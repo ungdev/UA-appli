@@ -1,0 +1,1 @@
+// Example file of a subcomponent. Those files must be included in the main component
