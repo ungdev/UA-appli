@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import LeftBar from './LeftBar';
+import Accueil from './Accueil';
+import HS_Decks from './HS_Decks';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 
+const routes = [
+  {
+    path: '/',
+    exact: true,
+    component: Accueil
+  },
+  {
+    path: '/hearthstone/decks',
+    component: HS_Decks
+  }
+];
+
 class App extends Component {
-  state = {
-    collapsed: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = { collapsed: false };
+  }
+
   onCollapse = collapsed => {
     console.log(collapsed);
     this.setState({ collapsed });
@@ -32,7 +49,14 @@ class App extends Component {
                 <Breadcrumb.Item>Bill</Breadcrumb.Item>
               </Breadcrumb>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                Bill is a cat.
+                {routes.map((route, index) => (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.component}
+                  />
+                ))}
               </div>
             </Content>
           </Layout>
