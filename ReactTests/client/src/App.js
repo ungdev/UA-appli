@@ -3,8 +3,9 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import LeftBar from './LeftBar';
 import Accueil from './Accueil';
 import HS_Decks from './HS_Decks';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter, withRoute, Router, Route, Link } from 'react-router-dom';
 import './App.css';
+import { withRouter } from 'react-router';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -23,7 +24,7 @@ const routes = [
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { collapsed: false };
+    this.state = { collapsed: false, path: this.props.location.pathname };
   }
 
   onCollapse = collapsed => {
@@ -31,7 +32,29 @@ class App extends Component {
     this.setState({ collapsed });
   };
 
+  componentDidMount() {
+    console.log('DidMount :', this.props);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({path: nextProps.location.pathname})
+  }
+
   render() {
+    const path = this.state.path
+    let component=''
+    switch(this.state.path){
+      case ('/'):
+        component = <Accueil />
+        break
+      case ('/decks'):
+        component = <HS_Decks />
+        break
+    }
+    console.log('render :', this.props, 'component :', component)
+
+    
+
     return (
       <div className="App">
         <Layout style={{ minHeight: '100vh' }}>
@@ -49,14 +72,7 @@ class App extends Component {
                 <Breadcrumb.Item>Bill</Breadcrumb.Item>
               </Breadcrumb>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                {routes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    component={route.component}
-                  />
-                ))}
+                {component}
               </div>
             </Content>
           </Layout>
@@ -66,4 +82,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);;
