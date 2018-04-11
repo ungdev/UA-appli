@@ -1,20 +1,54 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import LeftBar from './LeftBar';
+import Accueil from './Accueil';
+import HS_Decks from './HS_Decks';
+import CustomBreadcrumb from './customBreadcrumb';
+import {
+  BrowserRouter,
+  withRoute,
+  Router,
+  Route,
+  Link
+} from 'react-router-dom';
 import './App.css';
+import { withRouter } from 'react-router';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 class App extends Component {
-  state = {
-    collapsed: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = { collapsed: false, path: this.props.location.pathname };
+  }
+
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
 
+  componentDidMount() {
+    console.log('DidMount :', this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ path: nextProps.location.pathname });
+  }
+
   render() {
+    const path = this.state.path;
+    let component = '';
+    console.log(this.state.path);
+    switch (this.state.path) {
+      case '/':
+        component = <Accueil />;
+        break;
+      case '/tournois/hearthstone/decks':
+        component = <HS_Decks />;
+        break;
+    }
+
+    console.log('render :', this.props, 'component :', component);
+
     return (
       <div className="App">
         <Layout style={{ minHeight: '100vh' }}>
@@ -27,12 +61,9 @@ class App extends Component {
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>Bill</Breadcrumb.Item>
-              </Breadcrumb>
+              <CustomBreadcrumb path={this.state.path} />
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                Bill is a cat.
+                {component}
               </div>
             </Content>
           </Layout>
@@ -42,4 +73,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { Menu, Icon } from 'antd';
 import Logo_UA from './logo_ua_2018.png';
+import { Link } from 'react-router-dom';
 
 const SubMenu = Menu.SubMenu;
 
 class LeftBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <div>
+        <img src={Logo_UA} className="logo" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <img src={Logo_UA} class="logo" />
           <Menu.Item key="1">
-            <Icon type="home" />
-            <span>Accueil</span>
+            <Link to="/">
+              <Icon type="home" />
+              <span>Accueil</span>
+            </Link>
           </Menu.Item>
           <Menu.Item key="2">
             <Icon type="user" />
@@ -130,8 +137,10 @@ class LeftBar extends React.Component {
                 <span>Planning</span>
               </Menu.Item>
               <Menu.Item key="3-4-3">
-                <Icon type="inbox" />
-                <span>Decks</span>
+                <Link to="/tournois/hearthstone/decks">
+                  <Icon type="inbox" />
+                  <span>Decks</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-4-4">
                 <Icon type="profile" />
