@@ -3,23 +3,18 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import LeftBar from './LeftBar';
 import Accueil from './Accueil';
 import HS_Decks from './HS_Decks';
-import { BrowserRouter, withRoute, Router, Route, Link } from 'react-router-dom';
+import CustomBreadcrumb from './customBreadcrumb';
+import {
+  BrowserRouter,
+  withRoute,
+  Router,
+  Route,
+  Link
+} from 'react-router-dom';
 import './App.css';
 import { withRouter } from 'react-router';
 
 const { Header, Content, Footer, Sider } = Layout;
-
-const routes = [
-  {
-    path: '/',
-    exact: true,
-    component: Accueil
-  },
-  {
-    path: '/hearthstone/decks',
-    component: HS_Decks
-  }
-];
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +23,6 @@ class App extends Component {
   }
 
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
 
@@ -36,24 +30,24 @@ class App extends Component {
     console.log('DidMount :', this.props);
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({path: nextProps.location.pathname})
+  componentWillReceiveProps(nextProps) {
+    this.setState({ path: nextProps.location.pathname });
   }
 
   render() {
-    const path = this.state.path
-    let component=''
-    switch(this.state.path){
-      case ('/'):
-        component = <Accueil />
-        break
-      case ('/decks'):
-        component = <HS_Decks />
-        break
+    const path = this.state.path;
+    let component = '';
+    console.log(this.state.path);
+    switch (this.state.path) {
+      case '/':
+        component = <Accueil />;
+        break;
+      case '/tournois/hearthstone/decks':
+        component = <HS_Decks />;
+        break;
     }
-    console.log('render :', this.props, 'component :', component)
 
-    
+    console.log('render :', this.props, 'component :', component);
 
     return (
       <div className="App">
@@ -67,10 +61,7 @@ class App extends Component {
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>Bill</Breadcrumb.Item>
-              </Breadcrumb>
+              <CustomBreadcrumb path={this.state.path} />
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 {component}
               </div>
@@ -82,4 +73,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);;
+export default withRouter(App);

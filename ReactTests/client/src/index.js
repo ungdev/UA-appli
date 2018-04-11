@@ -11,8 +11,8 @@ import Switch from 'react-router-dom/Switch';
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path='/' component={App} />
-      <Route path='/decks' component={App}/>    
+      <Route exact path="/" component={App} />
+      <Route path="/tournois/hearthstone/decks" component={App} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
