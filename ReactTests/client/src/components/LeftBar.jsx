@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
-import Logo_UA from './logo_ua_2018.png';
+import Logo_UA from '../logo_ua_2018.png';
 import { Link } from 'react-router-dom';
 
 const SubMenu = Menu.SubMenu;

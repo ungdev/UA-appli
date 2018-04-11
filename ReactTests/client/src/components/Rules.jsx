@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
-class Teams extends React.Component {
+class Rules extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,23 +15,23 @@ class Teams extends React.Component {
   }
 
   render() {
-    console.log('render Teams :', this.props, this.state)
+    console.log('render Rules :', this.props, this.state)
     let game = this.state.game
     switch (game) {
       case ('lolamateur'):
-        game = 'Equipes pour League of Legends (catégorie amateur)'
+        game = 'Réglement du tournoi League of Legends (catégorie amateur)'
         break
       case ('lolpro'):
-        game = 'Equipes pour League of Legends (catégorie pro)'
+        game = 'Réglement du tournoi League of Legends (catégorie pro)'
         break
       case ('overwatch'):
-        game = 'Equipesi pour Overwatch'
+        game = 'Réglement du tournoi Overwatch'
         break
       case ('csgo'):
-        game = 'Equipes pour CS:GO'
+        game = 'Réglement du tournoi CS:GO'
         break
       case ('heartstone'):
-        game = 'Equipes pour Heartstone'
+        game = 'Réglement du tournoi Heartstone'
         break
       default:
         game = 'Ce jeu ne fait pas partie de la liste des tournois'
@@ -42,4 +42,4 @@ class Teams extends React.Component {
   }
 }
 
-export default withRouter(Teams)
+export default withRouter(Rules)

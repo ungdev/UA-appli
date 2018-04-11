@@ -11,13 +11,15 @@ import './App.css';
 import { withRouter } from 'react-router'
 
 //import components
-import LeftBar from './LeftBar'
-import Accueil from './Accueil'
-import HsDecks from './HsDecks'
-import CustomBreadcrumb from './CustomBreadcrumb'
-import Tournament from './Tournament'
-import Planning from './Planning'
-import Teams from './Teams'
+import LeftBar from './components/LeftBar'
+import Accueil from './components/Accueil'
+import HsDecks from './components/HsDecks'
+import CustomBreadcrumb from './components/CustomBreadcrumb'
+import Tournament from './components/Tournament'
+import Planning from './components/Planning'
+import Teams from './components/Teams'
+import Rules from './components/Rules'
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -66,6 +68,9 @@ class App extends Component {
         break
       case '/tournois/:game/teams':
         component = <Teams />
+        break
+      case '/tournois/:game/rules':
+        component = <Rules />
         break
     }
 
