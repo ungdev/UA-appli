@@ -42,8 +42,10 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-1-1">
-                <Icon type="share-alt" />
-                <span>Arbre</span>
+                <Link to='/tournois/csgo/arbre-tournois'>
+                  <Icon type="share-alt" />
+                  <span>Arbre</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-1-2">
                 <Icon type="calendar" />
@@ -71,8 +73,10 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-2-1">
-                <Icon type="fork" />
-                <span>Arbre</span>
+                <Link to='/tournois/lolpro/arbre-tournois'>
+                  <Icon type="share-alt" />
+                  <span>Arbre</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-2-2">
                 <Icon type="calendar" />
@@ -100,8 +104,10 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-3-1">
-                <Icon type="fork" />
-                <span>Arbre</span>
+                <Link to='/tournois/lolamateur/arbre-tournois'>
+                  <Icon type="share-alt" />
+                  <span>Arbre</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-3-2">
                 <Icon type="calendar" />
@@ -129,8 +135,10 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-4-1">
-                <Icon type="fork" />
-                <span>Arbre</span>
+                <Link to='/tournois/heartstone/arbre-tournois'>
+                  <Icon type="share-alt" />
+                  <span>Arbre</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-4-2">
                 <Icon type="calendar" />

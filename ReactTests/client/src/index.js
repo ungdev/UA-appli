@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App.js';
+import App from './App.jsx';
 import 'antd/dist/antd.css';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ ReactDOM.render(
     <Switch>
       <Route exact path="/" component={App} />
       <Route path="/tournois/hearthstone/decks" component={App} />
+      <Route path="/tournois/:game/arbre-tournois" component={App} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')

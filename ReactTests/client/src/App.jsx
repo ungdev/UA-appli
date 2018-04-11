@@ -3,7 +3,8 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import LeftBar from './LeftBar';
 import Accueil from './Accueil';
 import HsDecks from './HsDecks';
-import CustomBreadcrumb from './customBreadcrumb';
+import CustomBreadcrumb from './CustomBreadcrumb';
+import Tournament from './Tournament'
 import {
   BrowserRouter,
   withRoute,
@@ -19,7 +20,11 @@ const { Header, Content, Footer, Sider } = Layout;
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { collapsed: false, path: this.props.location.pathname };
+    this.state = { 
+      collapsed: false,
+      path: this.props.match.path,
+      pathname: this.props.location.pathname
+    };
   }
 
   onCollapse = collapsed => {
@@ -31,11 +36,17 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ path: nextProps.location.pathname });
+    console.log('will receive props: ', nextProps)
+    this.setState({ path: nextProps.match.path, pathname: nextProps.location.pathname });
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    return nextProps !== this.props && nextState!== this.state ? true : false
   }
 
   render() {
-    const path = this.state.path;
+    const path = this.state.pathname
+    console.log('path', path)
     let component = '';
     switch (this.state.path) {
       case '/':
@@ -43,6 +54,9 @@ class App extends Component {
         break;
       case '/tournois/hearthstone/decks':
         component = <HsDecks />;
+        break;
+      case '/tournois/:game/arbre-tournois':
+        component = <Tournament />
         break;
     }
 
@@ -58,7 +72,7 @@ class App extends Component {
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <CustomBreadcrumb path={this.state.path} />
+              <CustomBreadcrumb path={path} />
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 {component}
               </div>

@@ -3,12 +3,21 @@ import { Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
 
 class CustomBreadcrumb extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      path: this.props.path,
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ path: nextProps.path })
+  }
   render() {
     let fullPath = '';
-
+    console.log('Breadcrumb render : ', this.props)
     return (
       <Breadcrumb style={{ margin: '16px 0' }}>
-        {this.props.path
+        {this.state.path
           .slice(1)
           .split('/')
           .map((pathPart, key) => {
