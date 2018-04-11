@@ -17,6 +17,7 @@ import HsDecks from './HsDecks'
 import CustomBreadcrumb from './CustomBreadcrumb'
 import Tournament from './Tournament'
 import Planning from './Planning'
+import Teams from './Teams'
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -62,6 +63,9 @@ class App extends Component {
         break;
       case '/tournois/:game/planning':
         component = <Planning />
+        break
+      case '/tournois/:game/teams':
+        component = <Teams />
         break
     }
 

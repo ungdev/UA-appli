@@ -54,8 +54,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-1-3">
-                <Icon type="team" />
-                <span>Équipes</span>
+                <Link to='/tournois/csgo/teams'>
+                  <Icon type="team" />
+                  <span>Équipes</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-1-4">
                 <Icon type="profile" />
@@ -87,8 +89,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-2-3">
-                <Icon type="team" />
-                <span>Équipes</span>
+              <Link to='/tournois/lolpro/teams'>
+                  <Icon type="team" />
+                  <span>Équipes</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-2-4">
                 <Icon type="profile" />
@@ -114,14 +118,16 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-3-2">
-              <Link to='/tournois/lolamateur/planning'>
+                <Link to='/tournois/lolamateur/planning'>
                   <Icon type="calendar" />
                   <span>Planning</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-3-3">
-                <Icon type="team" />
-                <span>Équipes</span>
+              <Link to='/tournois/lolamateur/teams'>
+                  <Icon type="team" />
+                  <span>Équipes</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-3-4">
                 <Icon type="profile" />
@@ -147,7 +153,7 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-4-2">
-              <Link to='/tournois/heartstone/planning'>
+                <Link to='/tournois/heartstone/planning'>
                   <Icon type="calendar" />
                   <span>Planning</span>
                 </Link>
