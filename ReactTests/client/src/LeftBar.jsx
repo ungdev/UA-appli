@@ -48,8 +48,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-1-2">
-                <Icon type="calendar" />
-                <span>Planning</span>
+                <Link to='/tournois/csgo/planning'>
+                  <Icon type="calendar" />
+                  <span>Planning</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-1-3">
                 <Icon type="team" />
@@ -79,8 +81,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-2-2">
-                <Icon type="calendar" />
-                <span>Planning</span>
+                <Link to='/tournois/lolpro/planning'>
+                  <Icon type="calendar" />
+                  <span>Planning</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-2-3">
                 <Icon type="team" />
@@ -110,8 +114,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-3-2">
-                <Icon type="calendar" />
-                <span>Planning</span>
+              <Link to='/tournois/lolamateur/planning'>
+                  <Icon type="calendar" />
+                  <span>Planning</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-3-3">
                 <Icon type="team" />
@@ -141,8 +147,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-4-2">
-                <Icon type="calendar" />
-                <span>Planning</span>
+              <Link to='/tournois/heartstone/planning'>
+                  <Icon type="calendar" />
+                  <span>Planning</span>
+                </Link>
               </Menu.Item>
               <Menu.Item key="3-4-3">
                 <Link to="/tournois/hearthstone/decks">

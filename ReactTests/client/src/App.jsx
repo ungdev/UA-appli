@@ -1,26 +1,29 @@
-import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import LeftBar from './LeftBar';
-import Accueil from './Accueil';
-import HsDecks from './HsDecks';
-import CustomBreadcrumb from './CustomBreadcrumb';
-import Tournament from './Tournament'
+import React, { Component } from 'react'
+import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 import {
   BrowserRouter,
   withRoute,
   Router,
   Route,
   Link
-} from 'react-router-dom';
+} from 'react-router-dom'
 import './App.css';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router'
+
+//import components
+import LeftBar from './LeftBar'
+import Accueil from './Accueil'
+import HsDecks from './HsDecks'
+import CustomBreadcrumb from './CustomBreadcrumb'
+import Tournament from './Tournament'
+import Planning from './Planning'
 
 const { Header, Content, Footer, Sider } = Layout;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       collapsed: false,
       path: this.props.match.path,
       pathname: this.props.location.pathname
@@ -40,8 +43,8 @@ class App extends Component {
     this.setState({ path: nextProps.match.path, pathname: nextProps.location.pathname });
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    return nextProps !== this.props && nextState!== this.state ? true : false
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps !== this.props && nextState !== this.state ? true : false
   }
 
   render() {
@@ -57,6 +60,9 @@ class App extends Component {
       case '/tournois/:game/arbre-tournois':
         component = <Tournament />
         break;
+      case '/tournois/:game/planning':
+        component = <Planning />
+        break
     }
 
     return (

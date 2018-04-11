@@ -14,6 +14,7 @@ ReactDOM.render(
       <Route exact path="/" component={App} />
       <Route path="/tournois/hearthstone/decks" component={App} />
       <Route path="/tournois/:game/arbre-tournois" component={App} />
+      <Route path="/tournois/:game/planning" component={App} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
