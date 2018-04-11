@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { AutoComplete, Menu, Icon } from 'antd';
+import React from 'react';
+import { AutoComplete } from 'antd';
 
+// function onSelect(value) {
+//   console.log('onSelect', value);
+// }
 
-function onSelect(value) {
-  console.log('onSelect', value);
-}
-
-class HS_Decks extends React.Component {
+class HsDecks extends React.Component {
   state = {
     dataSource: ['Florent']
   };
@@ -39,4 +38,4 @@ class HS_Decks extends React.Component {
   }
 }
 
-export default HS_Decks
+export default HsDecks;

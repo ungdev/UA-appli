@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Menu, Icon } from 'antd';
 import Logo_UA from './logo_ua_2018.png';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ class LeftBar extends React.Component {
   render() {
     return (
       <div>
-        <img src={Logo_UA} className="logo" />
+        <img src={Logo_UA} alt="LogoUA2018" className="logo" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1">
             <Link to="/">

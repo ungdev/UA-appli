@@ -5,7 +5,7 @@ import App from './App.js';
 import 'antd/dist/antd.css';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Router, Route, hashHistory } from 'react-router';
+import { Route } from 'react-router';
 import Switch from 'react-router-dom/Switch';
 
 ReactDOM.render(

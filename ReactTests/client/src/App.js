@@ -1,22 +1,16 @@
-import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import React from 'react';
+import { Layout } from 'antd';
 import LeftBar from './LeftBar';
 import Accueil from './Accueil';
-import HS_Decks from './HS_Decks';
-import CustomBreadcrumb from './customBreadcrumb';
-import {
-  BrowserRouter,
-  withRoute,
-  Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import HsDecks from './HsDecks';
+import CustomBreadcrumb from './CustomBreadcrumb';
+
 import './App.css';
 import { withRouter } from 'react-router';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { collapsed: false, path: this.props.location.pathname };
@@ -35,19 +29,18 @@ class App extends Component {
   }
 
   render() {
-    const path = this.state.path;
     let component = '';
-    console.log(this.state.path);
+    //console.log(this.state.path);
     switch (this.state.path) {
       case '/':
         component = <Accueil />;
         break;
       case '/tournois/hearthstone/decks':
-        component = <HS_Decks />;
+        component = <HsDecks />;
         break;
     }
 
-    console.log('render :', this.props, 'component :', component);
+    //console.log('render :', this.props, 'component :', component);
 
     return (
       <div className="App">
