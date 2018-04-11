@@ -46,7 +46,6 @@ class App extends Component {
 
   render() {
     const path = this.state.pathname
-    console.log('path', path)
     let component = '';
     switch (this.state.path) {
       case '/':

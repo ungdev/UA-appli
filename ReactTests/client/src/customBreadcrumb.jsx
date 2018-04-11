@@ -17,7 +17,7 @@ class CustomBreadcrumb extends React.Component {
     console.log('Breadcrumb render : ', this.props)
     return (
       <Breadcrumb style={{ margin: '16px 0' }}>
-        {this.state.path
+        {/* {this.state.path
           .slice(1)
           .split('/')
           .map((pathPart, key) => {
@@ -29,7 +29,7 @@ class CustomBreadcrumb extends React.Component {
                 </Link>
               </Breadcrumb.Item>
             );
-          })}
+          })} */}
       </Breadcrumb>
     );
   }
