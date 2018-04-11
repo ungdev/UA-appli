@@ -1,6 +1,6 @@
 import React from 'react';
 import { Breadcrumb } from 'antd';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 class CustomBreadcrumb extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class CustomBreadcrumb extends React.Component {
     this.setState({ path: nextProps.path })
   }
   render() {
-    let fullPath = '';
+    // let fullPath = '';
     console.log('Breadcrumb render : ', this.props)
     return (
       <Breadcrumb style={{ margin: '16px 0' }}>

@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
-import {
-  BrowserRouter,
-  withRoute,
-  Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
+import { Layout } from 'antd'
 import './App.css';
-import { withRouter } from 'react-router'
 
 //import components
 import LeftBar from './components/LeftBar'
@@ -21,7 +14,7 @@ import Teams from './components/Teams'
 import Rules from './components/Rules'
 
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 class App extends Component {
   constructor(props) {
@@ -71,6 +64,8 @@ class App extends Component {
         break
       case '/tournois/:game/rules':
         component = <Rules />
+        break
+      default: 
         break
     }
 
