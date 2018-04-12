@@ -1,7 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { List, Divider } from 'antd'
+import { List, Divider, Collapse } from 'antd'
 
+const Panel = Collapse.Panel;
 
 class Teams extends React.Component {
   constructor(props) {
@@ -42,8 +43,9 @@ class Teams extends React.Component {
         ]
       },
     ]
-    console.log('render Teams :', teams)
+
     let game = this.state.game
+
     switch (game) {
       case ('lolamateur'):
         game = 'Equipes pour League of Legends (catégorie amateur)'
@@ -66,27 +68,25 @@ class Teams extends React.Component {
     return (
       <div>
         <h1>{game}</h1>
-
-        {teams.map((team) => (
-          <div>
-            <h2>{team.team}</h2>
-            <List
-              itemLayout="horizontal"
-              dataSource={team.members}
-              renderItem={item => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={<div>{item.nom}</div>}
-                    description={item.role}
-                  />
-                </List.Item>
-              )}
-            />
-            <Divider />
-          </div>
-        )
-
-        )}
+        <Collapse accordion>
+          {teams.map((team) => (
+              <Panel header={team.team} key={team.team}>
+                <List
+                  itemLayout="horizontal"
+                  dataSource={team.members}
+                  renderItem={item => (
+                    <List.Item>
+                      <List.Item.Meta
+                        title={<div>{item.nom}</div>}
+                        description={item.role}
+                      />
+                    </List.Item>
+                  )}
+                />
+              </Panel>
+          )
+          )}
+        </Collapse>
       </div>
     )
   }
