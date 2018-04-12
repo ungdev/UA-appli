@@ -10,7 +10,7 @@ import HsDecks from './components/HsDecks'
 import CustomBreadcrumb from './components/CustomBreadcrumb'
 import Tournament from './components/Tournament'
 import Planning from './components/Planning'
-import Teams from './components/Teams'
+import Teams from './components/TeamsComponents/Teams'
 import Rules from './components/Rules'
 
 
