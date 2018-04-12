@@ -60,8 +60,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-1-4">
+              <Link to='/tournois/csgo/rules'>
                 <Icon type="profile" />
                 <span>Règlement</span>
+              </Link>
               </Menu.Item>
               <Menu.Item key="3-1-5">
                 <Icon type="customer-service" />
@@ -95,8 +97,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-2-4">
+              <Link to='/tournois/lolpro/rules'>
                 <Icon type="profile" />
                 <span>Règlement</span>
+              </Link>
               </Menu.Item>
               <Menu.Item key="3-2-5">
                 <Icon type="customer-service" />
@@ -130,8 +134,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-3-4">
+              <Link to='/tournois/lolamateur/rules'>
                 <Icon type="profile" />
                 <span>Règlement</span>
+              </Link>
               </Menu.Item>
               <Menu.Item key="3-3-5">
                 <Icon type="customer-service" />
@@ -165,8 +171,10 @@ class LeftBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-4-4">
+              <Link to='/tournois/heartstone/rules'>
                 <Icon type="profile" />
                 <span>Règlement</span>
+              </Link>
               </Menu.Item>
               <Menu.Item key="3-4-5">
                 <Icon type="customer-service" />
