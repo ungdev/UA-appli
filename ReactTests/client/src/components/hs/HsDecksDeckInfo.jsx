@@ -1,38 +1,32 @@
 import React from 'react';
-import { decode } from 'deckstrings';
-import { Avatar, List } from 'antd';
+import { Col, Icon, Row, Tag } from 'antd';
 import HearthstoneJSON from 'hearthstonejson-client';
-import cardList from './cards.collectible.json';
-import HsDecksCardInfoBanner from './HsDecksCardInfoBanner';
 
 class HsDecksDeckInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      deck: decode(this.props.deckHash)
-        .cards.map(card => {
-          return [cardList.filter(v => v.dbfId == card[0])[0], card[1]];
-        })
-        .sort((a, b) => {
-          return a[0].cost - b[0].cost;
-        })
-    };
-  }
-
   render() {
-    console.log(this.state.deck);
-    return (
-      <List
-        size="small"
-        itemLayout="vertical"
-        dataSource={this.state.deck}
-        renderItem={item => (
-          <List.Item>
-            <HsDecksCardInfoBanner card={item} />
-          </List.Item>
-        )}
-      />
-    );
+    return this.props.deck.cards.map(card => {
+      return (
+        <p>
+          <Row align="top" justify="center" type="flex">
+            <Col span={3}>
+              <Tag color="#2db7f5">{card[0].cost}</Tag>
+            </Col>
+            <Col span={18}>
+              <div fontSize="smaller">{card[0].name.toUpperCase()}</div>
+            </Col>
+            <Col span={3}>
+              <Tag>
+                {card[0].rarity == 'LEGENDARY' ? (
+                  <Icon type="star" />
+                ) : (
+                  <div>{card[1]}</div>
+                )}
+              </Tag>
+            </Col>
+          </Row>
+        </p>
+      );
+    });
   }
 }
 export default HsDecksDeckInfo;

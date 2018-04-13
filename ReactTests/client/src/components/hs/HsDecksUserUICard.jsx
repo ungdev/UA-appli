@@ -1,32 +1,55 @@
 import React from 'react';
-import { Card, Tabs } from 'antd';
+import { Card, Divider, Tabs } from 'antd';
 import HsDecksDeckInfo from './HsDecksDeckInfo';
+import { decode } from 'deckstrings';
+import cardList from './cards.json';
 
 const TabPane = Tabs.TabPane;
 
+const deckDecoder = hashs => {
+  return Object.values(hashs).map(hash => {
+    let deck = decode(hash);
+    deck.cards = deck.cards
+      .map(card => {
+        return [cardList.filter(v => v.dbfId == card[0])[0], card[1]];
+      })
+      .sort((a, b) => {
+        return a[0].cost - b[0].cost;
+      });
+    deck.heroes = cardList.filter(v => v.dbfId == deck.heroes)[0].name;
+    return deck;
+  });
+};
+
 class HsDecksUserUICard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      decks: deckDecoder(this.props.deckHashs)
+    };
+  }
+
   render() {
     return (
       <Card
         style={{
           width: '60%'
         }}>
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Deck 1" key="1">
-            <HsDecksDeckInfo deckHash={this.props.decks[1]} />
-          </TabPane>
-          <TabPane tab="Deck 2" key="2">
-            <HsDecksDeckInfo deckHash={this.props.decks[2]} />
-          </TabPane>
-          <TabPane tab="Deck 3" key="3">
-            <HsDecksDeckInfo deckHash={this.props.decks[3]} />
-          </TabPane>
-          <TabPane tab="Deck 4" key="4">
-            <HsDecksDeckInfo deckHash={this.props.decks[4]} />
-          </TabPane>
-          <TabPane tab="Deck 5" key="5">
-            <HsDecksDeckInfo deckHash={this.props.decks[5]} />
-          </TabPane>
+        <Tabs defaultActiveKey="0" size="small" tabPosition="left">
+          {this.state.decks.map((deck, key) => {
+            return (
+              <TabPane
+                tab={
+                  <div className="tabTitle">
+                    <div className="tabTitleName">Deck {key + 1}</div>
+                    <div className="tabTitleHero">{deck.heroes}</div>
+                  </div>
+                }
+                key={key}>
+                <HsDecksDeckInfo deck={deck} />
+              </TabPane>
+            );
+          })}
         </Tabs>
       </Card>
     );
