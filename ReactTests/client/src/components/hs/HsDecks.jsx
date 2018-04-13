@@ -26,14 +26,6 @@ const db = [
   }
 ];
 
-const customPanelStyle = {
-  background: '#f7f7f7',
-  borderRadius: 4,
-  marginBottom: 24,
-  border: 0,
-  overflow: 'hidden'
-};
-
 class HsDecks extends React.Component {
   constructor(props) {
     super(props);
@@ -50,9 +42,7 @@ class HsDecks extends React.Component {
     });
   };
 
-  handleChoice = (value, option) => {
-    console.log(value, option);
-  };
+  handleChoice = (value, option) => {};
 
   render() {
     const { dataSource } = this.state;
