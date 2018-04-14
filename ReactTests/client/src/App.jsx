@@ -27,8 +27,6 @@ class App extends Component {
 
   onCollapse = collapsed => {
     this.setState({ collapsed });
-    console.log('collapse ordered');
-    console.log(this.state.collapsed);
   };
 
   componentDidMount() {
