@@ -34,6 +34,7 @@ class HsDecksUserUICard extends React.Component {
   }
 
   render() {
+    console.log(this.state.decks);
     return (
       <Card
         style={{

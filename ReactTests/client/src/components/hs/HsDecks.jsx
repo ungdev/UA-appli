@@ -1,7 +1,8 @@
 import React from 'react';
-import { AutoComplete, Collapse } from 'antd';
+import { AutoComplete, Button, Collapse, Icon, Input } from 'antd';
 import HsDecksUserUICard from './HsDecksUserUICard';
 const Panel = Collapse.Panel;
+const ButtonGroup = Button.Group;
 
 const db = [
   {
@@ -15,7 +16,7 @@ const db = [
     }
   },
   {
-    username: 'Toto',
+    username: 'FloFlo',
     decks: {
       0: 'AAEBAf0GBOCsApfTAp3iAtvpAg2KAZME9wS2B+EH3sQC58sC8tAC+NACiNICi+EC/OUC6OcCAA==',
       1: 'AAEBAZ8FBPIFrwe5wQLW5QINxQPbA6cFpwixCNOqAtmuAtO8ArPBAp3CArHCAuPLAvjSAgA=',
@@ -32,17 +33,12 @@ class HsDecks extends React.Component {
     this.state = {
       dataSource: db.map(user => {
         return user.username;
-      })
+      }),
+      dataToShow: db
     };
   }
 
-  handleSearch = value => {
-    this.setState({
-      dataSource: !value ? [] : [value, value + value, value + value + value]
-    });
-  };
-
-  handleChoice = (value, option) => {};
+  onSelect(value) {}
 
   render() {
     const { dataSource } = this.state;
@@ -51,16 +47,29 @@ class HsDecks extends React.Component {
         <h1>Decks Hearthstone</h1>
         <p>Rechercher un deck par nom de joueur</p>
         <AutoComplete
+          className="global-search"
+          style={{ width: 200 }}
           dataSource={dataSource}
-          style={{
-            width: '200px'
+          placeholder="Pseudo de joueur"
+          filterOption={(inputValue, option) =>
+            option.props.children
+              .toUpperCase()
+              .indexOf(inputValue.toUpperCase()) !== -1
+          }
+          onSelect={value => {
+            this.setState({
+              dataToShow: db.filter(user => user.username == value)
+            });
           }}
-          onSelect={this.handleChoice}
-          onSearch={this.handleSearch}
-          placeholder="input here"
+        />
+        <Button
+          icon="reload"
+          onClick={e => {
+            this.setState({ dataToShow: db });
+          }}
         />
         <Collapse accordion>
-          {db.map((user, key) => {
+          {this.state.dataToShow.map((user, key) => {
             return (
               <Panel header={user.username} key={key}>
                 <HsDecksUserUICard deckHashs={user.decks} />

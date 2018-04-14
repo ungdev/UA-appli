@@ -2,3 +2,44 @@
   height: 80px;
   margin: 0 auto;
 }
+
+.tabTitle {
+}
+
+.tabTitleName {
+  font-size: small;
+}
+.tabTitleHero {
+  font-size: smaller;
+}
+
+.cardTab {
+  weight: 60%;
+}
+
+.flex-card {
+  display: flex;
+}
+.flex-card-left {
+  padding: 10px;
+  flex-basis: 300px;
+}
+
+.flex-card-right {
+  padding: 10px;
+  flex-basis: 500px;
+}
+.cardName {
+  padding-top: 5px;
+  height: 36px;
+  font-size: 0.85em;
+  font-weight: 600;
+  border-width: 0.5px;
+  border-style: none none solid none;
+}
+.img-hs-Heroes {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 47%;
+}
