@@ -12,6 +12,7 @@ import Tournament from './components/Tournament';
 import Planning from './components/Planning';
 import Teams from './components/Teams/Teams';
 import Rules from './components/Rules';
+import TopBar from './components/TopBar'
 
 const { Header, Content, Sider } = Layout;
 
@@ -74,6 +75,8 @@ class App extends Component {
     return (
       <div className="App">
         <Layout style={{ minHeight: '100vh' }}>
+          <TopBar /> 
+          <Layout>
           <Sider
             collapsible
             collapsed={this.state.collapsed}
@@ -88,6 +91,7 @@ class App extends Component {
                 {component}
               </div>
             </Content>
+          </Layout>
           </Layout>
         </Layout>
       </div>
