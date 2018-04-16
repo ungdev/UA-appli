@@ -10,7 +10,7 @@ import HsDecks from './components/hs/HsDecks';
 import CustomBreadcrumb from './components/CustomBreadcrumb';
 import Tournament from './components/Tournament';
 import Planning from './components/Planning';
-import Teams from './components/Teams';
+import Teams from './components/Teams/Teams';
 import Rules from './components/Rules';
 
 const { Header, Content, Sider } = Layout;
