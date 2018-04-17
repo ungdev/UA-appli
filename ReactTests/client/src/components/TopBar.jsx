@@ -1,24 +1,31 @@
 import React from 'react'
-import Logo_UA from '../logo_ua_2018.png';
-import { Layout, Menu } from 'antd';
+import Logo_UA from '../logo_transp.png';
+import { Layout, Menu, Icon } from 'antd';
 const { Header, Content, Sider } = Layout;
 
 
 export default class TopBar extends React.Component {
 
   render() {
+    const title = this.props.sidebar ? '' : <span style={{marginLeft: 15}}>UTT Arena</span>
     return (
       <Header className="header" style={{ paddingLeft: 0 }}>
-        <div className='logo'><img src={Logo_UA} alt="LogoUA2018" style={{ float: 'left', height: 70 }} /></div>
+        <div className='logo' style={{ color: 'white', fontSize: 24, float: 'left' }}>
+          <img src={Logo_UA} alt="LogoUA2018" style={{ height: 65 }} />
+          {title}
+        </div>
         <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={['2']}
-          style={{ lineHeight: '64px' }}
+          style={{ lineHeight: '64px', float: 'right' }}
         >
-          <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
+          <Menu.Item key="1">
+            <div>
+              <Icon type='user' /> User
+          </div>
+          </Menu.Item>
+
         </Menu>
       </Header >
     )

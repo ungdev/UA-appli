@@ -75,7 +75,7 @@ class App extends Component {
     return (
       <div className="App">
         <Layout style={{ minHeight: '100vh' }}>
-          <TopBar /> 
+          <TopBar sidebar={this.state.collapsed}/> 
           <Layout>
           <Sider
             collapsible
@@ -84,7 +84,6 @@ class App extends Component {
             <LeftBar />
           </Sider>
           <Layout>
-            <Header style={{ background: '#fff', padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
               <CustomBreadcrumb path={path} />
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
