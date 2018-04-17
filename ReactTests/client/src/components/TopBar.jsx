@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo_UA from '../logo_transp.png';
+import Logo_UA from '../logo_ua_2018_hex.png';
 import { Layout, Menu, Icon } from 'antd';
 const { Header, Content, Sider } = Layout;
 
