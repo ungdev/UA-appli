@@ -27,7 +27,6 @@ class Rules extends React.Component {
         gameId = game.id
       }
     })
-    console.log(gameId)
     switch (gameId) {
       case ('lolamateur'):
         rulesToDisplay = <RulesLOL />

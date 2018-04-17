@@ -7,12 +7,14 @@ const SubMenu = Menu.SubMenu;
 class LeftBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
   }
+
   render() {
     return (
       <div>
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+        <Menu theme="dark" mode="inline">
           <Menu.Item key="1" style={{ marginTop: 0}}>
             <Link to="/">
             <Icon type="home" />
@@ -43,12 +45,6 @@ class LeftBar extends React.Component {
               <Link to='/tournois/csgo/arbre-tournois'>
                 <Icon type="share-alt" />
                 <span>Arbre</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="3-1-2">
-              <Link to='/tournois/csgo/planning'>
-                <Icon type="calendar" />
-                <span>Planning</span>
               </Link>
             </Menu.Item>
             <Menu.Item key="3-1-3">
@@ -82,12 +78,6 @@ class LeftBar extends React.Component {
                 <span>Arbre</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="3-2-2">
-              <Link to='/tournois/lolpro/planning'>
-                <Icon type="calendar" />
-                <span>Planning</span>
-              </Link>
-            </Menu.Item>
             <Menu.Item key="3-2-3">
               <Link to='/tournois/lolpro/teams'>
                 <Icon type="team" />
@@ -117,12 +107,6 @@ class LeftBar extends React.Component {
               <Link to='/tournois/lolamateur/arbre-tournois'>
                 <Icon type="share-alt" />
                 <span>Arbre</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="3-3-2">
-              <Link to='/tournois/lolamateur/planning'>
-                <Icon type="calendar" />
-                <span>Planning</span>
               </Link>
             </Menu.Item>
             <Menu.Item key="3-3-3">
@@ -156,12 +140,6 @@ class LeftBar extends React.Component {
                 <span>Arbre</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="3-4-2">
-              <Link to='/tournois/hearthstone/planning'>
-                <Icon type="calendar" />
-                <span>Planning</span>
-              </Link>
-            </Menu.Item>
             <Menu.Item key="3-4-3">
               <Link to="/tournois/hearthstone/decks">
                 <Icon type="inbox" />
@@ -190,10 +168,6 @@ class LeftBar extends React.Component {
             <Menu.Item key="3-5-1">
               <Icon type="fork" />
               <span>Arbre</span>
-            </Menu.Item>
-            <Menu.Item key="3-5-2">
-              <Icon type="calendar" />
-              <span>Planning</span>
             </Menu.Item>
             <Menu.Item key="3-5-3">
               <Icon type="team" />
