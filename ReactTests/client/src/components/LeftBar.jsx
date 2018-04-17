@@ -151,13 +151,13 @@ class LeftBar extends React.Component {
               </span>
             }>
             <Menu.Item key="3-4-1">
-              <Link to='/tournois/heartstone/arbre-tournois'>
+              <Link to='/tournois/hearthstone/arbre-tournois'>
                 <Icon type="share-alt" />
                 <span>Arbre</span>
               </Link>
             </Menu.Item>
             <Menu.Item key="3-4-2">
-              <Link to='/tournois/heartstone/planning'>
+              <Link to='/tournois/hearthstone/planning'>
                 <Icon type="calendar" />
                 <span>Planning</span>
               </Link>
@@ -169,7 +169,7 @@ class LeftBar extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="3-4-4">
-              <Link to='/tournois/heartstone/rules'>
+              <Link to='/tournois/hearthstone/rules'>
                 <Icon type="profile" />
                 <span>Règlement</span>
               </Link>

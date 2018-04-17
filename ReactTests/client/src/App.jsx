@@ -11,7 +11,7 @@ import CustomBreadcrumb from './components/CustomBreadcrumb';
 import Tournament from './components/Tournament';
 import Planning from './components/Planning';
 import Teams from './components/Teams/Teams';
-import Rules from './components/Rules';
+import Rules from './components/Rules/Rules';
 import TopBar from './components/TopBar'
 
 const { Header, Content, Sider } = Layout;
