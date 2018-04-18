@@ -1,20 +1,21 @@
-import React from 'react'
-import { withRouter } from 'react-router-dom'
-import { List, Divider, Collapse } from 'antd'
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { List, Divider, Collapse } from 'antd';
+import games from '../../games.json';
+import GameStatusBar from '../GameStatusBar/GameStatusBar';
 
 const Panel = Collapse.Panel;
 
 class Teams extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      game: this.props.match.params.game,
-    }
+      game: this.props.match.params.game
+    };
   }
 
-
   componentWillReceiveProps(nextProps) {
-    this.setState({ game: nextProps.match.params.game })
+    this.setState({ game: nextProps.match.params.game });
   }
 
   render() {
@@ -41,55 +42,58 @@ class Teams extends React.Component {
           { nom: 'Supportcaca', role: 'Support' },
           { nom: 'Topcaca', role: 'Top' }
         ]
-      },
-    ]
-
-    let game = this.state.game
-
-    switch (game) {
-      case ('lolamateur'):
-        game = 'Equipes pour League of Legends (catégorie amateur)'
-        break
-      case ('lolpro'):
-        game = 'Equipes pour League of Legends (catégorie pro)'
-        break
-      case ('overwatch'):
-        game = 'Equipes pour Overwatch'
-        break
-      case ('csgo'):
-        game = 'Equipes pour CS:GO'
-        break
-      case ('heartstone'):
-        game = 'Equipes pour Heartstone'
-        break
+      }
+    ];
+    let gameId = '';
+    let teamsToDisplay = '';
+    games.forEach(game => {
+      if (game.id === this.state.game) {
+        gameId = game.id;
+      }
+    });
+    switch (gameId) {
+      case 'lolamateur':
+        teamsToDisplay = 'Equipes pour League of Legends (catégorie amateur)';
+        break;
+      case 'lolpro':
+        teamsToDisplay = 'Equipes pour League of Legends (catégorie pro)';
+        break;
+      case 'csgo':
+        teamsToDisplay = 'Equipes pour CS:GO';
+        break;
+      case 'hearthstone':
+        teamsToDisplay = 'Equipes pour Heartstone';
+        break;
       default:
-        game = 'Ce jeu ne fait pas partie de la liste des tournois'
+        teamsToDisplay = 'Ce jeu ne fait pas partie de la liste des tournois';
     }
+    console.log(teamsToDisplay);
     return (
       <div>
-        <h1>{game}</h1>
+        <GameStatusBar game={this.state.game} />
+        <Divider />
+        <h1>{teamsToDisplay}</h1>
         <Collapse accordion>
-          {teams.map((team) => (
-              <Panel header={team.team} key={team.team}>
-                <List
-                  itemLayout="horizontal"
-                  dataSource={team.members}
-                  renderItem={item => (
-                    <List.Item>
-                      <List.Item.Meta
-                        title={<div>{item.nom}</div>}
-                        description={item.role}
-                      />
-                    </List.Item>
-                  )}
-                />
-              </Panel>
-          )
-          )}
+          {teams.map(team => (
+            <Panel header={team.team} key={team.team}>
+              <List
+                itemLayout="horizontal"
+                dataSource={team.members}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={<div>{item.nom}</div>}
+                      description={item.role}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Panel>
+          ))}
         </Collapse>
       </div>
-    )
+    );
   }
 }
 
-export default withRouter(Teams)
+export default withRouter(Teams);

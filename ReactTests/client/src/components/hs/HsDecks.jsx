@@ -1,6 +1,8 @@
 import React from 'react';
-import { AutoComplete, Button, Collapse, Icon, Input } from 'antd';
+import { AutoComplete, Button, Collapse, Divider, Icon, Input } from 'antd';
 import HsDecksUserUICard from './HsDecksUserUICard';
+import GameStatusBar from '../GameStatusBar/GameStatusBar';
+
 const Panel = Collapse.Panel;
 const ButtonGroup = Button.Group;
 
@@ -44,6 +46,8 @@ class HsDecks extends React.Component {
     const { dataSource } = this.state;
     return (
       <div>
+        <GameStatusBar game="hearthstone" />
+        <Divider />
         <h1>Decks Hearthstone</h1>
         <p>Rechercher un deck par nom de joueur</p>
         <AutoComplete

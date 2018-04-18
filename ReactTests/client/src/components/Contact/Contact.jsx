@@ -1,14 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import games from '../../games.json';
+import GameStatusBar from '../GameStatusBar/GameStatusBar';
 import { Divider } from 'antd';
 
-import RulesLOL from './RulesLOL';
-import RulesCSGO from './RulesCSGO';
-import RulesHS from './RulesHS';
-import GameStatusBar from '../GameStatusBar/GameStatusBar';
-
-class Rules extends React.Component {
+class Contact extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +18,7 @@ class Rules extends React.Component {
 
   render() {
     let gameId = '';
-    let rulesToDisplay = '';
+    let contactToDisplay = '';
     games.forEach(game => {
       if (game.id === this.state.game) {
         gameId = game.id;
@@ -30,29 +26,28 @@ class Rules extends React.Component {
     });
     switch (gameId) {
       case 'lolamateur':
-        rulesToDisplay = <RulesLOL />;
+        contactToDisplay = 'Contact Lol';
         break;
       case 'lolpro':
-        rulesToDisplay = <RulesLOL />;
+        contactToDisplay = 'Contact Lol Pro';
         break;
       case 'csgo':
-        rulesToDisplay = <RulesCSGO />;
+        contactToDisplay = 'Contact CSGO';
         break;
       case 'hearthstone':
-        rulesToDisplay = <RulesHS />;
+        contactToDisplay = 'Contact HS';
         break;
       default:
-        rulesToDisplay = 'Ce jeu ne fait pas partie de la liste des tournois';
     }
-    console.log(rulesToDisplay);
+    console.log(contactToDisplay);
     return (
       <div>
         <GameStatusBar game={this.state.game} />
         <Divider />
-        {rulesToDisplay}
+        {contactToDisplay}
       </div>
     );
   }
 }
 
-export default withRouter(Rules);
+export default withRouter(Contact);

@@ -9,10 +9,10 @@ import Accueil from './components/Accueil';
 import HsDecks from './components/hs/HsDecks';
 import CustomBreadcrumb from './components/CustomBreadcrumb';
 import Tournament from './components/Tournament';
-import Planning from './components/Planning';
 import Teams from './components/Teams/Teams';
 import Rules from './components/Rules/Rules';
-import TopBar from './components/TopBar'
+import TopBar from './components/TopBar';
+import Contact from './components/Contact/Contact';
 
 const { Header, Content, Sider } = Layout;
 
@@ -59,15 +59,14 @@ class App extends Component {
       case '/tournois/:game/arbre-tournois':
         component = <Tournament />;
         break;
-      case '/tournois/:game/planning':
-        component = <Planning />;
-        break;
       case '/tournois/:game/teams':
         component = <Teams />;
         break;
       case '/tournois/:game/rules':
         component = <Rules />;
         break;
+      case '/tournois/:game/contact':
+        component = <Contact />;
       default:
         break;
     }
@@ -75,22 +74,23 @@ class App extends Component {
     return (
       <div className="App">
         <Layout style={{ minHeight: '100vh' }}>
-          <TopBar sidebar={this.state.collapsed}/> 
+          <TopBar sidebar={this.state.collapsed} />
           <Layout>
-          <Sider
-            collapsible
-            collapsed={this.state.collapsed}
-            onCollapse={this.onCollapse}>
-            <LeftBar />
-          </Sider>
-          <Layout>
-            <Content style={{ margin: '0 16px' }}>
-              <CustomBreadcrumb path={path} />
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                {component}
-              </div>
-            </Content>
-          </Layout>
+            <Sider
+              collapsible
+              collapsed={this.state.collapsed}
+              onCollapse={this.onCollapse}>
+              <LeftBar />
+            </Sider>
+            <Layout>
+              <Content style={{ margin: '0 16px' }}>
+                <CustomBreadcrumb path={path} />
+                <div
+                  style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                  {component}
+                </div>
+              </Content>
+            </Layout>
           </Layout>
         </Layout>
       </div>
