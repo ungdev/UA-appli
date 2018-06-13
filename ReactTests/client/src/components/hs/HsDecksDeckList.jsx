@@ -4,11 +4,12 @@ import { Col, Icon, Popover, Row, Tag } from 'antd';
 class HsDecksDeckList extends React.Component {
   render() {
     return this.props.deck.cards.map((card, key) => {
+      let cardId = card[2].id;
       return (
         <Popover
           content={
             <img
-              src={`/hearthstone-card-images/rel/${card[0]}.png`}
+              src={`http://localhost:3000/cardImage/${cardId}.png`}
               alt={card[2].name}
             />
           }

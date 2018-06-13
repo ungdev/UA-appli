@@ -33,11 +33,24 @@ class HsDecks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      cardsJSON: {},
       dataSource: db.map(user => {
         return user.username;
       }),
       dataToShow: db
     };
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:3000/hsdata', {
+      method: 'GET',
+      mode: 'cors'
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ cardsJSON: data });
+      })
+      .catch(error => console.log(error));
   }
 
   onSelect(value) {}
@@ -76,7 +89,10 @@ class HsDecks extends React.Component {
           {this.state.dataToShow.map((user, key) => {
             return (
               <Panel header={user.username} key={key}>
-                <HsDecksUserUICard deckHashs={user.decks} />
+                <HsDecksUserUICard
+                  deckHashs={user.decks}
+                  cardsJSON={this.state.cardsJSON}
+                />
               </Panel>
             );
           })}

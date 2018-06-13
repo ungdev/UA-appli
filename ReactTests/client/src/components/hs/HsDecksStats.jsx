@@ -40,12 +40,15 @@ class HsDecksStats extends React.Component {
   }
 
   render() {
+    console.log('this.props.deck', this.props.deck);
     return (
       <Card bordered={false}>
         <img
           className="img-hs-Heroes"
-          src={`/hearthstone-card-images/rel/${this.props.deck.heroes[1]}.png`}
-          alt={this.props.deck.heroes[1]}
+          src={`http://localhost:3000/cardImage/${
+            this.props.deck.heroes.id
+          }.png`}
+          alt={this.props.deck.heroes.name}
         />
         <List size="small" bordered={false} header={<div>Courbe de Mana</div>}>
           {Object.entries(this.state.stats).map((entry, key) => {
