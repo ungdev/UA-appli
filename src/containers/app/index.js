@@ -8,8 +8,6 @@ import 'antd/dist/antd.css';
 
 const AsyncPizza = asyncComponent(() => import('../../components/pizza'))
 const Dashboard = asyncComponent(() => import('../dashboard'))
-const Reset = asyncComponent(() => import('../reset'))
-const Validate = asyncComponent(() => import('../validate'))
 
 const App = props => (
   <div>
@@ -18,8 +16,11 @@ const App = props => (
     <Switch>
       <Route path={process.env.REACT_APP_BASEURL} exact component={Home} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard'} component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + 'reset/:token'} component={Reset} />
-      <Route path={process.env.REACT_APP_BASEURL + 'valid/:token'} component={Validate} />
+      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/hearthstone/decks'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/arbre-tournois'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/contact'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/teams'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/rules'} component={Dashboard} />
       <Redirect from="*" to="/" />
     </Switch>
   </div>

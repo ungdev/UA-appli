@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router'
 import { connect } from 'react-redux'
-import { Layout } from 'antd'
 import './dashboard.css'
 
 
-import LeftBar from './components/LeftBar'
+
 import Accueil from './components/Accueil'
-import CustomBreadcrumb from './components/CustomBreadcrumb'
-import TopBar from './components/TopBar'
+import HsDecks from './components/hs/HsDecks'
+import Tournament from './components/Tournament'
+import Teams from './components/Teams/Teams'
+import Rules from './components/Rules/Rules'
+import Contact from './components/Contact/Contact'
+import DashboardLayout from './layout'
+
 
 import { autoLogin } from '../../modules/login'
 
 import './dashboard.css'
 
 const baseUrl = process.env.REACT_APP_BASEURL
-const { Header, Content, Sider } = Layout
 
 class Dashboard extends Component {
   constructor(props) {
@@ -43,31 +45,36 @@ class Dashboard extends Component {
   }
 
   render() {
-    let component = <Accueil />
-    const path = this.state.pathname
+    console.log(this.state.pathname)
+    let component = '';
+    switch (this.state.path) {
+      case '/dashboard':
+        component = <Accueil />;
+        break;
+      case '/dashboard/tournois/hearthstone/decks':
+        component = <HsDecks />;
+        break;
+      case '/dashboard/tournois/:game/arbre-tournois':
+        component = <Tournament />;
+        break;
+      case '/dashboard/tournois/:game/teams':
+        component = <Teams />;
+        break;
+      case '/dashboard/tournois/:game/rules':
+        component = <Rules />;
+        break;
+      case '/dashboard/tournois/:game/contact':
+        component = <Contact />;
+      default:
+        break;
+    }
     return (
-      <div className="App">
-        <Layout style={{ minHeight: '100vh' }}>
-          <TopBar sidebar={this.state.collapsed} />
-          <Layout>
-            <Sider
-              collapsible
-              collapsed={this.state.collapsed}
-              onCollapse={this.onCollapse}>
-              <LeftBar />
-            </Sider>
-            <Layout>
-              <Content style={{ margin: '0 16px' }}>
-                <CustomBreadcrumb path={path} />
-                <div
-                  style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                  {component}
-                </div>
-              </Content>
-            </Layout>
-          </Layout>
-        </Layout>
-      </div>
+      <DashboardLayout
+        collapsed={this.state.collapsed}
+        onCollapse={this.onCollapse}
+        path={this.state.pathname}
+        component={component}
+      />
     )
   }
 }

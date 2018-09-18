@@ -17,7 +17,7 @@ class LeftBar extends React.Component {
       <div>
         <Menu theme="dark" mode="inline">
           <Menu.Item key="1" style={{ marginTop: 0 }}>
-            <Link to="/">
+            <Link to="/dashboard">
               <Icon type="home" />
               <span>Accueil</span>
             </Link>
@@ -40,25 +40,25 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-1-1">
-                <Link to="/tournois/csgo/arbre-tournois">
+                <Link to="/dashboard/tournois/csgo/arbre-tournois">
                   <Icon type="share-alt" />
                   <span>Arbre</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-1-2">
-                <Link to="/tournois/csgo/teams">
+                <Link to="/dashboard/tournois/csgo/teams">
                   <Icon type="team" />
                   <span>Équipes</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-1-3">
-                <Link to="/tournois/csgo/rules">
+                <Link to="/dashboard/tournois/csgo/rules">
                   <Icon type="profile" />
                   <span>Règlement</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-1-4">
-                <Link to="/tournois/csgo/contact">
+                <Link to="/dashboard/tournois/csgo/contact">
                   <Icon type="customer-service" />
                   <span>Contact</span>
                 </Link>
@@ -73,25 +73,25 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-2-1">
-                <Link to="/tournois/lolpro/arbre-tournois">
+                <Link to="/dashboard/tournois/lolpro/arbre-tournois">
                   <Icon type="share-alt" />
                   <span>Arbre</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-2-2">
-                <Link to="/tournois/lolpro/teams">
+                <Link to="/dashboard/tournois/lolpro/teams">
                   <Icon type="team" />
                   <span>Équipes</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-2-3">
-                <Link to="/tournois/lolpro/rules">
+                <Link to="/dashboard/tournois/lolpro/rules">
                   <Icon type="profile" />
                   <span>Règlement</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-2-4">
-                <Link to="/tournois/lolpro/contact">
+                <Link to="/dashboard/tournois/lolpro/contact">
                   <Icon type="customer-service" />
                   <span>Contact</span>
                 </Link>
@@ -106,25 +106,25 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-3-1">
-                <Link to="/tournois/lolamateur/arbre-tournois">
+                <Link to="/dashboard/tournois/lolamateur/arbre-tournois">
                   <Icon type="share-alt" />
                   <span>Arbre</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-3-2">
-                <Link to="/tournois/lolamateur/teams">
+                <Link to="/dashboard/tournois/lolamateur/teams">
                   <Icon type="team" />
                   <span>Équipes</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-3-3">
-                <Link to="/tournois/lolamateur/rules">
+                <Link to="/dashboard/tournois/lolamateur/rules">
                   <Icon type="profile" />
                   <span>Règlement</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-3-4">
-                <Link to="/tournois/lolamateur/contact">
+                <Link to="/dashboard/tournois/lolamateur/contact">
                   <Icon type="customer-service" />
                   <span>Contact</span>
                 </Link>
@@ -139,25 +139,25 @@ class LeftBar extends React.Component {
                 </span>
               }>
               <Menu.Item key="3-4-1">
-                <Link to="/tournois/hearthstone/arbre-tournois">
+                <Link to="/dashboard/tournois/hearthstone/arbre-tournois">
                   <Icon type="share-alt" />
                   <span>Arbre</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-4-2">
-                <Link to="/tournois/hearthstone/decks">
+                <Link to="/dashboard/tournois/hearthstone/decks">
                   <Icon type="inbox" />
                   <span>Decks</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-4-3">
-                <Link to="/tournois/hearthstone/rules">
+                <Link to="/dashboard/tournois/hearthstone/rules">
                   <Icon type="profile" />
                   <span>Règlement</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3-4-4">
-                <Link to="/tournois/hearthstone/contact">
+                <Link to="/dashboard/tournois/hearthstone/contact">
                   <Icon type="customer-service" />
                   <span>Contact</span>
                 </Link>
