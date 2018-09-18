@@ -1,0 +1,43 @@
+.a-informations h2, .a-informations p {
+  margin: 0;
+  text-align: center;
+}
+
+.a-informations h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.a-informations p {
+  text-align: justify;
+  margin: 24px 0;
+}
+
+.a-informations span {
+  text-align: justify;
+  margin: 24px 0;
+  color: #14d9fa;
+}
+
+.a-informations__table {
+  margin-top: 24px;
+}
+
+.a-informations__table__row {
+  margin-top: 3px;
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.4rem;
+}
+
+.a-informations__table__row__cell:first-child {
+  font-weight: bold;
+  min-width: 100px;
+  color:#ffffff;
+}
+
+@media (min-width: 768px) {
+  .a-informations h2 {
+    font-size: 28px;
+  }
+}

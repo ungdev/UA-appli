@@ -1,0 +1,20 @@
+.a-button {
+  border: 0;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 4px 32px;
+  text-transform: uppercase;
+  font-family: 'ua2018-font', Impact, sans-serif;
+  letter-spacing: .5px;
+}
+
+.a-button:focus {
+  outline: 0;
+}
+
+.a-button.raised {
+  color: #202020;
+  background-color: #14d9fa;
+}

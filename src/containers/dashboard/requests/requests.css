@@ -1,0 +1,30 @@
+.a-request {
+  display: flex;
+  padding: 16px 0;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.a-request:first-of-type {
+  padding-top: 0;
+}
+
+.a-request:last-of-type {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.a-request__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.a-request__content > em {
+  padding-right: 5%;
+}
+
+.a-request__cancel {
+  color: #e74c3c;
+  cursor: pointer;
+}
