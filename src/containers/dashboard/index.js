@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router'
 import { connect } from 'react-redux'
 import { Layout } from 'antd'
+import './dashboard.css'
 
 
 import LeftBar from './components/LeftBar'
@@ -17,20 +18,17 @@ const baseUrl = process.env.REACT_APP_BASEURL
 const { Header, Content, Sider } = Layout
 
 class Dashboard extends Component {
-  constructor() {
-    super()
-
+  constructor(props) {
+    super(props)
     this.state = {
-      render: false
+      collapsed: false,
+      path: this.props.match.path,
+      pathname: this.props.location.pathname
     }
   }
 
-  componentWillMount() {
-    this.props.autoLogin().then(() => {
-      this.setState({
-        render: this.props.user && this.props.user.name
-      })
-    })
+  onCollapse = collapsed => {
+    this.setState({ collapsed });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,6 +36,10 @@ class Dashboard extends Component {
       path: nextProps.match.path,
       pathname: nextProps.location.pathname
     })
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps !== this.props || nextState !== this.state ? true : false
   }
 
   render() {

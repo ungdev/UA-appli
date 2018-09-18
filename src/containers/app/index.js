@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { Notifs as Notifications } from 'redux-notifications'
 import Home from '../home'
 import asyncComponent from '../../components/async'
+import 'antd/dist/antd.css';
 
 const AsyncPizza = asyncComponent(() => import('../../components/pizza'))
 const Dashboard = asyncComponent(() => import('../dashboard'))

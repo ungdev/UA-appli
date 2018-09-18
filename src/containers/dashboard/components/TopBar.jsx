@@ -22,7 +22,7 @@ export default class TopBar extends React.Component {
         >
           <Menu.Item key="1">
             <div>
-              <Icon type='user' /> User
+              <Icon type='logout' /> Se déconnecter
           </div>
           </Menu.Item>
 

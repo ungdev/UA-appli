@@ -1,54 +1,45 @@
-.a-dashboard {
-  min-height: calc(100vh - 70px);
-  padding: 20px;
-  background-image: url('../../assets/background.jpg');
-  background-size: 100% 100%;
-}
-
-.a-dashboard > h1 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
-}
-
-.a-dashboard > h2 {
-  margin-top: 0;
-  margin-bottom: 40px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
-}
-
-.a-dashboard-page {
-  max-width: 400px;
+/* .logo {
+  height: 80px;
   margin: 0 auto;
-  background-color: #fff;
-  border-radius: 3px;
-  box-shadow: 0 3px 6px rgba(0,0,0,.24);
-  padding: 20px;
+} */
+
+.tabTitle {
+}
+
+.tabTitleName {
+  font-size: small;
+}
+.tabTitleHero {
+  font-size: smaller;
+}
+
+.cardTab {
+  weight: 60%;
+}
+
+.flex-card {
   display: flex;
-  flex-direction: column;
+}
+.flex-card-left {
+  padding: 10px;
+  flex-basis: 300px;
 }
 
-.a-dashboard-page > h2 {
-  margin-top: 0;
-  color: #000;
-  text-transform: uppercase;
-  text-align: center;
+.flex-card-right {
+  padding: 10px;
+  flex-basis: 500px;
 }
-
-@media (min-width: 768px) {
-  .a-dashboard {
-    min-height: calc(100vh - 200px);
-    padding: 40px;
-  }
+.cardName {
+  padding-top: 5px;
+  height: 36px;
+  font-size: 0.85em;
+  font-weight: 600;
+  border-width: 0.5px;
+  border-style: none none solid none;
 }
-
-@media (min-width: 996px) {
-  .a-dashboard-page {
-    max-width: 660px;
-    padding: 40px;
-  }
+.img-hs-Heroes {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 47%;
 }
