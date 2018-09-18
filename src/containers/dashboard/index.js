@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router'
 import { connect } from 'react-redux'
+import { Layout } from 'antd'
 
-import Accueil from './components/Accueil';
+
+import LeftBar from './components/LeftBar'
+import Accueil from './components/Accueil'
+import CustomBreadcrumb from './components/CustomBreadcrumb'
+import TopBar from './components/TopBar'
 
 import { autoLogin } from '../../modules/login'
 
 import './dashboard.css'
 
 const baseUrl = process.env.REACT_APP_BASEURL
+const { Header, Content, Sider } = Layout
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
   constructor() {
     super()
 
@@ -27,8 +33,16 @@ class Dashboard extends React.Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      path: nextProps.match.path,
+      pathname: nextProps.location.pathname
+    })
+  }
+
   render() {
-    component = <Accueil />
+    let component = <Accueil />
+    const path = this.state.pathname
     return (
       <div className="App">
         <Layout style={{ minHeight: '100vh' }}>
