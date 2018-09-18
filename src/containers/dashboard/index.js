@@ -17,8 +17,6 @@ import { autoLogin } from '../../modules/login'
 
 import './dashboard.css'
 
-const baseUrl = process.env.REACT_APP_BASEURL
-
 class Dashboard extends Component {
   constructor(props) {
     super(props)
@@ -45,29 +43,16 @@ class Dashboard extends Component {
   }
 
   render() {
-    console.log(this.state.pathname)
-    let component = '';
-    switch (this.state.path) {
-      case '/dashboard':
-        component = <Accueil />;
-        break;
-      case '/dashboard/tournois/hearthstone/decks':
-        component = <HsDecks />;
-        break;
-      case '/dashboard/tournois/:game/arbre-tournois':
-        component = <Tournament />;
-        break;
-      case '/dashboard/tournois/:game/teams':
-        component = <Teams />;
-        break;
-      case '/dashboard/tournois/:game/rules':
-        component = <Rules />;
-        break;
-      case '/dashboard/tournois/:game/contact':
-        component = <Contact />;
-      default:
-        break;
+    let component = ''
+    let tab = this.props.location.split('/')
+    if(tab[1] === 'dashboard' && tab.length === 2) component = <Accueil />
+    if(tab[1] === 'dashboard' && tab.length === 5 && tab[2] === 'tournois') {
+      if(tab[4] === 'teams') component = <Teams tournament={tab[3]} />
+      if(tab[4] === 'arbre-tournois') component = <Tournament tournament={tab[3]} />
+      if(tab[4] === 'rules') component = <Rules tournament={tab[3]} />
+      if(tab[4] === 'contact') component = <Contact tournament={tab[3]} />
     }
+     //   component = <HsDecks />
     return (
       <DashboardLayout
         collapsed={this.state.collapsed}
