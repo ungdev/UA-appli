@@ -24,17 +24,20 @@ export default (state = initialState, action) => {
 export const fetchSpotlights = () => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
+    const oldSpotlights = getState().spotlights
+    console.log('oldSpotlights', oldSpotlights)
 
     if (!authToken || authToken.length === 0) {
       return
     }
 
     const spotlights = await axios.get('spotlights', { headers: { 'X-Token': authToken } })
-
-    dispatch({
-      type: SET_SPOTLIGHTS,
-      payload: spotlights.data
-    })
+    if(oldSpotlights.length !== spotlights.length){
+      dispatch({
+        type: SET_SPOTLIGHTS,
+        payload: spotlights.data
+      })
+    }
   }
 }
 
