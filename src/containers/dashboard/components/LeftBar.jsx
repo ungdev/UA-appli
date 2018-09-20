@@ -12,14 +12,16 @@ class LeftBar extends React.Component {
     this.state = {
       selectedKeys: {}
     }
+    this.props.fetchSpotlights()
   }
 
   render() {
     this.props.fetchSpotlights()
     console.log('spotlights', this.props.spotlights)
     let component = ''
-    if(this.props.spotlights){
-      component = this.props.spotlights.map((spotlight) => 
+    let { spotlights } = this.props 
+    if(spotlights){
+      component = spotlights.map((spotlight) => 
         (<SubMenu
             key={`3-${spotlight.id}`}
             title={
@@ -64,7 +66,7 @@ class LeftBar extends React.Component {
             </Menu.Item>
           </SubMenu>)
       )
-    }
+    } else spotlights = []
     
     return (<div>
       <Menu theme="dark" mode="inline">
@@ -82,22 +84,24 @@ class LeftBar extends React.Component {
               <Icon type="trophy" />
               <span>Les tournois</span>
             </span>
-          }>
+          }
+          onClick={this.props.fetchSpotlights}
+          >
           {component}
           <SubMenu
-            key={`3-${this.props.spotlights.length + 1}`}
+            key={`3-${spotlights.length + 1}`}
             title={
               <span>
                 <Icon type="team" />
                 <span>Libre</span>
               </span>
             }>
-            <Menu.Item key={`3-${this.props.spotlights.length + 1}`}>
+            <Menu.Item key={`3-${spotlights.length + 1}`}>
               <Icon type="calendar" />
               <span>Planning prev</span>
             </Menu.Item>
-            <Menu.Item key={`3-${this.props.spotlights.length + 1}-2`}>Proposer un tournois</Menu.Item>
-            <Menu.Item key={`3-${this.props.spotlights.length + 1}-3`}>
+            <Menu.Item key={`3-${spotlights.length + 1}-2`}>Proposer un tournois</Menu.Item>
+            <Menu.Item key={`3-${spotlights.length + 1}-3`}>
               <Icon type="customer-service" />
               <span>Contact</span>
             </Menu.Item>

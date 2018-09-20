@@ -38,6 +38,14 @@ class Dashboard extends Component {
     })
   }
 
+  componentWillMount() {
+    this.props.autoLogin().then(() => {
+      this.setState({
+        render: this.props.user && this.props.user.name
+      })
+    })
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps !== this.props || nextState !== this.state ? true : false
   }

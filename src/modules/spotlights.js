@@ -1,8 +1,4 @@
 import axios from '../lib/axios'
-import errorToString from '../lib/errorToString'
-import { fetchUser } from './user';
-import { actions as notifActions } from 'redux-notifications'
-import { push } from 'react-router-redux'
 
 export const SET_SPOTLIGHTS = 'spotlights/SET_SPOTLIGHTS'
 
@@ -22,12 +18,14 @@ export default (state = initialState, action) => {
 }
 
 export const fetchSpotlights = () => {
+  console.log('fetchspotlights')
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     const oldSpotlights = getState().spotlights
     console.log('oldSpotlights', oldSpotlights)
 
     if (!authToken || authToken.length === 0) {
+      console.log('no token', authToken, getState())
       return
     }
 
