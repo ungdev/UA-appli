@@ -1,10 +1,12 @@
 import React from 'react'
-import Logo_UA from '../logo_ua_2018_hex.png';
-import { Layout, Menu, Icon } from 'antd';
-const { Header, Content, Sider } = Layout;
+import Logo_UA from '../logo_ua_2018_hex.png'
+import { connect } from 'react-redux'
+import { Layout, Menu, Icon } from 'antd'
+import { logout } from '../../../modules/login'
+const { Header, Content, Sider } = Layout
 
 
-export default class TopBar extends React.Component {
+class TopBar extends React.Component {
 
   render() {
     const title = this.props.sidebar ? '' : <span style={{marginLeft: 15}}>UTT Arena</span>
@@ -20,14 +22,27 @@ export default class TopBar extends React.Component {
           defaultSelectedKeys={['2']}
           style={{ lineHeight: '64px', float: 'right' }}
         >
-          <Menu.Item key="1">
+          <Menu.Item key="1" onClick={this.props.disconnect}>
             <div>
               <Icon type='logout' /> Se déconnecter
           </div>
           </Menu.Item>
 
         </Menu>
-      </Header >
+      </Header>
     )
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  disconnect: () => {
+    console.log('disconnect')
+    dispatch(logout())
+  }
+})
+
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TopBar)

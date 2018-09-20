@@ -41,27 +41,3 @@ export const fetchSpotlights = () => {
   }
 }
 
-export const joinSolo = spotlight => {
-  return async (dispatch, getState) => {
-    const authToken = getState().login.token
-
-    if (!authToken || authToken.length === 0) {
-      return
-    }
-
-    try {
-      await axios.post(`/spotlight/${spotlight}/join`, { }, { headers: { 'X-Token': authToken } })
-
-      await dispatch(fetchUser())
-      dispatch(push('/dashboard'))
-    } catch (err) {
-      dispatch(
-        notifActions.notifSend({
-          message: errorToString(err.response.data.error),
-          kind: 'danger',
-          dismissAfter: 2000
-        })
-      )
-    }
-  }
-}

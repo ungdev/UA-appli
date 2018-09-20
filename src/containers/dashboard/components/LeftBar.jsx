@@ -17,51 +17,55 @@ class LeftBar extends React.Component {
   render() {
     this.props.fetchSpotlights()
     console.log('spotlights', this.props.spotlights)
-    let component = this.props.spotlights.map((spotlight) => 
-       (<SubMenu
-          key={`3-${spotlight.id}`}
-          title={
-            <span>
-              <Icon type="team" />
-              <span>{spotlight.shortName}</span>
-            </span>
-          }
-        >
-          <Menu.Item key={`3-${spotlight.id}-1`}>
-            <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
-              <Icon type="share-alt" />
-              <span>Arbre</span>
-            </Link>
-          </Menu.Item>
-          {
-            spotlight.perTeam > 1 ? 
-            (<Menu.Item key={`3-${spotlight.id}-2`}>
-              <Link to={`/dashboard/tournois/${spotlight.id}/teams`}>
+    let component = ''
+    if(this.props.spotlights){
+      component = this.props.spotlights.map((spotlight) => 
+        (<SubMenu
+            key={`3-${spotlight.id}`}
+            title={
+              <span>
                 <Icon type="team" />
-                <span>Équipes</span>
+                <span>{spotlight.shortName}</span>
+              </span>
+            }
+          >
+            <Menu.Item key={`3-${spotlight.id}-1`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
+                <Icon type="share-alt" />
+                <span>Arbre</span>
               </Link>
-            </Menu.Item>) : (spotlight.shortName === 'HS' ?
-            (<Menu.Item key={`3-${spotlight.id}-2`}>
-            <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
-              <Icon type="inbox" />
-              <span>Decks</span>
-            </Link>
-          </Menu.Item>) : '')
-          }
-          <Menu.Item key={`3-${spotlight.id}-3`}>
-            <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
-              <Icon type="profile" />
-              <span>Règlement</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key={`3-${spotlight.id}-4`}>
-            <Link to={`/dashboard/tournois/${spotlight.id}/contact`}>
-              <Icon type="customer-service" />
-              <span>Contact</span>
-            </Link>
-          </Menu.Item>
-        </SubMenu>)
-    )
+            </Menu.Item>
+            {
+              spotlight.perTeam > 1 ? 
+              (<Menu.Item key={`3-${spotlight.id}-2`}>
+                <Link to={`/dashboard/tournois/${spotlight.id}/teams`}>
+                  <Icon type="team" />
+                  <span>Équipes</span>
+                </Link>
+              </Menu.Item>) : (spotlight.shortName === 'HS' ?
+              (<Menu.Item key={`3-${spotlight.id}-2`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
+                <Icon type="inbox" />
+                <span>Decks</span>
+              </Link>
+            </Menu.Item>) : '')
+            }
+            <Menu.Item key={`3-${spotlight.id}-3`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
+                <Icon type="profile" />
+                <span>Règlement</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key={`3-${spotlight.id}-4`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/contact`}>
+                <Icon type="customer-service" />
+                <span>Contact</span>
+              </Link>
+            </Menu.Item>
+          </SubMenu>)
+      )
+    }
+    
     return (<div>
       <Menu theme="dark" mode="inline">
         <Menu.Item key="1" style={{ marginTop: 0 }}>
