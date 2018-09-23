@@ -2,8 +2,6 @@ import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
 import { actions as notifActions } from 'redux-notifications'
 import { logout, SET_TOKEN } from './login'
-import { SET_TEAMS } from './teams'
-import { SET_SPOTLIGHTS } from './spotlights'
 
 export const SET_USER = 'user/SET_USER'
 export const SET_PRICES = 'user/SET_PRICES'
@@ -55,8 +53,6 @@ export const fetchUser = () => {
 
       dispatch({ type: SET_USER, payload: res.data.user })
       dispatch({ type: SET_TOKEN, payload: res.data.token })
-      dispatch({ type: SET_SPOTLIGHTS, payload: res.data.spotlights })
-      dispatch({ type: SET_TEAMS, payload: res.data.teams })
       dispatch({ type: SET_PRICES, payload: res.data.prices })
     } catch (err) {
       dispatch(logout())

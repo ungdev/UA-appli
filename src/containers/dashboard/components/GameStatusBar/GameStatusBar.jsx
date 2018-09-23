@@ -1,5 +1,6 @@
-import React from 'react';
-import { Card, Icon, Steps } from 'antd';
+import React from 'react'
+import { Card, Icon, Steps, Spin } from 'antd'
+import { connect } from 'react-redux'
 
 const Step = Steps.Step;
 
@@ -12,13 +13,15 @@ class TournamentStatusBar extends React.Component {
   }
 
   render() {
+    const spotlight = this.props.spotlights.find(s => s.id == this.props.game)
+    if(!spotlight) return <Spin/>
     return (
       <div>
-        <Card title={<h1>{this.props.game}</h1>}>
+        <Card title={<h1>{spotlight.name}</h1>}>
           <Steps current={this.state.etat}>
             <Step
               title="Non commencé"
-              description="Début du tournois le .. à .."
+              description="Début du tournois le 08/12 à 10h"
               icon={<Icon type="hourglass" />}
             />
             <Step
@@ -39,4 +42,8 @@ class TournamentStatusBar extends React.Component {
   }
 }
 
-export default TournamentStatusBar;
+const mapStateToProps = state => ({
+  spotlights: state.spotlights.spotlights
+})
+
+export default connect(mapStateToProps, null)(TournamentStatusBar)

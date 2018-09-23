@@ -16,10 +16,10 @@ class LeftBar extends React.Component {
   }
 
   render() {
-    this.props.fetchSpotlights()
-    console.log('spotlights', this.props.spotlights)
+    if(this.props.spotlights.length === 0)
+      this.props.fetchSpotlights()
     let component = ''
-    let { spotlights } = this.props 
+    let { spotlights } = this.props
     if(spotlights){
       component = spotlights.map((spotlight) => 
         (<SubMenu

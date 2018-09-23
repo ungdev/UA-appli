@@ -7,30 +7,33 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+  let spotlights
   switch (action.type) {
     case SET_SPOTLIGHTS:
-      return {
-        spotlights: action.payload
-      }
+      if (!action.payload) return state
+      if (!state.spotlights) state.spotlights = []
+      spotlights = state.spotlights.splice(0)
+      if (!spotlights) spotlights = []
+      action.payload.forEach((spotlight) => {
+        let found = spotlights.find(s => spotlight.id === s.id) // if we find a matching spotlight
+        if (!found) spotlights.push(spotlight) //we do not add it to the tab
+      })
+      return { spotlights: spotlights }
     default:
       return state
   }
 }
 
 export const fetchSpotlights = () => {
-  console.log('fetchspotlights')
   return async (dispatch, getState) => {
     const authToken = getState().login.token
-    const oldSpotlights = getState().spotlights
-    console.log('oldSpotlights', oldSpotlights)
+    const oldSpotlights = getState().spotlights.spotlights
 
-    if (!authToken || authToken.length === 0) {
-      console.log('no token', authToken, getState())
-      return
-    }
+    if (!authToken || authToken.length === 0) return
 
     const spotlights = await axios.get('spotlights', { headers: { 'X-Token': authToken } })
-    if(oldSpotlights.length !== spotlights.length){
+
+    if(oldSpotlights.length !== spotlights.data.length){
       dispatch({
         type: SET_SPOTLIGHTS,
         payload: spotlights.data
@@ -38,4 +41,3 @@ export const fetchSpotlights = () => {
     }
   }
 }
-
