@@ -18,36 +18,26 @@ class Tournament extends React.Component {
   }
 
   render() {
-    let gameId = '';
-    let toornamentToDisplay = '';
-    games.forEach(game => {
-      if (game.id === this.state.game) {
-        gameId = game.id;
-      }
-    });
-    switch (gameId) {
-      case 'lolamateur':
-        toornamentToDisplay =
-          'Arbre de tournoi pour League of Legends (catégorie amateur)';
+    let toornamentToDisplay = ''
+    switch (this.props.tournament) {
+      case '1':
+        toornamentToDisplay = 'lol pro'
         break;
-      case 'lolpro':
-        toornamentToDisplay =
-          'Arbre de tournoi pour League of Legends (catégorie pro)';
+      case '6':
+        toornamentToDisplay = 'lol amateur'
         break;
-      case 'csgo':
-        toornamentToDisplay = 'Arbre de tournoi pour Overwatch';
+      case '5':
+        toornamentToDisplay = 'csgo'
         break;
-      case 'hearthstone':
-        toornamentToDisplay = 'Arbre de tournoi pour CS:GO';
+      case '2':
+        toornamentToDisplay = 'hs'
         break;
       default:
-        toornamentToDisplay =
-          'Ce jeu ne fait pas partie de la liste des tournois';
+        toornamentToDisplay = 'Ce jeu ne fait pas partie de la liste des tournois';
     }
-    console.log(toornamentToDisplay);
     return (
       <div>
-        <GameStatusBar game={this.state.game} />
+        <GameStatusBar game={this.props.tournament} />
         <Divider />
         {toornamentToDisplay}
       </div>
