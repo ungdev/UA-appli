@@ -13,10 +13,7 @@ const DashboardLayout = props => {
       <Layout style={{ minHeight: '100vh' }}>
         <TopBar sidebar={props.collapsed} />
         <Layout>
-          <Sider
-            collapsible
-            collapsed={props.collapsed}
-            onCollapse={props.onCollapse}>
+          <Sider>
             <LeftBar />
           </Sider>
           <Layout>

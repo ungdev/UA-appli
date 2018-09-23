@@ -1,20 +1,12 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { Divider } from 'antd';
-import games from '../games.json';
+import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { Divider } from 'antd'
 
-import GameStatusBar from './GameStatusBar/GameStatusBar';
+import GameStatusBar from './GameStatusBar/GameStatusBar'
 
 class Tournament extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      game: this.props.match.params.game
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ game: nextProps.match.params.game });
+    super(props)
   }
 
   render() {

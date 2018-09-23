@@ -21,14 +21,9 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      collapsed: false,
       path: this.props.match.path,
       pathname: this.props.location.pathname
     }
-  }
-
-  onCollapse = collapsed => {
-    this.setState({ collapsed });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,8 +58,6 @@ class Dashboard extends Component {
      //   component = <HsDecks />
     return (
       <DashboardLayout
-        collapsed={this.state.collapsed}
-        onCollapse={this.onCollapse}
         path={this.state.pathname}
         component={component}
       />

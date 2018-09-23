@@ -10,16 +10,43 @@ class LeftBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedKeys: {}
+      current: '1'
     }
     this.props.fetchSpotlights()
+    let { location } = this.props
+    let tab = location.split('/')
+    if(tab.length >= 2 && tab[2] == 'tournois'){
+      if(tab.length >= 4) {
+        if(tab[4] == 'arbre-tournois')
+          this.state = { current: `3-${tab[3]}-1` }
+        if(tab[4] == 'teams')
+          this.state = { current: `3-${tab[3]}-2` }
+        if(tab[4] == 'rules')
+          this.state = { current: `3-${tab[3]}-3` }
+        if(tab[4] == 'contact')
+          this.state = { current: `3-${tab[3]}-4` }
+      }
+    }
+  }
+
+  handleClick = (e) => {
+    console.log(e.key)
+    this.setState({ current: e.key })
   }
 
   render() {
     if(this.props.spotlights.length === 0)
       this.props.fetchSpotlights()
     let component = ''
-    let { spotlights } = this.props
+    let { spotlights, location } = this.props
+    let tab = location.split('/')
+    let openKeys = []
+    if(tab.length >= 2 && tab[2] == 'tournois'){
+      openKeys.push('3')
+      if(tab.length >= 3){
+        openKeys.push(`3-${tab[3]}`)
+      }
+    }
     if(spotlights){
       component = spotlights.map((spotlight) => 
         (<SubMenu
@@ -31,7 +58,7 @@ class LeftBar extends React.Component {
               </span>
             }
           >
-            <Menu.Item key={`3-${spotlight.id}-1`}>
+            <Menu.Item key={`3-${spotlight.id}-1`} selected>
               <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
                 <Icon type="share-alt" />
                 <span>Arbre</span>
@@ -68,8 +95,15 @@ class LeftBar extends React.Component {
       )
     } else spotlights = []
     
-    return (<div>
-      <Menu theme="dark" mode="inline">
+    return (
+      <Menu
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={[this.state.current]}
+        defaultOpenKeys={openKeys}
+        selectedKeys={[this.state.current]}
+        onClick={this.handleClick}
+      >
         <Menu.Item key="1" style={{ marginTop: 0 }}>
           <Link to="/dashboard">
             <Icon type="home" />
@@ -172,11 +206,12 @@ class LeftBar extends React.Component {
           <span>Mentions légales</span>
         </Menu.Item>
       </Menu>
-    </div>)
+    )
   }
 }
 
 const mapStateToProps = state => ({
+  location: state.routing.location.pathname,
   spotlights: state.spotlights.spotlights
 })
 

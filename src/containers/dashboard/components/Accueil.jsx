@@ -1,15 +1,15 @@
-import React from 'react';
-import NotPrepared from '../notprepared.jpg';
+import React from 'react'
+import NotPrepared from '../assets/notprepared.jpg'
 
 class Accueil extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{ height: '100%'}}>
         <h1>Accueil</h1>
-        <img src={NotPrepared} alt='not prepared' />
+        <div style={{ textAlign: 'center', height: '100%' }}><img src={NotPrepared} alt='not prepared' /></div>
       </div>
     );
   }
 }
 
-export default Accueil;
+export default Accueil
