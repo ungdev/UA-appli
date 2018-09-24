@@ -9,6 +9,7 @@ import payment from './payment'
 import teams from './teams'
 import spotlights from './spotlights'
 import forgot from './forgot'
+import contact from './contact'
 
 export default combineReducers({
   routing: routerReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   payment,
   teams,
   spotlights,
-  forgot
+  forgot,
+  contact
 })

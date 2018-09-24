@@ -8,9 +8,6 @@ import RulesHS from './RulesHS'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 
 class Rules extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     let rulesToDisplay = ''

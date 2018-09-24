@@ -9,24 +9,29 @@ const SubMenu = Menu.SubMenu;
 class LeftBar extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      current: '1'
-    }
+    let current = '1'
+    let openKeys = []
     this.props.fetchSpotlights()
     let { location } = this.props
     let tab = location.split('/')
     if(tab.length >= 2 && tab[2] == 'tournois'){
-      if(tab.length >= 4) {
-        if(tab[4] == 'arbre-tournois')
-          this.state = { current: `3-${tab[3]}-1` }
-        if(tab[4] == 'teams')
-          this.state = { current: `3-${tab[3]}-2` }
-        if(tab[4] == 'rules')
-          this.state = { current: `3-${tab[3]}-3` }
-        if(tab[4] == 'contact')
-          this.state = { current: `3-${tab[3]}-4` }
+      openKeys.push('3')
+      if(tab.length >= 3){
+        openKeys.push(`3-${tab[3]}`)
+        if(tab.length >= 4) {
+          if(tab[4] == 'arbre-tournois')
+          current = `3-${tab[3]}-1`
+          if(tab[4] == 'teams')
+            current = `3-${tab[3]}-2`
+          if(tab[4] == 'rules')
+            current = `3-${tab[3]}-3`
+          if(tab[4] == 'contact')
+            current = `3-${tab[3]}-4`
+        }
       }
     }
+
+    this.state = { current, openKeys }
   }
 
   handleClick = (e) => {
@@ -38,15 +43,7 @@ class LeftBar extends React.Component {
     if(this.props.spotlights.length === 0)
       this.props.fetchSpotlights()
     let component = ''
-    let { spotlights, location } = this.props
-    let tab = location.split('/')
-    let openKeys = []
-    if(tab.length >= 2 && tab[2] == 'tournois'){
-      openKeys.push('3')
-      if(tab.length >= 3){
-        openKeys.push(`3-${tab[3]}`)
-      }
-    }
+    let { spotlights } = this.props
     if(spotlights){
       component = spotlights.map((spotlight) => 
         (<SubMenu
@@ -100,7 +97,7 @@ class LeftBar extends React.Component {
         theme="dark"
         mode="inline"
         defaultSelectedKeys={[this.state.current]}
-        defaultOpenKeys={openKeys}
+        defaultOpenKeys={this.state.openKeys}
         selectedKeys={[this.state.current]}
         onClick={this.handleClick}
       >

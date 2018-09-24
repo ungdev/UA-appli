@@ -1,53 +1,64 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import games from '../../games.json';
-import GameStatusBar from '../GameStatusBar/GameStatusBar';
-import { Divider } from 'antd';
+import React from 'react'
+import GameStatusBar from '../GameStatusBar/GameStatusBar'
+import { Divider, Input, Button, Spin } from 'antd'
+import { connect } from 'react-redux'
+import { sendMessageToSlack } from '../../../../modules/contact'
+import moment from 'moment'
+
+const { TextArea } = Input
 
 class Contact extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      game: this.props.match.params.game
-    };
+      value: '',
+      maxCaracters: 1000
+    }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ game: nextProps.match.params.game });
+  sendMessage = () => {
+    this.props.sendMessageToSlack(this.state.value, this.props.tournament)
+    this.setState({ value: '' })
+  }
+  onChange = (e) => {
+    let message = e.target.value
+    if(message.length > this.state.maxCaracters)
+      message = message.substring(0, this.state.maxCaracters)
+    this.setState({ value: message })
   }
 
   render() {
-    let gameId = '';
-    let contactToDisplay = '';
-    games.forEach(game => {
-      if (game.id === this.state.game) {
-        gameId = game.id;
-      }
-    });
-    switch (gameId) {
-      case 'lolamateur':
-        contactToDisplay = 'Contact Lol';
-        break;
-      case 'lolpro':
-        contactToDisplay = 'Contact Lol Pro';
-        break;
-      case 'csgo':
-        contactToDisplay = 'Contact CSGO';
-        break;
-      case 'hearthstone':
-        contactToDisplay = 'Contact HS';
-        break;
-      default:
-    }
-    console.log(contactToDisplay);
+    const { maxCaracters } = this.state
+    const spotlight = this.props.spotlights.find(s => s.id == this.props.tournament)
+    if(!spotlight) return <Spin/>
+    let contactToDisplay = `Envoyer un message en rapport avec le tournoi ${spotlight.name}`
     return (
       <div>
-        <GameStatusBar game={this.state.game} />
+        <GameStatusBar game={this.props.tournament} />
         <Divider />
         {contactToDisplay}
+        <TextArea
+          rows={6}
+          onChange={this.onChange}
+          placeholder="Votre message pour l'équipe ici"
+          style={{ marginTop: '10px', marginBottom: '10px' }}
+          value={this.state.value}
+        />
+        <div style={{ display: 'flex', justifyContent: 'space-between' }} >
+          <Button type="primary" onClick={this.sendMessage}>Envoyer</Button>
+          <span style={this.state.value.length > maxCaracters - 50 ? { color: '#ff0000'} : {}} >{maxCaracters - this.state.value.length} caractères restants</span>
+        </div>
       </div>
-    );
+    )
   }
 }
 
-export default withRouter(Contact);
+const mapStateToProps = state => ({
+  spotlights: state.spotlights.spotlights
+})
+
+const mapDispatchToProps = dispatch => ({
+  sendMessageToSlack: (message, sendingLocation) => dispatch(sendMessageToSlack(message, sendingLocation))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contact)
