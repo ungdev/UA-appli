@@ -27,6 +27,8 @@ class LeftBar extends React.Component {
             current = `3-${tab[3]}-3`
           if(tab[4] == 'contact')
             current = `3-${tab[3]}-4`
+          if(tab[4] == 'decks')
+          current = `3-${tab[3]}-2`
         }
       }
     }

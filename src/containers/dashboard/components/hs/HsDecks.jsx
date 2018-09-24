@@ -59,7 +59,7 @@ class HsDecks extends React.Component {
     const { dataSource } = this.state;
     return (
       <div>
-        <GameStatusBar game="hearthstone" />
+        <GameStatusBar game="2" />
         <Divider />
         <h1>Decks Hearthstone</h1>
         <p>Rechercher un deck par nom de joueur</p>

@@ -16,7 +16,7 @@ const Spotlights = () => (
       <span>- Hearthstone :</span> 32 slots (en solo)<br />
       <span>- CS:GO :</span> 8 slots (équipes de 5)<br />
       <span>- League of Legends :</span> 8 slots Pro et 24 slots Amateurs (équipes de 5)<br />
-      <span>- SMBU :</span> 64 slots (en solo)<br />
+      <span>- SSBU :</span> 64 slots (en solo)<br />
       <span>- ??? :</span> Annonce prochainement<br />
     </p>
   </div>

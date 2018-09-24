@@ -54,6 +54,7 @@ class Dashboard extends Component {
       if(tab[4] === 'arbre-tournois') component = <Tournament tournament={tab[3]} />
       if(tab[4] === 'rules') component = <Rules tournament={tab[3]} />
       if(tab[4] === 'contact') component = <Contact tournament={tab[3]} />
+      if(tab[4] === 'decks' && tab[3] == 2) component = <HsDecks />
     }
      //   component = <HsDecks />
     return (

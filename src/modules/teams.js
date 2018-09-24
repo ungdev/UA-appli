@@ -30,7 +30,7 @@ export const fetchTeams = () => {
 
     const req = await axios.get('teams', { headers: { 'X-Token': authToken } })
     console.log(req)
-    if(oldTeams.length !== req.data.length){
+    if(!oldTeams || oldTeams.length !== req.data.length){
       dispatch({
         type: SET_TEAMS,
         payload: req.data

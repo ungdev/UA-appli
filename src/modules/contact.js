@@ -51,7 +51,7 @@ export const sendMessageToSlack = (message, sendingLocation) => {
       const { user } = getState().user
       const { spotlights } = getState().spotlights
       const spotlight = spotlights.find(s => s.id == sendingLocation)
-      const data = `/!\\ Message en provenance de ${user.fullname} (${user.email}) depuis l'onglet contact de l'application pour le jeu ${spotlight.name} /!\\ `
+      const data = `/!\\ Message en provenance de ${user.firstname} ${user.lastname} (${user.email}) depuis l'onglet contact de l'application pour le jeu ${spotlight.name} /!\\ `
       await axios.post('slack', {message: data, toChannel: sendingLocation}, { headers: { 'X-Token': authToken } })
       await axios.post('slack', {message: `"${message}"`, toChannel: sendingLocation}, { headers: { 'X-Token': authToken } })
       dispatch(
