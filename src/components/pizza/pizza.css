@@ -1,0 +1,26 @@
+.a-pizza-modal {
+  display: none;
+}
+
+.a-pizza-modal[active=true] {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  z-index: 90;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 40px;
+}
+
+.a-pizza-modal > h2 {
+  color: #202020;
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+.a-pizza-modal > img {
+  max-width: 100%;
+}

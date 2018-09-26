@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="760px" height="677px" viewBox="0 0 760 677" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>pizza</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="pizza">
+            <g>
+                <path d="M338.5,677 C151.551612,677 0,525.448388 0,338.5 C0,151.551612 151.551612,0 338.5,0 C525.448388,0 677,151.551612 677,338.5 C677,525.448388 525.448388,677 338.5,677 Z M339,609 C488.116882,609 609,488.116882 609,339 C609,189.883118 488.116882,69 339,69 C189.883118,69 69,189.883118 69,339 C69,488.116882 189.883118,609 339,609 Z" id="bread" fill="#CA956E"></path>
+                <g id="bread-dots" transform="translate(67.000000, 42.000000)" fill="#AB7E5D">
+                    <circle id="Oval-2" cx="198" cy="13" r="13"></circle>
+                    <circle id="Oval-2" cx="418" cy="39" r="13"></circle>
+                    <circle id="Oval-2" cx="39" cy="122" r="13"></circle>
+                    <circle id="Oval-2" cx="13" cy="452" r="13"></circle>
+                    <circle id="Oval-2" cx="224" cy="566" r="13"></circle>
+                    <circle id="Oval-2" cx="466" cy="541" r="13"></circle>
+                    <circle id="Oval-2" cx="557" cy="374" r="13"></circle>
+                    <circle id="Oval-2" cx="531" cy="122" r="13"></circle>
+                </g>
+                <circle id="cheese" fill="#FFCF42" cx="339" cy="339" r="270"></circle>
+                <g id="pepperoni" transform="translate(119.000000, 103.000000)" fill="#F0004A">
+                    <circle id="Oval-3" cx="82.5" cy="99.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="44.5" cy="215.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="89.5" cy="352.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="216.5" cy="308.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="237.5" cy="425.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="374.5" cy="352.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="395.5" cy="231.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="193.5" cy="154.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="261.5" cy="44.5" r="44.5"></circle>
+                    <circle id="Oval-3" cx="361.5" cy="104.5" r="44.5"></circle>
+                </g>
+                <g id="pepperoni-dots" transform="translate(167.000000, 153.000000)" fill="#CC003F">
+                    <circle id="Oval-4" cx="11.5" cy="155.5" r="11.5"></circle>
+                    <circle id="Oval-4" cx="23.5" cy="301.5" r="11.5"></circle>
+                    <circle id="Oval-4" cx="173.5" cy="268.5" r="11.5"></circle>
+                    <circle id="Oval-4" cx="211.5" cy="11.5" r="11.5"></circle>
+                    <circle id="Oval-4" cx="340.5" cy="197.5" r="11.5"></circle>
+                    <circle id="Oval-4" cx="329.5" cy="290.5" r="11.5"></circle>
+                </g>
+                <path d="M69.3567077,352 C69.1198669,347.363258 69,342.695627 69,338 C69,188.883118 189.883118,68 339,68 C488.116882,68 609,188.883118 609,338 C609,342.695627 608.880133,347.363258 608.643292,352 C601.358893,209.389874 483.421259,96 339,96 C194.578741,96 76.6411065,209.389874 69.3567072,352.000011 Z" id="shadow" fill="#E9B93B"></path>
+            </g>
+            <polygon id="part-eaten" fill="#FFFFFF" points="339 338.624083 598 78 760 338.624083"></polygon>
+            <g id="part" transform="translate(379.000000, 19.000000)">
+                <path d="M239,38.540983 L274.760057,2.62408316 C284.093391,-4.0425835 295.327119,1.99359926 308.461241,20.7326315 C319.360005,36.2823775 336.458749,58.0878635 350.760057,89.6240832 C371.56199,135.495012 380.760057,178.537188 380.760057,211.624083 C380.760057,223.351271 378.760057,230.017938 374.760057,231.624083 L316.691768,231.624083 C315.818284,199.257009 306.529387,158.217989 286.760057,114.624083 C272.458749,83.0878635 255.360005,61.2823775 244.461241,45.7326315 C242.602778,43.0810798 240.782364,40.6838636 239,38.540983 Z" id="Combined-Shape" fill="#CA956E"></path>
+                <path d="M45,232 C47,230.666667 112,166 240,38 C254,48.6666667 271,77.6666667 291,125 C311,172.333333 319.666667,208 317,232 C133.666667,233.333333 43,233.333333 45,232 Z" id="cheese" fill="#FFCF42"></path>
+                <circle id="bread-dot" fill="#AB7E5D" cx="297" cy="56" r="13"></circle>
+                <path d="M142,136.351103 L204.506421,73 C212.844845,81.0878422 218.026823,92.4115324 218.026823,104.945538 C218.026823,129.52221 198.103495,149.445538 173.526823,149.445538 C161.207648,149.445538 150.057656,144.439675 142,136.351103 Z" id="pepperonni-half-2" fill="#F0004A"></path>
+                <path d="M169,232 C169.268034,207.653677 189.08746,188 213.497249,188 C237.907037,188 257.726464,207.653677 257.994498,232 L169,232 Z" id="pepperonni-half-1" fill="#F0004A"></path>
+                <g id="cheese-drop-1" transform="translate(116.000000, 232.000000)">
+                    <path d="M0,0 L0,43 C3.33333333,51 8.66666667,55 16,55 C23.3333333,55 28.6666667,51 32,43 L32,0 L0,0 Z" id="Path-5" fill="#FFCF42"></path>
+                    <polygon id="Path-6" fill-opacity="0.15" fill="#000000" points="0 0 0 16 32 16 32 0"></polygon>
+                </g>
+                <g id="cheese-drop-2" transform="translate(186.000000, 232.000000)">
+                    <path d="M0,0 L0,30 C3.33333333,38 8.66666667,42 16,42 C23.3333333,42 28.6666667,38 32,30 L32,0 L0,0 Z" id="Path-5" fill="#FFCF42"></path>
+                    <polygon id="Path-6" fill-opacity="0.15" fill="#000000" points="0 0 0 16 32 16 32 0"></polygon>
+                </g>
+                <polygon id="shadow" fill-opacity="0.14" fill="#000000" points="0 252 27 252 198 80 185 67"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

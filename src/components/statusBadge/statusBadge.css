@@ -1,0 +1,23 @@
+.a-status-badge {
+  display: inline-block;
+  padding: 16px 24px;
+  font-size: 18px;
+  border-radius: 55px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.24);
+  text-align: center;
+}
+
+.a-status-badge[theme=success] {
+  background-color: #2ecc71;
+  color: #222;
+}
+
+.a-status-badge[theme=warning] {
+  background-color: #f39c12;
+  color: #222;
+}
+
+.a-status-badge[theme=error] {
+  background-color: #e74c3c;
+  color: #fff;
+}

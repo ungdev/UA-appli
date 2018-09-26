@@ -1,0 +1,11 @@
+.a-list {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+}
+
+.a-list > .a-list-item:not(:last-child) {
+  margin-bottom: 12px;
+}

@@ -1,0 +1,25 @@
+.a-spotlights h2, .a-spotlights p {
+  margin: 0;
+  text-align: center;
+}
+
+.a-spotlights h2 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.a-spotlights p {
+  text-align: justify;
+  margin: 24px 0;
+}
+.a-spotlights span {
+  text-align: justify;
+  margin: 24px 0;
+  color: #14d9fa;
+  font-weight: bold;
+}
+
+.a-spotlights strong:nth-of-type(n+3) {
+  display: inline-block;
+  margin-left: 12px;
+}
