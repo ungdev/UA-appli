@@ -10,6 +10,7 @@ import teams from './teams'
 import spotlights from './spotlights'
 import forgot from './forgot'
 import contact from './contact'
+import infos from './infos'
 
 export default combineReducers({
   routing: routerReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   teams,
   spotlights,
   forgot,
-  contact
+  contact,
+  infos
 })

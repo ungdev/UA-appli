@@ -9,6 +9,7 @@ import HsDecks from './components/hs/HsDecks'
 import Tournament from './components/Tournament'
 import Teams from './components/Teams/Teams'
 import Rules from './components/Rules/Rules'
+import Info from './components/Info/Info'
 import Contact from './components/Contact/Contact'
 import DashboardLayout from './layout'
 
@@ -55,8 +56,8 @@ class Dashboard extends Component {
       if(tab[4] === 'rules') component = <Rules tournament={tab[3]} />
       if(tab[4] === 'contact') component = <Contact tournament={tab[3]} />
       if(tab[4] === 'decks' && tab[3] == 2) component = <HsDecks />
+      if(tab[4] === 'info') component = <Info tournament={tab[3]} />
     }
-     //   component = <HsDecks />
     return (
       <DashboardLayout
         path={this.state.pathname}

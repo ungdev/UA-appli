@@ -36,7 +36,7 @@ class TournamentStatusBar extends React.Component {
             />
           </Steps>
         </Card>
-        <Card>Dernière info :</Card>
+        {!this.props.noLastInfo ? <Card>Dernière info :</Card> : null}
       </div>
     );
   }
