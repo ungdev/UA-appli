@@ -8,9 +8,9 @@
 ## Installation
 
 ```
-git clone git@github.com:ungdev/arena.utt.fr-2018.git
+git clone git@github.com:ungdev/UA-App-2018.git
 # or
-git clone https://github.com/ungdev/arena.utt.fr-2018.git
+git clone https://github.com/ungdev/UA-App-2018.git
 
 cd arena.utt.fr-2018
 yarn
@@ -44,7 +44,7 @@ yarn lint   # prettier lint
 ## Structure
 
 ```
-arena.utt.fr-2018/
+UA-App-2018/
 ├── public/                       # public assets that will be served directly (should not be used for fonts, images nor css)
 ├── src/                          # base directory
 │   ├── assets/                      # assets (eg. fonts, images, css)
@@ -54,7 +54,7 @@ arena.utt.fr-2018/
 │   │   └── home/
 |   │      └── components/           # components used by this container only
 │   ├── modules/                     # store / actions / reducers
-│   │   └── user/
+│   │   └── user.js
 │   ├── index.css                    # common css
 │   ├── index.js                     # entry point
 │   ├── registerServiceWorker.js     # generated file for PWA
