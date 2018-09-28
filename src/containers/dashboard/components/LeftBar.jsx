@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Icon, Spin } from 'antd'
+import { Menu, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchSpotlights } from '../../../modules/spotlights'
@@ -14,22 +14,22 @@ class LeftBar extends React.Component {
     this.props.fetchSpotlights()
     let { location } = this.props
     let tab = location.split('/')
-    if(tab.length >= 2 && tab[2] == 'tournois'){
+    if(tab.length >= 2 && tab[2] === 'tournois'){
       openKeys.push('3')
       if(tab.length >= 3){
         openKeys.push(`3-${tab[3]}`)
         if(tab.length >= 4) {
-          if(tab[4] == 'arbre-tournois')
+          if(tab[4] === 'arbre-tournois')
           current = `3-${tab[3]}-1`
-          if(tab[4] == 'teams')
+          if(tab[4] === 'teams')
             current = `3-${tab[3]}-2`
-          if(tab[4] == 'rules')
+          if(tab[4] === 'rules')
             current = `3-${tab[3]}-3`
-          if(tab[4] == 'contact')
+          if(tab[4] === 'contact')
             current = `3-${tab[3]}-4`
-          if(tab[4] == 'decks')
+          if(tab[4] === 'decks')
             current = `3-${tab[3]}-2`
-          if(tab[4] == 'info')
+          if(tab[4] === 'info')
             current = `3-${tab[3]}-5`
         }
       }
@@ -72,7 +72,7 @@ class LeftBar extends React.Component {
                   <Icon type="team" />
                   <span>Équipes</span>
                 </Link>
-              </Menu.Item>) : (spotlight.shortName === 'HS' ?
+              </Menu.Item>) : (spotlight.name === 'Hearthstone' ?
               (<Menu.Item key={`3-${spotlight.id}-2`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
                 <Icon type="inbox" />

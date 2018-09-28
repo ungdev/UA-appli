@@ -3,7 +3,6 @@ import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { Divider, Input, Button, Spin } from 'antd'
 import { connect } from 'react-redux'
 import { sendMessageToSlack } from '../../../../modules/contact'
-import moment from 'moment'
 
 const { TextArea } = Input
 
@@ -29,7 +28,7 @@ class Contact extends React.Component {
 
   render() {
     const { maxCaracters } = this.state
-    const spotlight = this.props.spotlights.find(s => s.id == this.props.tournament)
+    const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
     if(!spotlight) return <Spin/>
     let contactToDisplay = `Envoyer un message en rapport avec le tournoi ${spotlight.name}`
     return (

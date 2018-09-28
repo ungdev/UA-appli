@@ -3,7 +3,7 @@ import Logo_UA from '../logo_ua_2018_hex.png'
 import { connect } from 'react-redux'
 import { Layout, Menu, Icon } from 'antd'
 import { logout } from '../../../modules/login'
-const { Header, Content, Sider } = Layout
+const { Header } = Layout
 
 
 class TopBar extends React.Component {

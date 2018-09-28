@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
       if (!state.infos) state.infos = []
 
       infos = state.infos.splice(0)
-      const index = infos.findIndex(i => i.id == action.payload)
+      const index = infos.findIndex(i => i.id === action.payload)
       infos.splice(index, 1)
       return { infos: infos }
     default:
@@ -59,7 +59,7 @@ export const sendMessage = (spotlight, title, content) => {
     if (!authToken || authToken.length === 0) return
     try {
       const res = await axios.post(`infos/${spotlight}`, { title, content }, { headers: { 'X-Token': authToken } })
-      if(res.status == 200) {
+      if(res.status === 200) {
         dispatch(
           notifActions.notifSend({
             message: 'Message envoyé avec succès',
@@ -89,7 +89,7 @@ export const deleteInfo = (id) => {
 
     try {
       const res = await axios.delete(`infos/${id}`, { headers: { 'X-Token': authToken } })
-      if(res.status == 200) {
+      if(res.status === 200) {
         dispatch(
           notifActions.notifSend({
             message: 'Message supprimé',

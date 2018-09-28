@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Avatar, Button, Skeleton, Divider, Icon, Input } from 'antd'
+import { List, Avatar, Button, Skeleton, Divider, Input } from 'antd'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { connect } from 'react-redux'
 import { fetchInfos, sendMessage, SET_INFOS_LOADING } from '../../../../modules/infos'
@@ -34,7 +34,7 @@ class Info extends React.Component {
   getDate = (time) => {
     let date = time.split('T')[0].split('-')
     let hour = time.split('T')[1].split(':')
-    return `Le ${date[2]}/${date[1]} à ${parseInt(hour[0]) + 1}:${hour[1]}`
+    return `Le ${date[2]}/${date[1]} à ${parseInt(hour[0], 10) + 1}:${hour[1]}`
   }
 
   onTitleChange = (e) => {
@@ -62,8 +62,8 @@ class Info extends React.Component {
     const { loading, tournament, user } = this.props
     let { infos } = this.props
     const { maxTextCaracters } = this.state
-    infos = infos.filter(info => info.spotlightId == tournament)
-    if(tournament != this.state.tournament) {
+    infos = infos.filter(info => `${info.spotlightId}` === tournament)
+    if(tournament !== this.state.tournament) {
       this.loadData(0, 5)
       this.setState({ tournament })
     }
@@ -73,7 +73,6 @@ class Info extends React.Component {
       </div>
     ) : null)
 
-    //const actions = user.isAdmin === 100 ? [<a onClick={} >edit</a>, <a onClick={} ><Icon type="delete"/></a>] : null
     return (
       <div>
         <GameStatusBar game={this.props.tournament} noLastInfo />

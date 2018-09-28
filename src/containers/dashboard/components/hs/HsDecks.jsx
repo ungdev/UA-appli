@@ -1,10 +1,9 @@
 import React from 'react';
-import { AutoComplete, Button, Collapse, Divider, Icon, Input } from 'antd';
+import { AutoComplete, Button, Collapse, Divider } from 'antd';
 import HsDecksUserUICard from './HsDecksUserUICard';
 import GameStatusBar from '../GameStatusBar/GameStatusBar';
 
-const Panel = Collapse.Panel;
-const ButtonGroup = Button.Group;
+const Panel = Collapse.Panel
 
 const db = [
   {
@@ -75,7 +74,7 @@ class HsDecks extends React.Component {
           }
           onSelect={value => {
             this.setState({
-              dataToShow: db.filter(user => user.username == value)
+              dataToShow: db.filter(user => user.username === value) // === à vérifier
             });
           }}
         />

@@ -15,8 +15,8 @@ class Teams extends React.Component {
   render() {
     let { teams } = this.props
     if (!teams) return <Spin/>
-    teams = teams.filter(team => team.spotlightId == this.props.tournament)
-    const spotlight = this.props.spotlights.find(s => s.id == this.props.tournament)
+    teams = teams.filter(team => `${team.spotlightId}` === this.props.tournament)
+    const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
     if(!spotlight) return <Spin/>
     const teamsToDisplay = `Equipes pour ${spotlight.name}`
     return (
@@ -33,7 +33,7 @@ class Teams extends React.Component {
                 renderItem={item => (
                   <List.Item>
                     <List.Item.Meta
-                      title={<div>{team.captainId == item.id ? <Icon type='star'/> : ''} {item.name}</div>}
+                      title={<div>{team.captainId === item.id ? <Icon type='star'/> : ''} {item.name}</div>}
                       description={item.role ? item.role : ''}
                     />
                   </List.Item>

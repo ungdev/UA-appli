@@ -16,7 +16,7 @@ class HsDecksUserUICard extends React.Component {
   }
 
   deckDecoder = hashs => {
-    const cardList = this.props.cardsJSON;
+    const cardList = this.props.cardsJSON
     return Object.values(hashs).map(hash => {
       let deck = decode(hash);
       deck.cards = deck.cards
@@ -24,19 +24,18 @@ class HsDecksUserUICard extends React.Component {
           return [
             card[0],
             card[1],
-            cardList.filter(v => v.dbfId == card[0])[0]
+            cardList.filter(v => v.dbfId === card[0])[0] // === à vérifier
           ];
         })
         .sort((a, b) => {
           return a[2].cost - b[2].cost;
         });
-      deck.heroes = cardList.filter(v => v.dbfId == deck.heroes)[0];
+      deck.heroes = cardList.filter(v => v.dbfId === deck.heroes)[0] // === à vérifier
       return deck;
     });
   };
 
   render() {
-    console.log(this.state.decks);
     return (
       <Card
         style={{

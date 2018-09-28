@@ -15,13 +15,13 @@ class Rules extends React.Component {
       case '1':
         rulesToDisplay = <RulesLOL />
         break;
-      case '6':
+      case '2':
         rulesToDisplay = <RulesLOL />
         break;
-      case '5':
+      case '4':
         rulesToDisplay = <RulesCSGO />
         break;
-      case '2':
+      case '5':
         rulesToDisplay = <RulesHS />
         break;
       default:

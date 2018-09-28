@@ -5,10 +5,6 @@ import { Divider } from 'antd'
 import GameStatusBar from './GameStatusBar/GameStatusBar'
 
 class Tournament extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     let toornamentToDisplay = ''
     switch (this.props.tournament) {
