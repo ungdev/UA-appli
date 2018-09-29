@@ -1,8 +1,9 @@
 import React from 'react'
-import { Input, Button, Icon, Table } from 'antd'
+import { Input, Icon, Table } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
+import UserListActions from './UserListActions'
 import { fetchUsers } from '../../../../modules/admin'
 
 
@@ -28,6 +29,7 @@ class UsersList extends React.Component {
   
   render() {
     let { users } = this.props
+    console.log(users)
     users = users.map(user => {
       let role = ''
       if(user.isAdmin === 100) role = '/Admin'
@@ -103,6 +105,11 @@ class UsersList extends React.Component {
           value: 'SSBU',
         }],
         onFilter: (value, record) => record.spotlight === value,
+      },{
+        title: 'Actions',
+        key: 'action',
+        dataIndex: 'id',
+        render: (id) => <UserListActions userId={id} users={this.props.users}/>
       },
     ]
     return (<React.Fragment>
