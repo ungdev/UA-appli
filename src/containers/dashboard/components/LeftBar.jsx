@@ -47,7 +47,7 @@ class LeftBar extends React.Component {
     if(this.props.spotlights.length === 0)
       this.props.fetchSpotlights()
     let component = ''
-    let { spotlights } = this.props
+    let { spotlights, user } = this.props
     if(spotlights){
       component = spotlights.map((spotlight) => 
         (<SubMenu
@@ -117,7 +117,24 @@ class LeftBar extends React.Component {
             <span>Accueil</span>
           </Link>
         </Menu.Item>
-
+        {user && user.isAdmin === 100 ? (
+          <SubMenu
+            key="2"
+            title={
+              <span>
+                <Icon type="skin" />
+                <span>Administration</span>
+              </span>
+            }
+          >
+          <Menu.Item key="2-1">
+            <Link to={`/dashboard/admin/users`}>
+              <Icon type="book" />
+              <span>Utilisateurs</span>
+            </Link>
+          </Menu.Item>
+        </SubMenu>
+        ) : null}
         <SubMenu
           key="3"
           title={
@@ -218,6 +235,7 @@ class LeftBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user.user,
   location: state.routing.location.pathname,
   spotlights: state.spotlights.spotlights
 })

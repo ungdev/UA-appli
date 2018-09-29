@@ -15,12 +15,12 @@ const App = props => (
     <Notifications />
     <Switch>
       <Route path={process.env.REACT_APP_BASEURL} exact component={Home} />
-      <Route path={process.env.REACT_APP_BASEURL + 'dashboard'} component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/2/decks'} component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/arbre-tournois'} component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/contact'} component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/teams'} component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + '/dashboard/tournois/:game/rules'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/home'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/2/decks'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/arbre-tournois'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/contact'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/teams'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/rules'} component={Dashboard} />
       <Redirect from="*" to="/" />
     </Switch>
   </div>

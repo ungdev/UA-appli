@@ -62,7 +62,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  gotoDashboard: () => dispatch(push('/dashboard'))
+  gotoDashboard: () => dispatch(push('/dashboard/home'))
 })
 
 export default connect(

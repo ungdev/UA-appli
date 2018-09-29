@@ -12,6 +12,7 @@ import Rules from './components/Rules/Rules'
 import Info from './components/Info/Info'
 import Contact from './components/Contact/Contact'
 import DashboardLayout from './layout'
+import { push } from 'react-router-redux'
 
 
 import { autoLogin } from '../../modules/login'
@@ -49,14 +50,17 @@ class Dashboard extends Component {
   render() {
     let component = ''
     let tab = this.props.location.split('/')
-    if(tab[1] === 'dashboard' && tab.length === 2) component = <Accueil />
+    if(tab[1] === 'dashboard' && tab[2] === 'home' && tab.length === 3) component = <Accueil />
     if(tab[1] === 'dashboard' && tab.length === 5 && tab[2] === 'tournois') {
-      if(tab[4] === 'teams') component = <Teams tournament={tab[3]} />
+      if(tab[4] === 'teams' && tab[3] !== "5" && tab[3] !== "6") component = <Teams tournament={tab[3]} />
       if(tab[4] === 'arbre-tournois') component = <Tournament tournament={tab[3]} />
       if(tab[4] === 'rules') component = <Rules tournament={tab[3]} />
       if(tab[4] === 'contact') component = <Contact tournament={tab[3]} />
       if(tab[4] === 'decks' && tab[3] === "5") component = <HsDecks />
       if(tab[4] === 'info') component = <Info tournament={tab[3]} />
+    }
+    if(component === '') {
+      this.props.goToHome()
     }
     return (
       <DashboardLayout
@@ -73,7 +77,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  autoLogin: () => dispatch(autoLogin())
+  autoLogin: () => dispatch(autoLogin()),
+  goToHome: () => dispatch(push('/dashboard/home'))
 })
 
 export default connect(

@@ -14,7 +14,7 @@ class CustomBreadcrumb extends React.Component {
   }
   render() {
     // let fullPath = '';
-    console.log('Breadcrumb render : ', this.props)
+   // console.log('Breadcrumb render : ', this.props)
     return (
       <Breadcrumb style={{ margin: '16px 0' }}>
         {/* {this.state.path

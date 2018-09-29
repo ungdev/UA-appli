@@ -16,6 +16,7 @@ import Button from '../../components/button'
 
 import { fetchCanLogin } from '../../modules/canLogin'
 import { autoLogin } from '../../modules/login'
+import { push } from 'react-router-redux'
 
 class Home extends React.Component {
   constructor() {
@@ -81,6 +82,9 @@ class Home extends React.Component {
   }
 
   render() {
+    if(this.props.user) {
+      this.props.gotoDashboard()
+    }
     return (
       <div>
         <Header openLoginModal={this.openLoginModal} />
@@ -137,13 +141,17 @@ class Home extends React.Component {
     )
   }
 }
+const mapStateToProps = state => ({
+  user: state.user.user
+})
 
 const mapDispatchToProps = dispatch => ({
   fetchCanLogin: () => dispatch(fetchCanLogin()),
-  autoLogin: () => dispatch(autoLogin())
+  autoLogin: () => dispatch(autoLogin()),
+  gotoDashboard: () => dispatch(push('/dashboard/home'))
 })
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Home)
