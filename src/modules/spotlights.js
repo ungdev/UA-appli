@@ -18,7 +18,8 @@ export default (state = initialState, action) => {
         let found = spotlights.find(s => spotlight.id === s.id) // if we find a matching spotlight
         if (!found) spotlights.push(spotlight) //we do not add it to the tab
       })
-      return { spotlights: spotlights }
+      spotlights.sort((s1, s2) => s1.id > s2.id ? 1 : -1)
+      return { spotlights }
     default:
       return state
   }

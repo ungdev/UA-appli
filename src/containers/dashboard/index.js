@@ -11,6 +11,7 @@ import Teams from './components/Teams/Teams'
 import Rules from './components/Rules/Rules'
 import Info from './components/Info/Info'
 import Contact from './components/Contact/Contact'
+import UsersList from './components/Admin/UsersList'
 import DashboardLayout from './layout'
 import { push } from 'react-router-redux'
 
@@ -50,16 +51,23 @@ class Dashboard extends Component {
   render() {
     let component = ''
     let tab = this.props.location.split('/')
-    if(tab[1] === 'dashboard' && tab[2] === 'home' && tab.length === 3) component = <Accueil />
-    if(tab[1] === 'dashboard' && tab.length === 5 && tab[2] === 'tournois') {
-      if(tab[4] === 'teams' && tab[3] !== "5" && tab[3] !== "6") component = <Teams tournament={tab[3]} />
-      if(tab[4] === 'arbre-tournois') component = <Tournament tournament={tab[3]} />
-      if(tab[4] === 'rules') component = <Rules tournament={tab[3]} />
-      if(tab[4] === 'contact') component = <Contact tournament={tab[3]} />
-      if(tab[4] === 'decks' && tab[3] === "5") component = <HsDecks />
-      if(tab[4] === 'info') component = <Info tournament={tab[3]} />
+    tab.splice(0,1) // remove first element because it's equal to ''
+    if(tab[0] === 'dashboard' && tab[1] === 'home' && tab.length === 2) component = <Accueil />
+    if(tab[0] === 'dashboard' && tab.length === 4 && tab[1] === 'tournois') {
+      if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6") component = <Teams tournament={tab[2]} />
+      if(tab[3] === 'arbre-tournois') component = <Tournament tournament={tab[2]} />
+      if(tab[3] === 'rules') component = <Rules tournament={tab[2]} />
+      if(tab[3] === 'contact') component = <Contact tournament={tab[2]} />
+      if(tab[3] === 'decks' && tab[2] === "5") component = <HsDecks />
+      if(tab[3] === 'info') component = <Info tournament={tab[2]} />
     }
+    if(tab[0] === 'dashboard' && tab[1] === 'admin') {
+      if(tab[2] === 'users') component = <UsersList />
+    }
+
+
     if(component === '') {
+      console.log('unknown route')
       this.props.goToHome()
     }
     return (

@@ -6,10 +6,10 @@ const Step = Steps.Step;
 
 class TournamentStatusBar extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       etat: 1
-    };
+    }
   }
 
   render() {

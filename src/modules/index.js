@@ -11,6 +11,7 @@ import spotlights from './spotlights'
 import forgot from './forgot'
 import contact from './contact'
 import infos from './infos'
+import admin from './admin'
 
 export default combineReducers({
   routing: routerReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
   spotlights,
   forgot,
   contact,
-  infos
+  infos,
+  admin,
 })

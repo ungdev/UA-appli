@@ -14,27 +14,33 @@ class LeftBar extends React.Component {
     this.props.fetchSpotlights()
     let { location } = this.props
     let tab = location.split('/')
-    if(tab.length >= 2 && tab[2] === 'tournois'){
-      openKeys.push('3')
-      if(tab.length >= 3){
-        openKeys.push(`3-${tab[3]}`)
-        if(tab.length >= 4) {
-          if(tab[4] === 'arbre-tournois')
-          current = `3-${tab[3]}-1`
-          if(tab[4] === 'teams')
-            current = `3-${tab[3]}-2`
-          if(tab[4] === 'rules')
-            current = `3-${tab[3]}-3`
-          if(tab[4] === 'contact')
-            current = `3-${tab[3]}-4`
-          if(tab[4] === 'decks')
-            current = `3-${tab[3]}-2`
-          if(tab[4] === 'info')
-            current = `3-${tab[3]}-5`
+    tab.splice(0, 1)  // remove first element because it's equal to ''
+    if(tab[0] === 'dashboard'){
+      if(tab[1] === 'admin'){
+        openKeys.push('2')
+        if(tab[2] === 'users') current = `2-1`
+      }
+      if(tab[1] === 'tournois'){
+        openKeys.push('3')
+        if(tab.length >= 2){
+          openKeys.push(`3-${tab[2]}`)
+          if(tab.length >= 4) {
+            if(tab[3] === 'arbre-tournois')
+            current = `3-${tab[2]}-1`
+            if(tab[3] === 'teams')
+              current = `3-${tab[2]}-2`
+            if(tab[3] === 'rules')
+              current = `3-${tab[2]}-3`
+            if(tab[3] === 'contact')
+              current = `3-${tab[2]}-4`
+            if(tab[3] === 'decks')
+              current = `3-${tab[2]}-2`
+            if(tab[3] === 'info')
+              current = `3-${tab[2]}-5`
+          }
         }
       }
     }
-
     this.state = { current, openKeys }
   }
 
@@ -112,7 +118,7 @@ class LeftBar extends React.Component {
         onClick={this.handleClick}
       >
         <Menu.Item key="1" style={{ marginTop: 0 }}>
-          <Link to="/dashboard">
+          <Link to="/dashboard/home">
             <Icon type="home" />
             <span>Accueil</span>
           </Link>
@@ -122,14 +128,14 @@ class LeftBar extends React.Component {
             key="2"
             title={
               <span>
-                <Icon type="skin" />
+                <Icon type="thunderbolt" />
                 <span>Administration</span>
               </span>
             }
           >
           <Menu.Item key="2-1">
             <Link to={`/dashboard/admin/users`}>
-              <Icon type="book" />
+              <Icon type="team" />
               <span>Utilisateurs</span>
             </Link>
           </Menu.Item>
