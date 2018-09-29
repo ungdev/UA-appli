@@ -28,7 +28,11 @@ class Contact extends React.Component {
 
   render() {
     const { maxCaracters } = this.state
-    const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
+    let spotlight
+    if(this.props.tournament === 'libre')
+      spotlight = { name: 'Libre' }
+    else
+      spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
     if(!spotlight) return <Spin/>
     let contactToDisplay = `Envoyer un message en rapport avec le tournoi ${spotlight.name}`
     return (

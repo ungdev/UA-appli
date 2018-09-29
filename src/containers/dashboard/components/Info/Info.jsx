@@ -52,7 +52,7 @@ class Info extends React.Component {
   }
 
   sendMessage = () => {
-    this.props.sendMessage(this.props.tournament, this.state.titleValue, this.state.textValue)
+    this.props.sendMessage(this.props.tournament === 'libre' ? '7' : this.props.tournament, this.state.titleValue, this.state.textValue)
     this.loadData(0, 5)
     this.setState({ textValue: '', titleValue: '' })
   }
@@ -62,7 +62,7 @@ class Info extends React.Component {
     const { loading, tournament, user } = this.props
     let { infos } = this.props
     const { maxTextCaracters } = this.state
-    infos = infos.filter(info => `${info.spotlightId}` === tournament)
+    infos = infos.filter(info => `${info.spotlightId}` === (tournament === 'libre' ? '7' : tournament))
     if(tournament !== this.state.tournament) {
       this.loadData(0, 5)
       this.setState({ tournament })

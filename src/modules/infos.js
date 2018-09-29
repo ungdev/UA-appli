@@ -43,7 +43,7 @@ export const fetchInfos = (spotlight, start, end) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
-
+    if(spotlight === 'libre') spotlight = 7
     const infos = await axios.get(`infos/${spotlight}/${start}-${end}`, { headers: { 'X-Token': authToken } })
     dispatch({
       type: SET_INFOS,

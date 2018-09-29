@@ -14,7 +14,11 @@ class TournamentStatusBar extends React.Component {
 
   render() {
     const { game } = this.props
-    const spotlight = this.props.spotlights.find(s => `${s.id}` === game)
+    let spotlight
+    if(game === 'libre')
+      spotlight = { name: 'Tournoi Libre' }
+    else
+      spotlight = this.props.spotlights.find(s => `${s.id}` === game)
     if(!spotlight) return <Spin/>
     return (
       <div>
