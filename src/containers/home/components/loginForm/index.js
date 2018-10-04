@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { Form, Icon, Input, Button, Checkbox } from "antd"
-// import Button from '../../../../components/button'
 
 import { register } from "../../../../modules/register"
 import { tryLogin } from "../../../../modules/login"
@@ -13,39 +12,19 @@ import "./loginForm.css"
 const FormItem = Form.Item
 
 class LoginForm extends React.Component {
-  constructor() {
-    super()
-
-    this.state = {
-      tabIndex: 0,
-      loading: false
-    }
-
-    this.setTabIndex = this.setTabIndex.bind(this)
-    this.submit = this.submit.bind(this)
-  }
-
-  setTabIndex(tabIndex) {
-    this.setState({
-      tabIndex
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.props.login(values)
+      }
     })
-  }
-
-  submit(user) {
-    this.setState({
-      loading: true
-    })
-
-    this.props
-      .register(user)
-      .then(() => this.setState({ loading: false, tabIndex: 0 }))
   }
 
   render() {
     const { getFieldDecorator } = this.props.form
-    console.log(this.props.login)
     return (
-      <Form onSubmit={this.props.login} className="login-form">
+      <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
           {getFieldDecorator("name", {
             rules: [
