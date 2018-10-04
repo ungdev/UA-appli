@@ -12,6 +12,7 @@ import Rules from './components/Rules/Rules'
 import Info from './components/Info/Info'
 import Contact from './components/Contact/Contact'
 import UsersList from './components/Admin/UsersList'
+import Compare from './components/Libre/Compare'
 import DashboardLayout from './layout'
 import { push } from 'react-router-redux'
 
@@ -60,6 +61,7 @@ class Dashboard extends Component {
       if(tab[3] === 'contact') component = <Contact tournament={tab[2]} />
       if(tab[3] === 'decks' && tab[2] === "5") component = <HsDecks />
       if(tab[3] === 'info') component = <Info tournament={tab[2]} />
+      if(tab[3] === 'compare' && tab[2] === 'libre') component = <Compare />
     }
     if(tab[0] === 'dashboard' && tab[1] === 'admin') {
       if(tab[2] === 'users') component = <UsersList />

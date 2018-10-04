@@ -13,8 +13,8 @@ const DashboardLayout = props => {
       <Layout style={{ minHeight: '100vh' }}>
         <TopBar sidebar={props.collapsed} />
         <Layout>
-          <Sider>
-            <LeftBar />
+          <Sider width="250px">
+            <LeftBar/>
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
