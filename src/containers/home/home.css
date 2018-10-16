@@ -1,7 +1,12 @@
 .a-home {
-  width: 100%;
   background-color: #202020;
   background-size: 100% 100%;
+}
+
+.a-home-bg{
+  display:flex;
+  flex-direction:column;
+  min-height: 100vh;
 }
 
 .a-home__content {
