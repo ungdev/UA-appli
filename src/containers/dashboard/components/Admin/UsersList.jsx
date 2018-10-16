@@ -29,7 +29,6 @@ class UsersList extends React.Component {
   
   render() {
     let { users } = this.props
-    console.log(users)
     users = users.map(user => {
       let role = ''
       if(user.isAdmin === 100) role = '/Admin'

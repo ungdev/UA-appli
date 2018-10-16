@@ -59,6 +59,7 @@ export const fetchUsers = () => {
 
       dispatch({ type: SET_USERS, payload: res.data })
     } catch (err) {
+      console.log(err)
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
