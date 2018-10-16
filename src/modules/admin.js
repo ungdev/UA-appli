@@ -3,6 +3,7 @@ import errorToString from '../lib/errorToString'
 import { actions as notifActions } from 'redux-notifications'
 
 export const SET_USERS = 'admin/SET_USERS'
+export const SET_COUNTS = 'admin/SET_COUNTS'
 export const SET_USER_ADMIN = 'admin/SET_USER_ADMIN'
 export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
 
@@ -16,6 +17,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         users: action.payload
+      }
+    case SET_COUNTS:
+      return {
+        ...state,
+        counts: action.payload
       }
     case SET_USER_ADMIN:
       let users = state.users.splice(0)
@@ -52,6 +58,29 @@ export const fetchUsers = () => {
       const res = await axios.get('users', { headers: { 'X-Token': authToken } })
 
       dispatch({ type: SET_USERS, payload: res.data })
+    } catch (err) {
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
+export const fetchCounts = () => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      const res = await axios.get('/admin/paids', { headers: { 'X-Token': authToken } })
+
+      dispatch({ type: SET_COUNTS, payload: res.data })
     } catch (err) {
       dispatch(
         notifActions.notifSend({
