@@ -8,6 +8,7 @@
   text-transform: uppercase;
   font-family: 'ua2018-font', Impact, sans-serif;
   letter-spacing: .5px;
+  margin: auto;
 }
 
 .a-button:focus {

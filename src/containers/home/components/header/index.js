@@ -10,7 +10,7 @@ import './header.css'
 class Header extends React.Component {
   constructor() {
     super()
-
+    
     this.scroll = new SmoothScroll()
 
     this.scrollToInformations = this.scrollToInformations.bind(this)
