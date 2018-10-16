@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Spin } from 'antd'
 import { connect } from 'react-redux'
 import { fetchCounts } from '../../../../modules/admin'
 import { push } from 'react-router-redux'
@@ -19,9 +19,12 @@ class AdminBar extends React.Component {
     return <Card title={<h1>Panneau d'administration</h1>}>
     <p><i>"Un grand pouvoir implique de grandes responsabilités"</i><strong> Oncle Ben</strong></p>
     <p>Alors <strong>ne cassez pas tout !</strong></p>
-    <em>nombre de joueur n'ayant pas encore payé : </em> <strong>{this.props.counts[2]}</strong><br/>
-    <em>nombre de joueur en tant que visiteur : </em><strong>{this.props.counts[0]}</strong><br/>
-    <em>nombre de joueur dans une équipe : </em><strong>{this.props.counts[1]}</strong>
+    {this.props.count ?
+    (<React.Fragment>
+      <em>nombre de joueur n'ayant pas encore payé : </em> <strong>{this.props.counts[2]}</strong><br/>
+      <em>nombre de joueur en tant que visiteur : </em><strong>{this.props.counts[0]}</strong><br/>
+      <em>nombre de joueur dans une équipe : </em><strong>{this.props.counts[1]}</strong>
+    </React.Fragment>) : <Spin/>}
       </Card>
   }
 }

@@ -1,4 +1,5 @@
 export default error => {
+  if(!error) return 'Une erreur est survenue'
   switch (error) {
     case 'DISABLED_LOGIN':
       return 'Inscription désactivée'
@@ -23,6 +24,8 @@ export default error => {
     case 'SPOTLIGHT_FULL':
       return 'Le tournoi est plein'
     case 'UNKNOWN':
+      return 'Une erreur est survenue'
+    case '':
       return 'Une erreur est survenue'
     default:
       return error
