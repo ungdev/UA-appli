@@ -7,9 +7,7 @@ import Header from './components/header'
 import Intro from './components/intro'
 import Informations from './components/informations'
 import Category from './components/category'
-import Social from './components/social'
 import Spotlights from './components/spotlights'
-import Partners from './components/partners'
 import LoginModal from './components/loginModal'
 import ForgotModal from './components/forgotModal'
 import Button from '../../components/button'
@@ -117,7 +115,6 @@ class Home extends React.Component {
             <Category id="spotlights">Tournois</Category>
             <Spotlights />
           </div>
-          <Partners />
           <div className="a-home__content a-home__footer">
             <div>
               © UTT Net Group
@@ -135,8 +132,6 @@ class Home extends React.Component {
             </div>
           </div>
         </main>
-
-        <Social />
       </div>
     )
   }
