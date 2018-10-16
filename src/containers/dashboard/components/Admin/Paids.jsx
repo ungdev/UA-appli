@@ -3,11 +3,11 @@ import { Input, Icon, Table } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
-import UserListActions from './UserListActions'
 import { fetchUsers } from '../../../../modules/admin'
+import WhoPaid from './WhoPaid';
 
 
-class UsersList extends React.Component {
+class Paids extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -58,25 +58,6 @@ class UsersList extends React.Component {
         ),
         filterIcon: <Icon type="filter" style={{ color: this.state.searchText !== '' ? '#108ee9' : '#aaa' }} />,
       }, {
-        title: 'Mail',
-        dataIndex: 'email',
-        key: 'email',
-      }, {
-        title: 'Rôle',
-        dataIndex: 'role',
-        key: 'role',
-        filters: [{
-          text: 'Admin',
-          value: 'Admin',
-        }, {
-          text: 'Respo Tournoi',
-          value: 'Respo',
-        }, {
-          text: 'Joueur',
-          value: 'Joueur',
-        }],
-        onFilter: (value, record) => this.filterRole(record, value),
-      }, {
         title: 'Équipe',
         dataIndex: 'team',
         key: 'team',
@@ -105,15 +86,15 @@ class UsersList extends React.Component {
         }],
         onFilter: (value, record) => record.spotlight === value,
       },{
-        title: 'Actions',
-        key: 'action',
-        dataIndex: 'id',
-        render: (id) => <UserListActions userId={id} users={this.props.users}/>
+        title: 'A payé',
+        key: 'paid',
+        dataIndex: 'paid',
+        render: (paid) => <WhoPaid paid={paid} />
       },
     ]
     return (<React.Fragment>
       <AdminBar/>
-      <Table columns={columns} dataSource={users}  rowKey="id" />
+      <Table columns={columns} dataSource={users} rowKey="id" />
     </React.Fragment>)
   }
 }
@@ -129,4 +110,4 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps)(UsersList)
+    mapDispatchToProps)(Paids)

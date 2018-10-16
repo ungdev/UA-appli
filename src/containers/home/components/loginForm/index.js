@@ -53,6 +53,7 @@ class LoginForm extends React.Component {
             />
           )}
         </FormItem>
+        Pas de compte ? <a href='http://arena.utt.fr'>Cliquez ici !</a>
         <FormItem>
           <Button
             type="primary"

@@ -19,6 +19,7 @@ class LeftBar extends React.Component {
       if(tab[1] === 'admin'){
         openKeys.push('2')
         if(tab[2] === 'users') current = `2-1`
+        if(tab[2] === 'paids') current = `2-2`
       }
       if(tab[1] === 'tournois'){
         openKeys.push('3')
@@ -139,6 +140,12 @@ class LeftBar extends React.Component {
             <Link to={`/dashboard/admin/users`}>
               <Icon type="team" />
               <span>Utilisateurs</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="2-2">
+            <Link to={`/dashboard/admin/paids`}>
+              <Icon type="euro" />
+              <span>Mais qui a payé ?</span>
             </Link>
           </Menu.Item>
         </SubMenu>
