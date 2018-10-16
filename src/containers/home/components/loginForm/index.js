@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { Form, Icon, Input, Button, Checkbox } from "antd"
+import { Form, Icon, Input, Button } from "antd"
 
 import { register } from "../../../../modules/register"
 import { tryLogin } from "../../../../modules/login"

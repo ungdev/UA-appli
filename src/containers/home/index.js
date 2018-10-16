@@ -3,18 +3,7 @@ import { connect } from "react-redux"
 
 import "./home.css"
 
-import Header from "./components/header"
 import Intro from "./components/intro"
-import Informations from "./components/informations"
-import Category from "./components/category"
-import Social from "./components/social"
-import Spotlights from "./components/spotlights"
-import Partners from "./components/partners"
-import ForgotModal from "./components/forgotModal"
-import Button from "../../components/button"
-import LoginForm from "./components/loginForm"
-
-import bg from "../../assets/bg_image.png"
 
 import { fetchCanLogin } from "../../modules/canLogin"
 import { autoLogin } from "../../modules/login"
@@ -73,18 +62,11 @@ class Home extends React.Component {
     if (this.props.user) {
       this.props.gotoDashboard()
     }
-    let loginText = this.props.isLoggedIn ? "Dashboard" : "Connexion"
 
     return (
       <div>
-        {/* <main className="a-home" style={{backgroundImage : `url(${bg})`}}>
-          <div className="a-home-bg" > */}
-        <Intro>
-          {/* <LoginForm /> */}
-        </Intro>
+        <Intro />
       </div>
-      //   </main>
-      // </div>
     )
   }
 }
