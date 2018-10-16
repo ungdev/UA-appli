@@ -19,7 +19,7 @@ class AdminBar extends React.Component {
     return <Card title={<h1>Panneau d'administration</h1>}>
     <p><i>"Un grand pouvoir implique de grandes responsabilités"</i><strong> Oncle Ben</strong></p>
     <p>Alors <strong>ne cassez pas tout !</strong></p>
-    {this.props.count ?
+    {this.props.counts ?
     (<React.Fragment>
       <em>nombre de joueur n'ayant pas encore payé : </em> <strong>{this.props.counts[2]}</strong><br/>
       <em>nombre de joueur en tant que visiteur : </em><strong>{this.props.counts[0]}</strong><br/>
