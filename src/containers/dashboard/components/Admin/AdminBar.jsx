@@ -19,7 +19,7 @@ class AdminBar extends React.Component {
     <p>Alors <strong>ne cassez pas tout !</strong></p>
     {this.props.counts ?
     (<React.Fragment>
-      <em>nombre de joueurs inscrits : </em> <strong>{this.props.counts.totalPlayers}</strong><br/>
+      <em>nombre d'inscrits : </em> <strong>{this.props.counts.totalUsers}</strong><br/>
       <em>nombre de joueurs ayant payé : </em> <strong>{this.props.counts.totalPaidPlayers}</strong><br/>
       <em>nombre de d'inscrits n'ayant pas payé : </em> <strong>{this.props.counts.totalUnpaid}</strong><br/>
       <em>nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong><br/>
