@@ -19,9 +19,14 @@ class AdminBar extends React.Component {
     <p>Alors <strong>ne cassez pas tout !</strong></p>
     {this.props.counts ?
     (<React.Fragment>
-      <em>nombre de joueur n'ayant pas encore payé : </em> <strong>{this.props.counts[2]}</strong><br/>
-      <em>nombre de joueur en tant que visiteur : </em><strong>{this.props.counts[0]}</strong><br/>
-      <em>nombre de joueur dans une équipe : </em><strong>{this.props.counts[1]}</strong>
+      <em>nombre de joueurs inscrits : </em> <strong>{this.props.counts.totalPlayers}</strong><br/>
+      <em>nombre de joueurs ayant payé : </em> <strong>{this.props.counts.totalPaidPlayers}</strong><br/>
+      <em>nombre de d'inscrits n'ayant pas payé : </em> <strong>{this.props.counts.totalUnpaid}</strong><br/>
+      <em>nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong><br/>
+      <em>nombre d'équipes' : </em><strong>{this.props.counts.totalTeams}</strong><br/>
+      <em>nombre d'équipes complètes : </em><strong>{this.props.counts.totalFullTeams}</strong><br/>
+      <em>nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong><br/>
+
     </React.Fragment>) : <Spin/>}
       </Card>
   }
