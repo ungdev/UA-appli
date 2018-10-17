@@ -13,6 +13,7 @@ import Info from './components/Info/Info'
 import Contact from './components/Contact/Contact'
 import UsersList from './components/Admin/UsersList'
 import Paids from './components/Admin/Paids'
+import Spotlights from './components/Admin/Spotlights'
 import Compare from './components/Libre/Compare'
 import DashboardLayout from './layout'
 import { push } from 'react-router-redux'
@@ -67,6 +68,7 @@ class Dashboard extends Component {
     if(tab[0] === 'dashboard' && tab[1] === 'admin') {
       if(tab[2] === 'users') component = <UsersList />
       if(tab[2] === 'paids') component = <Paids />
+      if(tab[2] === 'spotlights') component = <Spotlights />
     }
 
 

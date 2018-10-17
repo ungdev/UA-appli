@@ -20,6 +20,10 @@ class LeftBar extends React.Component {
         openKeys.push('2')
         if(tab[2] === 'users') current = `2-1`
         if(tab[2] === 'paids') current = `2-2`
+        if(tab.length >= 2 && tab[2] === 'spotlights'){
+          openKeys.push('2-3')
+          current = `2-3-${tab[3]}`
+        }
       }
       if(tab[1] === 'tournois'){
         openKeys.push('3')
@@ -136,19 +140,37 @@ class LeftBar extends React.Component {
               </span>
             }
           >
-          <Menu.Item key="2-1">
-            <Link to={`/dashboard/admin/users`}>
-              <Icon type="team" />
-              <span>Utilisateurs</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="2-2">
-            <Link to={`/dashboard/admin/paids`}>
-              <Icon type="euro" />
-              <span>Mais qui a payé ?</span>
-            </Link>
-          </Menu.Item>
-        </SubMenu>
+            <Menu.Item key="2-1">
+              <Link to={`/dashboard/admin/users`}>
+                <Icon type="team" />
+                <span>Utilisateurs</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="2-2">
+              <Link to={`/dashboard/admin/paids`}>
+                <Icon type="euro" />
+                <span>Mais qui a payé ?</span>
+              </Link>
+            </Menu.Item>
+            <SubMenu
+              key="2-3"
+              title={
+                <span>
+                  <Icon type="euro" />
+                  <span>Équipe inscrite</span>
+                </span>
+              }
+            >
+            {spotlights.map((spotlight) => (
+              <Menu.Item key={`2-3-${spotlight.id}`}>
+                <Link to={`/dashboard/admin/spotlights/${spotlight.id}`}>
+                  <Icon type="team" />
+                  <span>{spotlight.shortName}</span>
+                </Link>
+              </Menu.Item>
+            ))}
+            </SubMenu>
+          </SubMenu>
         ) : null}
         <SubMenu
           key="3"
