@@ -33,7 +33,7 @@
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
-    "start": "static build --host-address 0.0.0.0 --port 8080",
+    "start": "static build --host-address 0.0.0.0 --port 8080 --spa",
     "serve": "pm2 serve build -i max --name arena.utt.fr-2018",
     "reload": "pm2 reload arena.utt.fr-2018 --update-env",
     "lint": "prettier --single-quote --print-width 100 --tab-width 2 --no-semi --write \"src/**/*.js\""
