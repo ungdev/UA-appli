@@ -1,16 +1,19 @@
 import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
 import { actions as notifActions } from 'redux-notifications'
+import moment from 'moment'
 
 export const SET_USERS = 'admin/SET_USERS'
 export const SET_COUNTS = 'admin/SET_COUNTS'
 export const SET_SPOTLIGHT = 'admin/SET_SPOTLIGHT'
+export const SET_CHARTDATA = 'admin/SET_CHARTDATA'
 export const SET_USER_ADMIN = 'admin/SET_USER_ADMIN'
 export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
 
 const initialState = {
   users: [],
   spotlights: [],
+  chartData: [],
 }
 
 export default (state = initialState, action) => {
@@ -24,6 +27,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         counts: action.payload
+      }
+    case SET_CHARTDATA:
+      return {
+        ...state,
+        chartData: action.payload
       }
     case SET_SPOTLIGHT:
       let spotlights = state.spotlights.slice(0)
@@ -91,6 +99,30 @@ export const fetchAdminSpotlight = (id) => {
       const res = await axios.get(`admin/spotlight/${id}`, { headers: { 'X-Token': authToken } })
 
       dispatch({ type: SET_SPOTLIGHT, payload: { id, spotlight: res.data } })
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
+export const fetchChartData = () => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      const res = await axios.post(`admin/chart`, { start: '2018-10-16', end: moment().format('YYYY-MM-DD'), step: 'day' }, { headers: { 'X-Token': authToken } })
+
+      dispatch({ type: SET_CHARTDATA, payload: res.data })
     } catch (err) {
       console.log(err)
       dispatch(
