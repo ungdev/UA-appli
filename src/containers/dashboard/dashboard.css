@@ -1,11 +1,8 @@
-/* .logo {
-  height: 80px;
-  margin: 0 auto;
-} */
 
 .social-embed {
   display: flex;
-  align-content: center;
+  flex-flow: row wrap;
+  justify-content: center;
   border: 1px solid #e8e8e8;
   border-radius: 2px;
 }

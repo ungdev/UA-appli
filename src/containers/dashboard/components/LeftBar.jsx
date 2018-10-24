@@ -142,7 +142,7 @@ class LeftBar extends React.Component {
           >
             <Menu.Item key="2-1">
               <Link to={`/dashboard/admin/users`}>
-                <Icon type="team" />
+                <Icon type="user" />
                 <span>Utilisateurs</span>
               </Link>
             </Menu.Item>
@@ -156,8 +156,8 @@ class LeftBar extends React.Component {
               key="2-3"
               title={
                 <span>
-                  <Icon type="euro" />
-                  <span>Équipe inscrite</span>
+                  <Icon type="team" />
+                  <span>Équipes inscrites</span>
                 </span>
               }
             >
