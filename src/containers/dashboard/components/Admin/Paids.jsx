@@ -3,8 +3,9 @@ import { Input, Icon, Table } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
-import { fetchUsers } from '../../../../modules/admin'
-import WhoPaid from './WhoPaid';
+import { fetchUsers, fetchChartData } from '../../../../modules/admin'
+import WhoPaid from './WhoPaid'
+import {Line} from 'react-chartjs-2'
 
 
 class Paids extends React.Component {
@@ -12,8 +13,11 @@ class Paids extends React.Component {
     super(props)
     this.state = {
       searchText: '',
+      data: [],
+      chartData: this.chartData([])
     }
     this.props.fetchUsers()
+    this.props.fetchChartData()
   }
   handleSearch = (e) => {
     this.setState({ searchText: e.target.value })
@@ -27,7 +31,49 @@ class Paids extends React.Component {
     return spotlight ? spotlight.shortName : id
   }
   
+  chartData = (data) => {
+    return {
+      labels: data.map(d => d.time),
+      datasets: [
+        {
+          label: 'Nombre de payment total',
+          fillColor: 'rgba(0,220,220,1)',
+          strokeColor: 'rgba(0,220,220,1)',
+          pointColor: 'rgba(0,220,220,1)',
+          pointStrokeColor: '#ffff00',
+          pointHighlightFill: '#ffff00',
+          pointHighlightStroke: 'rgba(0,220,220,1)',
+          data: data.map(d => d.count),
+        },
+      ]
+    }
+  }
   render() {
+    if (this.props.data !== this.state.data) this.setState({ data: this.props.data, chartData: this.chartData(this.props.data) })
+    const options = {
+      scaleShowGridLines: true,
+      scaleGridLineColor: 'rgba(0,0,0,.05)',
+      scaleGridLineWidth: 1,
+      scaleShowHorizontalLines: true,
+      scaleShowVerticalLines: true,
+      bezierCurve: true,
+      bezierCurveTension: 0.4,
+      pointDot: true,
+      pointDotRadius: 4,
+      pointDotStrokeWidth: 1,
+      pointHitDetectionRadius: 20,
+      datasetStroke: true,
+      datasetStrokeWidth: 2,
+      datasetFill: true,
+      legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+    }
+    const styles = {
+      graphContainer: {
+        border: '1px solid black',
+        padding: '15px'
+      }
+    }
+    
     let { users } = this.props
     users = users.map(user => {
       let role = ''
@@ -94,17 +140,24 @@ class Paids extends React.Component {
     ]
     return (<React.Fragment>
       <AdminBar/>
+      <div style={styles.graphContainer}>
+        <Line data={this.state.chartData}
+          options={options}
+          width="600" height="250"/>
+      </div>
       <Table columns={columns} dataSource={users} rowKey="id" />
     </React.Fragment>)
   }
 }
 const mapStateToProps = state => ({
   users: state.admin.users,
-  spotlights: state.spotlights.spotlights
+  spotlights: state.spotlights.spotlights,
+  data: state.admin.chartData
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchUsers: () => dispatch(fetchUsers())
+  fetchUsers: () => dispatch(fetchUsers()),
+  fetchChartData: () => dispatch(fetchChartData()),
 })
 
 

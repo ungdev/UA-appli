@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.9.2",
     "axios": "^0.18.0",
+    "chart.js": "^2.7.3",
     "classnames": "^2.2.5",
     "deckstrings": "^2.0.0",
     "history": "^4.7.2",
@@ -12,6 +13,7 @@
     "openid-client": "^2.4.2",
     "pm2": "^2.10.4",
     "react": "^16.4.0",
+    "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.4.0",
     "react-form": "^3.5.5",
     "react-konami": "^0.5.0",
@@ -31,7 +33,7 @@
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
-    "start": "static build --host-address 0.0.0.0 --port 8080",
+    "start": "static build --host-address 0.0.0.0 --port 8080 --spa",
     "serve": "pm2 serve build -i max --name arena.utt.fr-2018",
     "reload": "pm2 reload arena.utt.fr-2018 --update-env",
     "lint": "prettier --single-quote --print-width 100 --tab-width 2 --no-semi --write \"src/**/*.js\""
