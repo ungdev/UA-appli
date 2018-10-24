@@ -3,7 +3,10 @@
   margin: 0 auto;
 } */
 
-.tabTitle {
+iframe.facebook {
+  height: 700px;
+  width: 500px;
+  border: 2px solid #ccc;
 }
 
 .tabTitleName {
@@ -11,10 +14,6 @@
 }
 .tabTitleHero {
   font-size: smaller;
-}
-
-.cardTab {
-  weight: 60%;
 }
 
 .flex-card {

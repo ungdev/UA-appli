@@ -1,12 +1,12 @@
 import React from 'react'
-import NotPrepared from '../assets/notprepared.jpg'
 
 class Accueil extends React.Component {
   render() {
     return (
-      <div style={{ height: '100%'}}>
+      <div style={{ height: '100%'}} ref={el => (this.instance = el)}>
         <h1>Accueil</h1>
-        <div style={{ textAlign: 'center', height: '100%' }}><img src={NotPrepared} alt='not prepared' /></div>
+        
+        <iframe className="facebook" src="https://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FUTTArena&width=500&height=700&stream=true" />
       </div>
     );
   }

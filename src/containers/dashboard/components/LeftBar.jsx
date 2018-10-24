@@ -272,8 +272,10 @@ class LeftBar extends React.Component {
           </SubMenu>
         </SubMenu>
         <Menu.Item key="6">
-          <Icon type="star-o" />
-          <span>Partenaires</span>
+          <a href="https://arena.utt.fr/partners">
+            <Icon type="star-o" />
+            <span>Partenaires</span>
+          </a>
         </Menu.Item>
         <Menu.Item key="7">
           <Icon type="copyright" />
