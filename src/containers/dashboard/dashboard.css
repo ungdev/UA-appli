@@ -3,10 +3,22 @@
   margin: 0 auto;
 } */
 
-iframe.facebook {
+.social-embed {
+  display: flex;
+  align-content: center;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
+}
+
+.social-embed > div {
+  display: inline-block;
+  margin: 20px;
+}
+
+.social-embed iframe {
   height: 700px;
   width: 500px;
-  border: 2px solid #ccc;
+  border: none;
 }
 
 .tabTitleName {
