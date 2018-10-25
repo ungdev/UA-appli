@@ -55,6 +55,7 @@ class Material extends React.Component {
       })
     })
 
+    let index = 0
     let byUserRows = users.map(user => {
       let material = ''
       Object.keys(user.material).map(function(objectKey, index) {
@@ -69,6 +70,7 @@ class Material extends React.Component {
       })
 
       return {
+        key: index++,
         name: user.name,
         material: material
       }
@@ -112,8 +114,8 @@ class Material extends React.Component {
 
       <p>Affichage :</p>
       <Select defaultValue="material" onChange={this.selectChanged}>
-        <Select.Option value="material">Par matériel</Select.Option>
-        <Select.Option value="user">Par utilisateur</Select.Option>
+        <Select.Option value="material"><Icon type="desktop" theme="outlined" style={{marginRight: '10px'}} />Par matériel</Select.Option>
+        <Select.Option value="user"><Icon type="user" theme="outlined" style={{marginRight: '10px'}} />Par utilisateur</Select.Option>
       </Select>
 
       <br /><br />
