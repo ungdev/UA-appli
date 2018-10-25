@@ -20,6 +20,7 @@ class Material extends React.Component {
     let rows = []
 
     users.forEach(user => {
+      console.log(user.material)
       Object.keys(user.material).map(function(objectKey, index) {
         var value = user.material[objectKey]
 
@@ -32,8 +33,16 @@ class Material extends React.Component {
           }
         }
 
-        if(value === true) {
-          rows[index].value++
+        let count = null
+        if(typeof value === 'boolean' && value === true) {
+          count = 1
+        }
+        else if(typeof value === 'number' && value > 0) {
+          count = value
+        }
+
+        if(count != null) {
+          rows[index].value += count
           rows[index].users += rows[index].users === '' ? (user.name) : (", " + user.name)
         }
       })
