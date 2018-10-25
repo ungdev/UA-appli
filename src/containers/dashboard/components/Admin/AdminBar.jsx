@@ -18,16 +18,29 @@ class AdminBar extends React.Component {
     <p><i>"Un grand pouvoir implique de grandes responsabilités"</i><strong> Oncle Ben</strong></p>
     <p>Alors <strong>ne cassez pas tout !</strong></p>
     {this.props.counts ?
-    (<React.Fragment>
-      <em>nombre d'inscrits : </em> <strong>{this.props.counts.totalUsers}</strong><br/>
-      <em>nombre de joueurs ayant payé : </em> <strong>{this.props.counts.totalPaidPlayers}</strong><br/>
-      <em>nombre de d'inscrits n'ayant pas payé : </em> <strong>{this.props.counts.totalUnpaid}</strong><br/>
-      <em>nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong><br/>
-      <em>nombre d'équipes' : </em><strong>{this.props.counts.totalTeams}</strong><br/>
-      <em>nombre d'équipes complètes : </em><strong>{this.props.counts.totalFullTeams}</strong><br/>
-      <em>nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong><br/>
-
-    </React.Fragment>) : <Spin/>}
+    (<ul>
+      <li>
+        <em>Nombre de joueurs inscrits : </em> <strong>{this.props.counts.totalUsers}</strong>
+      </li>
+      <li>
+        <em>Nombre de joueurs ayant payé : </em> <strong>{this.props.counts.totalPaidPlayers}</strong>
+      </li>
+      <li>
+        <em>Nombre d'inscrits n'ayant pas payé : </em> <strong>{this.props.counts.totalUnpaid}</strong>
+      </li>
+      <li>
+        <em>Nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong>
+      </li>
+      <li>
+        <em>Nombre d'équipes : </em><strong>{this.props.counts.totalTeams}</strong>
+      </li>
+      <li>
+        <em>Nombre d'équipes complètes : </em><strong>{this.props.counts.totalFullTeams}</strong>
+      </li>
+      <li>
+        <em>Nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong>
+      </li>
+    </ul>) : <Spin/>}
       </Card>
   }
 }

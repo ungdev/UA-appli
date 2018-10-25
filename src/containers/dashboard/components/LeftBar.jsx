@@ -170,6 +170,12 @@ class LeftBar extends React.Component {
               </Menu.Item>
             ))}
             </SubMenu>
+            <Menu.Item key="2-4">
+              <Link to={`/dashboard/admin/material`}>
+                <Icon type="desktop" />
+                <span>Matériel</span>
+              </Link>
+            </Menu.Item>
           </SubMenu>
         ) : null}
         <SubMenu
