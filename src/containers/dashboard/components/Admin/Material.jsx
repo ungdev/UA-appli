@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'antd'
+import { Table, Select, Icon } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
@@ -11,52 +11,78 @@ class Material extends React.Component {
   constructor(props) {
     super(props)
     
+    this.state = {
+      by: 'material'
+    }
+
     this.props.fetchUsers()
+
+    this.selectChanged = this.selectChanged.bind(this)
   }
   
+  selectChanged(e) {    
+    this.setState({
+      by: e
+    })
+  }
+
   render() {
     let users = this.props.users
 
-    let rows = []
+    let byMaterialRows = []
 
     users.forEach(user => {
-      console.log(user.material)
       Object.keys(user.material).map(function(objectKey, index) {
         var value = user.material[objectKey]
 
-        if(typeof rows[index] === 'undefined') {
-          rows[index] = {
+        if(typeof byMaterialRows[index] === 'undefined') {
+          byMaterialRows[index] = {
             key: index,
-            name: objectKey,
-            value: 0,
+            material: objectKey,
+            count: 0,
             users: ''
           }
         }
 
-        let count = null
         if(typeof value === 'boolean' && value === true) {
-          count = 1
+          byMaterialRows[index].count += 1
+          byMaterialRows[index].users += (byMaterialRows[index].users !== '' ? ', ' : '') + user.name
         }
         else if(typeof value === 'number' && value > 0) {
-          count = value
-        }
-
-        if(count != null) {
-          rows[index].value += count
-          rows[index].users += rows[index].users === '' ? (user.name) : (", " + user.name)
+          byMaterialRows[index].count += value
+          byMaterialRows[index].users += (byMaterialRows[index].users !== '' ? ', ' : '') + user.name + ' (' + value + ')'
         }
       })
     })
 
-    const columns = [
+    let byUserRows = users.map(user => {
+      let material = ''
+      Object.keys(user.material).map(function(objectKey, index) {
+        var value = user.material[objectKey]
+
+        if(typeof value === 'boolean' && value === true) {
+          material += (material !== '' ? ', ' : '') + objectKey
+        }
+        else if(typeof value === 'number' && value > 0) {
+          material += (material !== '' ? ', ' : '') + objectKey + ' (' + value + ')'
+        }
+      })
+
+      return {
+        name: user.name,
+        material: material
+      }
+    })
+
+    const byMaterialColumns = [
       {
         title: 'Matériel',
-        dataIndex: 'name',
+        dataIndex: 'material',
         key: 'material'
       },
       {
         title: 'Nombre',
-        dataIndex: 'value',
+        dataIndex: 'count',
         key: 'count',
       },
       {
@@ -66,9 +92,34 @@ class Material extends React.Component {
       }
     ]
 
+    const byUserColumns = [
+      {
+        title: 'Utilisateur',
+        dataIndex: 'name',
+        key: 'user',
+      },
+      {
+        title: 'Matériel',
+        dataIndex: 'material',
+        key: 'material'
+      }
+    ]
+
     return (<React.Fragment>
       <AdminBar />
-      <Table columns={columns} dataSource={rows} />
+
+      <br />
+
+      <p>Affichage :</p>
+      <Select defaultValue="material" onChange={this.selectChanged}>
+        <Select.Option value="material">Par matériel</Select.Option>
+        <Select.Option value="user">Par utilisateur</Select.Option>
+      </Select>
+
+      <br /><br />
+
+      {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} />}
+      {this.state.by === 'user' && <Table columns={byUserColumns} dataSource={byUserRows} />}
     </React.Fragment>)
   }
 }
