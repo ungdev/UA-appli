@@ -142,7 +142,7 @@ class LeftBar extends React.Component {
           >
             <Menu.Item key="2-1">
               <Link to={`/dashboard/admin/users`}>
-                <Icon type="team" />
+                <Icon type="user" />
                 <span>Utilisateurs</span>
               </Link>
             </Menu.Item>
@@ -156,8 +156,8 @@ class LeftBar extends React.Component {
               key="2-3"
               title={
                 <span>
-                  <Icon type="euro" />
-                  <span>Équipe inscrite</span>
+                  <Icon type="team" />
+                  <span>Équipes inscrites</span>
                 </span>
               }
             >
@@ -170,6 +170,12 @@ class LeftBar extends React.Component {
               </Menu.Item>
             ))}
             </SubMenu>
+            <Menu.Item key="2-4">
+              <Link to={`/dashboard/admin/material`}>
+                <Icon type="desktop" />
+                <span>Matériel</span>
+              </Link>
+            </Menu.Item>
           </SubMenu>
         ) : null}
         <SubMenu
@@ -272,8 +278,10 @@ class LeftBar extends React.Component {
           </SubMenu>
         </SubMenu>
         <Menu.Item key="6">
-          <Icon type="star-o" />
-          <span>Partenaires</span>
+          <a href="https://arena.utt.fr/partners">
+            <Icon type="star-o" />
+            <span>Partenaires</span>
+          </a>
         </Menu.Item>
         <Menu.Item key="7">
           <Icon type="copyright" />
