@@ -15,8 +15,8 @@ const App = props => (
     <Notifications />
     <Switch>
       <Route path={process.env.REACT_APP_BASEURL} exact component={Home} />
-      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/home'} component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/users'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/home'} exact component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/users'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/paids'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/spotlights/:id'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/material'} exact component={Dashboard} />

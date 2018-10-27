@@ -24,6 +24,7 @@ class LeftBar extends React.Component {
           openKeys.push('2-3')
           current = `2-3-${tab[3]}`
         }
+        if(tab[2] === 'material') current = `2-4`
       }
       if(tab[1] === 'tournois'){
         openKeys.push('3')
