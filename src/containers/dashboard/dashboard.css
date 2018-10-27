@@ -1,9 +1,21 @@
-/* .logo {
-  height: 80px;
-  margin: 0 auto;
-} */
 
-.tabTitle {
+.social-embed {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
+}
+
+.social-embed > div {
+  display: inline-block;
+  margin: 20px;
+}
+
+.social-embed iframe {
+  height: 700px;
+  width: 500px;
+  border: none;
 }
 
 .tabTitleName {
@@ -11,10 +23,6 @@
 }
 .tabTitleHero {
   font-size: smaller;
-}
-
-.cardTab {
-  weight: 60%;
 }
 
 .flex-card {
