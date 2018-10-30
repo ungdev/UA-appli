@@ -1,15 +1,15 @@
-import React from "react"
-import { connect } from "react-redux"
-import { push } from "react-router-redux"
-import { autoLogin } from "../../../../modules/login"
+import React from 'react'
+import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
+import { autoLogin } from '../../../../modules/login'
 
 import {
   fetchMessages,
   // sendMessage,
   SET_MESSAGES_LOADING
-} from "../../../../modules/messages"
+} from '../../../../modules/messages'
 
-import { Card } from "antd"
+import { Card } from 'antd'
 
 class Messenger extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class Messenger extends React.Component {
   }
   render() {
     let { messages } = this.state
-    console.log("messages", messages)
+    console.log('messages', messages)
     let messageList = messages.map(message => {
       return (
         <Card>
@@ -55,7 +55,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   autoLogin: () => dispatch(autoLogin()),
-  goToHome: () => dispatch(push("/dashboard/home")),
+  goToHome: () => dispatch(push('/dashboard/home')),
   getMessages: () => dispatch(fetchMessages()),
   // sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
   setLoading: () => dispatch({ type: SET_MESSAGES_LOADING })
