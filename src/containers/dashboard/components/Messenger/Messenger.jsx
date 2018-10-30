@@ -36,7 +36,7 @@ class Messenger extends React.Component {
   render() {
     let { messages } = this.state
     console.log("messages", messages)
-    let messageList = messages.map(message=>{return <Card><p>{message.message}</p></Card>})
+    let messageList = messages.map(message=>{return <Card><p>Message de : {message.From.name} => {message.message}</p></Card>})
     return (
       <div>
         {messageList}
