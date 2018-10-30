@@ -20,12 +20,11 @@ class LeftBar extends React.Component {
         openKeys.push('2')
         if(tab[2] === 'users') current = `2-1`
         if(tab[2] === 'paids') current = `2-2`
-        if(tab[2] === 'material') current = `2-4`
+        if(tab[2] === 'material') current = `2-3`
         if(tab.length >= 2 && tab[2] === 'spotlights'){
-          openKeys.push('2-3')
-          current = `2-3-${tab[3]}`
+          openKeys.push('2-4')
+          current = `2-4-${tab[3]}`
         }
-        if(tab[2] === 'material') current = `2-4`
       }
       if(tab[1] === 'tournois'){
         openKeys.push('3')
@@ -154,8 +153,14 @@ class LeftBar extends React.Component {
                 <span>Mais qui a payé ?</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="2-3">
+              <Link to={`/dashboard/admin/material`}>
+                <Icon type="desktop" />
+                <span>Matériel</span>
+              </Link>
+            </Menu.Item>
             <SubMenu
-              key="2-3"
+              key="2-4"
               title={
                 <span>
                   <Icon type="team" />
@@ -164,7 +169,7 @@ class LeftBar extends React.Component {
               }
             >
             {spotlights.map((spotlight) => (
-              <Menu.Item key={`2-3-${spotlight.id}`}>
+              <Menu.Item key={`2-4-${spotlight.id}`}>
                 <Link to={`/dashboard/admin/spotlights/${spotlight.id}`}>
                   <Icon type="team" />
                   <span>{spotlight.shortName}</span>
@@ -172,12 +177,6 @@ class LeftBar extends React.Component {
               </Menu.Item>
             ))}
             </SubMenu>
-            <Menu.Item key="2-4">
-              <Link to={`/dashboard/admin/material`}>
-                <Icon type="desktop" />
-                <span>Matériel</span>
-              </Link>
-            </Menu.Item>
           </SubMenu>
         ) : null}
         <SubMenu
