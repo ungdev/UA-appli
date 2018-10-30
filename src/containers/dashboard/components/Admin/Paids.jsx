@@ -36,7 +36,7 @@ class Paids extends React.Component {
       labels: data.map(d => d.time),
       datasets: [
         {
-          label: 'Nombre de payment total',
+          label: 'Nombre total de paiements',
           fillColor: 'rgba(0,220,220,1)',
           strokeColor: 'rgba(0,220,220,1)',
           pointColor: 'rgba(0,220,220,1)',
