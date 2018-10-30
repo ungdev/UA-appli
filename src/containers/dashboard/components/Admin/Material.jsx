@@ -140,8 +140,6 @@ class Material extends React.Component {
       })
     })
 
-    console.log("MATERIALS : ", materials)
-
     let i = 0
     Object.keys(materials).forEach(key => {
       let count = ''
