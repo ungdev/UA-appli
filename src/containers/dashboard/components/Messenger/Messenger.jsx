@@ -1,13 +1,11 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import { autoLogin } from "../../../../modules/login"
-import _ from "lodash"
 
 import {
   fetchMessages,
-  sendMessage,
+  // sendMessage,
   SET_MESSAGES_LOADING
 } from "../../../../modules/messages"
 
@@ -23,10 +21,9 @@ class Messenger extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log('didupdate ?')
-    prevProps != this.props
-      ? this.setState({ messages: this.props.messages })
-      : null
+    if (prevProps !== this.props) {
+      this.setState({ messages: this.props.messages })
+    }
   }
 
   loadMessages() {
@@ -36,12 +33,16 @@ class Messenger extends React.Component {
   render() {
     let { messages } = this.state
     console.log("messages", messages)
-    let messageList = messages.map(message=>{return <Card><p>Message de : {message.From.name} => {message.message}</p></Card>})
-    return (
-      <div>
-        {messageList}
-      </div>
-    )
+    let messageList = messages.map(message => {
+      return (
+        <Card>
+          <p>
+            Message de : {message.From.name} => {message.message}
+          </p>
+        </Card>
+      )
+    })
+    return <div>{messageList}</div>
   }
 }
 
