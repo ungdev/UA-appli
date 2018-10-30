@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { autoLogin } from '../../../../modules/login'
-
+import _ from 'lodash'
 import {
   fetchMessages,
   // sendMessage,
@@ -16,13 +16,14 @@ class Messenger extends React.Component {
     super(props)
     this.loadMessages()
     this.state = {
-      messages: this.props.messages
+      messages: this.props.messages,
+      user: this.props.user
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps !== this.props) {
-      this.setState({ messages: this.props.messages })
+      this.setState({ messages: this.props.messages, user: this.props.user })
     }
   }
 
@@ -32,15 +33,22 @@ class Messenger extends React.Component {
   }
   render() {
     let { messages } = this.state
-    console.log('messages', messages)
     let messageList = messages.map(message => {
-      return (
-        <Card>
-          <p>
-            Message de : {message.From.name} => {message.message}
-          </p>
-        </Card>
-      )
+      if (this.props.user) {
+        let cssclass =
+          this.props.user.id === message.senderId
+            ? 'sender'
+            : 'receiver'
+        return (
+          <Card
+            title={message.From.name}
+            className={cssclass}
+            style={{ width: 300 }}
+          >
+            <p>{message.message}</p>
+          </Card>
+        )
+      }
     })
     return <div>{messageList}</div>
   }
