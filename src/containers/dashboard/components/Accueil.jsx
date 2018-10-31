@@ -79,7 +79,7 @@ class Accueil extends React.Component {
         <h2>Mes matchs</h2>
 
         <div style={matches}>
-          {this.getMatches()}
+          {/*this.getMatches()*/}
         </div>
 
         <Divider />
