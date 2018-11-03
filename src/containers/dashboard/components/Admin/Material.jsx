@@ -129,8 +129,8 @@ class Material extends React.Component {
             
             if(materials[key].users.indexOf(user.name) === -1) {
               let userValues = ''
-              Object.keys(value).forEach(val => {
-                userValues += (userValues !== '' ? ', ' : '') + val + ' (' + value[val] + ')'
+              Object.keys(value).forEach(k => {
+                userValues += (userValues !== '' ? ', ' : '') + k + (value[k] !== 1 ? ' (' + value[k] + ')' : '')
               })
 
               materials[key].users += (materials[key].users !== '' ? ', ' : '') + user.name + ' (' + userValues + ')'
@@ -143,10 +143,11 @@ class Material extends React.Component {
     let i = 0
     Object.keys(materials).forEach(key => {
       let count = ''
+      let materialValues = materials[key].values
 
-      if(typeof materials[key].values !== 'undefined') {
-        Object.keys(materials[key].values).forEach(k => {
-          count += (count !== '' ? ', ' : '') + k + ' (' + materials[key].values[k] + ')'
+      if(typeof materialValues !== 'undefined') {
+        Object.keys(materialValues).forEach(k => {
+          count += (count !== '' ? ', ' : '') + k + (materialValues[k] !== 1 ? ' (' + materialValues[k] + ')' : '')
         })
       }
       else {
@@ -170,8 +171,19 @@ class Material extends React.Component {
       Object.keys(user.material).forEach(key => {
         let value = user.material[key]
 
-        if(value !== 0) {
-          material += (material !== '' ? ', ' : '') + key + ' (' + value + ')'
+        if(typeof value === 'object') {
+          let values = ''
+
+          Object.keys(value).forEach(k => {
+            values += (values !== '' ? ', ' : '') + k + (value[k] !== 1 ? ' (' + value[k] + ')' : '')
+          })
+
+          material += (material !== '' ? ', ' : '') + key + ' (' + values + ')'
+        }
+        else {
+          if(value !== 0) {
+            material += (material !== '' ? ', ' : '') + key + ' (' + value + ')'
+          }
         }
       })
 
