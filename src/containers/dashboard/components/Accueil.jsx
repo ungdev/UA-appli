@@ -4,15 +4,6 @@ import { Divider, Card } from 'antd'
 import qs from 'qs'
 import axiosToornament from '../../../lib/axiosToornament'
 
-const matches = {
-  display: 'flex'
-}
-
-const styleTeam =  {
-  display:'flex',
-  justifyContent: 'space-between'
-}
-
 const colorResult = (result) => {
   switch (result) {
     case "L":
@@ -30,7 +21,7 @@ const getTeam = (team) => {
     fontWeight: team.result === 'win' ? 'bold' : null
   }}>{team.participant.name}</p> : <p>A définir</p>
   const result = team.result ? <p style={colorResult(labelResult)}>{labelResult}</p> : ""
-  return <div style={styleTeam}>{name} {result}</div>
+  return <div style={{ display: 'flex', justifyContent: 'space-between' }}>{name} {result}</div>
 }
 
 class Accueil extends React.Component {
@@ -78,7 +69,7 @@ class Accueil extends React.Component {
 
         <h2>Mes matchs</h2>
 
-        <div style={matches}>
+        <div style={{display: 'flex'}}>
           {this.getMatches()}
         </div>
 

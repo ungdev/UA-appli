@@ -31,20 +31,13 @@ class LeftBar extends React.Component {
         if(tab.length >= 2){
           tab[2] === 'libre' ? openKeys.push(`3-7`) : openKeys.push(`3-${tab[2]}`)
           if(tab.length >= 4) {
-            if(tab[3] === 'arbre-tournois')
-            current = `3-${tab[2]}-1`
-            if(tab[3] === 'teams')
-              current = `3-${tab[2]}-2`
-            if(tab[3] === 'rules')
-              current = `3-${tab[2]}-3`
-            if(tab[3] === 'contact')
-              tab[2] === 'libre' ? current = `3-7-4` : current = `3-${tab[2]}-4`
-            if(tab[3] === 'decks')
-              current = `3-${tab[2]}-2`
-            if(tab[3] === 'info')
-              tab[2] === 'libre' ? current = `3-7-5` : current = `3-${tab[2]}-5`
-            if(tab[3] === 'compare' && tab[2] === 'libre')
-              current = `3-7-2`
+            if(tab[3] === 'arbre-tournois') current = `3-${tab[2]}-1`
+            if(tab[3] === 'teams') current = `3-${tab[2]}-2`
+            if(tab[3] === 'rules') current = `3-${tab[2]}-3`
+            if(tab[3] === 'contact') tab[2] === 'libre' ? current = `3-7-4` : current = `3-${tab[2]}-4`
+            if(tab[3] === 'decks') current = `3-${tab[2]}-2`
+            if(tab[3] === 'info') tab[2] === 'libre' ? current = `3-7-5` : current = `3-${tab[2]}-5`
+            if(tab[3] === 'compare' && tab[2] === 'libre') current = `3-7-2`
           }
         }
       }
