@@ -35,7 +35,7 @@ class LoginForm extends React.Component {
             ]
           })(
             <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)", marginLeft: "-3px" }} />}
               placeholder="Nom d'utilisateur"
             />
           )}
@@ -47,20 +47,22 @@ class LoginForm extends React.Component {
             ]
           })(
             <Input
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)", marginLeft: "-3px" }} />}
               type="password"
               placeholder="Mot de passe"
             />
           )}
         </FormItem>
-        Pas de compte ? <a href='http://arena.utt.fr'>Cliquez ici !</a>
+        <div style={{ marginBottom: "5px", marginTop: "20px", fontSize: "0.9em" }}>
+          Pas de compte ? <a href="https://arena.utt.fr">Cliquez ici !</a>
+        </div>
         <FormItem>
           <Button
             type="primary"
             htmlType="submit"
             className="login-form-button"
           >
-            Log in
+            Connexion
           </Button>
         </FormItem>
       </Form>

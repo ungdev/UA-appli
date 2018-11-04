@@ -1,4 +1,9 @@
 
+table {
+  border: 1px solid #e8e8e8;
+  border-bottom: none;
+}
+
 .social-embed {
   display: flex;
   flex-flow: row wrap;
@@ -50,4 +55,11 @@
   margin-left: auto;
   margin-right: auto;
   width: 47%;
+}
+
+.custom-filter-dropdown {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
 }
