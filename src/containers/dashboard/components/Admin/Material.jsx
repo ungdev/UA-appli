@@ -184,7 +184,9 @@ class Material extends React.Component {
             values += (values !== '' ? ', ' : '') + k + (value[k] !== 1 ? ' (' + value[k] + ')' : '')
           })
 
-          material += (material !== '' ? ', ' : '') + key + ' (' + values + ')'
+          if(values !== '') {
+            material += (material !== '' ? ', ' : '') + key + ' (' + values + ')'
+          }
         }
         else {
           if(value !== 0) {
