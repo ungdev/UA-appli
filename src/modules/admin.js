@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
         spotlights
       }
     case SET_USER_ADMIN:
-      let users = state.users.splice(0)
+      let users = state.users.slice()
       const userId = action.payload
       const index = users.findIndex(u => u.id === userId)
       users[index].isAdmin = 100
@@ -50,7 +50,7 @@ export default (state = initialState, action) => {
         users
       }
     case REMOVE_USER_ADMIN:
-      let users2 = state.users.splice(0)
+      let users2 = state.users.slice()
       const userId2 = action.payload
       const index2 = users2.findIndex(u => u.id === userId2)
       users2[index2].isAdmin = 0
