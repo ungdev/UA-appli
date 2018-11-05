@@ -250,7 +250,7 @@ class Material extends React.Component {
 
       <br /><br />
 
-      {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} />}
+      {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} locale={{ emptyText: 'Aucun résultat' }} />}
       {this.state.by === 'user' && (
         <React.Fragment>
           <Select
@@ -263,7 +263,7 @@ class Material extends React.Component {
             {users.map(user => <Select.Option value={user.name}>{user.name}</Select.Option>)}
           </Select>
           <Button style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearch}><Icon type="close"></Icon></Button>
-          <Table columns={byUserColumns} dataSource={byUserRows} style={{ marginTop: '20px' }} />
+          <Table columns={byUserColumns} dataSource={byUserRows} locale={{ emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} />
         </React.Fragment>
       )}
     </React.Fragment>)
