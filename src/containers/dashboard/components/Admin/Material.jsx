@@ -13,39 +13,39 @@ class Material extends React.Component {
     
     this.state = {
       by: 'material',
-      search: null
+      searchName: null
     }
 
-    this.props.fetchUsers()
-
     this.mainSelectChanged = this.mainSelectChanged.bind(this)
-    this.searchSelectChanged = this.searchSelectChanged.bind(this)
-    this.clearSearch = this.clearSearch.bind(this)
+    this.setSearchName = this.setSearchName.bind(this)
+    this.clearSearchName = this.clearSearchName.bind(this)
+
+    this.props.fetchUsers()
   }
   
   mainSelectChanged(e) {
     this.setState({
       by: e,
-      search: null
+      searchName: null
     })
   }
 
-  searchSelectChanged(v) {
+  setSearchName(v) {
     this.setState({
-      search: v
+      searchName: v
     })
   }
 
-  clearSearch() {
+  clearSearchName() {
     this.setState({
-      search: null
+      searchName: null
     })
   }
 
   render() {
     let users = this.props.users
 
-    // Get users material
+    // Get users material and fullname
     users = users.map(user => {
       let material = []
 
@@ -83,6 +83,7 @@ class Material extends React.Component {
 
         return {
           ...user,
+          fullname : `${user.name} (${user.firstname} ${user.lastname})`,
           material: material
         }
       }
@@ -197,12 +198,14 @@ class Material extends React.Component {
 
       byUserRows.push({
         key: i,
-        name: user.name,
+        fullname: user.fullname,
         material: material
       })
     })
 
-    byUserRows = byUserRows.filter(row => this.state.search !== null ? (row.name.toLowerCase() === this.state.search.toLowerCase()) : true)
+    if(this.state.searchName !== null) {
+      byUserRows = byUserRows.filter(row => row.fullname.includes(this.state.searchName))
+    }
 
     // By material columns
     const byMaterialColumns = [
@@ -227,8 +230,23 @@ class Material extends React.Component {
     const byUserColumns = [
       {
         title: 'Utilisateur',
-        dataIndex: 'name',
-        key: 'user',
+        dataIndex: 'fullname',
+        key: 'fullname',
+        filterDropdown: (
+          <div className="custom-filter-dropdown">
+            <Select
+              showSearch
+              placeholder="Nom d'utilisateur"
+              value={this.state.searchName !== null ? this.state.searchName : undefined}
+              onChange={this.setSearchName}
+              style={{ width: '200px' }}
+            >
+              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+            </Select>
+            <Button title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
+          </div>
+        ),
+        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
       },
       {
         title: 'Matériel',
@@ -253,21 +271,7 @@ class Material extends React.Component {
       <br /><br />
 
       {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} locale={{ emptyText: 'Aucun résultat' }} />}
-      {this.state.by === 'user' && (
-        <React.Fragment>
-          <Select
-            showSearch
-            style={{ width: '200px' }}
-            placeholder="Rechercher un joueur"
-            onChange={this.searchSelectChanged}
-            value={this.state.search ? this.state.search : undefined}
-          >
-            {users.map(user => <Select.Option value={user.name}>{user.name}</Select.Option>)}
-          </Select>
-          <Button style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearch}><Icon type="close"></Icon></Button>
-          <Table columns={byUserColumns} dataSource={byUserRows} locale={{ emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} />
-        </React.Fragment>
-      )}
+      {this.state.by === 'user' && <Table columns={byUserColumns} dataSource={byUserRows} locale={{ emptyText: 'Aucun résultat' }} />}
     </React.Fragment>)
   }
 }
