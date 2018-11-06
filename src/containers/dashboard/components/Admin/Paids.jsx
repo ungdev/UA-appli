@@ -22,6 +22,15 @@ class Paids extends React.Component {
     this.props.fetchChartData()
   }
 
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.data !== this.state.data) {
+      this.setState({
+        data: nextProps.data,
+        chartData: this.chartData(nextProps.data)
+      })
+    }
+  }
+
   setSearchName = (v) => {
     this.setState({
       searchName: v
@@ -56,13 +65,6 @@ class Paids extends React.Component {
   }
 
   render() {
-    if (this.props.data !== this.state.data) {
-      this.setState({
-        data: this.props.data,
-        chartData: this.chartData(this.props.data)
-      })
-    }
-
     const chartOptions = {
       scaleShowGridLines: true,
       scaleGridLineColor: 'rgba(0,0,0,.05)',
@@ -130,7 +132,7 @@ class Paids extends React.Component {
               onChange={this.setSearchName}
               style={{ width: '200px' }}
             >
-              {users.map(user => <Select.Option value={user.fullname}>{user.fullname}</Select.Option>)}
+              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
             </Select>
             <Button title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
           </div>
@@ -204,7 +206,7 @@ class Paids extends React.Component {
         <Line
           data={this.state.chartData}
           options={chartOptions}
-          width="600" height="250" />
+          width={600} height={250} />
       </div>
       <Table columns={columns} dataSource={rows} locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }} rowKey="id" />
     </React.Fragment>)

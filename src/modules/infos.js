@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
       if (!action.payload) return state
       if (!state.infos) state.infos = []
       //test has new elements
-      infos = state.infos.splice(0) // peut poser probleme de splice
+      infos = state.infos.slice()
       if (!infos) infos = []
       action.payload.forEach((info) => {
         let found = infos.find(i => info.id === i.id) // if we find a matching spotlight

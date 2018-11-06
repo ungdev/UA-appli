@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
         spotlights
       }
     case SET_USER_ADMIN:
-      let users = state.users.splice(0)
+      let users = state.users.slice()
       const userId = action.payload
       const index = users.findIndex(u => u.id === userId)
       users[index].isAdmin = 100
@@ -50,7 +50,7 @@ export default (state = initialState, action) => {
         users
       }
     case REMOVE_USER_ADMIN:
-      let users2 = state.users.splice(0)
+      let users2 = state.users.slice()
       const userId2 = action.payload
       const index2 = users2.findIndex(u => u.id === userId2)
       users2[index2].isAdmin = 0
@@ -123,6 +123,39 @@ export const fetchChartData = () => {
       const res = await axios.post(`admin/chart`, { start: '2018-10-16', end: moment().format('YYYY-MM-DD'), step: 'day' }, { headers: { 'X-Token': authToken } })
 
       dispatch({ type: SET_CHARTDATA, payload: res.data })
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
+export const sendReminderMails = () => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      dispatch(
+        notifActions.notifSend({
+          message: 'Envoie en cours ...',
+          dismissAfter: 2000
+      }))
+      const res = await axios.get(`admin/reminders`, { headers: { 'X-Token': authToken } })
+      console.log('result:', res.data)
+      dispatch(
+        notifActions.notifSend({
+          message: JSON.stringify(res.data),
+          dismissAfter: 15000
+      }))
     } catch (err) {
       console.log(err)
       dispatch(
