@@ -135,6 +135,39 @@ export const fetchChartData = () => {
   }
 }
 
+export const sendReminderMails = () => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      dispatch(
+        notifActions.notifSend({
+          message: 'Envoie en cours ...',
+          dismissAfter: 2000
+      }))
+      const res = await axios.get(`admin/reminders`, { headers: { 'X-Token': authToken } })
+      console.log('result:', res.data)
+      dispatch(
+        notifActions.notifSend({
+          message: JSON.stringify(res.data),
+          dismissAfter: 15000
+      }))
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
 export const fetchCounts = () => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token

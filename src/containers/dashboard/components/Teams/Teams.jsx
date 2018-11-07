@@ -48,7 +48,7 @@ class Teams extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  teams: state.teams.teams,
+  teams: state.teams.teams || [],
   spotlights: state.spotlights.spotlights
 })
 

@@ -1,15 +1,38 @@
 
 import React from 'react'
-import { Card, Spin } from 'antd'
+import { Card, Spin, Button, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { fetchCounts } from '../../../../modules/admin'
+import { sendReminderMails } from '../../../../modules/admin'
 import { push } from 'react-router-redux'
 
 class AdminBar extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      modalVisible: false
+    }
     this.props.fetchCounts()
+  }
+
+  openModal = () => {
+    this.setState({
+      modalVisible: true,
+    })
+  }
+
+  sendMails = (e) => {
+    this.props.sendReminderMails()
+    this.setState({
+      modalVisible: false,
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      modalVisible: false,
+    })
   }
 
   render() {
@@ -41,6 +64,17 @@ class AdminBar extends React.Component {
         <em>Nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong>
       </li>
     </ul>) : <Spin/>}
+        <Button type="primary" onClick={this.openModal}>
+          Envoyer les mails de rappel
+        </Button>
+        <Modal
+          title="Êtes vous sûr ?"
+          visible={this.state.modalVisible}
+          onOk={this.sendMails}
+          onCancel={this.closeModal}
+        >
+          <p>Cela enverra une grande quantitée de mails, ne faites ça que si vous êtes sûr de ce que vous faites</p>
+        </Modal>
       </Card>
   }
 }
@@ -51,7 +85,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   redirectToHome: () => dispatch(push('/dashboard/home')),
-  fetchCounts: () => dispatch(fetchCounts())
+  fetchCounts: () => dispatch(fetchCounts()),
+  sendReminderMails: () => dispatch(sendReminderMails())
 })
 
 

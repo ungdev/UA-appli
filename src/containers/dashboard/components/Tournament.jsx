@@ -41,7 +41,7 @@ class Tournament extends React.Component {
   getStages() {
     const { stages, id } = this.state
     if (stages.length) return stages.map((s,i) => 
-      <iframe key={i} width="100%" height="480" src={`https://widget.toornament.com/tournaments/${id}/stages/${s.id}/?_locale=fr_FR&theme=`} scrolling="no" allowFullScreen></iframe>
+      <iframe title="toornamentIFrame" key={i} width="100%" height="480" src={`https://widget.toornament.com/tournaments/${id}/stages/${s.id}/?_locale=fr_FR&theme=`} scrolling="no" allowFullScreen></iframe>
     )
   }
 
