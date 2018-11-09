@@ -55,6 +55,9 @@ class AdminBar extends React.Component {
         <em>Nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong>
       </li>
       <li>
+        <em>Nombre de joueurs libre : </em><strong>{this.props.counts.totalFreePlayers}</strong>
+      </li>
+      <li>
         <em>Nombre d'équipes : </em><strong>{this.props.counts.totalTeams}</strong>
       </li>
       <li>
