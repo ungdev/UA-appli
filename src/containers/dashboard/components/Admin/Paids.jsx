@@ -15,7 +15,8 @@ class Paids extends React.Component {
     this.state = {
       searchName: null,
       data: [],
-      chartData: this.chartData([])
+      chartDataDayly: this.chartData([]),
+      chartDataCumul: this.chartData([]),
     }
 
     this.props.fetchUsers()
@@ -26,7 +27,8 @@ class Paids extends React.Component {
     if (nextProps.data !== this.state.data) {
       this.setState({
         data: nextProps.data,
-        chartData: this.chartData(nextProps.data)
+        chartDataDayly: this.chartData(nextProps.data.dayly),
+        chartDataCumul: this.chartData(nextProps.data.cumul),
       })
     }
   }
@@ -208,7 +210,11 @@ class Paids extends React.Component {
       <AdminBar/>
       <div style={chartStyles}>
         <Line
-          data={this.state.chartData}
+          data={this.state.chartDataDayly}
+          options={chartOptions}
+          width={600} height={250} />
+        <Line
+          data={this.state.chartDataCumul}
           options={chartOptions}
           width={600} height={250} />
       </div>
@@ -220,7 +226,7 @@ class Paids extends React.Component {
 const mapStateToProps = state => ({
   users: state.admin.users,
   spotlights: state.spotlights.spotlights,
-  data: state.admin.chartData
+  data: state.admin.chartData ? state.admin.chartData : { dayly: [], cumul: [] }
 })
 
 const mapDispatchToProps = dispatch => ({
