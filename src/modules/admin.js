@@ -13,7 +13,7 @@ export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
 const initialState = {
   users: [],
   spotlights: [],
-  chartData: [],
+  chartData: { dayly: [], cumul: [] },
 }
 
 export default (state = initialState, action) => {
@@ -120,9 +120,20 @@ export const fetchChartData = () => {
     }
 
     try {
-      const res = await axios.post(`admin/chart`, { start: '2018-10-16', end: moment().format('YYYY-MM-DD'), step: 'day' }, { headers: { 'X-Token': authToken } })
+      const res = await axios.post(`admin/chart`, {
+        start: '2018-10-16',
+        end: moment().format('YYYY-MM-DD'),
+        step: 'day',
+        mode: 'dayly',
+      }, { headers: { 'X-Token': authToken } })
+      const res2 = await axios.post(`admin/chart`, {
+        start: '2018-10-16',
+        end: moment().format('YYYY-MM-DD'),
+        step: 'day',
+        mode: 'cumul',
+      }, { headers: { 'X-Token': authToken } })
 
-      dispatch({ type: SET_CHARTDATA, payload: res.data })
+      dispatch({ type: SET_CHARTDATA, payload: { dayly: res.data, cumul: res2.data} })
     } catch (err) {
       console.log(err)
       dispatch(
