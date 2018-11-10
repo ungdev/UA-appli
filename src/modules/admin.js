@@ -8,6 +8,7 @@ export const SET_COUNTS = 'admin/SET_COUNTS'
 export const SET_SPOTLIGHT = 'admin/SET_SPOTLIGHT'
 export const SET_CHARTDATA = 'admin/SET_CHARTDATA'
 export const SET_USER_ADMIN = 'admin/SET_USER_ADMIN'
+export const SET_USER_PAID = 'admin/SET_USER_PAID'
 export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
 
 const initialState = {
@@ -58,6 +59,15 @@ export default (state = initialState, action) => {
         ...state,
         users: users2
       }
+    case SET_USER_PAID:
+      let users3 = state.users.slice()
+      const userId3 = action.payload
+      const index3 = users3.findIndex(u => u.id === userId3)
+      users3[index3].paid = 1
+      return {
+        ...state,
+        users: users3
+      }
     default:
       return state
   }
@@ -99,6 +109,41 @@ export const fetchAdminSpotlight = (id) => {
       const res = await axios.get(`admin/spotlight/${id}`, { headers: { 'X-Token': authToken } })
 
       dispatch({ type: SET_SPOTLIGHT, payload: { id, spotlight: res.data } })
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
+export const validatePayment = (userId) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+    dispatch(
+      notifActions.notifSend({
+        message: 'Demande de paiement reçue, merci de patienter...',
+        kind: 'warning',
+        dismissAfter: 2000
+    }))
+    try {
+      const res = await axios.post(`admin/pay`, { userId }, { headers: { 'X-Token': authToken } })
+      if(res.status === 200) {
+        dispatch({ type: SET_USER_PAID, payload: userId })
+        dispatch(
+          notifActions.notifSend({
+            message: 'Payment validé',
+            dismissAfter: 2000
+        }))
+      }
     } catch (err) {
       console.log(err)
       dispatch(
