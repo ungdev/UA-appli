@@ -29,7 +29,7 @@ class AdminBar extends React.Component {
     })
   }
 
-  handleCancel = () => {
+  closeModal = () => {
     this.setState({
       modalVisible: false,
     })
