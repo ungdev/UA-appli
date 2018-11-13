@@ -1,8 +1,8 @@
 import axios from '../lib/axios'
 import { actions as notifActions } from 'redux-notifications'
 
-export const SET_MESSAGES = 'infos/SET_INFOS'
-export const SET_MESSAGES_LOADING = 'infos/SET_INFOS'
+export const SET_MESSAGES = 'messages/SET_MESSAGES'
+export const SET_MESSAGES_LOADING = 'messages/SET_MESSAGES'
 
 const initialState = {
   messages: [],
@@ -44,34 +44,47 @@ export const fetchMessages = () => {
   }
 }
 
-// export const sendMessage = (spotlight, title, content) => {
-//   return async (dispatch, getState) => {
-//     const authToken = getState().login.token
-//     if (!authToken || authToken.length === 0) return
-//     try {
-//       const res = await axios.post(`infos/${spotlight}`, { title, content }, { headers: { 'X-Token': authToken } })
-//       if(res.status === 200) {
-//         dispatch(
-//           notifActions.notifSend({
-//             message: 'Message envoyé avec succès',
-//             dismissAfter: 2000
-//           })
-//         )
-//       }
-//     }
-//     catch (e){
-//       console.log(e)
-//       dispatch(
-//         notifActions.notifSend({
-//           message: 'Une erreur est survenue',
-//           kind: 'danger',
-//           dismissAfter: 2000
-//         })
-//       )
-//     }
+export const fetchMessagesByIdUser = (idTo) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+    if (!authToken || authToken.length === 0) return
+    const messages = await axios.get(`messages/${idTo}`, { headers: { 'X-Token': authToken } })
+    dispatch({
+      type: SET_MESSAGES,
+      payload: messages.data
+    })
     
-//   }
-// }
+  }
+}
+
+export const sendMessage = (message) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+    if (!authToken || authToken.length === 0) return
+    try {
+      const res = await axios.post(`messages`, { message }, { headers: { 'X-Token': authToken } })
+      if(res.status === 200) {
+        dispatch(
+          notifActions.notifSend({
+            message: 'Message envoyé avec succès',
+            dismissAfter: 2000
+          })
+        )
+      }
+    }
+    catch (e){
+      console.log(e)
+      dispatch(
+        notifActions.notifSend({
+          message: 'Une erreur est survenue',
+          kind: 'danger',
+          dismissAfter: 2000
+        })
+      )
+    }
+    
+  }
+}
 
 
 

@@ -17,6 +17,7 @@ import Spotlights from './components/Admin/Spotlights'
 import Compare from './components/Libre/Compare'
 import DashboardLayout from './layout'
 import Messenger from './components/Messenger/Messenger'
+import Conversations from './components/Conversations/Conversations'
 import { push } from 'react-router-redux'
 
 
@@ -70,8 +71,13 @@ class Dashboard extends Component {
       if(tab[2] === 'users') component = <UsersList />
       if(tab[2] === 'paids') component = <Paids />
       if(tab[2] === 'spotlights') component = <Spotlights />
+      if(tab[2] === 'conversations') component = <Conversations />
+      if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
+
     }
     if(tab[0] === 'dashboard' && tab[1] === 'messages' && tab.length === 2) component = <Messenger />
+    // if(tab[0] === 'dashboard' && tab[1] === 'conversations' && tab.length === 2) component = <Conversations />
+
 
 
     if(component === '') {

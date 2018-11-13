@@ -13,6 +13,7 @@ import contact from './contact'
 import infos from './infos'
 import admin from './admin'
 import messages from './messages'
+import conversations from './conversations'
 
 export default combineReducers({
   routing: routerReducer,
@@ -29,4 +30,5 @@ export default combineReducers({
   infos,
   admin,
   messages,
+  conversations,
 })
