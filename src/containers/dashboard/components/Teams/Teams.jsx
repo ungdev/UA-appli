@@ -16,6 +16,7 @@ class Teams extends React.Component {
     let { teams } = this.props
     if (!teams) return <Spin/>
     teams = teams.filter(team => `${team.spotlightId}` === this.props.tournament)
+                  .filter(team => team.isInSpotlight)
     const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
     if(!spotlight) return <Spin/>
     const teamsToDisplay = `Equipes pour ${spotlight.name}`
@@ -47,7 +48,7 @@ class Teams extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  teams: state.teams.teams,
+  teams: state.teams.teams || [],
   spotlights: state.spotlights.spotlights
 })
 

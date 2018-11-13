@@ -1,9 +1,26 @@
-/* .logo {
-  height: 80px;
-  margin: 0 auto;
-} */
 
-.tabTitle {
+table {
+  border: 1px solid #e8e8e8;
+  border-bottom: none;
+}
+
+.social-embed {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
+}
+
+.social-embed > div {
+  display: inline-block;
+  margin: 20px;
+}
+
+.social-embed iframe {
+  height: 700px;
+  width: 500px;
+  border: none;
 }
 
 .tabTitleName {
@@ -11,10 +28,6 @@
 }
 .tabTitleHero {
   font-size: smaller;
-}
-
-.cardTab {
-  weight: 60%;
 }
 
 .flex-card {
@@ -44,6 +57,7 @@
   width: 47%;
 }
 
+<<<<<<< HEAD
 .sender{
   max-width:50%;
   margin-left: 50%;
@@ -55,3 +69,11 @@
   margin-right: 50%;
   margin-bottom: 10px;
 }
+=======
+.custom-filter-dropdown {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+>>>>>>> master

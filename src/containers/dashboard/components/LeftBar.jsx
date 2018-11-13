@@ -20,11 +20,19 @@ class LeftBar extends React.Component {
         openKeys.push('2')
         if(tab[2] === 'users') current = `2-1`
         if(tab[2] === 'paids') current = `2-2`
+<<<<<<< HEAD
         if(tab[3] == 'conversations') current= '2-3'
         if(tab.length >= 3 && tab[3] === 'spotlights'){
           openKeys.push('2-4')
           current = `2-4-${tab[3]}`
+=======
+        if(tab[2] === 'material') current = `2-4`
+        if(tab.length >= 2 && tab[2] === 'spotlights'){
+          openKeys.push('2-3')
+          current = `2-3-${tab[3]}`
+>>>>>>> master
         }
+        if(tab[2] === 'material') current = `2-4`
       }
       if(tab[1] === 'tournois'){
         openKeys.push('3')
@@ -45,6 +53,8 @@ class LeftBar extends React.Component {
               tab[2] === 'libre' ? current = `3-7-5` : current = `3-${tab[2]}-5`
             if(tab[3] === 'compare' && tab[2] === 'libre')
               current = `3-7-2`
+            if(tab[3] === 'calendar' && tab[2] === 'libre')
+              current = `3-7-1`
           }
         }
       }
@@ -143,7 +153,7 @@ class LeftBar extends React.Component {
           >
             <Menu.Item key="2-1">
               <Link to={`/dashboard/admin/users`}>
-                <Icon type="team" />
+                <Icon type="user" />
                 <span>Utilisateurs</span>
               </Link>
             </Menu.Item>
@@ -163,8 +173,8 @@ class LeftBar extends React.Component {
               key="2-4"
               title={
                 <span>
-                  <Icon type="euro" />
-                  <span>Équipe inscrite</span>
+                  <Icon type="team" />
+                  <span>Équipes inscrites</span>
                 </span>
               }
             >
@@ -177,6 +187,12 @@ class LeftBar extends React.Component {
               </Menu.Item>
             ))}
             </SubMenu>
+            <Menu.Item key="2-4">
+              <Link to={`/dashboard/admin/material`}>
+                <Icon type="desktop" />
+                <span>Matériel</span>
+              </Link>
+            </Menu.Item>
           </SubMenu>
         ) : null}
         <SubMenu
@@ -198,9 +214,11 @@ class LeftBar extends React.Component {
                 <span>Libre</span>
               </span>
             }>
-            <Menu.Item key={`3-${spotlights.length + 1}`}>
-              <Icon type="calendar" />
-              <span>Planning prev</span>
+            <Menu.Item key={`3-${spotlights.length + 1}-1`}>
+              <Link to={`/dashboard/tournois/libre/calendar`}>
+                <Icon type="calendar" />
+                <span>Planning</span>
+              </Link>
             </Menu.Item>
             <Menu.Item key={`3-${spotlights.length + 1}-2`}>
               <Link to={`/dashboard/tournois/libre/compare`}>
@@ -222,69 +240,17 @@ class LeftBar extends React.Component {
             </Menu.Item>
           </SubMenu>
         </SubMenu>
-        <SubMenu
-          key="4"
-          title={
-            <span>
-              <Icon type="rocket" />
-              <span>Animations</span>
-            </span>
-          }>
-          <Menu.Item key="4-1">
-            <Icon type="calendar" />
-            <span>Planning scène</span>
-          </Menu.Item>
-          <Menu.Item key="4-2">
-            <Icon type="environment-o" />
-            <span>Plan UA</span>
-          </Menu.Item>
-        </SubMenu>
-        <SubMenu
-          key="5"
-          title={
-            <span>
-              <Icon type="shop" />
-              <span>Shopping</span>
-            </span>
-          }>
-          <SubMenu
-            key="5-1"
-            title={
-              <span>
-                <Icon type="coffee" />
-                <span>Buvette</span>
-              </span>
-            }>
-            <Menu.Item key="5-1-1">
-              <Icon type="form" />
-              <span>Carte</span>
-            </Menu.Item>
-            <Menu.Item key="5-1-2">
-              <Icon type="dashboard" />
-              <span>Attente</span>
-            </Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="5-2"
-            title={
-              <span>
-                <Icon type="skin" />
-                <span>Magasin</span>
-              </span>
-            }>
-            <Menu.Item key="5-2-1">
-              <Icon type="book" />
-              <span>Catalogue</span>
-            </Menu.Item>
-          </SubMenu>
-        </SubMenu>
         <Menu.Item key="6">
-          <Icon type="star-o" />
-          <span>Partenaires</span>
+          <a href="https://arena.utt.fr/partners">
+            <Icon type="star-o" />
+            <span>Partenaires</span>
+          </a>
         </Menu.Item>
         <Menu.Item key="7">
-          <Icon type="copyright" />
-          <span>Mentions légales</span>
+          <a href="https://arena.utt.fr/mentions-legales">
+            <Icon type="copyright" />
+            <span>Mentions légales</span>
+          </a>
         </Menu.Item>
       </Menu>
     )

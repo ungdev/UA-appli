@@ -27,7 +27,7 @@ const Intro = props => {
         <div className="a-intro__images__image" style={imgs[3]} />
         <div className="a-intro__images__image" style={imgs[4]} />
       </div>
-      <div className="a-intro__logo">
+      <div className="a-intro__login">
         <LoginForm />
       </div>
     </div>

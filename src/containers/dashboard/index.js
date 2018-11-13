@@ -14,7 +14,9 @@ import Contact from './components/Contact/Contact'
 import UsersList from './components/Admin/UsersList'
 import Paids from './components/Admin/Paids'
 import Spotlights from './components/Admin/Spotlights'
+import Material from './components/Admin/Material'
 import Compare from './components/Libre/Compare'
+import Calendar from './components/Libre/Calendar'
 import DashboardLayout from './layout'
 import Messenger from './components/Messenger/Messenger'
 import Conversations from './components/Conversations/Conversations'
@@ -66,14 +68,19 @@ class Dashboard extends Component {
       if(tab[3] === 'decks' && tab[2] === "5") component = <HsDecks />
       if(tab[3] === 'info') component = <Info tournament={tab[2]} />
       if(tab[3] === 'compare' && tab[2] === 'libre') component = <Compare />
+      if(tab[3] === 'calendar' && tab[2] === 'libre') component = <Calendar />
     }
     if(tab[0] === 'dashboard' && tab[1] === 'admin') {
       if(tab[2] === 'users') component = <UsersList />
       if(tab[2] === 'paids') component = <Paids />
       if(tab[2] === 'spotlights') component = <Spotlights />
+<<<<<<< HEAD
       if(tab[2] === 'conversations') component = <Conversations />
       if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
 
+=======
+      if(tab[2] === 'material') component = <Material />
+>>>>>>> master
     }
     if(tab[0] === 'dashboard' && tab[1] === 'messages' && tab.length === 2) component = <Messenger />
     // if(tab[0] === 'dashboard' && tab[1] === 'conversations' && tab.length === 2) component = <Conversations />

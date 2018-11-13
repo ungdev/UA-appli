@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     case SET_SPOTLIGHTS:
       if (!action.payload) return state
       if (!state.spotlights) state.spotlights = []
-      spotlights = state.spotlights.splice(0)
+      spotlights = state.spotlights.slice()
       if (!spotlights) spotlights = []
       action.payload.forEach((spotlight) => {
         let found = spotlights.find(s => spotlight.id === s.id) // if we find a matching spotlight
