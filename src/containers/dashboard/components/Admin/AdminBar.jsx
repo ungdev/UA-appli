@@ -37,11 +37,7 @@ class AdminBar extends React.Component {
   }
 
   render() {
-    if(!this.props.user) {
-      return null
-    }
-
-    if(this.props.user.isAdmin !== 100) {
+    if(this.props.user && this.props.user.isAdmin !== 100) {
       this.props.redirectToHome()
     }
 
