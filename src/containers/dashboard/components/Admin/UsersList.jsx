@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Icon, Table } from 'antd'
+import { Icon, Table, Select, Button } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
@@ -10,18 +10,26 @@ import { fetchUsers } from '../../../../modules/admin'
 class UsersList extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
-      searchText: '',
+      searchName: null,
     }
+
     this.props.fetchUsers()
   }
-  handleSearch = (e) => {
-    this.setState({ searchText: e.target.value })
+
+  setSearchName = (v) => {
+    this.setState({
+      searchName: v
+    })
   }
 
-  filterRole = (record, value) => {
-    return record.role ? record.role.includes(value) : false
+  clearSearchName = () => {
+    this.setState({
+      searchName: null
+    })
   }
+
   getTournamentNameById = (id) => {
     const spotlight = this.props.spotlights.find(spotlight => spotlight.id === id)
     return spotlight ? spotlight.shortName : id
@@ -29,12 +37,21 @@ class UsersList extends React.Component {
   
   render() {
     let { users } = this.props
+
     users = users.map(user => {
       let role = ''
-      if(user.isAdmin === 100) role = '/Admin'
-      if(user.respo && user.respo !== 0) role = `${role}/Respo ${this.getTournamentNameById(user.respo)}`
-      if((!user.respo || (user.respo && user.respo === 0)) && user.isAdmin !== 100) role = '/Joueur'
+      if(user.isAdmin === 100) {
+        role = '/Admin'
+      }
+      if(user.respo && user.respo !== 0) {
+        role += `/Respo ${this.getTournamentNameById(user.respo)}`
+      }
+      if((!user.respo || (user.respo && user.respo === 0)) && user.isAdmin !== 100) {
+        role = '/Joueur'
+      }
+
       role = role.substr(1)
+
       return {
         ...user,
         fullname: `${user.name} (${user.firstname} ${user.lastname})`,
@@ -42,78 +59,110 @@ class UsersList extends React.Component {
         spotlight: this.getTournamentNameById(user.spotlightId),
       }
     })
-    users = users.filter(user => user.fullname.includes(this.state.searchText))
-    const columns = [{
-        title: 'utilisateur',
+
+    let rows = users
+    if(this.state.searchName !== null) {
+      rows = users.filter(user => user.fullname.includes(this.state.searchName))
+    }
+
+    const columns = [
+      {
+        title: 'Utilisateur',
         dataIndex: 'fullname',
         key: 'fullname',
         filterDropdown: (
           <div className="custom-filter-dropdown">
-            <Input
-              placeholder="Search name"
-              value={this.state.searchText}
-              onChange={this.handleSearch}
-            />
+            <Select
+              showSearch
+              placeholder="Nom d'utilisateur"
+              value={this.state.searchName !== null ? this.state.searchName : undefined}
+              onChange={this.setSearchName}
+              style={{ width: '200px' }}
+            >
+              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+            </Select>
+            <Button title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
           </div>
         ),
-        filterIcon: <Icon type="filter" style={{ color: this.state.searchText !== '' ? '#108ee9' : '#aaa' }} />,
-      }, {
+        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
+      },
+      {
         title: 'Mail',
         dataIndex: 'email',
         key: 'email',
-      }, {
+      },
+      {
         title: 'Rôle',
         dataIndex: 'role',
         key: 'role',
-        filters: [{
-          text: 'Admin',
-          value: 'Admin',
-        }, {
-          text: 'Respo Tournoi',
-          value: 'Respo',
-        }, {
-          text: 'Joueur',
-          value: 'Joueur',
-        }],
-        onFilter: (value, record) => this.filterRole(record, value),
-      }, {
+        filters: [
+          {
+            text: 'Admin',
+            value: 'Admin',
+          },
+          {
+            text: 'Respo Tournoi',
+            value: 'Respo',
+          },
+          {
+            text: 'Joueur',
+            value: 'Joueur',
+          }
+        ],
+        onFilter: (value, record) => record.role ? record.role.includes(value) : false
+      },
+      {
         title: 'Équipe',
         dataIndex: 'team',
         key: 'team',
-      }, {
+      },
+      {
         title: 'Tournoi',
         dataIndex: 'spotlight',
         key: 'spotlight',
-        filters: [{
-          text: 'LoL (pro)',
-          value: 'LoL (pro)',
-        }, {
-          text: 'LoL (amateur)',
-          value: 'LoL (amateur)',
-        }, {
-          text: 'Fortnite',
-          value: 'Fortnite',
-        }, {
-          text: 'CS:GO',
-          value: 'CS:GO',
-        }, {
-          text: 'Hearthstone',
-          value: 'Hearthstone',
-        }, {
-          text: 'SSBU',
-          value: 'SSBU',
-        }],
+        filters: [
+          {
+            text: 'LoL (pro)',
+            value: 'LoL (pro)',
+          },
+          {
+            text: 'LoL (amateur)',
+            value: 'LoL (amateur)',
+          },
+          {
+            text: 'Fortnite',
+            value: 'Fortnite',
+          },
+          {
+            text: 'CS:GO',
+            value: 'CS:GO',
+          },
+          {
+            text: 'Hearthstone',
+            value: 'Hearthstone',
+          },
+          {
+            text: 'SSBU',
+            value: 'SSBU',
+          },
+          {
+            text: 'OSU',
+            value: 'OSU',
+          }
+        ],
         onFilter: (value, record) => record.spotlight === value,
-      },{
+      },
+      {
         title: 'Actions',
         key: 'action',
         dataIndex: 'id',
         render: (id) => <UserListActions userId={id} users={this.props.users}/>
-      },
+      }
     ]
+
     return (<React.Fragment>
       <AdminBar/>
-      <Table columns={columns} dataSource={users}  rowKey="id" />
+      <Table columns={columns} dataSource={rows} locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
     </React.Fragment>)
   }
 }

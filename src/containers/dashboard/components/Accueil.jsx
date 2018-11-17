@@ -29,13 +29,13 @@ class Accueil extends React.Component {
   state = { matches: [] }
 
   componentDidMount() {
-    this.fetchMatches()
+    //this.fetchMatches()
   }
 
   getMatches() {
     const { matches } = this.state
     console.log('MATCHES:  ', matches)
-    if (matches.length) {
+    if (matches.length > 0) {
       return matches.map((m,i) => (
         <Card title={`Match ${i+1}`} key={i} style={{ width: 300, margin: '0 1rem' }}>
           {m.opponents.map(team => getTeam(team))}
@@ -69,8 +69,8 @@ class Accueil extends React.Component {
 
         <h2>Mes matchs</h2>
 
-        <div style={{display: 'flex'}}>
-          {this.getMatches()}
+        <div style={matches}>
+          {/*this.getMatches()*/}
         </div>
 
         <Divider />

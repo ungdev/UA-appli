@@ -9,12 +9,15 @@ import { fetchAdminSpotlight } from '../../../../modules/admin'
 class Spotlights extends React.Component {
   constructor(props) {
     super(props)
+    
     this.state = {
       searchText: '',
       id: this.props.location.split('/')[4]
     }
+
     this.props.fetchAdminSpotlight(this.state.id)
   }
+  
   handleSearch = (e) => {
     this.setState({ searchText: e.target.value })
   }
@@ -22,25 +25,43 @@ class Spotlights extends React.Component {
   render() {
     let { spotlights, location } = this.props
     let { id } = this.state
+
     let currentId = location.split('/')[4]
+
     if(currentId !== id) {
       this.setState({ id: currentId })
       this.props.fetchAdminSpotlight(currentId)
     }
-    if (!spotlights) return <Spin/>
-    if (!spotlights[id]) return <Spin/>
-    let teams = spotlights[id]
-    const columns = [{
-        title: 'équipe',
+
+    if (!spotlights || !spotlights[id]) {
+      return <Spin/>
+    }
+
+    let rows = spotlights[id].map(team => {
+      let date = new Date(team.completed_at.substring(0, 19)) // Remove '+00:00' at the end
+
+      date = date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR')
+
+      return {
+        ...team,
+        date: date
+      }
+    })
+
+    const columns = [
+      {
+        title: 'Équipe',
         dataIndex: 'name',
-      },{
-        title: 'date de complétion',
-        dataIndex: 'completed_at',
       },
+      {
+        title: 'Date de complétion',
+        dataIndex: 'date',
+      }
     ]
+
     return (<React.Fragment>
       <AdminBar/>
-      <Table columns={columns} dataSource={teams} rowKey="id" />
+      <Table columns={columns} dataSource={rows} locale={{ emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
     </React.Fragment>)
   }
 }

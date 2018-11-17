@@ -1,26 +1,20 @@
 import React from 'react'
-import { Divider, Spin, Button } from 'antd'
+import { Divider } from 'antd'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { connect } from 'react-redux'
 import { fetchInfos, sendMessage, SET_INFOS_LOADING } from '../../../../modules/infos'
-import axios from '../../../../lib/axios'
 
 
-class Compare extends React.Component {
+class Calendar extends React.Component {
 
   render() {
     return (
       <div>
         <GameStatusBar game="libre" />
         <Divider />
-        <Spin/>
-        <Button onClick={this.buttonclicked} />
+        <iframe title="libreCalendar" src="https://calendar.google.com/calendar/b/1/embed?showPrint=0&amp;showTz=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=4mdfsfsmm9m4jbap8qlht0opao%40group.calendar.google.com&amp;color=%238D6F47&amp;ctz=Europe%2FParis" width="800" height="600" scrolling="no"></iframe>
       </div>
     )
-  }
-  buttonclicked() {
-    console.log("????")
-    axios.post('auth/openid').then(r => console.log(r)).catch(e => console.log(e))
   }
 }
 
@@ -40,4 +34,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Compare)
+)(Calendar)

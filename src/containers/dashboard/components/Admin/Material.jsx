@@ -13,77 +13,82 @@ class Material extends React.Component {
     
     this.state = {
       by: 'material',
-      search: null
+      searchName: null
     }
 
-    this.props.fetchUsers()
-
     this.mainSelectChanged = this.mainSelectChanged.bind(this)
-    this.searchSelectChanged = this.searchSelectChanged.bind(this)
-    this.clearSearch = this.clearSearch.bind(this)
+    this.setSearchName = this.setSearchName.bind(this)
+    this.clearSearchName = this.clearSearchName.bind(this)
+
+    this.props.fetchUsers()
   }
   
   mainSelectChanged(e) {
     this.setState({
       by: e,
-      search: null
+      searchName: null
     })
   }
 
-  searchSelectChanged(v) {
+  setSearchName(v) {
     this.setState({
-      search: v
+      searchName: v
     })
   }
 
-  clearSearch() {
+  clearSearchName() {
     this.setState({
-      search: null
+      searchName: null
     })
   }
 
   render() {
     let users = this.props.users
 
-    // Get users material
+    // Get users material and fullname
     users = users.map(user => {
       let material = []
 
-      user.orders.forEach(order => {
-        if(order.paid === true) {
-          Object.keys(order.material).forEach(key => {
-            let value = order.material[key]
+      if(user.orders) {
+        user.orders.forEach(order => {
+          if(order.paid === true) {
+            Object.keys(order.material).forEach(key => {
+              let value = order.material[key]
 
-            if(typeof material[key] === 'undefined') {
-              if(typeof value === 'boolean' || typeof value === 'number') {
-                material[key] = 0
-              }
-              else {
-                material[key] = []
-              }
-            }
-
-            if(typeof value === 'boolean' && value === true) {
-              material[key]++
-            }
-            else if(typeof value === 'number' && value > 0) {
-              material[key] += value
-            }
-            else if(typeof value === 'string' && value !== '' && value !== 'none') {
-              if(typeof material[key][value] === 'undefined') {
-                material[key][value] = 0
+              if(typeof material[key] === 'undefined') {
+                if(typeof value === 'boolean' || typeof value === 'number') {
+                  material[key] = 0
+                }
+                else {
+                  material[key] = []
+                }
               }
 
-              material[key][value]++
-            }
-          })
+              if(typeof value === 'boolean' && value === true) {
+                material[key]++
+              }
+              else if(typeof value === 'number' && value > 0) {
+                material[key] += value
+              }
+              else if(typeof value === 'string' && value !== '' && value !== 'none') {
+                if(typeof material[key][value] === 'undefined') {
+                  material[key][value] = 0
+                }
+
+                material[key][value]++
+              }
+            })
+          }
+        })
+
+        return {
+          ...user,
+          fullname : `${user.name} (${user.firstname} ${user.lastname})`,
+          material: material
         }
-      })
-
-      return {
-        ...user,
-        material: material
       }
+
+      return user
     })
 
     // By material rows
@@ -91,62 +96,65 @@ class Material extends React.Component {
     let materials = []
 
     users.forEach(user => {
-      Object.keys(user.material).forEach(key => {
-        let value = user.material[key]
+      if(user.material) {
+        Object.keys(user.material).forEach(key => {
+          let value = user.material[key]
 
-        if(typeof materials[key] === 'undefined') {
-          if(Array.isArray(value)) {
-            materials[key] = {
-              material: key,
-              values: [],
-              users: ''
+          if(typeof materials[key] === 'undefined') {
+            if(Array.isArray(value)) {
+              materials[key] = {
+                material: key,
+                values: [],
+                users: ''
+              }
+            }
+            else {
+              materials[key] = {
+                material: key,
+                count: 0,
+                users: ''
+              }
             }
           }
-          else {
-            materials[key] = {
-              material: key,
-              count: 0,
-              users: ''
-            }
+
+          if(typeof value === 'boolean' && value === true) {
+            materials[key].count++
+            materials[key].users += (materials[key].users !== '' ? ', ' : '') + user.name
           }
-        }
+          else if(typeof value === 'number' && value > 0) {
+            materials[key].count += value
+            materials[key].users += (materials[key].users !== '' ? ', ' : '') + user.name + ' (' + value + ')'
+          }
+          else if(Array.isArray(value)) {
+            Object.keys(value).forEach(v => {
+              if(typeof materials[key].values[v] === 'undefined') {
+                materials[key].values[v] = 0
+              }
 
-        if(typeof value === 'boolean' && value === true) {
-          materials[key].count++
-          materials[key].users += (materials[key].users !== '' ? ', ' : '') + user.name
-        }
-        else if(typeof value === 'number' && value > 0) {
-          materials[key].count += value
-          materials[key].users += (materials[key].users !== '' ? ', ' : '') + user.name + ' (' + value + ')'
-        }
-        else if(Array.isArray(value)) {
-          Object.keys(value).forEach(v => {
-            if(typeof materials[key].values[v] === 'undefined') {
-              materials[key].values[v] = 0
-            }
+              materials[key].values[v] += value[v]
+              
+              if(materials[key].users.indexOf(user.name) === -1) {
+                let userValues = ''
+                Object.keys(value).forEach(k => {
+                  userValues += (userValues !== '' ? ', ' : '') + k + (value[k] !== 1 ? ' (' + value[k] + ')' : '')
+                })
 
-            materials[key].values[v] += value[v]
-            
-            if(materials[key].users.indexOf(user.name) === -1) {
-              let userValues = ''
-              Object.keys(value).forEach(val => {
-                userValues += (userValues !== '' ? ', ' : '') + val + ' (' + value[val] + ')'
-              })
-
-              materials[key].users += (materials[key].users !== '' ? ', ' : '') + user.name + ' (' + userValues + ')'
-            }
-          })
-        }
-      })
+                materials[key].users += (materials[key].users !== '' ? ', ' : '') + user.name + ' (' + userValues + ')'
+              }
+            })
+          }
+        })
+      }
     })
 
     let i = 0
     Object.keys(materials).forEach(key => {
       let count = ''
+      let materialValues = materials[key].values
 
-      if(typeof materials[key].values !== 'undefined') {
-        Object.keys(materials[key].values).forEach(k => {
-          count += (count !== '' ? ', ' : '') + k + ' (' + materials[key].values[k] + ')'
+      if(typeof materialValues !== 'undefined') {
+        Object.keys(materialValues).forEach(k => {
+          count += (count !== '' ? ', ' : '') + k + (materialValues[k] !== 1 ? ' (' + materialValues[k] + ')' : '')
         })
       }
       else {
@@ -170,26 +178,34 @@ class Material extends React.Component {
       Object.keys(user.material).forEach(key => {
         let value = user.material[key]
 
-        if(value !== 0) {
-          material += (material !== '' ? ', ' : '') + key + ' (' + value + ')'
+        if(typeof value === 'object') {
+          let values = ''
+
+          Object.keys(value).forEach(k => {
+            values += (values !== '' ? ', ' : '') + k + (value[k] !== 1 ? ' (' + value[k] + ')' : '')
+          })
+
+          if(values !== '') {
+            material += (material !== '' ? ', ' : '') + key + ' (' + values + ')'
+          }
+        }
+        else {
+          if(value !== 0) {
+            material += (material !== '' ? ', ' : '') + key + ' (' + value + ')'
+          }
         }
       })
 
       byUserRows.push({
         key: i,
-        name: user.name,
+        fullname: user.fullname,
         material: material
       })
     })
 
-    byUserRows = byUserRows.filter(row => this.state.search !== null ? (row.name.toLowerCase() === this.state.search.toLowerCase()) : true)
-
-    // By user search options
-    let usernameOptions = []
-
-    users.forEach((user, i) => {
-      usernameOptions.push(<Select.Option value={user.name} key={i}>{user.name}</Select.Option>)
-    })
+    if(this.state.searchName !== null) {
+      byUserRows = byUserRows.filter(row => row.fullname.includes(this.state.searchName))
+    }
 
     // By material columns
     const byMaterialColumns = [
@@ -214,8 +230,23 @@ class Material extends React.Component {
     const byUserColumns = [
       {
         title: 'Utilisateur',
-        dataIndex: 'name',
-        key: 'user',
+        dataIndex: 'fullname',
+        key: 'fullname',
+        filterDropdown: (
+          <div className="custom-filter-dropdown">
+            <Select
+              showSearch
+              placeholder="Nom d'utilisateur"
+              value={this.state.searchName !== null ? this.state.searchName : undefined}
+              onChange={this.setSearchName}
+              style={{ width: '200px' }}
+            >
+              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+            </Select>
+            <Button title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
+          </div>
+        ),
+        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
       },
       {
         title: 'Matériel',
@@ -239,22 +270,8 @@ class Material extends React.Component {
 
       <br /><br />
 
-      {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} />}
-      {this.state.by === 'user' && (
-        <React.Fragment>
-          <Select
-            showSearch
-            style={{ width: '200px' }}
-            placeholder="Rechercher un joueur"
-            onChange={this.searchSelectChanged}
-            value={this.state.search ? this.state.search : undefined}
-          >
-            {usernameOptions}
-          </Select>
-          <Button style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearch}><Icon type="close"></Icon></Button>
-          <Table columns={byUserColumns} dataSource={byUserRows} style={{ marginTop: '20px' }} />
-        </React.Fragment>
-      )}
+      {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} locale={{ emptyText: 'Aucun résultat' }} />}
+      {this.state.by === 'user' && <Table columns={byUserColumns} dataSource={byUserRows} locale={{ emptyText: 'Aucun résultat' }} />}
     </React.Fragment>)
   }
 }
