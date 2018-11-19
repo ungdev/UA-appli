@@ -36,12 +36,14 @@ class LeftBar extends React.Component {
             current = `3-${tab[2]}-1`
             if(tab[3] === 'teams')
               current = `3-${tab[2]}-2`
+            if(tab[3] === 'decks')
+              current = `3-${tab[2]}-2`
+            if(tab[3] === 'mydecks')
+              current = `3-${tab[2]}-2.5`
             if(tab[3] === 'rules')
               current = `3-${tab[2]}-3`
             if(tab[3] === 'contact')
               tab[2] === 'libre' ? current = `3-7-4` : current = `3-${tab[2]}-4`
-            if(tab[3] === 'decks')
-              current = `3-${tab[2]}-2`
             if(tab[3] === 'info')
               tab[2] === 'libre' ? current = `3-7-5` : current = `3-${tab[2]}-5`
             if(tab[3] === 'compare' && tab[2] === 'libre')
@@ -95,7 +97,17 @@ class LeftBar extends React.Component {
                 <Icon type="inbox" />
                 <span>Decks</span>
               </Link>
-            </Menu.Item>) : '')
+            </Menu.Item>
+              ) : '')
+            }
+            {
+              spotlight.name === 'Hearthstone' && user && user.team && user.team.spotlight && user.team.spotlight.name === 'Hearthstone' ? 
+              <Menu.Item key={`3-${spotlight.id}-2.5`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/mydecks`}>
+                <Icon type="inbox" />
+                <span>Mes Decks</span>
+              </Link>
+            </Menu.Item> : null
             }
             <Menu.Item key={`3-${spotlight.id}-3`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>

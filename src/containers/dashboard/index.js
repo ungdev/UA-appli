@@ -6,6 +6,7 @@ import './dashboard.css'
 
 import Accueil from './components/Accueil'
 import HsDecks from './components/hs/HsDecks'
+import MyHsDecks from './components/hs/MyHsDecks'
 import Tournament from './components/Tournament'
 import Teams from './components/Teams/Teams'
 import Rules from './components/Rules/Rules'
@@ -64,6 +65,7 @@ class Dashboard extends Component {
       if(tab[3] === 'rules') component = <Rules tournament={tab[2]} />
       if(tab[3] === 'contact') component = <Contact tournament={tab[2]} />
       if(tab[3] === 'decks' && tab[2] === "5") component = <HsDecks />
+      if(tab[3] === 'mydecks' && tab[2] === "5") component = <MyHsDecks />
       if(tab[3] === 'info') component = <Info tournament={tab[2]} />
       if(tab[3] === 'compare' && tab[2] === 'libre') component = <Compare />
       if(tab[3] === 'calendar' && tab[2] === 'libre') component = <Calendar />

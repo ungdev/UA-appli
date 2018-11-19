@@ -43,7 +43,6 @@ class Accueil extends React.Component {
 
   getMatches() {
     const { matches } = this.state
-    console.log('MATCHES:  ', matches)
     if (matches.length > 0) {
       return matches.map((m,i) => (
         <Card title={`Match ${i+1}`} key={i} style={{ width: 300, margin: '0 1rem' }}>
