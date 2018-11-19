@@ -5,7 +5,18 @@ import HsDecksStats from './HsDecksStats'
 import { getDeck, deleteDeck } from '../../../../modules/hearthstone'
 import { connect } from 'react-redux'
 
-const TabPane = Tabs.TabPane;
+const TabPane = Tabs.TabPane
+const hsclass = [
+  { en: 'PRIEST', fr: 'Prêtre' },
+  { en: 'MAGE', fr: 'Mage' },
+  { en: 'PALADIN', fr: 'Paladin' },
+  { en: 'ROGUE', fr: 'Voleur' },
+  { en: 'SHAMAN', fr: 'Shaman' },
+  { en: 'HUNTER', fr: 'Chasseur' },
+  { en: 'DRUID', fr: 'Druide' },
+  { en: 'WARLOCK', fr: 'Démoniste' },
+  { en: 'WARRIOR', fr: 'Guerrier' },
+]
 
 class HsDecksCards extends React.Component {
   constructor(props) {
@@ -46,12 +57,14 @@ class HsDecksCards extends React.Component {
       <Tabs defaultActiveKey="0" size="small" tabPosition="left">
         {decks.map((de, key) => {
           let deck = alldecks[de.id]
+          let deckclass = hsclass.find(c => c.en === deck.class)
+          deckclass = deckclass ? deckclass.fr : ''
           return (<TabPane
           className="cardTab"
           tab={
             <div className="tabTitle">
-              <div className="tabTitleName">Deck</div>
-              <div className="tabTitleHero">{deck.hero.name}</div>
+              <div className="tabTitleName">{deck.name}</div>
+              <div className="tabTitleHero">{deckclass}</div>
             </div>
           }
           key={key}
