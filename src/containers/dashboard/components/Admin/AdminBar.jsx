@@ -7,12 +7,13 @@ import { sendReminderMails } from '../../../../modules/admin'
 import { push } from 'react-router-redux'
 
 class AdminBar extends React.Component {
-
   constructor(props) {
     super(props)
+
     this.state = {
       modalVisible: false
     }
+    
     this.props.fetchCounts()
   }
 
@@ -22,7 +23,7 @@ class AdminBar extends React.Component {
     })
   }
 
-  sendMails = (e) => {
+  sendMails = () => {
     this.props.sendReminderMails()
     this.setState({
       modalVisible: false,
@@ -36,37 +37,44 @@ class AdminBar extends React.Component {
   }
 
   render() {
-    if(this.props.user && this.props.user.isAdmin !== 100) this.props.redirectToHome()
-    return <Card title={<h1>Panneau d'administration</h1>}>
-    <p><i>"Un grand pouvoir implique de grandes responsabilités"</i><strong> Oncle Ben</strong></p>
-    <p>Alors <strong>ne cassez pas tout !</strong></p>
-    {this.props.counts ?
-    (<ul>
-      <li>
-        <em>Nombre de joueurs inscrits : </em> <strong>{this.props.counts.totalUsers}</strong>
-      </li>
-      <li>
-        <em>Nombre de joueurs ayant payé : </em> <strong>{this.props.counts.totalPaidPlayers}</strong>
-      </li>
-      <li>
-        <em>Nombre d'inscrits n'ayant pas payé : </em> <strong>{this.props.counts.totalUnpaid}</strong>
-      </li>
-      <li>
-        <em>Nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong>
-      </li>
-      <li>
-        <em>Nombre de joueurs libre : </em><strong>{this.props.counts.totalFreePlayers}</strong>
-      </li>
-      <li>
-        <em>Nombre d'équipes : </em><strong>{this.props.counts.totalTeams}</strong>
-      </li>
-      <li>
-        <em>Nombre d'équipes complètes : </em><strong>{this.props.counts.totalFullTeams}</strong>
-      </li>
-      <li>
-        <em>Nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong>
-      </li>
-    </ul>) : <Spin/>}
+    if(this.props.user && this.props.user.isAdmin !== 100) {
+      this.props.redirectToHome()
+    }
+
+    return (
+      <Card title={<h1>Panneau d'administration</h1>}>
+        <p><i>"Un grand pouvoir implique de grandes responsabilités"</i><strong> Oncle Ben</strong></p>
+        <p>Alors <strong>ne cassez pas tout !</strong></p>
+
+        {this.props.counts ?
+          (<ul>
+            <li>
+              <em>Nombre de joueurs inscrits : </em> <strong>{this.props.counts.totalUsers}</strong>
+            </li>
+            <li>
+              <em>Nombre de joueurs ayant payé : </em> <strong>{this.props.counts.totalPaidPlayers}</strong>
+            </li>
+            <li>
+              <em>Nombre d'inscrits n'ayant pas payé : </em> <strong>{this.props.counts.totalUnpaid}</strong>
+            </li>
+            <li>
+              <em>Nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong>
+            </li>
+            <li>
+              <em>Nombre de joueurs libre : </em><strong>{this.props.counts.totalFreePlayers}</strong>
+            </li>
+            <li>
+              <em>Nombre d'équipes : </em><strong>{this.props.counts.totalTeams}</strong>
+            </li>
+            <li>
+              <em>Nombre d'équipes complètes : </em><strong>{this.props.counts.totalFullTeams}</strong>
+            </li>
+            <li>
+              <em>Nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong>
+            </li>
+          </ul>)
+        : <Spin/>}
+
         <Button type="primary" onClick={this.openModal}>
           Envoyer les mails de rappel
         </Button>
@@ -79,6 +87,7 @@ class AdminBar extends React.Component {
           <p>Cela enverra une grande quantitée de mails, ne faites ça que si vous êtes sûr de ce que vous faites</p>
         </Modal>
       </Card>
+    )
   }
 }
 

@@ -4,13 +4,13 @@ import { connect } from 'react-redux'
 import { setAdmin, removeAdmin, validatePayment } from '../../../../modules/admin'
 
 class UserListActions extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = {
       modalVisible: false
     }
   }
+
   setAdmin = () => {
     this.props.setAdmin(this.props.userId)
   }
@@ -41,6 +41,7 @@ class UserListActions extends React.Component {
   render() {
     const { users, userId } = this.props
     const user = users.find(u => u.id === userId)
+
     return (
       <React.Fragment>
         {user && user.isAdmin !== 100 ?
@@ -69,7 +70,6 @@ class UserListActions extends React.Component {
         >
           <p>Cela validera le paiement de l'utilisateur, et il recevra sa place par mail</p>
         </Modal>
-
       </React.Fragment>)
   }
 }

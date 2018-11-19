@@ -22,10 +22,10 @@ const statMaker = deck => {
     '7+': 0
   };
   deck.cards.forEach(card => {
-    if (card[2].cost > 6) {
+    if (card.cost > 6) {
       stats['7+']++;
     } else {
-      stats[card[2].cost]++;
+      stats[card.cost]++;
     }
   });
   return stats;
@@ -40,15 +40,14 @@ class HsDecksStats extends React.Component {
   }
 
   render() {
-    console.log('this.props.deck', this.props.deck);
+    const { hero } = this.props.deck
     return (
-      <Card bordered={false}>
+      <Card bordered={false} style={{ display: 'flex', justifyContent: 'center' }}>
         <img
-          className="img-hs-Heroes"
-          src={`http://localhost:3000/cardImage/${
-            this.props.deck.heroes.id
-          }.png`}
-          alt={this.props.deck.heroes.name}
+          src={`http://media.services.zam.com/v1/media/byName/hs/cards/enus/animated/${hero.id}_premium.gif`}
+          alt={hero.name}
+          width={204}
+          height={310}
         />
         <List size="small" bordered={false} header={<div>Courbe de Mana</div>}>
           {Object.entries(this.state.stats).map((entry, key) => {

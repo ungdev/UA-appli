@@ -202,7 +202,7 @@ export const sendReminderMails = () => {
     try {
       dispatch(
         notifActions.notifSend({
-          message: 'Envoie en cours ...',
+          message: 'Envoi en cours ...',
           dismissAfter: 2000
       }))
       const res = await axios.get(`admin/reminders`, { headers: { 'X-Token': authToken } })

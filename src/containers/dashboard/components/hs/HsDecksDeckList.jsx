@@ -1,16 +1,21 @@
 import React from 'react';
-import { Col, Icon, Popover, Row, Tag } from 'antd';
+import { Col, Icon, Popover, Row, Tag } from 'antd'
+import { connect } from 'react-redux'
 
 class HsDecksDeckList extends React.Component {
   render() {
     return this.props.deck.cards.map((card, key) => {
-      let cardId = card[2].id;
       return (
         <Popover
           content={
-            <img
-              src={`http://localhost:3000/cardImage/${cardId}.png`}
-              alt={card[2].name}
+            this.props.golden ?
+              <img
+                src={`http://media.services.zam.com/v1/media/byName/hs/cards/enus/animated/${card.id}_premium.gif`}
+                alt={card.name}
+              /> :
+              <img
+              src={`http://media.services.zam.com/v1/media/byName/hs/cards/enus/${card.id}.png`}
+              alt={card.name}
             />
           }
           trigger="hover"
@@ -18,17 +23,17 @@ class HsDecksDeckList extends React.Component {
           placement="rightBottom">
           <Row align="center" justify="center">
             <Col span={2}>
-              <Tag color="#2db7f5">{card[2].cost}</Tag>
+              <Tag color="#2db7f5">{card.cost}</Tag>
             </Col>
             <Col offset={1} span={18}>
-              <div className="cardName">{card[2].name.toUpperCase()}</div>
+              <div className="cardName">{card.name.toUpperCase()}</div>
             </Col>
             <Col offset={1} span={1}>
               <Tag color="#736a61">
-                {card[2].rarity === 'LEGENDARY' ? (
+                {card.rarity === 'LEGENDARY' ? (
                   <Icon type="star" />
                 ) : (
-                  <div>x{card[1]}</div>
+                  <div>x{card.quantity}</div>
                 )}
               </Tag>
             </Col>
@@ -38,4 +43,18 @@ class HsDecksDeckList extends React.Component {
     });
   }
 }
-export default HsDecksDeckList;
+
+
+const mapStateToProps = state => ({
+  alldecks: state.hearthstone.decks,
+})
+
+const mapDispatchToProps = dispatch => ({
+  //getCardImage: (id) => dispatch(getCardImage(id))
+})
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps)(HsDecksDeckList)
+
