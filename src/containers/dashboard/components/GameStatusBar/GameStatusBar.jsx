@@ -2,11 +2,12 @@ import React from 'react'
 import { Card, Icon, Steps, Spin } from 'antd'
 import { connect } from 'react-redux'
 
-const Step = Steps.Step;
+const Step = Steps.Step
 
 class TournamentStatusBar extends React.Component {
   constructor(props) {
     super(props)
+    
     this.state = {
       etat: 1
     }
@@ -14,19 +15,26 @@ class TournamentStatusBar extends React.Component {
 
   render() {
     const { game } = this.props
-    let spotlight
-    if(game === 'libre')
+
+    let spotlight = null
+    if(game === 'libre') {
       spotlight = { name: 'Tournoi Libre' }
-    else
+    }
+    else {
       spotlight = this.props.spotlights.find(s => `${s.id}` === game)
-    if(!spotlight) return <Spin/>
+    }
+
+    if(!spotlight) {
+      return <Spin/>
+    }
+
     return (
       <div>
         <Card title={<h1>{spotlight.name}</h1>}>
           <Steps current={this.state.etat}>
             <Step
               title="Non commencé"
-              description="Début du tournois le 08/12 à 10h"
+              description="Début du tournoi le 08/12 à 10h"
               icon={<Icon type="hourglass" />}
             />
             <Step
@@ -36,7 +44,7 @@ class TournamentStatusBar extends React.Component {
             />
             <Step
               title="Terminé"
-              description="Remise des prix le.. à "
+              description="Remise des prix le 09/12 à ..."
               icon={<Icon type="trophy" />}
             />
           </Steps>

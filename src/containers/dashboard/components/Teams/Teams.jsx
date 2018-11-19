@@ -19,7 +19,7 @@ class Teams extends React.Component {
                   .filter(team => team.isInSpotlight)
     const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
     if(!spotlight) return <Spin/>
-    const teamsToDisplay = `Equipes pour ${spotlight.name}`
+    const teamsToDisplay = `Équipes pour ${spotlight.name}`
     return (
       <div>
         <GameStatusBar game={this.props.tournament} />

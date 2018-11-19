@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import './dashboard.css'
-
-
+import { push } from 'react-router-redux'
 
 import Accueil from './components/Accueil'
 import HsDecks from './components/hs/HsDecks'
@@ -18,8 +16,6 @@ import Material from './components/Admin/Material'
 import Compare from './components/Libre/Compare'
 import Calendar from './components/Libre/Calendar'
 import DashboardLayout from './layout'
-import { push } from 'react-router-redux'
-
 
 import { autoLogin } from '../../modules/login'
 
@@ -67,6 +63,8 @@ class Dashboard extends Component {
     }
 
     if(tab[1] === 'admin') {
+      console.log("PROPS : ", this.props)
+
       if(tab[2] === 'users') component = <UsersList />
       if(tab[2] === 'paids') component = <Paids />
       if(tab[2] === 'spotlights') component = <Spotlights />

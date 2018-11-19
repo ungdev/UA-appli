@@ -69,7 +69,7 @@ class Accueil extends React.Component {
 
         <h2>Mes matchs</h2>
 
-        <div style={matches}>
+        <div className="matches">
           {/*this.getMatches()*/}
         </div>
 
@@ -87,10 +87,10 @@ class Accueil extends React.Component {
             screenName="uttarena"
             lang="fr"
             noFooter={true}
-            options={{height: 700, width: 500 }} />
+            options={{ height: 700, width: 500 }} />
         </div>
       </div>
-    );
+    )
   }
 }
 

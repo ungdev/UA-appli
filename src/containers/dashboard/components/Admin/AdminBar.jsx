@@ -36,10 +36,6 @@ class AdminBar extends React.Component {
   }
 
   render() {
-    if(this.props.user && this.props.user.isAdmin !== 100) {
-      this.props.redirectToHome()
-    }
-
     return (
       <Card title={<h1>Panneau d'administration</h1>}>
         <p><i>"Un grand pouvoir implique de grandes responsabilités"</i><strong> Oncle Ben</strong></p>
@@ -83,7 +79,7 @@ class AdminBar extends React.Component {
           onOk={this.sendMails}
           onCancel={this.closeModal}
         >
-          <p>Cela enverra une grande quantitée de mails, ne faites ça que si vous êtes sûr de ce que vous faites</p>
+          <p>Cela enverra une grande quantité de mails, ne faites ça que si vous êtes sûr de ce que vous faites.</p>
         </Modal>
       </Card>
     )

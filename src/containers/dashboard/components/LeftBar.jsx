@@ -4,120 +4,148 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchSpotlights } from '../../../modules/spotlights'
 
-const SubMenu = Menu.SubMenu;
+const SubMenu = Menu.SubMenu
 
 class LeftBar extends React.Component {
   constructor(props) {
     super(props)
+
     let current = '1'
     let openKeys = []
+
     this.props.fetchSpotlights()
-    let { location } = this.props
-    let tab = location.split('/')
-    tab.splice(0, 1)  // remove first element because it's equal to ''
-    if(tab[0] === 'dashboard'){
-      if(tab[1] === 'admin'){
+
+    let tab = this.props.location.split('/').splice(0, 1)  // remove first element because it's equal to ''
+
+    if(tab[0] === 'dashboard') {
+      if(tab[1] === 'admin') {
         openKeys.push('2')
-        if(tab[2] === 'users') current = `2-1`
-        if(tab[2] === 'paids') current = `2-2`
-        if(tab[2] === 'material') current = `2-3`
-        if(tab.length >= 2 && tab[2] === 'spotlights'){
+
+        if(tab[2] === 'users') {
+          current = `2-1`
+        }
+        if(tab[2] === 'paids') {
+          current = `2-2`
+        }
+        if(tab[2] === 'material') {
+          current = `2-3`
+        }
+        if(tab.length >= 2 && tab[2] === 'spotlights') {
           openKeys.push('2-4')
           current = `2-4-${tab[3]}`
         }
       }
-      if(tab[1] === 'tournois'){
+
+      if(tab[1] === 'tournois') {
         openKeys.push('3')
-        if(tab.length >= 2){
+
+        if(tab.length >= 2) {
           tab[2] === 'libre' ? openKeys.push(`3-7`) : openKeys.push(`3-${tab[2]}`)
           if(tab.length >= 4) {
-            if(tab[3] === 'arbre-tournois')
-            current = `3-${tab[2]}-1`
-            if(tab[3] === 'teams')
+            if(tab[3] === 'arbre-tournois') {
+              current = `3-${tab[2]}-1`
+            }
+            if(tab[3] === 'teams') {
               current = `3-${tab[2]}-2`
-            if(tab[3] === 'rules')
+            }
+            if(tab[3] === 'rules') {
               current = `3-${tab[2]}-3`
-            if(tab[3] === 'contact')
+            }
+            if(tab[3] === 'contact') {
               tab[2] === 'libre' ? current = `3-7-4` : current = `3-${tab[2]}-4`
-            if(tab[3] === 'decks')
+            }
+            if(tab[3] === 'decks') {
               current = `3-${tab[2]}-2`
-            if(tab[3] === 'info')
+            }
+            if(tab[3] === 'info') {
               tab[2] === 'libre' ? current = `3-7-5` : current = `3-${tab[2]}-5`
-            if(tab[3] === 'compare' && tab[2] === 'libre')
+            }
+            if(tab[3] === 'compare' && tab[2] === 'libre') {
               current = `3-7-2`
-            if(tab[3] === 'calendar' && tab[2] === 'libre')
+            }
+            if(tab[3] === 'calendar' && tab[2] === 'libre') {
               current = `3-7-1`
+            }
           }
         }
       }
     }
+
     this.state = { current, openKeys }
   }
 
   handleClick = (e) => {
-    console.log(e.key)
-    this.setState({ current: e.key })
+    this.setState({
+      current: e.key
+    })
   }
 
   render() {
-    if(this.props.spotlights.length === 0)
+    if(this.props.spotlights.length === 0) {
       this.props.fetchSpotlights()
+    }
+
     let component = ''
     let { spotlights, user } = this.props
-    if(spotlights){
-      component = spotlights.map((spotlight) => 
-        (<SubMenu
-            key={`3-${spotlight.id}`}
-            title={
-              <span>
+
+    if(spotlights) {
+      component = spotlights.map(spotlight => (
+        <SubMenu
+          key={`3-${spotlight.id}`}
+          title={
+            <span>
+              <Icon type="team" />
+              <span>{spotlight.shortName}</span>
+            </span>
+          }
+        >
+          <Menu.Item key={`3-${spotlight.id}-1`} selected>
+            <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
+              <Icon type="share-alt" />
+              <span>Arbre</span>
+            </Link>
+          </Menu.Item>
+          {
+            spotlight.perTeam > 1 ? 
+            (<Menu.Item key={`3-${spotlight.id}-2`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/teams`}>
                 <Icon type="team" />
-                <span>{spotlight.shortName}</span>
-              </span>
-            }
-          >
-            <Menu.Item key={`3-${spotlight.id}-1`} selected>
-              <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
-                <Icon type="share-alt" />
-                <span>Arbre</span>
+                <span>Équipes</span>
               </Link>
-            </Menu.Item>
-            {
-              spotlight.perTeam > 1 ? 
-              (<Menu.Item key={`3-${spotlight.id}-2`}>
-                <Link to={`/dashboard/tournois/${spotlight.id}/teams`}>
-                  <Icon type="team" />
-                  <span>Équipes</span>
-                </Link>
-              </Menu.Item>) : (spotlight.name === 'Hearthstone' ?
-              (<Menu.Item key={`3-${spotlight.id}-2`}>
-              <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
-                <Icon type="inbox" />
-                <span>Decks</span>
-              </Link>
-            </Menu.Item>) : '')
-            }
-            <Menu.Item key={`3-${spotlight.id}-3`}>
-              <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
-                <Icon type="profile" />
-                <span>Règlement</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key={`3-${spotlight.id}-4`}>
-              <Link to={`/dashboard/tournois/${spotlight.id}/contact`}>
-                <Icon type="customer-service" />
-                <span>Contact</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key={`3-${spotlight.id}-5`}>
-              <Link to={`/dashboard/tournois/${spotlight.id}/info`}>
-                <Icon type="info-circle" />
-                <span>Informations</span>
-              </Link>
-            </Menu.Item>
-          </SubMenu>)
+            </Menu.Item>) : (spotlight.name === 'Hearthstone' ?
+            (<Menu.Item key={`3-${spotlight.id}-2`}>
+            <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
+              <Icon type="inbox" />
+              <span>Decks</span>
+            </Link>
+          </Menu.Item>) : '')
+          }
+          <Menu.Item key={`3-${spotlight.id}-3`}>
+            <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
+              <Icon type="profile" />
+              <span>Règlement</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key={`3-${spotlight.id}-4`}>
+            <Link to={`/dashboard/tournois/${spotlight.id}/contact`}>
+              <Icon type="customer-service" />
+              <span>Contact</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key={`3-${spotlight.id}-5`}>
+            <Link to={`/dashboard/tournois/${spotlight.id}/info`}>
+              <Icon type="info-circle" />
+              <span>Informations</span>
+            </Link>
+          </Menu.Item>
+        </SubMenu>
+        )
       )
-    } else spotlights = []
-    
+    }
+    else {
+      spotlights = []
+    }
+
     return (
       <Menu
         theme="dark"
@@ -133,7 +161,7 @@ class LeftBar extends React.Component {
             <span>Accueil</span>
           </Link>
         </Menu.Item>
-        {user && user.isAdmin === 100 ? (
+        {user && user.permissions.admin === 100 ? (
           <SubMenu
             key="2"
             title={
@@ -170,7 +198,7 @@ class LeftBar extends React.Component {
                 </span>
               }
             >
-            {spotlights.map((spotlight) => (
+            {spotlights.map(spotlight => (
               <Menu.Item key={`2-4-${spotlight.id}`}>
                 <Link to={`/dashboard/admin/spotlights/${spotlight.id}`}>
                   <Icon type="team" />
