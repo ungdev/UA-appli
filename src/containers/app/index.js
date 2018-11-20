@@ -16,9 +16,6 @@ const App = props => (
     <Switch>
       <Route path={process.env.REACT_APP_BASEURL} exact component={Home} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/home'} exact component={Dashboard} />
-      <Route path={process.env.REACT_APP_BASEURL + 'manifest.js'} exact/>
-      <Route path={process.env.REACT_APP_BASEURL + 'OneSignalSDKUpdaterWorker.js'} exact />
-      <Route path={process.env.REACT_APP_BASEURL + 'OneSignalSDKWorker.js'} exact />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/users'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/paids'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/spotlights/:id'} exact component={Dashboard} />
