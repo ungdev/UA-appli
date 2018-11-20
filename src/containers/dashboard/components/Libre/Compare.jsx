@@ -11,7 +11,6 @@ class Compare extends React.Component {
   render() {
     return (
       <div>
-        <GameStatusBar game="libre" />
         <Divider />
         <Spin/>
         <Button onClick={this.buttonclicked} />

@@ -4,7 +4,12 @@ import { connect } from 'react-redux'
 
 class HsDecksDeckList extends React.Component {
   render() {
-    return this.props.deck.cards.map((card, key) => {
+    return this.props.deck.cards.sort((c1, c2) => {
+      if(c1.cost > c2.cost) return 1
+      if(c1.cost < c2.cost) return -1
+      return 0
+    })
+    .map((card, key) => {
       return (
         <Popover
           content={
