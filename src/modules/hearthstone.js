@@ -1,7 +1,6 @@
 import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
 import { actions as notifActions } from 'redux-notifications'
-import moment from 'moment'
 
 export const SET_PLAYERS = 'hearthstone/SET_PLAYERS'
 export const ADD_DECKS = 'hearthstone/ADD_DECKS'
