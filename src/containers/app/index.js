@@ -16,6 +16,9 @@ const App = props => (
     <Switch>
       <Route path={process.env.REACT_APP_BASEURL} exact component={Home} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/home'} exact component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'manifest.js'} exact/>
+      <Route path={process.env.REACT_APP_BASEURL + 'OneSignalSDKUpdaterWorker.js'} exact />
+      <Route path={process.env.REACT_APP_BASEURL + 'OneSignalSDKWorker.js'} exact />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/users'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/paids'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/spotlights/:id'} exact component={Dashboard} />
@@ -29,7 +32,7 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/info'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/libre/compare'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/libre/calendar'} component={Dashboard} />
-      <Redirect from="*" to="/" />
+      <Redirect from="*" to="/dashboard/home" />
     </Switch>
   </div>
 )
