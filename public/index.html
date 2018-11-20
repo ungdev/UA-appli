@@ -21,32 +21,6 @@
     -->
     <title>%REACT_APP_WEBSITE_NAME%</title>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
-    <script>
-      var OneSignal = window.OneSignal || [];
-      OneSignal.push(["init", {
-        appId: "cac7c5b1-3b95-4c2d-b5df-b631b3c3646b",
-        autoRegister: true, /* Set to true for HTTP Slide Prompt */
-        httpPermissionRequest: {
-          enable: true
-        },
-        notifyButton: {
-            enable: true /* Set to false to hide */
-        },
-        welcomeNotification: {
-          "title": "My Custom Title",
-          "message": "Thanks for subscribing!",
-          // "url": "" /* Leave commented for the notification to not open a window on Chrome and Firefox (on Safari, it opens to your webpage) */
-        },
-        promptOptions: {
-          /* actionMessage limited to 90 characters */
-          actionMessage: "We'd like to show you notifications for the latest news and updates.",
-          /* acceptButtonText limited to 15 characters */
-          acceptButtonText: "ALLOW",
-          /* cancelButtonText limited to 15 characters */
-          cancelButtonText: "NO THANKS"
-        }
-      }]);
-    </script>
   </head>
   <body>
     <noscript>
