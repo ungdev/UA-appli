@@ -161,7 +161,7 @@ class LeftBar extends React.Component {
             <span>Accueil</span>
           </Link>
         </Menu.Item>
-        {user && user.permissions.admin === 100 ? (
+        {user && user.permissions && user.permissions.admin === 100 ? (
           <SubMenu
             key="2"
             title={

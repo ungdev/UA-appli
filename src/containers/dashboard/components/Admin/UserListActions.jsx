@@ -1,13 +1,16 @@
 import React from 'react'
-import { Icon, Tooltip, Modal } from 'antd'
+import { Icon, Tooltip, Modal, Button, Select } from 'antd'
 import { connect } from 'react-redux'
 import { setAdmin, removeAdmin, validatePayment } from '../../../../modules/admin'
+
+import './admin.css'
 
 class UserListActions extends React.Component {
   constructor(props) {
     super(props)
+    
     this.state = {
-      modalVisible: false
+      paymentModalVisible: false
     }
   }
 
@@ -19,22 +22,36 @@ class UserListActions extends React.Component {
     this.props.removeAdmin(this.props.userId)
   }
 
-  openModal = () => {
-    this.setState({
-      modalVisible: true,
-    })
-  }
-
-  validate = () => {
+  validatePayment = () => {
     this.props.validatePayment(this.props.userId)
     this.setState({
-      modalVisible: false,
+      paymentModalVisible: false
     })
   }
 
-  closeModal = () => {
+  openMainModal = () => {
     this.setState({
-      modalVisible: false,
+      mainModalVisible: true
+    })
+  }
+
+  closeMainModal = () => {
+    this.setState({
+      mainModalVisible: false
+    })
+  }
+
+  openPaymentModal = () => {
+    this.setState({
+      mainModalVisible: false,
+      paymentModalVisible: true
+    })
+  }
+
+  closePaymentModal = () => {
+    this.setState({
+      mainModalVisible: true,
+      paymentModalVisible: false
     })
   }
 
@@ -42,33 +59,80 @@ class UserListActions extends React.Component {
     const { users, userId } = this.props
     const user = users.find(u => u.id === userId)
 
+    if(!user) {
+      return null
+    }
+
+    let admin = user.permissions ? (user.permissions.admin === 100) : false
+
     return (
       <React.Fragment>
-        {user && user.isAdmin !== 100 ?
-          <Tooltip placement="top" title="Rendre Administrateur">
-            <a onClick={this.setAdmin} style={{ marginLeft: '2px', marginRight: '2px' }}>
-              <Icon type="arrow-up"/>
-            </a>
-          </Tooltip> : null}
-        {user && user.isAdmin === 100 ? (
-          <Tooltip placement="top" title="Enlever les droits Administrateur">
-            <a onClick={this.removeAdmin} style={{ color: '#ff0000', marginLeft: '2px', marginRight: '2px' }}>
-              <Icon type="arrow-down"/>
-            </a>
-          </Tooltip>) : null}
-        {user && !user.paid ? (
-          <Tooltip placement="top" title="Valider le paiement">
-            <a onClick={this.openModal} style={{ color: '#00ff00', marginLeft: '2px', marginRight: '2px' }}>
-              <Icon type="dollar"/>
-            </a>
-          </Tooltip>) : null}
+        <Tooltip placement="top" title="Actions">
+          <a onClick={this.openMainModal} style={{ fontSize: '18px' }}>
+            <Icon type="setting" />
+          </a>
+        </Tooltip>
+
+        <Modal
+          title="Actions"
+          visible={this.state.mainModalVisible}
+          footer={<Button type="primary" onClick={this.closeMainModal}>Ok</Button>}
+          onCancel={this.closeMainModal}
+        >
+          <h2 className="admin-action-title"><Icon type="safety" /> Administrateur</h2>
+          <div className="admin-action-content">
+            {!admin ?
+              <Tooltip placement="right" title="Rendre administrateur">
+                <Button type="primary" onClick={this.setAdmin} className="admin-action-button"><Icon type="arrow-up" /></Button>
+              </Tooltip>
+            : null}
+            {admin ?
+              <Tooltip placement="right" title="Enlever le rang administrateur">
+                <Button type="danger" onClick={this.removeAdmin} className="admin-action-button" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}><Icon type="arrow-down" /></Button>
+              </Tooltip>
+            : null}
+          </div>
+
+          <h2 className="admin-action-title"><Icon type="crown" /> Responsable tournoi</h2>
+          <div className="admin-action-content">
+            <Select
+              mode="multiple"
+              placeholder="Aucun tournoi"
+              notFoundContent="Aucun tournoi"
+              style={{ width: '100%' }}
+            >
+              <Select.Option key="lol-pro">Tournoi LoL (pro)</Select.Option>
+              <Select.Option key="lol-amateur">Tournoi LoL (amateur)</Select.Option>
+              <Select.Option key="fortnite">Fortnite</Select.Option>
+              <Select.Option key="csgo">CS:GO</Select.Option>
+              <Select.Option key="hearthstone">Hearthstone</Select.Option>
+              <Select.Option key="ssbu">SSBU</Select.Option>
+              <Select.Option key="osu">osu!</Select.Option>
+              <Select.Option key="libre">Libre</Select.Option>
+            </Select>
+          </div>
+
+          {!user.paid ?
+            <React.Fragment>
+              <h2 className="admin-action-title"><Icon type="euro" style={{ fontSize: '17px' }} /> Paiement</h2>
+              <div className="admin-action-content">
+                <Tooltip placement="right" title="Payer la place">
+                  <Button type="primary" onClick={this.openPaymentModal} className="admin-action-button"><Icon type="euro" /></Button>
+                </Tooltip>
+              </div>
+            </React.Fragment>
+          : null}
+        </Modal>
+
         <Modal
           title="Êtes vous sûr ?"
-          visible={this.state.modalVisible}
-          onOk={this.validate}
-          onCancel={this.closeModal}
+          visible={this.state.paymentModalVisible}
+          onOk={this.validatePayment}
+          onCancel={this.closePaymentModal}
+          cancelText="Annuler"
         >
-          <p>Cela validera le paiement de l'utilisateur, et il recevra sa place par mail</p>
+          <h3>Validation d'un paiement</h3>
+          <p>Cela validera le paiement de l'utilisateur et il recevra sa place par mail.</p>
         </Modal>
       </React.Fragment>)
   }

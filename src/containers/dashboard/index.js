@@ -38,11 +38,7 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    this.props.autoLogin().then(() => {
-      this.setState({
-        render: this.props.user && this.props.user.name
-      })
-    })
+    this.props.autoLogin()
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -55,7 +51,7 @@ class Dashboard extends Component {
     tab.splice(0,1) // remove first element because it's equal to ''
 
     if(tab[0] !== 'dashboard') {
-      this.props.gotoHome()
+      this.props.goToHome()
     }
 
     if(tab[1] === 'home' && tab.length === 2) {
@@ -63,12 +59,17 @@ class Dashboard extends Component {
     }
 
     if(tab[1] === 'admin') {
-      console.log("PROPS : ", this.props)
+      let user = this.props.user
 
-      if(tab[2] === 'users') component = <UsersList />
-      if(tab[2] === 'paids') component = <Paids />
-      if(tab[2] === 'spotlights') component = <Spotlights />
-      if(tab[2] === 'material') component = <Material />
+      if(user && user.permissions && user.permissions.admin === 100) {
+        if(tab[2] === 'users') component = <UsersList />
+        if(tab[2] === 'paids') component = <Paids />
+        if(tab[2] === 'spotlights') component = <Spotlights />
+        if(tab[2] === 'material') component = <Material />
+      }
+      else {
+        return null
+      }
     }
 
     if(tab[1] === 'tournois' && tab.length === 4) {

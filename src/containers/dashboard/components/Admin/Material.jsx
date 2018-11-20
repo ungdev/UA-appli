@@ -1,11 +1,10 @@
 import React from 'react'
 import { Table, Select, Icon, Button } from 'antd'
 import { connect } from 'react-redux'
+import { Object } from 'core-js';
 
 import AdminBar from './AdminBar'
 import { fetchUsers } from '../../../../modules/admin'
-import { Object } from 'core-js';
-
 
 class Material extends React.Component {
   constructor(props) {
@@ -44,6 +43,10 @@ class Material extends React.Component {
 
   render() {
     let users = this.props.users
+
+    if(!users) {
+      this.props.gotoHome()
+    }
 
     // Get users material and fullname
     users = users.map(user => {
