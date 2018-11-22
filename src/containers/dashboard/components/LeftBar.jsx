@@ -20,16 +20,10 @@ class LeftBar extends React.Component {
         openKeys.push('2')
         if (tab[2] === 'users') current = `2-1`
         if (tab[2] === 'paids') current = `2-2`
-        if (tab[3] == 'conversations') current = '2-3'
-        if (tab.length >= 3 && tab[3] === 'spotlights') {
-          openKeys.push('2-4')
-          current = `2-4-${tab[3]}`
-          if (tab[2] === 'material') current = `2-4`
-          if (tab.length >= 2 && tab[2] === 'spotlights') {
-            openKeys.push('2-3')
-            current = `2-3-${tab[3]}`
-          }
-          if (tab[2] === 'material') current = `2-4`
+        if (tab[2] === 'material') current = `2-4`
+        if (tab.length >= 2 && tab[2] === 'spotlights') {
+          openKeys.push('2-3')
+          current = `2-3-${tab[3]}`
         }
         if (tab[2] === 'material') current = `2-4`
       }
@@ -58,8 +52,8 @@ class LeftBar extends React.Component {
           }
         }
       }
-      this.state = { current, openKeys }
     }
+    this.state = { current, openKeys }
   }
 
   handleClick = e => {
@@ -67,7 +61,7 @@ class LeftBar extends React.Component {
     this.setState({ current: e.key })
   }
 
-  render = () => {
+  render() {
     if (this.props.spotlights.length === 0) this.props.fetchSpotlights()
     let component = ''
     let { spotlights, user } = this.props
@@ -123,13 +117,6 @@ class LeftBar extends React.Component {
               <span>Règlement</span>
             </Link>
           </Menu.Item>
-          ) : ( '' )}
-          <Menu.Item key={`3-${spotlight.id}-3`}>
-            <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
-              <Icon type="profile" />
-              <span>Règlement</span>
-            </Link>
-          </Menu.Item>
           <Menu.Item key={`3-${spotlight.id}-4`}>
             <Link to={`/dashboard/tournois/${spotlight.id}/contact`}>
               <Icon type="customer-service" />
@@ -178,15 +165,15 @@ class LeftBar extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="2-2">
-              <Link to={`/dashboard/admin/paids`}>
-                <Icon type="euro" />
-                <span>Mais qui a payé ?</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2-3">
               <Link to={'/dashboard/admin/conversations'}>
                 <Icon type="message" />
                 <span>Messagerie admin</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="2-3">
+              <Link to={`/dashboard/admin/paids`}>
+                <Icon type="euro" />
+                <span>Mais qui a payé ?</span>
               </Link>
             </Menu.Item>
             <SubMenu
@@ -214,14 +201,13 @@ class LeftBar extends React.Component {
               </Link>
             </Menu.Item>
           </SubMenu>
-        ) : (
-          <Menu.Item key="2">
-            <Link to={'/dashboard/messages'}>
-              <Icon type="message" />
-              <span>Messagerie</span>
-            </Link>
-          </Menu.Item>
-        )}
+        ) : 
+        <Menu.Item key="2-3">
+              <Link to={'/dashboard/messages'}>
+                <Icon type="message" />
+                <span>Messagerie admin</span>
+              </Link>
+            </Menu.Item>}
         <SubMenu
           key="3"
           title={
