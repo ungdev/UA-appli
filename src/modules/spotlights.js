@@ -134,7 +134,6 @@ export const fetchTeamsBySpotlightId = (id) => {
     }
     try {
       const req = await axios.get(`spotlights/${id}/teams`, { headers: { 'X-Token': authToken } })
-      console.log(req)
       dispatch({
         type: SET_SPOTLIGHT_TEAMS,
         payload: req.data

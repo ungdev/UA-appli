@@ -52,7 +52,6 @@ export const fetchHSPlayers = () => {
 
     try {
       const res = await axios.get('hearthstone/players', { headers: { 'X-Token': authToken } })
-      console.log('result', res)
       dispatch({ type: SET_PLAYERS, payload: res.data })
     } catch (err) {
       console.log(err)
@@ -76,7 +75,6 @@ export const addDeck = (name, deckstring) => {
 
     try {
       const res = await axios.post(`hearthstone/decks`, { name, deckstring }, { headers: { 'X-Token': authToken } })
-      console.log('result', res)
       dispatch(fetchHSPlayers())
     } catch (err) {
       console.log(err)
@@ -101,8 +99,6 @@ export const deleteDeck = (id) => {
 
     try {
       const res = await axios.delete(`hearthstone/decks/${id}`, { headers: { 'X-Token': authToken } })
-      console.log('result', res)
-      //dispatch(fetchHSPlayers())
       dispatch({ type: DELETE_DECK, payload: id })
     } catch (err) {
       console.log(err)
@@ -127,7 +123,6 @@ export const getDeck = (id) => {
 
     try {
       const res = await axios.get(`hearthstone/decks/${id}`, { headers: { 'X-Token': authToken } })
-      console.log('result', res)
       dispatch({ type: ADD_DECKS, payload: { id, deck: res.data } })
     } catch (err) {
       console.log(err)

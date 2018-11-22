@@ -17,8 +17,7 @@ class Compare extends React.Component {
     )
   }
   buttonclicked() {
-    console.log("????")
-    axios.post('auth/openid').then(r => console.log(r)).catch(e => console.log(e))
+    //axios.post('auth/openid').then(r => console.log(r)).catch(e => console.log(e))
   }
 }
 

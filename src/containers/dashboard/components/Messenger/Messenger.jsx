@@ -65,7 +65,6 @@ class Messenger extends React.Component {
   render() {
     
     let { messages } = this.state
-    console.log(this.props)
     if (this.state.user !== this.props.user) {
       this.loadMessages()
     }
