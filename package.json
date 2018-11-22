@@ -5,11 +5,8 @@
   "dependencies": {
     "antd": "^3.9.2",
     "axios": "^0.18.0",
-<<<<<<< HEAD
     "chat-template": "^0.0.26",
-=======
     "chart.js": "^2.7.3",
->>>>>>> master
     "classnames": "^2.2.5",
     "deckstrings": "^2.0.0",
     "history": "^4.7.2",

@@ -57,12 +57,13 @@ export const fetchMessagesByIdUser = (idTo) => {
   }
 }
 
-export const sendMessage = (message) => {
+export const sendMessage = (to, message, spotlight) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
+    console.log('TAMERE : ', to, message, spotlight)
     if (!authToken || authToken.length === 0) return
     try {
-      const res = await axios.post(`messages`, { message }, { headers: { 'X-Token': authToken } })
+      const res = await axios.post(`messages`, { to, message, spotlight }, { headers: { 'X-Token': authToken } })
       if(res.status === 200) {
         dispatch(
           notifActions.notifSend({

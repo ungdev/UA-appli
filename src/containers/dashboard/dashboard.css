@@ -57,7 +57,6 @@ table {
   width: 47%;
 }
 
-<<<<<<< HEAD
 .sender{
   max-width:50%;
   margin-left: 50%;
@@ -69,11 +68,9 @@ table {
   margin-right: 50%;
   margin-bottom: 10px;
 }
-=======
 .custom-filter-dropdown {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 10px;
 }
->>>>>>> master

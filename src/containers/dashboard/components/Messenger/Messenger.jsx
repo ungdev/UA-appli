@@ -5,36 +5,48 @@ import { autoLogin } from '../../../../modules/login'
 import _ from 'lodash'
 import {
   fetchMessages,
-  // sendMessage,
+  sendMessage,
   SET_MESSAGES_LOADING,
   fetchMessagesByIdUser
 } from '../../../../modules/messages'
 
-import { List, Input } from 'antd'
+import { List, Input, Button } from 'antd'
 const { TextArea } = Input
 
 class Messenger extends React.Component {
   constructor(props) {
     super(props)
-    this.loadMessages()
     this.state = {
       messages: this.props.messages,
       user: this.props.user,
-      to: {},
-      textValue: ''
+      userTo: this.props.idTo ? this.props.idTo : null,
+      spotlight: '',
+      textValue: '',
+      maxTitleCaracters: 100,
+      maxTextCaracters: 1000
     }
+    this.loadMessages()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps !== this.props) {
-      this.setState({ messages: this.props.messages, user: this.props.user })
+      this.setState({
+        messages: this.props.messages,
+        user: this.props.user,
+        userTo: this.props.idTo
+      })
     }
   }
 
   loadMessages() {
     this.props.setLoading()
-    this.props.user && this.props.user.isAdmin === 100 ? this.props.getMessagesByIdUser(this.props.idTo) :  this.props.getMessages()
+    if (this.props.user && this.props.user.isAdmin === 100) {
+      this.props.getMessagesByIdUser(this.props.idTo)
+    } else {
+      this.props.getMessages()
+    }
 
+    // this.props.user && this.props.user.isAdmin === 100 ? this.props.getMessagesByIdUser(this.props.idTo) :  this.props.getMessages()
   }
 
   onTextChange = e => {
@@ -43,37 +55,44 @@ class Messenger extends React.Component {
   }
 
   sendMessage = () => {
+    console.log(this.props.user.firstname)
     this.props.sendMessage(
-      this.props.tournament === 'libre' ? '7' : this.props.tournament,
-      this.state.titleValue,
-      this.state.textValue
+      this.props.idTo,
+      this.state.textValue,
+      this.props.user.team.spotlightId
     )
-    this.loadData(0, 5)
     this.setState({ textValue: '' })
   }
 
   render() {
+    
     let { messages } = this.state
     console.log(this.props)
+    if (this.state.user !== this.props.user) {
+      this.loadMessages()
+    }
+    const { maxTextCaracters } = this.state
     let messagesList = (
       <List
         itemLayout="horizontal"
         dataSource={messages.map(message => {
-          return { title: message.From === null ? 'UTT Arena Administration' : message.From.name , message: message.message}
+          return {
+            title:
+              message.From === null
+                ? 'UTT Arena Administration'
+                : message.From.name,
+            message: message.message
+          }
         })}
         renderItem={item => (
           <List.Item>
-            <List.Item.Meta
-              title={item.title}
-              description={item.message}
-            />
+            <List.Item.Meta title={item.title} description={item.message} />
           </List.Item>
         )}
       />
     )
-    console.log('MESSAGESLIST : ', messagesList)
     return (
-      <div>
+      <React.Fragment>
         <div>{messagesList}</div>
         <TextArea
           style={{ marginTop: '5px', marginBottom: '20px' }}
@@ -82,7 +101,21 @@ class Messenger extends React.Component {
           placeholder="Message"
           value={this.state.textValue}
         />
-      </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Button type="primary" onClick={this.sendMessage}>
+            Envoyer
+          </Button>
+          <span
+            style={
+              this.state.textValue.length > maxTextCaracters - 50
+                ? { color: '#ff0000' }
+                : {}
+            }
+          >
+            {maxTextCaracters - this.state.textValue.length} caractères restants
+          </span>
+        </div>
+      </React.Fragment>
     )
   }
 }
@@ -96,10 +129,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   autoLogin: () => dispatch(autoLogin()),
+  redirectToHome: () => dispatch(push('/dashboard/home')),
   goToHome: () => dispatch(push('/dashboard/home')),
   getMessages: () => dispatch(fetchMessages()),
-  getMessagesByIdUser: (idTo) => dispatch(fetchMessagesByIdUser(idTo)),
-  // sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
+  getMessagesByIdUser: idTo => dispatch(fetchMessagesByIdUser(idTo)),
+  sendMessage: (to, message, spotlight) => dispatch(sendMessage(to, message, spotlight)),
   setLoading: () => dispatch({ type: SET_MESSAGES_LOADING })
 })
 

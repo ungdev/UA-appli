@@ -37,6 +37,7 @@ class Conversations extends React.Component {
     if (this.props.user && this.props.user.isAdmin !== 100)
       this.props.redirectToHome()
     let { conversations } = this.state
+    console.log(conversations)
     // let conversationsList = conversations.map(conversation => {
     //   return (
     //     <Card
@@ -47,7 +48,7 @@ class Conversations extends React.Component {
       <List
         itemLayout="horizontal"
         dataSource={conversations.map(conversation => {
-          return { title: conversation.User2.name, idTo: conversation.User2.id }
+          return { title: conversation.User2.name, idTo: conversation.User2.id, spotlight: conversation.User2.team.spotlightId }
         })}
         renderItem={item => (
           <List.Item>
@@ -59,7 +60,6 @@ class Conversations extends React.Component {
         )}
       />
     )
-    console.log('LIST : ', conversationsList)
     return <div>{conversationsList}</div>
   }
 }
@@ -73,6 +73,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   autoLogin: () => dispatch(autoLogin()),
+  redirectToHome: () => dispatch(push('/dashboard/home')),
   goToHome: () => dispatch(push('/dashboard/home')),
   getConversations: () => dispatch(fetchConversations()),
   // sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
