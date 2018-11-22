@@ -31,28 +31,30 @@ class LeftBar extends React.Component {
           }
           if (tab[2] === 'material') current = `2-4`
         }
-        if (tab[1] === 'tournois') {
-          openKeys.push('3')
-          if (tab.length >= 2) {
-            tab[2] === 'libre'
-              ? openKeys.push(`3-7`)
-              : openKeys.push(`3-${tab[2]}`)
-            if (tab.length >= 4) {
-              if (tab[3] === 'arbre-tournois') current = `3-${tab[2]}-1`
-              if (tab[3] === 'teams') current = `3-${tab[2]}-2`
-              if (tab[3] === 'rules') current = `3-${tab[2]}-3`
-              if (tab[3] === 'contact')
-                tab[2] === 'libre'
-                  ? (current = `3-7-4`)
-                  : (current = `3-${tab[2]}-4`)
-              if (tab[3] === 'decks') current = `3-${tab[2]}-2`
-              if (tab[3] === 'info')
-                tab[2] === 'libre'
-                  ? (current = `3-7-5`)
-                  : (current = `3-${tab[2]}-5`)
-              if (tab[3] === 'compare' && tab[2] === 'libre') current = `3-7-2`
-              if (tab[3] === 'calendar' && tab[2] === 'libre') current = `3-7-1`
-            }
+        if (tab[2] === 'material') current = `2-4`
+      }
+      if (tab[1] === 'tournois') {
+        openKeys.push('3')
+        if (tab.length >= 2) {
+          tab[2] === 'libre'
+            ? openKeys.push(`3-7`)
+            : openKeys.push(`3-${tab[2]}`)
+          if (tab.length >= 4) {
+            if (tab[3] === 'arbre-tournois') current = `3-${tab[2]}-1`
+            if (tab[3] === 'teams') current = `3-${tab[2]}-2`
+            if (tab[3] === 'decks') current = `3-${tab[2]}-2`
+            if (tab[3] === 'mydecks') current = `3-${tab[2]}-2.5`
+            if (tab[3] === 'rules') current = `3-${tab[2]}-3`
+            if (tab[3] === 'contact')
+              tab[2] === 'libre'
+                ? (current = `3-7-4`)
+                : (current = `3-${tab[2]}-4`)
+            if (tab[3] === 'info')
+              tab[2] === 'libre'
+                ? (current = `3-7-5`)
+                : (current = `3-${tab[2]}-5`)
+            if (tab[3] === 'compare' && tab[2] === 'libre') current = `3-7-2`
+            if (tab[3] === 'calendar' && tab[2] === 'libre') current = `3-7-1`
           }
         }
       }
@@ -103,6 +105,25 @@ class LeftBar extends React.Component {
           ) : (
             ''
           )}
+          {spotlight.name === 'Hearthstone' &&
+          user &&
+          user.team &&
+          user.team.spotlight &&
+          user.team.spotlight.name === 'Hearthstone' ? (
+            <Menu.Item key={`3-${spotlight.id}-2.5`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/mydecks`}>
+                <Icon type="inbox" />
+                <span>Mes Decks</span>
+              </Link>
+            </Menu.Item>
+          ) : null}
+          <Menu.Item key={`3-${spotlight.id}-3`}>
+            <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
+              <Icon type="profile" />
+              <span>Règlement</span>
+            </Link>
+          </Menu.Item>
+          ) : ( '' )}
           <Menu.Item key={`3-${spotlight.id}-3`}>
             <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
               <Icon type="profile" />

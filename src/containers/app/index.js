@@ -23,6 +23,7 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/conversations'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/material'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/decks'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/mydecks'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/arbre-tournois'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/contact'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/teams'} component={Dashboard} />
@@ -31,7 +32,7 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/libre/compare'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/messages'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/libre/calendar'} component={Dashboard} />
-      <Redirect from="*" to="/" />
+      <Redirect from="*" to="/dashboard/home" />
     </Switch>
   </div>
 )

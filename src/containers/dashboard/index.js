@@ -6,6 +6,7 @@ import './dashboard.css'
 
 import Accueil from './components/Accueil'
 import HsDecks from './components/hs/HsDecks'
+import MyHsDecks from './components/hs/MyHsDecks'
 import Tournament from './components/Tournament'
 import Teams from './components/Teams/Teams'
 import Rules from './components/Rules/Rules'
@@ -56,9 +57,13 @@ class Dashboard extends Component {
   }
 
   render() {
-    let component = ''
+    let component = null
     let tab = this.props.location.split('/')
     tab.splice(0,1) // remove first element because it's equal to ''
+
+    if(tab[0] !== 'dashboard') {
+      this.props.gotoHome()
+    }
     if(tab[0] === 'dashboard' && tab[1] === 'home' && tab.length === 2) component = <Accueil />
     if(tab[0] === 'dashboard' && tab.length === 4 && tab[1] === 'tournois') {
       if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6") component = <Teams tournament={tab[2]} />
@@ -66,11 +71,13 @@ class Dashboard extends Component {
       if(tab[3] === 'rules') component = <Rules tournament={tab[2]} />
       if(tab[3] === 'contact') component = <Contact tournament={tab[2]} />
       if(tab[3] === 'decks' && tab[2] === "5") component = <HsDecks />
+      if(tab[3] === 'mydecks' && tab[2] === "5") component = <MyHsDecks />
       if(tab[3] === 'info') component = <Info tournament={tab[2]} />
       if(tab[3] === 'compare' && tab[2] === 'libre') component = <Compare />
       if(tab[3] === 'calendar' && tab[2] === 'libre') component = <Calendar />
     }
-    if(tab[0] === 'dashboard' && tab[1] === 'admin') {
+
+    if(tab[1] === 'admin') {
       if(tab[2] === 'users') component = <UsersList />
       if(tab[2] === 'paids') component = <Paids />
       if(tab[2] === 'spotlights') component = <Spotlights />
@@ -85,11 +92,37 @@ class Dashboard extends Component {
     // if(tab[0] === 'dashboard' && tab[1] === 'conversations' && tab.length === 2) component = <Conversations />
 
 
+    if(tab[1] === 'tournois' && tab.length === 4) {
+      if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6") {
+        component = <Teams tournament={tab[2]} />
+      }
+      if(tab[3] === 'arbre-tournois') {
+        component = <Tournament tournament={tab[2]} />
+      }
+      if(tab[3] === 'rules') {
+        component = <Rules tournament={tab[2]} />
+      }
+      if(tab[3] === 'contact') {
+        component = <Contact tournament={tab[2]} />
+      }
+      if(tab[3] === 'decks' && tab[2] === "5") {
+        component = <HsDecks />
+      }
+      if(tab[3] === 'info') {
+        component = <Info tournament={tab[2]} />
+      }
+      if(tab[3] === 'compare' && tab[2] === 'libre') {
+        component = <Compare />
+      }
+      if(tab[3] === 'calendar' && tab[2] === 'libre') {
+        component = <Calendar />
+      }
+    }
 
-    if(component === '') {
-      console.log('unknown route')
+    if(component === null) {
       this.props.goToHome()
     }
+
     return (
       <DashboardLayout
         path={this.state.pathname}

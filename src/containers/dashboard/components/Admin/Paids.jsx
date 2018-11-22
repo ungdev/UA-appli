@@ -176,8 +176,8 @@ class Paids extends React.Component {
             value: 'SSBU',
           },
           {
-            text: 'OSU',
-            value: 'OSU',
+            text: 'osu!',
+            value: 'osu!',
           }
         ],
         onFilter: (value, record) => record.spotlight === value
