@@ -55,11 +55,10 @@ class Messenger extends React.Component {
   }
 
   sendMessage = () => {
-    console.log(this.props.user.firstname)
     this.props.sendMessage(
       this.props.idTo,
       this.state.textValue,
-      this.props.user.team.spotlightId
+      this.props.user.team == null ? null : this.props.user.team.spotlightId
     )
     this.setState({ textValue: '' })
   }

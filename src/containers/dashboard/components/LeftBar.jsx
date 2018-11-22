@@ -205,7 +205,7 @@ class LeftBar extends React.Component {
         <Menu.Item key="2-3">
               <Link to={'/dashboard/messages'}>
                 <Icon type="message" />
-                <span>Messagerie admin</span>
+                <span>Messagerie</span>
               </Link>
             </Menu.Item>}
         <SubMenu
