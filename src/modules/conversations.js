@@ -1,5 +1,4 @@
 import axios from '../lib/axios'
-import { actions as notifActions } from 'redux-notifications'
 
 export const SET_CONVERSATIONS = 'conversations/SET_CONVERSATIONS'
 export const SET_CONVERSATIONS_LOADING = 'conversations/SET_CONVERSATIONS'

@@ -7,7 +7,7 @@ import {
   fetchConversations,
   SET_CONVERSATIONS_LOADING
 } from '../../../../modules/conversations'
-import { List, Card } from 'antd'
+import { List } from 'antd'
 
 class Conversations extends React.Component {
   constructor(props) {

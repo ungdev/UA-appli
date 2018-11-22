@@ -76,12 +76,12 @@ class LeftBar extends React.Component {
             </span>
           }
         >
-          <Menu.Item key={`3-${spotlight.id}-1`} selected>
+          {/*<Menu.Item key={`3-${spotlight.id}-1`} selected>
             <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
               <Icon type="share-alt" />
               <span>Arbre</span>
             </Link>
-          </Menu.Item>
+        </Menu.Item>*/}
           {spotlight.perTeam > 1 ? (
             <Menu.Item key={`3-${spotlight.id}-2`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/teams`}>
@@ -228,18 +228,18 @@ class LeftBar extends React.Component {
               </span>
             }
           >
-            <Menu.Item key={`3-${spotlights.length + 1}-1`}>
+            {/*<Menu.Item key={`3-${spotlights.length + 1}-1`}>
               <Link to={`/dashboard/tournois/libre/calendar`}>
                 <Icon type="calendar" />
                 <span>Planning</span>
               </Link>
-            </Menu.Item>
-            <Menu.Item key={`3-${spotlights.length + 1}-2`}>
+          </Menu.Item>*/}
+            {/*<Menu.Item key={`3-${spotlights.length + 1}-2`}>
               <Link to={`/dashboard/tournois/libre/compare`}>
                 <Icon type="build" />
                 <span>Comparer mes jeux</span>
               </Link>
-            </Menu.Item>
+        </Menu.Item>*/}
             <Menu.Item key={`3-${spotlights.length + 1}-4`}>
               <Link to={`/dashboard/tournois/libre/contact`}>
                 <Icon type="customer-service" />

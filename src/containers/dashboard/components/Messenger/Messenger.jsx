@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { autoLogin } from '../../../../modules/login'
-import _ from 'lodash'
 import {
   fetchMessages,
   sendMessage,

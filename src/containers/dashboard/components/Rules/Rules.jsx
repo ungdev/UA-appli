@@ -5,6 +5,8 @@ import { Divider } from 'antd'
 import RulesLOL from './RulesLOL'
 import RulesCSGO from './RulesCSGO'
 import RulesHS from './RulesHS'
+import RulesFortnite from './RulesFortnite'
+import RulesSSBU from './RulesSSBU'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 
 class Rules extends React.Component {
@@ -14,18 +16,24 @@ class Rules extends React.Component {
     switch (this.props.tournament) {
       case '1':
         rulesToDisplay = <RulesLOL />
-        break;
+        break
       case '2':
         rulesToDisplay = <RulesLOL />
+        break
+      case '3':
+        rulesToDisplay = <RulesFortnite />
         break;
       case '4':
         rulesToDisplay = <RulesCSGO />
-        break;
+        break
       case '5':
         rulesToDisplay = <RulesHS />
-        break;
+        break
+      case '6':
+        rulesToDisplay = <RulesSSBU />
+        break
       default:
-        rulesToDisplay = 'Ce jeu ne fait pas partie de la liste des tournois';
+        rulesToDisplay = 'Ce jeu n\'a pas de rêglement sur ce site'
     }
     return (
       <div>

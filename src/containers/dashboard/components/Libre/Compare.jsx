@@ -1,6 +1,5 @@
 import React from 'react'
 import { Divider, Spin, Button } from 'antd'
-import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { connect } from 'react-redux'
 import { fetchInfos, sendMessage, SET_INFOS_LOADING } from '../../../../modules/infos'
 import axios from '../../../../lib/axios'

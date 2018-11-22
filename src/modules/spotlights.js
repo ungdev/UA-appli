@@ -29,13 +29,13 @@ export default (state = initialState, action) => {
       return { ...state, spotlights }
     case SET_SPOTLIGHT_STATE:
       spotlights = state.spotlights.splice(0)
-      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId))
+      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10))
       if(index === -1) return state
       spotlights[index].state = action.payload.stateValue
       return { ...state, spotlights}
     case ADD_SPOTLIGHT_STATE:
       spotlights = state.spotlights.splice(0)
-      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId))
+      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10))
       if(index === -1) return state
       spotlights[index].states.push(action.payload.newState)
       return { ...state, spotlights }
