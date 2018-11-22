@@ -12,6 +12,8 @@ import forgot from './forgot'
 import contact from './contact'
 import infos from './infos'
 import admin from './admin'
+import messages from './messages'
+import conversations from './conversations'
 import hearthstone from './hearthstone'
 
 export default combineReducers({
@@ -28,5 +30,7 @@ export default combineReducers({
   contact,
   infos,
   admin,
+  messages,
+  conversations,
   hearthstone,
 })

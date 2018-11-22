@@ -19,6 +19,8 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/users'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/paids'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/spotlights/:id'} exact component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/messages/:id'} exact component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/conversations'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/material'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/decks'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/mydecks'} component={Dashboard} />
@@ -28,6 +30,7 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/rules'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/info'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/libre/compare'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/messages'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/libre/calendar'} component={Dashboard} />
       <Redirect from="*" to="/dashboard/home" />
     </Switch>
