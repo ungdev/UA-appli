@@ -73,16 +73,18 @@ class Dashboard extends Component {
     if(tab[1] === 'admin') {
       let user = this.props.user
 
-      if(user && user.permissions && user.permissions.admin === 100) {
-        if(tab[2] === 'users') component = <UsersList />
-        if(tab[2] === 'paids') component = <Paids />
-        if(tab[2] === 'spotlights') component = <Spotlights />
-        if(tab[2] === 'conversations') component = <Conversations />
-        if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
-        if(tab[2] === 'material') component = <Material />
-      }
-      else {
-        this.props.goToHome()
+      if(user) {
+        if(user.permissions && user.permissions.admin === 100) {
+          if(tab[2] === 'users') component = <UsersList />
+          if(tab[2] === 'paids') component = <Paids />
+          if(tab[2] === 'spotlights') component = <Spotlights />
+          if(tab[2] === 'conversations') component = <Conversations />
+          if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
+          if(tab[2] === 'material') component = <Material />
+        }
+        else {
+          this.props.goToHome()
+        }
       }
     }
     
@@ -101,7 +103,7 @@ class Dashboard extends Component {
     }
 
     if(component === null) {
-      this.props.goToHome()
+      return null
     }
 
     return (
