@@ -18,6 +18,10 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+  let users = state.users.slice()
+  const userId = action.payload
+  const index = users.findIndex(u => u.id === userId)
+
   switch (action.type) {
     case SET_USERS:
       return {
@@ -42,31 +46,22 @@ export default (state = initialState, action) => {
         spotlights
       }
     case SET_USER_ADMIN:
-      let users = state.users.slice()
-      const userId = action.payload
-      const index = users.findIndex(u => u.id === userId)
-      users[index].isAdmin = 100
+      users[index].permissions.admin = 100
       return {
         ...state,
         users
       }
     case REMOVE_USER_ADMIN:
-      let users2 = state.users.slice()
-      const userId2 = action.payload
-      const index2 = users2.findIndex(u => u.id === userId2)
-      users2[index2].isAdmin = 0
+      users[index].permissions.admin = 0
       return {
         ...state,
-        users: users2
+        users
       }
     case SET_USER_PAID:
-      let users3 = state.users.slice()
-      const userId3 = action.payload
-      const index3 = users3.findIndex(u => u.id === userId3)
-      users3[index3].paid = 1
+      users[index].paid = 1
       return {
         ...state,
-        users: users3
+        users
       }
     default:
       return state
@@ -82,7 +77,7 @@ export const fetchUsers = () => {
     }
 
     try {
-      const res = await axios.get('users', { headers: { 'X-Token': authToken } })
+      const res = await axios.get('admin/users', { headers: { 'X-Token': authToken } })
 
       dispatch({ type: SET_USERS, payload: res.data })
     } catch (err) {
@@ -135,7 +130,7 @@ export const validatePayment = (userId) => {
         dismissAfter: 2000
     }))
     try {
-      const res = await axios.post(`admin/pay`, { userId }, { headers: { 'X-Token': authToken } })
+      const res = await axios.post(`admin/forcepay`, { userId }, { headers: { 'X-Token': authToken } })
       if(res.status === 200) {
         dispatch({ type: SET_USER_PAID, payload: userId })
         dispatch(
@@ -255,13 +250,24 @@ export const setAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/users/${id}`, { isAdmin: 100 }, { headers: { 'X-Token': authToken } })
+      // Prevent user from setting its own permissions
+      if(getState().user.user.id === id) {
+        dispatch(
+          notifActions.notifSend({
+            message: 'Vous ne pouvez pas modifier vos permissions',
+            kind: 'warning',
+            dismissAfter: 2000
+        }))
+
+        return
+      }
+
+      const res = await axios.put(`/admin/user/${id}`, { admin: 100 }, { headers: { 'X-Token': authToken } })
       if(res.status === 200) {
         dispatch({ type: SET_USER_ADMIN, payload: id })
         dispatch(
           notifActions.notifSend({
-            message: 'L\'utilisateur est maintenant Administrateur',
-            kind: 'warning',
+            message: 'L\'utilisateur est maintenant administrateur',
             dismissAfter: 2000
         }))
       }
@@ -284,13 +290,24 @@ export const removeAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/users/${id}`, { isAdmin: 0 }, { headers: { 'X-Token': authToken } })
+      // Prevent user from setting its own permissions
+      if(getState().user.user.id === id) {
+        dispatch(
+          notifActions.notifSend({
+            message: 'Vous ne pouvez pas modifier vos permissions',
+            kind: 'warning',
+            dismissAfter: 2000
+        }))
+
+        return
+      }
+
+      const res = await axios.put(`/admin/user/${id}`, { admin: 0 }, { headers: { 'X-Token': authToken } })
       if(res.status === 200) {
         dispatch({ type: REMOVE_USER_ADMIN, payload: id })
         dispatch(
           notifActions.notifSend({
-            message: 'L\'utilisateur n\'est maintenant plus Administrateur',
-            kind: 'warning',
+            message: 'L\'utilisateur n\'est maintenant plus administrateur',
             dismissAfter: 2000
         }))
       }
