@@ -95,7 +95,7 @@ class UserListActions extends React.Component {
     const { users, userId } = this.props
     const user = users.find(u => u.id === userId)
 
-    if(!user) {
+    if (!user) {
       return null
     }
 
