@@ -99,7 +99,7 @@ class UserListActions extends React.Component {
       return null
     }
 
-    let admin = user.permissions ? (user.permissions.admin === 100) : false
+    let admin = user.permissions && user.permissions.admin === 100
 
     return (
       <React.Fragment>
