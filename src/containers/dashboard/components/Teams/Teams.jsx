@@ -2,7 +2,7 @@ import React from 'react'
 import { List, Divider, Collapse, Spin, Icon } from 'antd'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { connect } from 'react-redux'
-import { fetchTeams } from '../../../../modules/teams'
+import { fetchTeamsBySpotlightId } from '../../../../modules/spotlights'
 
 const Panel = Collapse.Panel;
 
@@ -13,8 +13,7 @@ class Teams extends React.Component {
   }
 
   render() {
-    let { teams } = this.props
-    if (!teams) return <Spin/>
+    let teams = this.props.teams.filter(team => team.spotlightId === parseInt(this.props.tournament, 10))
     teams = teams.filter(team => `${team.spotlightId}` === this.props.tournament)
                   .filter(team => team.isInSpotlight)
     const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
@@ -25,7 +24,7 @@ class Teams extends React.Component {
         <GameStatusBar game={this.props.tournament} />
         <Divider />
         <h1>{teamsToDisplay}</h1>
-        <Collapse>
+        {teams.length > 0 ? <Collapse>
           {teams.map(team => (
             <Panel header={team.name} key={team.id}>
               <List
@@ -42,18 +41,18 @@ class Teams extends React.Component {
               />
             </Panel>
           ))}
-        </Collapse>
+        </Collapse> : <Spin />}
       </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  teams: state.teams.teams || [],
+  teams: state.spotlights.teams || [],
   spotlights: state.spotlights.spotlights
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchTeams: () => dispatch(fetchTeams())
+  fetchTeams: (spotlightId) => dispatch(fetchTeamsBySpotlightId(spotlightId))
 })
 
 

@@ -57,6 +57,17 @@ table {
   width: 47%;
 }
 
+.sender{
+  max-width:50%;
+  margin-left: 50%;
+  margin-bottom: 10px;
+}
+
+.receiver{
+  max-width:50%;
+  margin-right: 50%;
+  margin-bottom: 10px;
+}
 .custom-filter-dropdown {
   background: #fff;
   border: 1px solid #ccc;

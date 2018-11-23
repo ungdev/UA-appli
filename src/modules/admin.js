@@ -201,7 +201,6 @@ export const sendReminderMails = () => {
           dismissAfter: 2000
       }))
       const res = await axios.get(`admin/reminders`, { headers: { 'X-Token': authToken } })
-      console.log('result:', res.data)
       dispatch(
         notifActions.notifSend({
           message: JSON.stringify(res.data),

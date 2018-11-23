@@ -75,7 +75,7 @@ class Info extends React.Component {
 
     return (
       <div>
-        <GameStatusBar game={this.props.tournament} noLastInfo />
+        {this.props.tournament !== 'libre' && <GameStatusBar game={this.props.tournament} noLastInfo />}
         {user && user.isAdmin === 100 ? (
           <React.Fragment>
             <TextArea

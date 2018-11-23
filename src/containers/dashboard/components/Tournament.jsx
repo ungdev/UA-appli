@@ -34,7 +34,6 @@ class Tournament extends React.Component {
   async fetchStages() {
     const id =  spotlightsID[this.props.tournament]
     const stages = await axiosToornament.get(`${id}/stages`)
-    console.log(stages)
     this.setState({stages: stages.data, id})
   }
 

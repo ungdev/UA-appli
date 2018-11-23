@@ -40,7 +40,10 @@ class LeftBar extends React.Component {
         openKeys.push('3')
 
         if(tab.length >= 2) {
-          tab[2] === 'libre' ? openKeys.push(`3-7`) : openKeys.push(`3-${tab[2]}`)
+          tab[2] === 'libre'
+            ? openKeys.push(`3-7`)
+            : openKeys.push(`3-${tab[2]}`)
+
           if(tab.length >= 4) {
             if(tab[3] === 'arbre-tournois') {
               current = `3-${tab[2]}-1`
@@ -48,23 +51,30 @@ class LeftBar extends React.Component {
             if(tab[3] === 'teams') {
               current = `3-${tab[2]}-2`
             }
+            if(tab[3] === 'decks') {
+              current = `3-${tab[2]}-2`
+            }
+            if (tab[3] === 'mydecks') {
+              current = `3-${tab[2]}-2.5`
+            }
             if(tab[3] === 'rules') {
               current = `3-${tab[2]}-3`
             }
             if(tab[3] === 'contact') {
-              tab[2] === 'libre' ? current = `3-7-4` : current = `3-${tab[2]}-4`
-            }
-            if(tab[3] === 'decks') {
-              current = `3-${tab[2]}-2`
+              tab[2] === 'libre'
+                ? current = `3-7-4`
+                : current = `3-${tab[2]}-4`
             }
             if(tab[3] === 'info') {
-              tab[2] === 'libre' ? current = `3-7-5` : current = `3-${tab[2]}-5`
-            }
-            if(tab[3] === 'compare' && tab[2] === 'libre') {
-              current = `3-7-2`
+              tab[2] === 'libre'
+                ? current = `3-7-5`
+                : current = `3-${tab[2]}-5`
             }
             if(tab[3] === 'calendar' && tab[2] === 'libre') {
               current = `3-7-1`
+            }
+            if(tab[3] === 'compare' && tab[2] === 'libre') {
+              current = `3-7-2`
             }
           }
         }
@@ -106,19 +116,38 @@ class LeftBar extends React.Component {
             </Link>
           </Menu.Item>
           {
-            spotlight.perTeam > 1 ? 
-            (<Menu.Item key={`3-${spotlight.id}-2`}>
+            spotlight.perTeam > 1 ?
+            <Menu.Item key={`3-${spotlight.id}-2`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/teams`}>
                 <Icon type="team" />
                 <span>Équipes</span>
               </Link>
-            </Menu.Item>) : (spotlight.name === 'Hearthstone' ?
-            (<Menu.Item key={`3-${spotlight.id}-2`}>
-            <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
-              <Icon type="inbox" />
-              <span>Decks</span>
-            </Link>
-          </Menu.Item>) : '')
+            </Menu.Item>
+            : ''
+          }
+          {
+            spotlight.name === 'Hearthstone' ?
+            <Menu.Item key={`3-${spotlight.id}-2`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
+                <Icon type="inbox" />
+                <span>Decks</span>
+              </Link>
+            </Menu.Item>
+            : ''
+          }
+          {
+            spotlight.name === 'Hearthstone' &&
+            user &&
+            user.team &&
+            user.team.spotlight &&
+            user.team.spotlight.name === 'Hearthstone' ?
+            <Menu.Item key={`3-${spotlight.id}-2.5`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/mydecks`}>
+                <Icon type="inbox" />
+                <span>Mes Decks</span>
+              </Link>
+            </Menu.Item>
+            : ''
           }
           <Menu.Item key={`3-${spotlight.id}-3`}>
             <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
@@ -139,8 +168,7 @@ class LeftBar extends React.Component {
             </Link>
           </Menu.Item>
         </SubMenu>
-        )
-      )
+      ))
     }
     else {
       spotlights = []
@@ -178,6 +206,12 @@ class LeftBar extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="2-2">
+              <Link to={'/dashboard/admin/conversations'}>
+                <Icon type="message" />
+                <span>Messagerie admin</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="2-3">
               <Link to={`/dashboard/admin/paids`}>
                 <Icon type="euro" />
                 <span>Mais qui a payé ?</span>
@@ -198,17 +232,31 @@ class LeftBar extends React.Component {
                 </span>
               }
             >
-            {spotlights.map(spotlight => (
-              <Menu.Item key={`2-4-${spotlight.id}`}>
-                <Link to={`/dashboard/admin/spotlights/${spotlight.id}`}>
-                  <Icon type="team" />
-                  <span>{spotlight.shortName}</span>
-                </Link>
-              </Menu.Item>
-            ))}
+            {
+              spotlights.map(spotlight => (
+                <Menu.Item key={`2-4-${spotlight.id}`}>
+                  <Link to={`/dashboard/admin/spotlights/${spotlight.id}`}>
+                    <Icon type="team" />
+                    <span>{spotlight.shortName}</span>
+                  </Link>
+                </Menu.Item>
+              ))
+            }
             </SubMenu>
+            <Menu.Item key="2-5">
+              <Link to={`/dashboard/admin/material`}>
+                <Icon type="desktop" />
+                <span>Matériel</span>
+              </Link>
+            </Menu.Item>
           </SubMenu>
-        ) : null}
+        ) : 
+        <Menu.Item key="2-3">
+              <Link to={'/dashboard/messages'}>
+                <Icon type="message" />
+                <span>Messagerie</span>
+              </Link>
+            </Menu.Item>}
         <SubMenu
           key="3"
           title={
@@ -218,7 +266,7 @@ class LeftBar extends React.Component {
             </span>
           }
           onClick={this.props.fetchSpotlights}
-          >
+        >
           {component}
           <SubMenu
             key={`3-${spotlights.length + 1}`}
@@ -227,19 +275,20 @@ class LeftBar extends React.Component {
                 <Icon type="team" />
                 <span>Libre</span>
               </span>
-            }>
-            <Menu.Item key={`3-${spotlights.length + 1}-1`}>
+            }
+          >
+            {/*<Menu.Item key={`3-${spotlights.length + 1}-1`}>
               <Link to={`/dashboard/tournois/libre/calendar`}>
                 <Icon type="calendar" />
                 <span>Planning</span>
               </Link>
-            </Menu.Item>
-            <Menu.Item key={`3-${spotlights.length + 1}-2`}>
+          </Menu.Item>*/}
+            {/*<Menu.Item key={`3-${spotlights.length + 1}-2`}>
               <Link to={`/dashboard/tournois/libre/compare`}>
                 <Icon type="build" />
                 <span>Comparer mes jeux</span>
               </Link>
-            </Menu.Item>
+        </Menu.Item>*/}
             <Menu.Item key={`3-${spotlights.length + 1}-4`}>
               <Link to={`/dashboard/tournois/libre/contact`}>
                 <Icon type="customer-service" />
@@ -281,7 +330,7 @@ const mapDispatchToProps = dispatch => ({
   fetchSpotlights: () => dispatch(fetchSpotlights())
 })
 
-
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(LeftBar)
+  mapStateToProps,
+  mapDispatchToProps
+)(LeftBar)
