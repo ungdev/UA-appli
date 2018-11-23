@@ -15,7 +15,8 @@ class LeftBar extends React.Component {
 
     this.props.fetchSpotlights()
 
-    let tab = this.props.location.split('/').splice(0, 1)  // remove first element because it's equal to ''
+    let tab = this.props.location.split('/')
+    tab.splice(0, 1)  // remove first element because it's equal to ''
 
     if(tab[0] === 'dashboard') {
       if(tab[1] === 'admin') {
@@ -215,12 +216,6 @@ class LeftBar extends React.Component {
               <Link to={`/dashboard/admin/paids`}>
                 <Icon type="euro" />
                 <span>Mais qui a payé ?</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2-3">
-              <Link to={`/dashboard/admin/material`}>
-                <Icon type="desktop" />
-                <span>Matériel</span>
               </Link>
             </Menu.Item>
             <SubMenu
