@@ -10,16 +10,24 @@ class UserListActions extends React.Component {
     super(props)
     
     this.state = {
-      paymentModalVisible: false
+      paymentModalVisible: false,
+      setAdminModalVisible: false,
+      removeAdminModalVisible: false
     }
   }
 
   setAdmin = () => {
     this.props.setAdmin(this.props.userId)
+    this.setState({
+      setAdminModalVisible: false
+    })
   }
 
   removeAdmin = () => {
     this.props.removeAdmin(this.props.userId)
+    this.setState({
+      removeAdminModalVisible: false
+    })
   }
 
   validatePayment = () => {
@@ -38,6 +46,34 @@ class UserListActions extends React.Component {
   closeMainModal = () => {
     this.setState({
       mainModalVisible: false
+    })
+  }
+
+  openSetAdminModal = () => {
+    this.setState({
+      mainModalVisible: false,
+      setAdminModalVisible: true
+    })
+  }
+
+  closeSetAdminModal = () => {
+    this.setState({
+      mainModalVisible: true,
+      setAdminModalVisible: false
+    })
+  }
+
+  openRemoveAdminModal = () => {
+    this.setState({
+      mainModalVisible: false,
+      removeAdminModalVisible: true
+    })
+  }
+
+  closeRemoveAdminModal = () => {
+    this.setState({
+      mainModalVisible: true,
+      removeAdminModalVisible: false
     })
   }
 
@@ -84,12 +120,12 @@ class UserListActions extends React.Component {
           <div className="admin-action-content">
             {!admin ?
               <Tooltip placement="right" title="Rendre administrateur">
-                <Button type="primary" onClick={this.setAdmin} className="admin-action-button"><Icon type="arrow-up" /></Button>
+                <Button type="primary" onClick={this.openSetAdminModal} className="admin-action-button"><Icon type="arrow-up" /></Button>
               </Tooltip>
             : null}
             {admin ?
-              <Tooltip placement="right" title="Enlever le rang administrateur">
-                <Button type="danger" onClick={this.removeAdmin} className="admin-action-button" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}><Icon type="arrow-down" /></Button>
+              <Tooltip placement="right" title="Enlever le rang d'administrateur">
+                <Button type="danger" onClick={this.openRemoveAdminModal} className="admin-action-button" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}><Icon type="arrow-down" /></Button>
               </Tooltip>
             : null}
           </div>
@@ -117,7 +153,7 @@ class UserListActions extends React.Component {
             <React.Fragment>
               <h2 className="admin-action-title"><Icon type="euro" style={{ fontSize: '17px' }} /> Paiement</h2>
               <div className="admin-action-content">
-                <Tooltip placement="right" title="Payer la place">
+                <Tooltip placement="right" title="Valider le paiement">
                   <Button type="primary" onClick={this.openPaymentModal} className="admin-action-button"><Icon type="euro" /></Button>
                 </Tooltip>
               </div>
@@ -131,9 +167,36 @@ class UserListActions extends React.Component {
           onOk={this.validatePayment}
           onCancel={this.closePaymentModal}
           cancelText="Annuler"
+          okText="Ok"
         >
           <h3>Validation d'un paiement</h3>
+          <p><strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong></p>
+          <br />
           <p>Cela validera le paiement de l'utilisateur et il recevra sa place par mail.</p>
+        </Modal>
+
+        <Modal
+          title="Êtes vous sûr ?"
+          visible={this.state.setAdminModalVisible}
+          onOk={this.setAdmin}
+          onCancel={this.closeSetAdminModal}
+          cancelText="Annuler"
+          okText="Ok"
+        >
+          <h3>Rendre administrateur</h3>
+          <p><strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong></p>
+        </Modal>
+
+        <Modal
+          title="Êtes vous sûr ?"
+          visible={this.state.removeAdminModalVisible}
+          onOk={this.removeAdmin}
+          onCancel={this.closeRemoveAdminModal}
+          cancelText="Annuler"
+          okText="Ok"
+        >
+          <h3>Enlever le rang d'administrateur</h3>
+          <p><strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong></p>
         </Modal>
       </React.Fragment>)
   }

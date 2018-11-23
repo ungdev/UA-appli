@@ -110,7 +110,7 @@ class TournamentStatusBar extends React.Component {
         <Card title={<h1>{spotlight.name}</h1>}>
           <Steps current={this.state.etat} progressDot={this.customDot}>
           {
-            spotlight.states.map(state => (
+            spotlight.states && spotlight.states.map(state => (
               <Step
               title={state.title}
               description={state.desc}
