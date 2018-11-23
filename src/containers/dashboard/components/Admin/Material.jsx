@@ -44,7 +44,7 @@ class Material extends React.Component {
   render() {
     let users = this.props.users
 
-    if(!users) {
+    if (!users) {
       this.props.gotoHome()
     }
 
