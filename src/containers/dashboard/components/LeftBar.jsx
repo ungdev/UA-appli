@@ -91,7 +91,7 @@ class LeftBar extends React.Component {
   }
 
   render() {
-    if(this.props.spotlights.length === 0) {
+    if (this.props.spotlights.length === 0) {
       this.props.fetchSpotlights()
     }
 
