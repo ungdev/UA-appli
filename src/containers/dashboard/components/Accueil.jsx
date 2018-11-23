@@ -17,16 +17,22 @@ const colorResult = (result) => {
 
 const getTeam = (team) => {
   const labelResult = team.result ? team.result.toUpperCase()[0] : null
-  const name = team.participant ? <p style={{
-    fontWeight: team.result === 'win' ? 'bold' : null
-  }}>{team.participant.name}</p> : <p>A définir</p>
+  const name = team.participant ?
+    <p style={{ fontWeight: team.result === 'win' ? 'bold' : null }}>{team.participant.name}</p>
+    : <p>A définir</p>
   const result = team.result ? <p style={colorResult(labelResult)}>{labelResult}</p> : ""
+
   return <div style={{ display: 'flex', justifyContent: 'space-between' }}>{name} {result}</div>
 }
 
 class Accueil extends React.Component {
+constructor(props) {
+    super(props)
 
-  state = { matches: [] }
+    this.state = {
+      matches: []
+    }
+  }
 
   componentDidMount() {
     //this.fetchMatches()

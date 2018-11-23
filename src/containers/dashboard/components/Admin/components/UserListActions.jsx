@@ -1,9 +1,9 @@
 import React from 'react'
 import { Icon, Tooltip, Modal, Button, Select } from 'antd'
 import { connect } from 'react-redux'
-import { setAdmin, removeAdmin, validatePayment } from '../../../../modules/admin'
+import { setAdmin, removeAdmin, validatePayment } from '../../../../../modules/admin'
 
-import './admin.css'
+import '../admin.css'
 
 class UserListActions extends React.Component {
   constructor(props) {
@@ -99,7 +99,7 @@ class UserListActions extends React.Component {
       return null
     }
 
-    let admin = user.permissions && user.permissions.admin === 100
+    let userIsAdmin = user.permissions && user.permissions.admin === 100
 
     return (
       <React.Fragment>
@@ -118,12 +118,12 @@ class UserListActions extends React.Component {
           <h1 className="admin-action-username">{ `${user.name} (${user.firstname} ${user.lastname})` }</h1>
           <h2 className="admin-action-title"><Icon type="safety" /> Administrateur</h2>
           <div className="admin-action-content">
-            {!admin ?
+            {!userIsAdmin ?
               <Tooltip placement="right" title="Rendre administrateur">
                 <Button type="primary" onClick={this.openSetAdminModal} className="admin-action-button"><Icon type="arrow-up" /></Button>
               </Tooltip>
             : null}
-            {admin ?
+            {userIsAdmin ?
               <Tooltip placement="right" title="Enlever le rang d'administrateur">
                 <Button type="danger" onClick={this.openRemoveAdminModal} className="admin-action-button" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}><Icon type="arrow-down" /></Button>
               </Tooltip>

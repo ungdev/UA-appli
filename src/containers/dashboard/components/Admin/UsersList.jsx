@@ -3,7 +3,7 @@ import { Icon, Table, Select, Button, Spin } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
-import UserListActions from './UserListActions'
+import UserListActions from './components/UserListActions'
 import { fetchUsers } from '../../../../modules/admin'
 
 
@@ -170,6 +170,7 @@ class UsersList extends React.Component {
     </React.Fragment>)
   }
 }
+
 const mapStateToProps = state => ({
   users: state.admin.users,
   spotlights: state.spotlights.spotlights
@@ -178,7 +179,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsers())
 })
-
 
 export default connect(
     mapStateToProps,
