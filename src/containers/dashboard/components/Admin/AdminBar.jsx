@@ -78,6 +78,8 @@ class AdminBar extends React.Component {
           visible={this.state.modalVisible}
           onOk={this.sendMails}
           onCancel={this.closeModal}
+          okText="Ok"
+          cancelText="Annuler"
         >
           <p>Cela enverra une grande quantité de mails, ne faites ça que si vous êtes sûr de ce que vous faites.</p>
         </Modal>

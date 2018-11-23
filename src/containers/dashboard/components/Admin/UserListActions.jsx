@@ -79,6 +79,7 @@ class UserListActions extends React.Component {
           footer={<Button type="primary" onClick={this.closeMainModal}>Ok</Button>}
           onCancel={this.closeMainModal}
         >
+          <h1 className="admin-action-username">{ `${user.name} (${user.firstname} ${user.lastname})` }</h1>
           <h2 className="admin-action-title"><Icon type="safety" /> Administrateur</h2>
           <div className="admin-action-content">
             {!admin ?

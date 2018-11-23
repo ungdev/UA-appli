@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Table, Select, Button } from 'antd'
+import { Icon, Table, Select, Button, Spin } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
@@ -37,6 +37,10 @@ class UsersList extends React.Component {
   
   render() {
     let { users } = this.props
+
+    if(!users) {
+      return <Spin />
+    }
 
     users = users.map(user => {
       let role = ''
@@ -146,8 +150,8 @@ class UsersList extends React.Component {
             value: 'SSBU',
           },
           {
-            text: 'OSU',
-            value: 'OSU',
+            text: 'osu!',
+            value: 'osu!',
           }
         ],
         onFilter: (value, record) => record.spotlight === value,
