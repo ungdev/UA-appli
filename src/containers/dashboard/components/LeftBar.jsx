@@ -98,7 +98,7 @@ class LeftBar extends React.Component {
     let component = ''
     let { spotlights, user } = this.props
 
-    if(spotlights) {
+    if (spotlights) {
       component = spotlights.map(spotlight => (
         <SubMenu
           key={`3-${spotlight.id}`}
