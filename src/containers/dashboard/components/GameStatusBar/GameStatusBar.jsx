@@ -119,7 +119,7 @@ class TournamentStatusBar extends React.Component {
           }
           </Steps>
         </Card>
-        {this.props.user && this.props.user.isAdmin === 100 &&
+        {this.props.user && this.props.user.permissions && this.props.user.permissions.admin === 100 &&
           <div style={{ marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-around' }}>
             <Button type="danger" onClick={this.previousState}>État précédent</Button>
             <Button type="primary" onClick={this.openModal}>Ajouter un état</Button>

@@ -236,7 +236,8 @@ export const fetchCounts = () => {
           message: errorToString(err.response.data.error),
           kind: 'danger',
           dismissAfter: 2000
-      }))
+        })
+      )
     }
   }
 }
@@ -249,19 +250,8 @@ export const setAdmin = (id) => {
       return
     }
     try {
-      // Prevent user from setting its own permissions
-      if(getState().user.user.id === id) {
-        dispatch(
-          notifActions.notifSend({
-            message: 'Vous ne pouvez pas modifier vos permissions',
-            kind: 'warning',
-            dismissAfter: 2000
-        }))
-
-        return
-      }
-
       const res = await axios.put(`/admin/user/${id}`, { admin: 100 }, { headers: { 'X-Token': authToken } })
+
       if(res.status === 200) {
         dispatch({ type: SET_USER_ADMIN, payload: id })
         dispatch(
@@ -289,19 +279,8 @@ export const removeAdmin = (id) => {
       return
     }
     try {
-      // Prevent user from setting its own permissions
-      if(getState().user.user.id === id) {
-        dispatch(
-          notifActions.notifSend({
-            message: 'Vous ne pouvez pas modifier vos permissions',
-            kind: 'warning',
-            dismissAfter: 2000
-        }))
-
-        return
-      }
-
       const res = await axios.put(`/admin/user/${id}`, { admin: 0 }, { headers: { 'X-Token': authToken } })
+
       if(res.status === 200) {
         dispatch({ type: REMOVE_USER_ADMIN, payload: id })
         dispatch(

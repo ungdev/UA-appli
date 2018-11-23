@@ -44,13 +44,13 @@ class UsersList extends React.Component {
 
     users = users.map(user => {
       let role = ''
-      if(user.isAdmin === 100) {
+      if(user.permissions && user.permissions.admin === 100) {
         role = '/Admin'
       }
       if(user.respo && user.respo !== 0) {
         role += `/Respo ${this.getTournamentNameById(user.respo)}`
       }
-      if((!user.respo || (user.respo && user.respo === 0)) && user.isAdmin !== 100) {
+      if(role === '') {
         role = '/Joueur'
       }
 
@@ -160,7 +160,7 @@ class UsersList extends React.Component {
         title: 'Actions',
         key: 'action',
         dataIndex: 'id',
-        render: (id) => <UserListActions userId={id} users={this.props.users}/>
+        render: (id) => <UserListActions userId={id} users={this.props.users} />
       }
     ]
 
