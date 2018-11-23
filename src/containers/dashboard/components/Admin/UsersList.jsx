@@ -38,7 +38,7 @@ class UsersList extends React.Component {
   render() {
     let { users } = this.props
 
-    if(!users) {
+    if (!users) {
       return <Spin />
     }
 
