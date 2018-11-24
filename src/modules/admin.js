@@ -14,7 +14,7 @@ export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
 const initialState = {
   users: [],
   spotlights: [],
-  chartData: { dayly: [], cumul: [] },
+  chartData: { daily: [], cumul: [] },
 }
 
 export default (state = initialState, action) => {
@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
       let users = state.users.slice()
       const userId = action.payload
       const index = users.findIndex(u => u.id === userId)
-      users[index].isAdmin = 100
+      users[index].permission.admin = 100
       return {
         ...state,
         users
@@ -54,7 +54,7 @@ export default (state = initialState, action) => {
       let users2 = state.users.slice()
       const userId2 = action.payload
       const index2 = users2.findIndex(u => u.id === userId2)
-      users2[index2].isAdmin = 0
+      users2[index2].permission.admin = 0
       return {
         ...state,
         users: users2
@@ -82,7 +82,7 @@ export const fetchUsers = () => {
     }
 
     try {
-      const res = await axios.get('users', { headers: { 'X-Token': authToken } })
+      const res = await axios.get('admin/users', { headers: { 'X-Token': authToken } })
 
       dispatch({ type: SET_USERS, payload: res.data })
     } catch (err) {
@@ -169,7 +169,7 @@ export const fetchChartData = () => {
         start: '2018-10-16',
         end: moment().format('YYYY-MM-DD'),
         step: 'day',
-        mode: 'dayly',
+        mode: 'daily',
       }, { headers: { 'X-Token': authToken } })
       const res2 = await axios.post(`admin/chart`, {
         start: '2018-10-16',
@@ -178,7 +178,7 @@ export const fetchChartData = () => {
         mode: 'cumul',
       }, { headers: { 'X-Token': authToken } })
 
-      dispatch({ type: SET_CHARTDATA, payload: { dayly: res.data, cumul: res2.data} })
+      dispatch({ type: SET_CHARTDATA, payload: { daily: res.data, cumul: res2.data} })
     } catch (err) {
       console.log(err)
       dispatch(

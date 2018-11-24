@@ -14,7 +14,7 @@ class UsersList extends React.Component {
     this.state = {
       searchName: null,
     }
-
+    console.log('HEHEHEHEJFJENFOLEGN')
     this.props.fetchUsers()
   }
 
@@ -40,13 +40,13 @@ class UsersList extends React.Component {
 
     users = users.map(user => {
       let role = ''
-      if(user.isAdmin === 100) {
+      if(user.permission && user.permission.admin) {
         role = '/Admin'
       }
       if(user.respo && user.respo !== 0) {
         role += `/Respo ${this.getTournamentNameById(user.respo)}`
       }
-      if((!user.respo || (user.respo && user.respo === 0)) && user.isAdmin !== 100) {
+      if((!user.respo || (user.respo && user.respo === 0)) && (!user.permission || !user.permission.admin)) {
         role = '/Joueur'
       }
 

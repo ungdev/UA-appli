@@ -52,6 +52,9 @@ class LeftBar extends React.Component {
           }
         }
       }
+      if (tab[1] === 'messages') {
+        current = '2.5'
+      }
     }
     this.state = { current, openKeys }
   }
@@ -147,7 +150,7 @@ class LeftBar extends React.Component {
             <span>Accueil</span>
           </Link>
         </Menu.Item>
-        {user && user.isAdmin === 100 ? (
+        {user && user.permission && user.permission.admin ? (
           <SubMenu
             key="2"
             title={
@@ -201,7 +204,7 @@ class LeftBar extends React.Component {
             </Menu.Item>
           </SubMenu>
         ) : 
-        <Menu.Item key="2-3">
+        <Menu.Item key="2.5">
               <Link to={'/dashboard/messages'}>
                 <Icon type="message" />
                 <span>Messagerie</span>
