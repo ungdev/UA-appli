@@ -11,13 +11,6 @@
   z-index: 2;
 }
 
-@media screen and (max-width: 992px) {
-  .a-intro__login {
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
 .a-intro__shadow {
   position: absolute;
   top: 0;
@@ -44,7 +37,14 @@
   background-size: cover;
 }
 
-@media (min-width: 992px) {
+@media screen and (max-width: 992px) {
+  .a-intro__login {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (min-width: 992px) {
   .a-intro__images {
     display: block;
   }
@@ -85,9 +85,7 @@
     clip-path: polygon(90% 0, 100% 0, 100% 100%, 70% 100%);
     background-position: -85% center;
   }
-}
 
-@media (min-width: 996px) {
   .a-intro__login {
     top: 140px;
   }

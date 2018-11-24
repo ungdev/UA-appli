@@ -99,9 +99,9 @@ class Paids extends React.Component {
         role = '/Admin'
       }
       if(user.respo && user.respo !== 0) {
-        role = `${role}/Respo ${this.getTournamentNameById(user.respo)}`
+        role += `/Respo ${this.getTournamentNameById(user.respo)}`
       }
-      if((!user.respo || (user.respo && user.respo === 0)) && (!user.permission || !user.permission.admin)) {
+      if(role === '') {
         role = '/Joueur'
       }
 

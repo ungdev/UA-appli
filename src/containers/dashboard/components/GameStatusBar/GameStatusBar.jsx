@@ -7,13 +7,14 @@ import { addState } from '../../../../modules/spotlights'
 
 const Step = Steps.Step
 
-
 class TournamentStatusBar extends React.Component {
-  
   constructor(props) {
     super(props)
+
     props.getInfos(props.game, 0, 1)
+    
     const spotlight = props.spotlights.find(s => `${s.id}` === props.game)
+
     this.state = {
       etat: spotlight ? spotlight.state : 0,
       info: props.infos && props.infos.length > 0 ? props.infos[0].title : '',
@@ -109,7 +110,7 @@ class TournamentStatusBar extends React.Component {
         <Card title={<h1>{spotlight.name}</h1>}>
           <Steps current={this.state.etat} progressDot={this.customDot}>
           {
-            spotlight.states.map(state => (
+            spotlight.states && spotlight.states.map(state => (
               <Step
               title={state.title}
               description={state.desc}

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import './dashboard.css'
-
-
+import { push } from 'react-router-redux'
 
 import Accueil from './components/Accueil'
 import HsDecks from './components/hs/HsDecks'
@@ -21,8 +19,6 @@ import Calendar from './components/Libre/Calendar'
 import DashboardLayout from './layout'
 import Messenger from './components/Messenger/Messenger'
 import Conversations from './components/Conversations/Conversations'
-import { push } from 'react-router-redux'
-
 
 import { autoLogin } from '../../modules/login'
 
@@ -45,11 +41,7 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    this.props.autoLogin().then(() => {
-      this.setState({
-        render: this.props.user && this.props.user.name
-      })
-    })
+    this.props.autoLogin()
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -62,10 +54,11 @@ class Dashboard extends Component {
     tab.splice(0,1) // remove first element because it's equal to ''
 
     if(tab[0] !== 'dashboard') {
-      this.props.gotoHome()
+      this.props.goToHome()
     }
-    if(tab[0] === 'dashboard' && tab[1] === 'home' && tab.length === 2) component = <Accueil />
-    if(tab[0] === 'dashboard' && tab.length === 4 && tab[1] === 'tournois') {
+    
+    if(tab[1] === 'home' && tab.length === 2) component = <Accueil />
+    if(tab[1] === 'tournois' && tab.length === 4) {
       if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6") component = <Teams tournament={tab[2]} />
       if(tab[3] === 'arbre-tournois') component = <Tournament tournament={tab[2]} />
       if(tab[3] === 'rules') component = <Rules tournament={tab[2]} />
@@ -78,49 +71,39 @@ class Dashboard extends Component {
     }
 
     if(tab[1] === 'admin') {
-      if(tab[2] === 'users') component = <UsersList />
-      if(tab[2] === 'paids') component = <Paids />
-      if(tab[2] === 'spotlights') component = <Spotlights />
-      if(tab[2] === 'conversations') component = <Conversations />
-      if(tab[2] === 'messages') {
-        component = <Messenger idTo={tab[3]}/>
+      let user = this.props.user
+
+      if(user) {
+        if(user.permissions && user.permissions.admin === 100) {
+          if(tab[2] === 'users') component = <UsersList />
+          if(tab[2] === 'paids') component = <Paids />
+          if(tab[2] === 'spotlights') component = <Spotlights />
+          if(tab[2] === 'conversations') component = <Conversations />
+          if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
+          if(tab[2] === 'material') component = <Material />
+        }
+        else {
+          this.props.goToHome()
+        }
       }
-
-      if(tab[2] === 'material') component = <Material />
     }
-    if(tab[0] === 'dashboard' && tab[1] === 'messages' && tab.length === 2) component = <Messenger />
-    // if(tab[0] === 'dashboard' && tab[1] === 'conversations' && tab.length === 2) component = <Conversations />
-
+    
+    if(tab[1] === 'messages' && tab.length === 2) component = <Messenger />
+    // if(tab[1] === 'conversations' && tab.length === 2) component = <Conversations />
 
     if(tab[1] === 'tournois' && tab.length === 4) {
-      if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6") {
-        component = <Teams tournament={tab[2]} />
-      }
-      if(tab[3] === 'arbre-tournois') {
-        component = <Tournament tournament={tab[2]} />
-      }
-      if(tab[3] === 'rules') {
-        component = <Rules tournament={tab[2]} />
-      }
-      if(tab[3] === 'contact') {
-        component = <Contact tournament={tab[2]} />
-      }
-      if(tab[3] === 'decks' && tab[2] === "5") {
-        component = <HsDecks />
-      }
-      if(tab[3] === 'info') {
-        component = <Info tournament={tab[2]} />
-      }
-      if(tab[3] === 'compare' && tab[2] === 'libre') {
-        component = <Compare />
-      }
-      if(tab[3] === 'calendar' && tab[2] === 'libre') {
-        component = <Calendar />
-      }
+      if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6") component = <Teams tournament={tab[2]} />
+      if(tab[3] === 'arbre-tournois') component = <Tournament tournament={tab[2]} />
+      if(tab[3] === 'rules') component = <Rules tournament={tab[2]} />
+      if(tab[3] === 'contact') component = <Contact tournament={tab[2]} />
+      if(tab[3] === 'decks' && tab[2] === "5") component = <HsDecks />
+      if(tab[3] === 'info') component = <Info tournament={tab[2]} />
+      if(tab[3] === 'compare' && tab[2] === 'libre') component = <Compare />
+      if(tab[3] === 'calendar' && tab[2] === 'libre') component = <Calendar />
     }
 
     if(component === null) {
-      this.props.goToHome()
+      return null
     }
 
     return (

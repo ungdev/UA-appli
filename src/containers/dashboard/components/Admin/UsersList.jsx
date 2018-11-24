@@ -1,9 +1,9 @@
 import React from 'react'
-import { Icon, Table, Select, Button } from 'antd'
+import { Icon, Table, Select, Button, Spin } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
-import UserListActions from './UserListActions'
+import UserListActions from './components/UserListActions'
 import { fetchUsers } from '../../../../modules/admin'
 
 
@@ -38,6 +38,10 @@ class UsersList extends React.Component {
   render() {
     let { users } = this.props
 
+    if (!users) {
+      return <Spin />
+    }
+
     users = users.map(user => {
       let role = ''
       if(user.permission && user.permission.admin) {
@@ -46,7 +50,7 @@ class UsersList extends React.Component {
       if(user.respo && user.respo !== 0) {
         role += `/Respo ${this.getTournamentNameById(user.respo)}`
       }
-      if((!user.respo || (user.respo && user.respo === 0)) && (!user.permission || !user.permission.admin)) {
+      if(role === '') {
         role = '/Joueur'
       }
 
@@ -156,7 +160,7 @@ class UsersList extends React.Component {
         title: 'Actions',
         key: 'action',
         dataIndex: 'id',
-        render: (id) => <UserListActions userId={id} users={this.props.users}/>
+        render: (id) => <UserListActions userId={id} users={this.props.users} />
       }
     ]
 
@@ -166,6 +170,7 @@ class UsersList extends React.Component {
     </React.Fragment>)
   }
 }
+
 const mapStateToProps = state => ({
   users: state.admin.users,
   spotlights: state.spotlights.spotlights
@@ -174,7 +179,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsers())
 })
-
 
 export default connect(
     mapStateToProps,
