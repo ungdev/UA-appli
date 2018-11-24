@@ -1,6 +1,5 @@
 import React from 'react'
 import { Icon } from 'antd'
-import { connect } from 'react-redux'
 
 class WhoPaid extends React.Component {
 
@@ -13,10 +12,4 @@ class WhoPaid extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-    
-  })
-
-export default connect(
-    null,
-    mapDispatchToProps)(WhoPaid)
+export default WhoPaid

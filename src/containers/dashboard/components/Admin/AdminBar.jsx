@@ -54,9 +54,6 @@ class AdminBar extends React.Component {
     })
   }
   render() {
-    if(!this.props.user || !this.props.user.permission || !this.props.user.permission.admin) {
-      this.props.redirectToHome()
-    }
 
     return (
       <Card title={<h1>Panneau d'administration</h1>}>

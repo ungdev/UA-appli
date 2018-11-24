@@ -54,6 +54,7 @@ class Dashboard extends Component {
     tab.splice(0,1) // remove first element because it's equal to ''
 
     if(tab[0] !== 'dashboard') {
+      console.log('NOT DASHBOARD')
       this.props.goToHome()
     }
     
@@ -74,7 +75,7 @@ class Dashboard extends Component {
       let user = this.props.user
 
       if(user) {
-        if(user.permissions && user.permissions.admin === 100) {
+        if(user.permission && user.permission.admin) {
           if(tab[2] === 'users') component = <UsersList />
           if(tab[2] === 'paids') component = <Paids />
           if(tab[2] === 'spotlights') component = <Spotlights />

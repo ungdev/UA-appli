@@ -99,7 +99,7 @@ class UserListActions extends React.Component {
       return null
     }
 
-    let userIsAdmin = user.permissions && user.permissions.admin === 100
+    let userIsAdmin = user.permission && user.permission.admin
 
     return (
       <React.Fragment>
@@ -122,12 +122,11 @@ class UserListActions extends React.Component {
               <Tooltip placement="right" title="Rendre administrateur">
                 <Button type="primary" onClick={this.openSetAdminModal} className="admin-action-button"><Icon type="arrow-up" /></Button>
               </Tooltip>
-            : null}
-            {userIsAdmin ?
+            : 
               <Tooltip placement="right" title="Enlever le rang d'administrateur">
                 <Button type="danger" onClick={this.openRemoveAdminModal} className="admin-action-button" style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}><Icon type="arrow-down" /></Button>
               </Tooltip>
-            : null}
+            }
           </div>
 
           <h2 className="admin-action-title"><Icon type="crown" /> Responsable tournoi</h2>

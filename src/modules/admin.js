@@ -18,7 +18,7 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  let users = state.users.slice()
+  let users = state.users.slice(0)
   const userId = action.payload
   const index = users.findIndex(u => u.id === userId)
 
@@ -46,19 +46,13 @@ export default (state = initialState, action) => {
         spotlights
       }
     case SET_USER_ADMIN:
-      let users = state.users.slice()
-      const userId = action.payload
-      const index = users.findIndex(u => u.id === userId)
       users[index].permission.admin = true
       return {
         ...state,
         users
       }
     case REMOVE_USER_ADMIN:
-      let users2 = state.users.slice()
-      const userId2 = action.payload
-      const index2 = users2.findIndex(u => u.id === userId2)
-      users2[index2].permission.admin = false
+      users[index].permission.admin = false
       return {
         ...state,
         users
@@ -288,7 +282,7 @@ export const setAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/user/${id}`, { admin: 100 }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/user/${id}`, { admin: true }, { headers: { 'X-Token': authToken } })
 
       if(res.status === 200) {
         dispatch({ type: SET_USER_ADMIN, payload: id })
@@ -299,6 +293,7 @@ export const setAdmin = (id) => {
         }))
       }
     } catch (err) {
+      console.log(err)
       dispatch(
         notifActions.notifSend({
           message: 'Une erreur est survenue',
@@ -317,7 +312,7 @@ export const removeAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/user/${id}`, { admin: 0 }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/user/${id}`, { admin: false }, { headers: { 'X-Token': authToken } })
 
       if(res.status === 200) {
         dispatch({ type: REMOVE_USER_ADMIN, payload: id })
@@ -328,6 +323,7 @@ export const removeAdmin = (id) => {
         }))
       }
     } catch (err) {
+      console.log(err)
       dispatch(
         notifActions.notifSend({
           message: 'Une erreur est survenue',

@@ -74,7 +74,7 @@ export const addDeck = (name, deckstring) => {
     }
 
     try {
-      const res = await axios.post(`hearthstone/decks`, { name, deckstring }, { headers: { 'X-Token': authToken } })
+      await axios.post(`hearthstone/decks`, { name, deckstring }, { headers: { 'X-Token': authToken } })
       dispatch(fetchHSPlayers())
     } catch (err) {
       console.log(err)
@@ -98,7 +98,7 @@ export const deleteDeck = (id) => {
     }
 
     try {
-      const res = await axios.delete(`hearthstone/decks/${id}`, { headers: { 'X-Token': authToken } })
+      await axios.delete(`hearthstone/decks/${id}`, { headers: { 'X-Token': authToken } })
       dispatch({ type: DELETE_DECK, payload: id })
     } catch (err) {
       console.log(err)
