@@ -39,13 +39,13 @@ class Messenger extends React.Component {
 
   loadMessages() {
     this.props.setLoading()
-    if (this.props.user && this.props.user.isAdmin === 100) {
+    if (this.props.user && this.props.user.permissions && this.props.user.permissions.admin === 100) {
       this.props.getMessagesByIdUser(this.props.idTo)
     } else {
       this.props.getMessages()
     }
 
-    // this.props.user && this.props.user.isAdmin === 100 ? this.props.getMessagesByIdUser(this.props.idTo) :  this.props.getMessages()
+    // this.props.user && this.props.user.permissions && this.props.user.permissions.admin === 100 ? this.props.getMessagesByIdUser(this.props.idTo) :  this.props.getMessages()
   }
 
   onTextChange = e => {

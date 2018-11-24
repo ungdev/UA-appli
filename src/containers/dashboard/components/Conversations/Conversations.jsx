@@ -34,8 +34,10 @@ class Conversations extends React.Component {
   }
 
   render() {
-    if (this.props.user && this.props.user.isAdmin !== 100)
+    if (this.props.user && this.props.user.permissions && this.props.user.permissions.admin !== 100) {
       this.props.redirectToHome()
+    }
+    
     let { conversations } = this.state
     // let conversationsList = conversations.map(conversation => {
     //   return (

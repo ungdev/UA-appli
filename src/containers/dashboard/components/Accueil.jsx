@@ -4,15 +4,6 @@ import { Divider, Card } from 'antd'
 import qs from 'qs'
 import axiosToornament from '../../../lib/axiosToornament'
 
-const matches = {
-  display: 'flex'
-}
-
-const styleTeam =  {
-  display:'flex',
-  justifyContent: 'space-between'
-}
-
 const colorResult = (result) => {
   switch (result) {
     case "L":
@@ -26,16 +17,22 @@ const colorResult = (result) => {
 
 const getTeam = (team) => {
   const labelResult = team.result ? team.result.toUpperCase()[0] : null
-  const name = team.participant ? <p style={{
-    fontWeight: team.result === 'win' ? 'bold' : null
-  }}>{team.participant.name}</p> : <p>A définir</p>
+  const name = team.participant ?
+    <p style={{ fontWeight: team.result === 'win' ? 'bold' : null }}>{team.participant.name}</p>
+    : <p>A définir</p>
   const result = team.result ? <p style={colorResult(labelResult)}>{labelResult}</p> : ""
-  return <div style={styleTeam}>{name} {result}</div>
+
+  return <div style={{ display: 'flex', justifyContent: 'space-between' }}>{name} {result}</div>
 }
 
 class Accueil extends React.Component {
+constructor(props) {
+    super(props)
 
-  state = { matches: [] }
+    this.state = {
+      matches: []
+    }
+  }
 
   componentDidMount() {
     //this.fetchMatches()
@@ -77,7 +74,7 @@ class Accueil extends React.Component {
 
         <h2>Mes matchs</h2>
 
-        <div style={matches}>
+        <div className="matches">
           {/*this.getMatches()*/}
         </div>
 
@@ -95,10 +92,10 @@ class Accueil extends React.Component {
             screenName="uttarena"
             lang="fr"
             noFooter={true}
-            options={{height: 700, width: 500 }} />
+            options={{ height: 700, width: 500 }} />
         </div>
       </div>
-    );
+    )
   }
 }
 

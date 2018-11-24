@@ -1,0 +1,31 @@
+.ant-modal-mask {
+  z-index: 999;
+}
+
+.ant-modal-wrap {
+  z-index: 999;
+}
+
+.admin-action-username {
+  font-size: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #d4d4d4;
+  padding-bottom: 10px;
+}
+
+.admin-action-title {
+  font-size: 18px;
+}
+
+.admin-action-title i {
+  color: #1890ff;
+  font-size: 18px;
+}
+
+.admin-action-content {
+  margin: 0 30px 15px 25px;
+}
+
+.admin-action-button i {
+  color: #fff;
+}

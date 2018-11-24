@@ -34,7 +34,7 @@ class Pizza extends React.Component {
         <Konami easterEgg={this.trigger} resetDelay={1000} />
         <div className="a-pizza-modal" active={this.state.show.toString()}>
           <h2>Oui, il y aura de la pizza.</h2>
-          <img src={`${process.env.PUBLIC_URL}/pizza.svg`} alt="pizza" />
+          <img src={`${process.env.PUBLIC_URL}/pizza.svg`} alt="" />
         </div>
       </div>
     )

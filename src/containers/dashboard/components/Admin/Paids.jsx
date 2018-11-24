@@ -95,13 +95,13 @@ class Paids extends React.Component {
 
     users = users.map(user => {
       let role = ''
-      if(user.isAdmin === 100) {
+      if(user.permissions && user.permissions.admin === 100) {
         role = '/Admin'
       }
       if(user.respo && user.respo !== 0) {
-        role = `${role}/Respo ${this.getTournamentNameById(user.respo)}`
+        role += `/Respo ${this.getTournamentNameById(user.respo)}`
       }
-      if((!user.respo || (user.respo && user.respo === 0)) && user.isAdmin !== 100) {
+      if(role === '') {
         role = '/Joueur'
       }
 

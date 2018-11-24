@@ -15,11 +15,13 @@ class Home extends React.Component {
     this.props.autoLogin()
   }
 
-  render() {
+  componentDidUpdate() {
     if (this.props.user) {
       this.props.gotoDashboard()
     }
+  }
 
+  render() {
     return (
       <div>
         <Intro />
