@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
 import { fetchUsers, fetchChartData } from '../../../../modules/admin'
-import WhoPaid from './WhoPaid'
 import {Line} from 'react-chartjs-2'
 
 
@@ -186,7 +185,7 @@ class Paids extends React.Component {
         title: 'A payé',
         key: 'paid',
         dataIndex: 'paid',
-        render: (paid) => <WhoPaid paid={paid} />,
+        render: (paid) => { return paid ? <Icon type="check"/> : <Icon type="close"/> },
         filters: [
           {
             text: 'Payé',

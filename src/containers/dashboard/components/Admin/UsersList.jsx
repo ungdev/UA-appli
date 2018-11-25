@@ -14,7 +14,6 @@ class UsersList extends React.Component {
     this.state = {
       searchName: null,
     }
-    console.log('HEHEHEHEJFJENFOLEGN')
     this.props.fetchUsers()
   }
 
