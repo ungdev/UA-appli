@@ -33,12 +33,6 @@ class Conversations extends React.Component {
     }
   }
 
-  componentDidMount() {
-    if (!this.props.user || !this.props.user.permission || !this.props.user.permission.admin)
-    console.log('REDIRECT', this.props)
-      this.props.redirectToHome()
-  }
-
   render() {
     
     let { conversations } = this.state
