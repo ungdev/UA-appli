@@ -69,9 +69,9 @@ constructor(props) {
       <div style={{ height: '100%'}}>
         <h1>Accueil</h1>
 
-        <Divider />
+        {/*<Divider />
 
-        {/*<h2>Mes matchs</h2>
+        <h2>Mes matchs</h2>
 
         <div className="matches">
           {/*this.getMatches()}
