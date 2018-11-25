@@ -71,11 +71,11 @@ constructor(props) {
 
         <Divider />
 
-        <h2>Mes matchs</h2>
+        {/*<h2>Mes matchs</h2>
 
         <div className="matches">
-          {/*this.getMatches()*/}
-        </div>
+          {/*this.getMatches()}
+        </div>*/}
 
         <Divider />
 
