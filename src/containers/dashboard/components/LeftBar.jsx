@@ -113,12 +113,12 @@ class LeftBar extends React.Component {
             </span>
           }
         >
-          <Menu.Item key={`3-${spotlight.id}-1`} selected>
+          {spotlight.toornamentID && <Menu.Item key={`3-${spotlight.id}-1`} selected>
             <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
               <Icon type="share-alt" />
               <span>Arbre</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item>}
           {
             spotlight.perTeam > 1 ?
             <Menu.Item key={`3-${spotlight.id}-2`}>
