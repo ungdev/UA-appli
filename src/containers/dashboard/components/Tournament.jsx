@@ -1,7 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Divider } from 'antd'
-import axiosToornament from '../../../lib/axiosToornament'
+import { fetchSpotlightStages } from '../../../modules/spotlights'
 
 import GameStatusBar from './GameStatusBar/GameStatusBar'
 
@@ -32,16 +33,16 @@ class Tournament extends React.Component {
   }
 
   async fetchStages() {
-    const id =  spotlightsID[this.props.tournament]
-    const stages = await axiosToornament.get(`${id}/stages`)
-    console.log(stages)
-    this.setState({stages: stages.data, id})
+    if (!this.props.stages[this.props.tournament]) {
+      this.props.fetchSpotlightStages(this.props.tournament);
+    }
   }
 
   getStages() {
-    const { stages, id } = this.state
-    if (stages.length) return stages.map((s,i) => 
-      <iframe title="toornamentIFrame" key={i} width="100%" height="480" src={`https://widget.toornament.com/tournaments/${id}/stages/${s.id}/?_locale=fr_FR&theme=`} scrolling="no" allowFullScreen></iframe>
+    const { stages, tournament } = this.props
+    console.log(stages, tournament) 
+    if (stages && stages[tournament]) return stages[tournament].map((s, i) => 
+      <iframe title="toornamentIFrame" key={i} width="100%" height="480" src={`https://widget.toornament.com/tournaments/${s.toornamentID}/stages/${s.id}/?_locale=fr_FR&theme=`} scrolling="no" allowFullScreen></iframe>
     )
   }
 
@@ -56,4 +57,15 @@ class Tournament extends React.Component {
   }
 }
 
-export default withRouter(Tournament);
+const mapStateToProps = state => ({
+  spotlights: state.spotlights.spotlights,
+  stages: state.spotlights.stages,
+  user: state.user.user,
+  infos: state.infos.infos,
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchSpotlightStages: (id) => dispatch(fetchSpotlightStages(id)),
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tournament));

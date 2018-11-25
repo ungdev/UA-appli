@@ -1,9 +1,8 @@
 import React from 'react'
 import { Divider, Spin, Button } from 'antd'
-import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { connect } from 'react-redux'
 import { fetchInfos, sendMessage, SET_INFOS_LOADING } from '../../../../modules/infos'
-import axios from '../../../../lib/axios'
+//import axios from '../../../../lib/axios'
 
 
 class Compare extends React.Component {
@@ -18,8 +17,7 @@ class Compare extends React.Component {
     )
   }
   buttonclicked() {
-    console.log("????")
-    axios.post('auth/openid').then(r => console.log(r)).catch(e => console.log(e))
+    //axios.post('auth/openid').then(r => console.log(r)).catch(e => console.log(e))
   }
 }
 

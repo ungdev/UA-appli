@@ -55,7 +55,6 @@ export const fetchUser = () => {
       dispatch({ type: SET_TOKEN, payload: res.data.token })
       dispatch({ type: SET_PRICES, payload: res.data.prices })
 
-
       var OneSignal = window.OneSignal || [];
       OneSignal.push(["init", {
         appId: "cac7c5b1-3b95-4c2d-b5df-b631b3c3646b",

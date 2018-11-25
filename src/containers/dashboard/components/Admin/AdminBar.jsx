@@ -1,9 +1,8 @@
-
 import React from 'react'
 import { Card, Spin, Button, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { fetchCounts } from '../../../../modules/admin'
-import { sendReminderMails } from '../../../../modules/admin'
+import { sendReminderMails, sendInformationsMails } from '../../../../modules/admin'
 import { push } from 'react-router-redux'
 
 class AdminBar extends React.Component {
@@ -11,7 +10,8 @@ class AdminBar extends React.Component {
     super(props)
 
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      modalVisible2: false
     }
     
     this.props.fetchCounts()
@@ -20,6 +20,11 @@ class AdminBar extends React.Component {
   openModal = () => {
     this.setState({
       modalVisible: true,
+    })
+  }
+  openModal2 = () => {
+    this.setState({
+      modalVisible2: true,
     })
   }
 
@@ -36,10 +41,19 @@ class AdminBar extends React.Component {
     })
   }
 
+  sendMails2 = () => {
+    this.props.sendInformationsMails()
+    this.setState({
+      modalVisible2: false,
+    })
+  }
+
+  closeModal2 = () => {
+    this.setState({
+      modalVisible2: false,
+    })
+  }
   render() {
-    if(this.props.user && this.props.user.isAdmin !== 100) {
-      this.props.redirectToHome()
-    }
 
     return (
       <Card title={<h1>Panneau d'administration</h1>}>
@@ -75,14 +89,27 @@ class AdminBar extends React.Component {
           </ul>)
         : <Spin/>}
 
-        <Button type="primary" onClick={this.openModal}>
+        <Button type="danger" onClick={this.openModal}>
           Envoyer les mails de rappel
+        </Button>
+        <Button type="danger" onClick={this.openModal2} style={{ marginLeft: '20px' }}>
+          Envoyer les mails d'information
         </Button>
         <Modal
           title="Êtes vous sûr ?"
           visible={this.state.modalVisible}
           onOk={this.sendMails}
           onCancel={this.closeModal}
+          okText="Ok"
+          cancelText="Annuler"
+        >
+          <p>Cela enverra une grande quantité de mails, ne faites ça que si vous êtes sûr de ce que vous faites.</p>
+        </Modal>
+        <Modal
+          title="Êtes vous sûr ?"
+          visible={this.state.modalVisible2}
+          onOk={this.sendMails2}
+          onCancel={this.closeModal2}
         >
           <p>Cela enverra une grande quantitée de mails, ne faites ça que si vous êtes sûr de ce que vous faites</p>
         </Modal>
@@ -98,7 +125,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   redirectToHome: () => dispatch(push('/dashboard/home')),
   fetchCounts: () => dispatch(fetchCounts()),
-  sendReminderMails: () => dispatch(sendReminderMails())
+  sendReminderMails: () => dispatch(sendReminderMails()),
+  sendInformationsMails: () => dispatch(sendInformationsMails())
 })
 
 

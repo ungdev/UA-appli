@@ -36,7 +36,6 @@ class TopBar extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   disconnect: () => {
-    console.log('disconnect')
     dispatch(logout())
   }
 })

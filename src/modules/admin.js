@@ -14,10 +14,14 @@ export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
 const initialState = {
   users: [],
   spotlights: [],
-  chartData: { dayly: [], cumul: [] },
+  chartData: { daily: [], cumul: [] },
 }
 
 export default (state = initialState, action) => {
+  let users = state.users.slice(0)
+  const userId = action.payload
+  const index = users.findIndex(u => u.id === userId)
+
   switch (action.type) {
     case SET_USERS:
       return {
@@ -42,31 +46,22 @@ export default (state = initialState, action) => {
         spotlights
       }
     case SET_USER_ADMIN:
-      let users = state.users.slice()
-      const userId = action.payload
-      const index = users.findIndex(u => u.id === userId)
-      users[index].isAdmin = 100
+      users[index].permission.admin = true
       return {
         ...state,
         users
       }
     case REMOVE_USER_ADMIN:
-      let users2 = state.users.slice()
-      const userId2 = action.payload
-      const index2 = users2.findIndex(u => u.id === userId2)
-      users2[index2].isAdmin = 0
+      users[index].permission.admin = false
       return {
         ...state,
-        users: users2
+        users
       }
     case SET_USER_PAID:
-      let users3 = state.users.slice()
-      const userId3 = action.payload
-      const index3 = users3.findIndex(u => u.id === userId3)
-      users3[index3].paid = 1
+      users[index].paid = 1
       return {
         ...state,
-        users: users3
+        users
       }
     default:
       return state
@@ -82,7 +77,7 @@ export const fetchUsers = () => {
     }
 
     try {
-      const res = await axios.get('users', { headers: { 'X-Token': authToken } })
+      const res = await axios.get('admin/users', { headers: { 'X-Token': authToken } })
 
       dispatch({ type: SET_USERS, payload: res.data })
     } catch (err) {
@@ -135,12 +130,12 @@ export const validatePayment = (userId) => {
         dismissAfter: 2000
     }))
     try {
-      const res = await axios.post(`admin/pay`, { userId }, { headers: { 'X-Token': authToken } })
+      const res = await axios.post(`admin/forcepay`, { userId }, { headers: { 'X-Token': authToken } })
       if(res.status === 200) {
         dispatch({ type: SET_USER_PAID, payload: userId })
         dispatch(
           notifActions.notifSend({
-            message: 'Payment validé',
+            message: 'Paiement validé',
             dismissAfter: 2000
         }))
       }
@@ -169,7 +164,7 @@ export const fetchChartData = () => {
         start: '2018-10-16',
         end: moment().format('YYYY-MM-DD'),
         step: 'day',
-        mode: 'dayly',
+        mode: 'daily',
       }, { headers: { 'X-Token': authToken } })
       const res2 = await axios.post(`admin/chart`, {
         start: '2018-10-16',
@@ -178,7 +173,7 @@ export const fetchChartData = () => {
         mode: 'cumul',
       }, { headers: { 'X-Token': authToken } })
 
-      dispatch({ type: SET_CHARTDATA, payload: { dayly: res.data, cumul: res2.data} })
+      dispatch({ type: SET_CHARTDATA, payload: { daily: res.data, cumul: res2.data} })
     } catch (err) {
       console.log(err)
       dispatch(
@@ -205,8 +200,39 @@ export const sendReminderMails = () => {
           message: 'Envoi en cours ...',
           dismissAfter: 2000
       }))
-      const res = await axios.get(`admin/reminders`, { headers: { 'X-Token': authToken } })
-      console.log('result:', res.data)
+      const res = await axios.get(`admin/reminders-mail`, { headers: { 'X-Token': authToken } })
+      dispatch(
+        notifActions.notifSend({
+          message: JSON.stringify(res.data),
+          dismissAfter: 15000
+      }))
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
+export const sendInformationsMails = () => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      dispatch(
+        notifActions.notifSend({
+          message: 'Envoi en cours ...',
+          dismissAfter: 2000
+      }))
+      const res = await axios.get(`admin/informations-mail`, { headers: { 'X-Token': authToken } })
       dispatch(
         notifActions.notifSend({
           message: JSON.stringify(res.data),
@@ -242,7 +268,8 @@ export const fetchCounts = () => {
           message: errorToString(err.response.data.error),
           kind: 'danger',
           dismissAfter: 2000
-      }))
+        })
+      )
     }
   }
 }
@@ -255,17 +282,18 @@ export const setAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/users/${id}`, { isAdmin: 100 }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/setadmin/${id}`, { admin: true }, { headers: { 'X-Token': authToken } })
+
       if(res.status === 200) {
         dispatch({ type: SET_USER_ADMIN, payload: id })
         dispatch(
           notifActions.notifSend({
-            message: 'L\'utilisateur est maintenant Administrateur',
-            kind: 'warning',
+            message: 'L\'utilisateur est maintenant administrateur',
             dismissAfter: 2000
         }))
       }
     } catch (err) {
+      console.log(err)
       dispatch(
         notifActions.notifSend({
           message: 'Une erreur est survenue',
@@ -284,17 +312,18 @@ export const removeAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/users/${id}`, { isAdmin: 0 }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/setadmin/${id}`, { admin: false }, { headers: { 'X-Token': authToken } })
+
       if(res.status === 200) {
         dispatch({ type: REMOVE_USER_ADMIN, payload: id })
         dispatch(
           notifActions.notifSend({
-            message: 'L\'utilisateur n\'est maintenant plus Administrateur',
-            kind: 'warning',
+            message: 'L\'utilisateur n\'est maintenant plus administrateur',
             dismissAfter: 2000
         }))
       }
     } catch (err) {
+      console.log(err)
       dispatch(
         notifActions.notifSend({
           message: 'Une erreur est survenue',

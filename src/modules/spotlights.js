@@ -3,11 +3,15 @@ import errorToString from '../lib/errorToString'
 import { actions as notifActions } from 'redux-notifications'
 
 export const SET_SPOTLIGHTS = 'spotlights/SET_SPOTLIGHTS'
+export const SET_SPOTLIGHT_TEAMS = 'spotlights/SET_SPOTLIGHT_TEAMS'
 export const SET_SPOTLIGHT_STATE = 'spotlights/SET_SPOTLIGHT_STATE'
 export const ADD_SPOTLIGHT_STATE = 'spotlights/ADD_SPOTLIGHT_STATE'
+export const SET_SPOTLIGHT_STAGES = 'spotlights/SET_SPOTLIGHT_STAGES'
 
 const initialState = {
-  spotlights: []
+  spotlights: [],
+  teams: [],
+  stages: {}
 }
 
 export default (state = initialState, action) => {
@@ -24,19 +28,39 @@ export default (state = initialState, action) => {
         if (!found) spotlights.push(spotlight) //we do not add it to the tab
       })
       spotlights.sort((s1, s2) => s1.id > s2.id ? 1 : -1)
-      return { spotlights }
+      return { ...state, spotlights }
     case SET_SPOTLIGHT_STATE:
       spotlights = state.spotlights.splice(0)
-      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId))
+      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10))
       if(index === -1) return state
       spotlights[index].state = action.payload.stateValue
       return { ...state, spotlights}
     case ADD_SPOTLIGHT_STATE:
       spotlights = state.spotlights.splice(0)
-      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId))
+      index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10))
       if(index === -1) return state
       spotlights[index].states.push(action.payload.newState)
       return { ...state, spotlights }
+    case SET_SPOTLIGHT_TEAMS:
+        let teams = state.teams.splice(0)
+        action.payload.forEach(newteam => {
+          const found = teams.find(team => team.id === newteam.id)
+          if(!found){
+            teams.push(newteam)
+          }
+        })
+        return {
+          ...state,
+          teams
+        }
+    case SET_SPOTLIGHT_STAGES:
+        return {
+          ...state,
+          stages: {
+            ...state.stages,
+            [action.payload.spotlightId]: action.payload.stages
+          }
+        }
     default:
       return state
   }
@@ -58,6 +82,23 @@ export const fetchSpotlights = () => {
     }
   }
 }
+
+export const fetchSpotlightStages = (spotlightId) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) return
+
+    const res = await axios.get(`spotlights/${spotlightId}/stages`, { headers: { 'X-Token': authToken } })
+    if(res.status === 200){
+      dispatch({
+        type: SET_SPOTLIGHT_STAGES,
+        payload: { spotlightId, stages: res.data }
+      })
+    }
+  }
+}
+
 export const setSpotlightState = (spotlightId, stateValue) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
@@ -99,6 +140,33 @@ export const addState = (spotlightId, title, desc, popover) => {
         })
       }
     } catch(err) {
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+        })
+      )
+    }
+  }
+}
+
+
+export const fetchTeamsBySpotlightId = (id) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+    try {
+      const req = await axios.get(`spotlights/${id}/teams`, { headers: { 'X-Token': authToken } })
+      dispatch({
+        type: SET_SPOTLIGHT_TEAMS,
+        payload: req.data
+      })
+    } catch(err) {
+      console.log(err)
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
 import { fetchUsers, fetchChartData } from '../../../../modules/admin'
-import WhoPaid from './WhoPaid'
 import {Line} from 'react-chartjs-2'
 
 
@@ -15,7 +14,7 @@ class Paids extends React.Component {
     this.state = {
       searchName: null,
       data: [],
-      chartDataDayly: this.chartData([]),
+      chartDataDaily: this.chartData([]),
       chartDataCumul: this.chartData([]),
     }
 
@@ -27,7 +26,7 @@ class Paids extends React.Component {
     if (nextProps.data !== this.state.data) {
       this.setState({
         data: nextProps.data,
-        chartDataDayly: this.chartData(nextProps.data.dayly),
+        chartDataDaily: this.chartData(nextProps.data.daily),
         chartDataCumul: this.chartData(nextProps.data.cumul),
       })
     }
@@ -95,13 +94,13 @@ class Paids extends React.Component {
 
     users = users.map(user => {
       let role = ''
-      if(user.isAdmin === 100) {
+      if(user.permission && user.permission.admin) {
         role = '/Admin'
       }
       if(user.respo && user.respo !== 0) {
-        role = `${role}/Respo ${this.getTournamentNameById(user.respo)}`
+        role += `/Respo ${this.getTournamentNameById(user.respo)}`
       }
-      if((!user.respo || (user.respo && user.respo === 0)) && user.isAdmin !== 100) {
+      if(role === '') {
         role = '/Joueur'
       }
 
@@ -186,7 +185,7 @@ class Paids extends React.Component {
         title: 'A payé',
         key: 'paid',
         dataIndex: 'paid',
-        render: (paid) => <WhoPaid paid={paid} />,
+        render: (paid) => { return paid ? <Icon type="check"/> : <Icon type="close"/> },
         filters: [
           {
             text: 'Payé',
@@ -210,7 +209,7 @@ class Paids extends React.Component {
       <AdminBar/>
       <div style={chartStyles}>
         <Line
-          data={this.state.chartDataDayly}
+          data={this.state.chartDataDaily}
           options={chartOptions}
           width={600} height={250} />
         <Line
@@ -226,7 +225,7 @@ class Paids extends React.Component {
 const mapStateToProps = state => ({
   users: state.admin.users,
   spotlights: state.spotlights.spotlights,
-  data: state.admin.chartData ? state.admin.chartData : { dayly: [], cumul: [] }
+  data: state.admin.chartData ? state.admin.chartData : { daily: [], cumul: [] }
 })
 
 const mapDispatchToProps = dispatch => ({

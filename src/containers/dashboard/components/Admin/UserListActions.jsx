@@ -44,13 +44,13 @@ class UserListActions extends React.Component {
 
     return (
       <React.Fragment>
-        {user && user.isAdmin !== 100 ?
+        {user && user.permission && !user.permission.admin ?
           <Tooltip placement="top" title="Rendre Administrateur">
             <a onClick={this.setAdmin} style={{ marginLeft: '2px', marginRight: '2px' }}>
               <Icon type="arrow-up"/>
             </a>
           </Tooltip> : null}
-        {user && user.isAdmin === 100 ? (
+        {user && user.permission && user.permission.admin ? (
           <Tooltip placement="top" title="Enlever les droits Administrateur">
             <a onClick={this.removeAdmin} style={{ color: '#ff0000', marginLeft: '2px', marginRight: '2px' }}>
               <Icon type="arrow-down"/>

@@ -7,13 +7,14 @@ import { addState } from '../../../../modules/spotlights'
 
 const Step = Steps.Step
 
-
 class TournamentStatusBar extends React.Component {
-  
   constructor(props) {
     super(props)
+
     props.getInfos(props.game, 0, 1)
+    
     const spotlight = props.spotlights.find(s => `${s.id}` === props.game)
+
     this.state = {
       etat: spotlight ? spotlight.state : 0,
       info: props.infos && props.infos.length > 0 ? props.infos[0].title : '',
@@ -109,7 +110,7 @@ class TournamentStatusBar extends React.Component {
         <Card title={<h1>{spotlight.name}</h1>}>
           <Steps current={this.state.etat} progressDot={this.customDot}>
           {
-            spotlight.states.map(state => (
+            spotlight.states && spotlight.states.map(state => (
               <Step
               title={state.title}
               description={state.desc}
@@ -118,7 +119,7 @@ class TournamentStatusBar extends React.Component {
           }
           </Steps>
         </Card>
-        {this.props.user && this.props.user.isAdmin === 100 &&
+        {this.props.user && this.props.user.permission && this.props.user.permission.admin &&
           <div style={{ marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-around' }}>
             <Button type="danger" onClick={this.previousState}>État précédent</Button>
             <Button type="primary" onClick={this.openModal}>Ajouter un état</Button>

@@ -37,8 +37,9 @@ class Contact extends React.Component {
     let contactToDisplay = `Envoyer un message en rapport avec le tournoi ${spotlight.name}`
     return (
       <div>
-        <GameStatusBar game={this.props.tournament} />
-        <Divider />
+        {this.props.tournament !== 'libre' && (
+          <React.Fragment><GameStatusBar game={this.props.tournament} />
+        <Divider /></React.Fragment>)}
         {contactToDisplay}
         <TextArea
           rows={6}

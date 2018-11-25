@@ -75,8 +75,8 @@ class Info extends React.Component {
 
     return (
       <div>
-        <GameStatusBar game={this.props.tournament} noLastInfo />
-        {user && user.isAdmin === 100 ? (
+        {this.props.tournament !== 'libre' && <GameStatusBar game={this.props.tournament} noLastInfo />}
+        {user && user.permission && user.permission.admin ? ( // change for respo after
           <React.Fragment>
             <TextArea
             style={{ marginTop: '20px', width: '25%' }}
@@ -107,7 +107,7 @@ class Info extends React.Component {
           dataSource={infos}
           locale={{ emptyText: 'Pas d\'informations à afficher' }}
           renderItem={info => (
-            <List.Item actions={user && user.isAdmin === 100 ? [
+            <List.Item actions={user && user.permission && user.permission.admin ? [
               <Delete infoId={info.id}/>] : null}>
               <Skeleton avatar title loading={info.loading} active>
                 <List.Item.Meta
