@@ -9,15 +9,6 @@ import GameStatusBar from './GameStatusBar/GameStatusBar'
 /** TODO: -replace by real Toornament ID and add to DB
  *        -Use cache to limit API call  
 */
-
-const spotlightsID = {
-  1:'842778600520679424',
-  2:'842795723920302080',
-  3:'1912315739670036480',
-  4:'992461745903747072',
-  5:'992461745903747072',
-  6:'992461745903747072',
-}
 class Tournament extends React.Component {
 
   state = { stages: [] }

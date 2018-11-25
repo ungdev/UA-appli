@@ -127,11 +127,16 @@ class LeftBar extends React.Component {
                 <span>Équipes</span>
               </Link>
             </Menu.Item>
-            : ''
+            : <Menu.Item key={`3-${spotlight.id}-2`}>
+            <Link to={`/dashboard/tournois/${spotlight.id}/players`}>
+              <Icon type="team" />
+              <span>Joueurs</span>
+            </Link>
+          </Menu.Item>
           }
           {
             spotlight.name === 'Hearthstone' ?
-            <Menu.Item key={`3-${spotlight.id}-2`}>
+            <Menu.Item key={`3-${spotlight.id}-2.3`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
                 <Icon type="inbox" />
                 <span>Decks</span>

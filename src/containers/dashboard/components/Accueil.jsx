@@ -1,7 +1,7 @@
 import React from 'react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import { Divider, Card } from 'antd'
-import qs from 'qs'
+//import qs from 'qs'
 
 const colorResult = (result) => {
   switch (result) {

@@ -28,6 +28,7 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/arbre-tournois'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/contact'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/teams'} component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/players'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/rules'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/info'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/libre/compare'} component={Dashboard} />
