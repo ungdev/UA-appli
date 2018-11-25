@@ -31,7 +31,7 @@ class Tournament extends React.Component {
 
   getStages() {
     const { stages, tournament } = this.props
-    console.log(stages, tournament) 
+    //console.log(stages, tournament) 
     if (stages && stages[tournament]) return stages[tournament].map((s, i) => 
       <iframe title="toornamentIFrame" key={i} width="100%" height="480" src={`https://widget.toornament.com/tournaments/${s.toornamentID}/stages/${s.id}/?_locale=fr_FR&theme=`} scrolling="no" allowFullScreen></iframe>
     )
