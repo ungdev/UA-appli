@@ -6,10 +6,12 @@ export const SET_SPOTLIGHTS = 'spotlights/SET_SPOTLIGHTS'
 export const SET_SPOTLIGHT_TEAMS = 'spotlights/SET_SPOTLIGHT_TEAMS'
 export const SET_SPOTLIGHT_STATE = 'spotlights/SET_SPOTLIGHT_STATE'
 export const ADD_SPOTLIGHT_STATE = 'spotlights/ADD_SPOTLIGHT_STATE'
+export const SET_SPOTLIGHT_STAGES = 'spotlights/SET_SPOTLIGHT_STAGES'
 
 const initialState = {
   spotlights: [],
-  teams: []
+  teams: [],
+  stages: {}
 }
 
 export default (state = initialState, action) => {
@@ -51,6 +53,14 @@ export default (state = initialState, action) => {
           ...state,
           teams
         }
+    case SET_SPOTLIGHT_STAGES:
+        return {
+          ...state,
+          stages: {
+            ...state.stages,
+            [action.payload.spotlightId]: action.payload.stages
+          }
+        }
     default:
       return state
   }
@@ -72,6 +82,23 @@ export const fetchSpotlights = () => {
     }
   }
 }
+
+export const fetchSpotlightStages = (spotlightId) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) return
+
+    const res = await axios.get(`spotlights/${spotlightId}/stages`, { headers: { 'X-Token': authToken } })
+    if(res.status === 200){
+      dispatch({
+        type: SET_SPOTLIGHT_STAGES,
+        payload: { spotlightId, stages: res.data }
+      })
+    }
+  }
+}
+
 export const setSpotlightState = (spotlightId, stateValue) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
