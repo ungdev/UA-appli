@@ -2,7 +2,6 @@ import React from 'react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import { Divider, Card } from 'antd'
 import qs from 'qs'
-import axiosToornament from '../../../lib/axiosToornament'
 
 const colorResult = (result) => {
   switch (result) {
@@ -53,16 +52,16 @@ constructor(props) {
     /** TODO: -Remplacer par ID du tournoi du user
      *        -Limiter call API via cache
     */
-    const data = await axiosToornament.get('1912315739670036480/matches',
-      {
-        headers: { Range: "matches=0-127"},
-        /** TODO: Récupérer l'ID toornament du joueur ou via le nom d'équipe */
-        params: { participant_ids: ["1912338498338021376"] },
-        paramsSerializer: function(params) {
-          return qs.stringify(params, { indices: false })
-        }
-      })
-    this.setState({ matches: data.data })
+    // const data = await axiosToornament.get('1912315739670036480/matches',
+    //   {
+    //     headers: { Range: "matches=0-127"},
+    //     /** TODO: Récupérer l'ID toornament du joueur ou via le nom d'équipe */
+    //     params: { participant_ids: ["1912338498338021376"] },
+    //     paramsSerializer: function(params) {
+    //       return qs.stringify(params, { indices: false })
+    //     }
+    //   })
+    // this.setState({ matches: data.data })
   }
 
   render() {
