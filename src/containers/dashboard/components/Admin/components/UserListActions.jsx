@@ -100,7 +100,6 @@ class UserListActions extends React.Component {
   }
 
   onTournamentSelected = value => {
-    console.log(value)
     this.setState({ tournamentsSelected: value })
   }
 
@@ -141,7 +140,6 @@ class UserListActions extends React.Component {
       respos.forEach(respo => {
         userRespo.push(respo)
       })
-      console.log(userRespo)
     }
 
     return (
@@ -322,7 +320,7 @@ const mapDispatchToProps = dispatch => ({
   setAdmin: id => dispatch(setAdmin(id)),
   removeAdmin: id => dispatch(removeAdmin(id)),
   validatePayment: id => dispatch(validatePayment(id)),
-  setRespo: (id, spotlights) => dispatch(setRespo(id, spotlights)),
+  setRespo: (id, spotlights) => dispatch(setRespo(id, spotlights))
 })
 
 const mapStateToProps = state => ({
