@@ -6,7 +6,7 @@ import {
   removeAdmin,
   validatePayment
 } from '../../../../../modules/admin'
-import { setRespo, removeRespo } from '../../../../../modules/respo'
+import { setRespo } from '../../../../../modules/respo'
 
 import '../admin.css'
 
@@ -323,7 +323,6 @@ const mapDispatchToProps = dispatch => ({
   removeAdmin: id => dispatch(removeAdmin(id)),
   validatePayment: id => dispatch(validatePayment(id)),
   setRespo: (id, spotlights) => dispatch(setRespo(id, spotlights)),
-  removeRespo: (id, spotlights) => dispatch(removeRespo(id, spotlights))
 })
 
 const mapStateToProps = state => ({
