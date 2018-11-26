@@ -46,8 +46,8 @@ class UsersList extends React.Component {
       if(user.permission && user.permission.admin) {
         role = '/Admin'
       }
-      if(user.respo && user.respo !== 0) {
-        role += `/Respo ${this.getTournamentNameById(user.respo)}`
+      else if(user.permission.respo && user.permission.respo !='') {
+        role += `/Respo ${user.permission.respo}`
       }
       if(role === '') {
         role = '/Joueur'

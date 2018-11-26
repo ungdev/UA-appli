@@ -3,6 +3,7 @@ import errorToString from '../lib/errorToString'
 import { actions as notifActions } from 'redux-notifications'
 import moment from 'moment'
 
+export const SET_USERS = 'admin/SET_USERS'
 export const SET_USER_RESPO = 'admin/SET_USER_RESPO'
 export const REMOVE_USER_RESPO = 'admin/REMOVE_USER_RESPO'
 
@@ -41,7 +42,7 @@ export default (state = initialState, action) => {
   }
 }
 
-export const setRespo = (id) => {
+export const setRespo = (id, spotlights) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -49,43 +50,13 @@ export const setRespo = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setrespo/${id}`, { respo: 'tournoi' }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/setrespo/${id}`, { respo: spotlights}, { headers: { 'X-Token': authToken } })
 
       if(res.status === 200) {
         dispatch({ type: SET_USER_RESPO, payload: id })
         dispatch(
           notifActions.notifSend({
             message: 'L\'utilisateur est maintenant responsable de tournoi',
-            dismissAfter: 2000
-        }))
-      }
-    } catch (err) {
-      console.log(err)
-      dispatch(
-        notifActions.notifSend({
-          message: 'Une erreur est survenue',
-          kind: 'danger',
-          dismissAfter: 2000
-      }))
-    }
-  }
-}
-
-export const removeRespo = (id) => {
-  return async (dispatch, getState) => {
-    const authToken = getState().login.token
-
-    if (!authToken || authToken.length === 0) {
-      return
-    }
-    try {
-      const res = await axios.put(`/admin/setrespo/${id}`, { respo: 'tournoi' }, { headers: { 'X-Token': authToken } })
-
-      if(res.status === 200) {
-        dispatch({ type: REMOVE_USER_RESPO, payload: id })
-        dispatch(
-          notifActions.notifSend({
-            message: 'L\'utilisateur n\'est maintenant plus responsable de tournoi',
             dismissAfter: 2000
         }))
       }
