@@ -221,11 +221,6 @@ class Material extends React.Component {
         title: 'Nombre',
         dataIndex: 'count',
         key: 'count',
-      },
-      {
-        title: 'Utilisateurs',
-        dataIndex: 'users',
-        key: 'users',
       }
     ]
 
@@ -258,8 +253,6 @@ class Material extends React.Component {
       }
     ]
 
-    // ---------
-
     return (<React.Fragment>
       <AdminBar />
 
@@ -273,8 +266,19 @@ class Material extends React.Component {
 
       <br /><br />
 
-      {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} locale={{ emptyText: 'Aucun résultat' }} />}
-      {this.state.by === 'user' && <Table columns={byUserColumns} dataSource={byUserRows} locale={{ emptyText: 'Aucun résultat' }} />}
+      {this.state.by === 'material' &&
+        <Table
+          columns={byMaterialColumns}
+          dataSource={byMaterialRows}
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.users || <span style={{ color: '#aaa' }}>(Vide)</span>}</p>}
+          locale={{ emptyText: 'Aucun résultat' }} />
+      }
+      {this.state.by === 'user' &&
+        <Table
+          columns={byUserColumns}
+          dataSource={byUserRows}
+          locale={{ emptyText: 'Aucun résultat' }} />
+      }
     </React.Fragment>)
   }
 }

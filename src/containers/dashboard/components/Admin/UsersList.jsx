@@ -195,6 +195,23 @@ class UsersList extends React.Component {
         onFilter: (value, record) => record.spotlight === value,
       },
       {
+        title: 'A payé',
+        key: 'paid',
+        dataIndex: 'paid',
+        render: (paid) => {return paid ? <Icon type="check" /> : <Icon type="close" />},
+        filters: [
+          {
+            text: 'Payé',
+            value: 'true',
+          },
+          {
+            text: 'Non payé',
+            value: 'false',
+          }
+        ],
+        onFilter: (value, record) => value === 'true' ? (record.paid) : (!record.paid)
+      },
+      {
         title: 'Actions',
         key: 'action',
         dataIndex: 'id',
@@ -202,10 +219,12 @@ class UsersList extends React.Component {
       }
     ]
 
-    return (<React.Fragment>
-      <AdminBar/>
-      <Table columns={columns} dataSource={rows} locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
-    </React.Fragment>)
+    return (
+      <React.Fragment>
+        <AdminBar/>
+        <Table columns={columns} dataSource={rows} locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
+      </React.Fragment>
+    )
   }
 }
 
