@@ -70,7 +70,6 @@ export const sendMessage = (to, message, spotlight) => {
     if (!authToken || authToken.length === 0) return
     try {
       const { lastMessageTime } = getState().messages
-      console.log(getState().payload)
       if(lastMessageTime && lastMessageTime + 30000 > moment().valueOf()){
         const diff = Math.ceil((lastMessageTime + 30000 - moment().valueOf()) / 1000)
         return dispatch(
