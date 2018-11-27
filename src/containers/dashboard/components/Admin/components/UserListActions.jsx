@@ -1,12 +1,9 @@
 import React from 'react'
-import { Icon, Tooltip, Modal, Button, Select } from 'antd'
+import { Icon, Tooltip, Modal, Button } from 'antd'
 import { connect } from 'react-redux'
-import {
-  setAdmin,
-  removeAdmin,
-  validatePayment
-} from '../../../../../modules/admin'
-import { setRespo } from '../../../../../modules/respo'
+import { setAdmin, removeAdmin, validatePayment } from '../../../../../modules/admin'
+import { setRespoPermission } from '../../../../../modules/respoPermission'
+import RespoPermission from './RespoPermission'
 
 import '../admin.css'
 
@@ -18,9 +15,8 @@ class UserListActions extends React.Component {
       paymentModalVisible: false,
       setAdminModalVisible: false,
       removeAdminModalVisible: false,
-      setRespoModalVisible: false,
-      removeRespoModalVisible: false,
-      tournamentsSelected: ''
+      respoPermissionModalVisible: false,
+      checkedRespoPermission: []
     }
   }
 
@@ -99,28 +95,31 @@ class UserListActions extends React.Component {
     })
   }
 
-  onTournamentSelected = value => {
-    this.setState({ tournamentsSelected: value })
-  }
-
-  openSetRespoModal = () => {
+  openRespoPermissionModal = () => {
     this.setState({
-      setRespoModalVisible: true,
+      respoPermissionModalVisible: true,
       mainModalVisible: false
     })
   }
 
-  closeSetRespoModal = () => {
+  closeRespoPermissionModal = () => {
     this.setState({
-      setRespoModalVisible: false,
+      respoPermissionModalVisible: false,
       mainModalVisible: true
     })
   }
 
-  setRespo = () => {
-    this.props.setRespo(this.props.userId, this.state.tournamentsSelected)
+  setRespoPermission = () => {
+    this.props.setRespoPermission(this.props.userId, this.state.checkedRespoPermission)
+    
     this.setState({
-      setRespoModalVisible: false
+      respoPermissionModalVisible: false
+    })
+  }
+
+  setCheckedRespoPermission = (checked) => {
+    this.setState({
+      checkedRespoPermission: checked
     })
   }
 
@@ -133,12 +132,13 @@ class UserListActions extends React.Component {
     }
 
     let userIsAdmin = user.permission && user.permission.admin
-    let userRespo = []
+    let userRespoPermission = []
 
-    if (user.permission && user.permission.respo != null) {
-      const respos = user.permission.respo.split(',')
-      respos.forEach(respo => {
-        userRespo.push(respo)
+    if (user.permission && user.permission.respo) {
+      const respoPermission = user.permission.respo.split(',')
+      
+      respoPermission.forEach(respo => {
+        userRespoPermission.push(respo)
       })
     }
 
@@ -154,17 +154,16 @@ class UserListActions extends React.Component {
           title="Actions"
           visible={this.state.mainModalVisible}
           footer={
-            <Button type="primary" onClick={this.closeMainModal}>
-              Ok
-            </Button>
+            <Button type="primary" onClick={this.closeMainModal}>Ok</Button>
           }
           onCancel={this.closeMainModal}
         >
-          <h1 className="admin-action-username">{`${user.name} (${
-            user.firstname
-          } ${user.lastname})`}</h1>
+          <h1 className="admin-action-username">
+            {`${user.name} (${user.firstname} ${user.lastname})`}
+          </h1>
+          
           <h2 className="admin-action-title">
-            <Icon type="safety" /> Administrateur
+            <Icon type="crown" /> Administrateur
           </h2>
           <div className="admin-action-content">
             {!userIsAdmin ? (
@@ -195,28 +194,20 @@ class UserListActions extends React.Component {
           </div>
 
           <h2 className="admin-action-title">
-            <Icon type="crown" /> Responsable tournoi
+            <Icon type="safety" /> Permissions
           </h2>
           <div className="admin-action-content">
-            <Select
-              mode="multiple"
-              placeholder="Aucun Tournoi"
-              notFoundContent="Aucun tournoi"
-              defaultValue={userRespo !== [] ? userRespo : null}
-              style={{ width: '100%' }}
-              onChange={this.onTournamentSelected}
-            >
-              {this.props.spotlights.map(spotlight => {
-                return (
-                  <Select.Option key={spotlight.shortName}>
-                    Tournoi {spotlight.shortName}
-                  </Select.Option>
-                )
-              })}
-            </Select>
-            <Button type="primary" onClick={this.openSetRespoModal}>
-              <Icon type="arrow-up" />
-            </Button>
+            <RespoPermission permission={userRespoPermission} checkedPermission={(checked) => this.setCheckedRespoPermission(checked)} />
+            <Tooltip placement="right" title="Modifier les permissions">
+              <Button
+                type="primary"
+                onClick={this.openRespoPermissionModal}
+                className="admin-action-button"
+                style={{ margin: '10px 0 0 10px' }}
+              >
+                <Icon type="save" />
+              </Button>
+            </Tooltip>
           </div>
 
           {!user.paid ? (
@@ -247,7 +238,7 @@ class UserListActions extends React.Component {
           cancelText="Annuler"
           okText="Ok"
         >
-          <h3>Validation d'un paiement</h3>
+          <h3>Valider un paiement</h3>
           <p>
             <strong>
               Utilisateur :{' '}
@@ -256,8 +247,7 @@ class UserListActions extends React.Component {
           </p>
           <br />
           <p>
-            Cela validera le paiement de l'utilisateur et il recevra sa place
-            par mail.
+            Cela validera le paiement de l'utilisateur et il recevra sa place par mail.
           </p>
         </Modal>
 
@@ -272,8 +262,7 @@ class UserListActions extends React.Component {
           <h3>Rendre administrateur</h3>
           <p>
             <strong>
-              Utilisateur :{' '}
-              {`${user.name} (${user.firstname} ${user.lastname})`}
+              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
             </strong>
           </p>
         </Modal>
@@ -289,25 +278,23 @@ class UserListActions extends React.Component {
           <h3>Enlever le rang d'administrateur</h3>
           <p>
             <strong>
-              Utilisateur :{' '}
-              {`${user.name} (${user.firstname} ${user.lastname})`}
+              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
             </strong>
           </p>
         </Modal>
 
         <Modal
           title="Êtes vous sûr ?"
-          visible={this.state.setRespoModalVisible}
-          onOk={this.setRespo}
-          onCancel={this.closeSetRespoModal}
+          visible={this.state.respoPermissionModalVisible}
+          onOk={this.setRespoPermission}
+          onCancel={this.closeRespoPermissionModal}
           cancelText="Annuler"
           okText="Ok"
         >
-          <h3>Définir comme responsable du tournoi</h3>
+          <h3>Modifier les permissions</h3>
           <p>
             <strong>
-              Utilisateur :{' '}
-              {`${user.name} (${user.firstname} ${user.lastname})`}
+              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
             </strong>
           </p>
         </Modal>
@@ -320,14 +307,10 @@ const mapDispatchToProps = dispatch => ({
   setAdmin: id => dispatch(setAdmin(id)),
   removeAdmin: id => dispatch(removeAdmin(id)),
   validatePayment: id => dispatch(validatePayment(id)),
-  setRespo: (id, spotlights) => dispatch(setRespo(id, spotlights))
-})
-
-const mapStateToProps = state => ({
-  spotlights: state.spotlights.spotlights
+  setRespoPermission: (id, respo) => dispatch(setRespoPermission(id, respo))
 })
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(UserListActions)
