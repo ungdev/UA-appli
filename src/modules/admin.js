@@ -200,7 +200,7 @@ export const sendReminderMails = () => {
           message: 'Envoi en cours ...',
           dismissAfter: 2000
       }))
-      const res = await axios.get(`admin/reminders-mail`, { headers: { 'X-Token': authToken } })
+      const res = await axios.get(`admin/remindersMail`, { headers: { 'X-Token': authToken } })
       dispatch(
         notifActions.notifSend({
           message: JSON.stringify(res.data),
@@ -232,7 +232,7 @@ export const sendInformationsMails = () => {
           message: 'Envoi en cours ...',
           dismissAfter: 2000
       }))
-      const res = await axios.get(`admin/informations-mail`, { headers: { 'X-Token': authToken } })
+      const res = await axios.get(`admin/informationsMail`, { headers: { 'X-Token': authToken } })
       dispatch(
         notifActions.notifSend({
           message: JSON.stringify(res.data),
@@ -282,7 +282,7 @@ export const setAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setadmin/${id}`, { admin: true }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/setAdmin/${id}`, { admin: true }, { headers: { 'X-Token': authToken } })
 
       if(res.status === 200) {
         dispatch({ type: SET_USER_ADMIN, payload: id })
@@ -312,7 +312,7 @@ export const removeAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setadmin/${id}`, { admin: false }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/setAdmin/${id}`, { admin: false }, { headers: { 'X-Token': authToken } })
 
       if(res.status === 200) {
         dispatch({ type: REMOVE_USER_ADMIN, payload: id })
