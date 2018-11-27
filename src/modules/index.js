@@ -15,6 +15,7 @@ import admin from './admin'
 import messages from './messages'
 import conversations from './conversations'
 import hearthstone from './hearthstone'
+import matches from './matches'
 
 export default combineReducers({
   routing: routerReducer,
@@ -33,4 +34,5 @@ export default combineReducers({
   messages,
   conversations,
   hearthstone,
+  matches
 })
