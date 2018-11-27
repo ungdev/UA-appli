@@ -197,6 +197,11 @@ class UserListActions extends React.Component {
             <Icon type="safety" /> Permissions
           </h2>
           <div className="admin-action-content">
+            {userIsAdmin &&
+              <p>
+                L'utilisateur étant administrateur, toutes les permissions lui sont accordées.
+              </p>
+            }
             <RespoPermission permission={userRespoPermission} checkedPermission={(checked) => this.setCheckedRespoPermission(checked)} />
             <Tooltip placement="right" title="Modifier les permissions">
               <Button
