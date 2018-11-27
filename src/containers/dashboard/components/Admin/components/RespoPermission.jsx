@@ -11,18 +11,8 @@ class RespoPermission extends React.Component {
     super(props)
 
     this.state = {
-      expandedKeys: [],
-      autoExpandParent: true,
-      checkedKeys: this.props.permission,
-      selectedKeys: []
+      checkedKeys: this.props.permission || []
     }
-  }
-
-  onExpand = (expandedKeys) => {
-    this.setState({
-      expandedKeys,
-      autoExpandParent: false,
-    })
   }
 
   onCheck = (checkedKeys) => {
@@ -31,12 +21,6 @@ class RespoPermission extends React.Component {
     })
 
     this.props.checkedPermission(checkedKeys)
-  }
-
-  onSelect = (selectedKeys, info) => {
-    this.setState({
-      selectedKeys
-    })
   }
 
   renderTreeNodes = (data) => {
@@ -154,13 +138,9 @@ class RespoPermission extends React.Component {
     return (
       <Tree
         checkable
-        onExpand={this.onExpand}
-        expandedKeys={this.state.expandedKeys}
-        autoExpandParent={this.state.autoExpandParent}
         onCheck={this.onCheck}
         checkedKeys={this.state.checkedKeys}
-        onSelect={this.onSelect}
-        selectedKeys={this.state.selectedKeys}
+        selectedKeys={null}
       >
         {this.renderTreeNodes(treeData)}
       </Tree>
