@@ -34,7 +34,6 @@ class Conversations extends React.Component {
   }
 
   render() {
-    
     let { conversations } = this.state
     // let conversationsList = conversations.map(conversation => {
     //   return (
@@ -47,13 +46,19 @@ class Conversations extends React.Component {
       <List
         itemLayout="horizontal"
         dataSource={conversations.map(conversation => {
-          return { title: conversation.User2.name, idTo: conversation.User2.id, spotlight: conversation.User2.team === null ? 'libre' : conversation.User2.team.spotlightId }
+          return { title: conversation.User2.name, idTo: conversation.User2.id }
         })}
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
               title={item.title}
-              description={<Link to={{pathname: `/dashboard/admin/messages/${item.idTo}`}}>Accéder à la conversation</Link>}
+              description={
+                <Link
+                  to={{ pathname: `/dashboard/admin/messages/${item.idTo}` }}
+                >
+                  Accéder à la conversation
+                </Link>
+              }
             />
           </List.Item>
         )}
