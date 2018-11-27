@@ -26,6 +26,10 @@
   margin: 0 30px 15px 25px;
 }
 
+.admin-action-content > p {
+  font-weight: bold;
+}
+
 .admin-action-button i {
   color: #fff;
 }
