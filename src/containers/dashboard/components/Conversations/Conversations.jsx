@@ -42,11 +42,12 @@ class Conversations extends React.Component {
     //       title={conversation.User2.name} />
     //   )
     // })
-    let conversationsList = (
+    let conversationsList = ''
+    conversationsList = (
       <List
         itemLayout="horizontal"
         dataSource={conversations.map(conversation => {
-          return { title: conversation.User2.name, idTo: conversation.User2.id, spotlight: conversation.User2.team.spotlightId }
+          return { title: conversation.User2.name, idTo: conversation.User2.id, spotlight: conversation.User2.team === null ? 'libre' : conversation.User2.team.spotlightId }
         })}
         renderItem={item => (
           <List.Item>
