@@ -82,13 +82,13 @@ export const sendMessage = (spotlight, title, content) => {
   }
 }
 
-export const deleteInfo = (id) => {
+export const deleteInfo = (infoId, spotlightId) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
 
     try {
-      const res = await axios.delete(`infos/${id}`, { headers: { 'X-Token': authToken } })
+      const res = await axios.delete(`infos/${spotlightId}/${infoId}`, { headers: { 'X-Token': authToken } })
       if(res.status === 200) {
         dispatch(
           notifActions.notifSend({
@@ -98,7 +98,7 @@ export const deleteInfo = (id) => {
         )
         dispatch({
           type: DELETE_INFO,
-          payload: id
+          payload: infoId
         })
       }
     } catch(e) {
