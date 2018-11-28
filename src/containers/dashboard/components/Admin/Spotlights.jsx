@@ -33,6 +33,7 @@ class Spotlights extends React.Component {
       this.props.fetchAdminSpotlight(currentId)
     }
 
+    if (!spotlights || !spotlights[id] || !allspotlights) {
       return <Spin/>
     }
     let thisSpotlight = allspotlights.find(s => s.id === parseInt(currentId, 10))
