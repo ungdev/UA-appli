@@ -5,8 +5,8 @@
   "dependencies": {
     "antd": "^3.9.2",
     "axios": "^0.18.0",
-    "chat-template": "^0.0.26",
     "chart.js": "^2.7.3",
+    "chat-template": "^0.0.26",
     "classnames": "^2.2.5",
     "deckstrings": "^2.0.0",
     "history": "^4.7.2",
@@ -31,7 +31,8 @@
     "redux-logger": "^3.0.6",
     "redux-notifications": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "smooth-scroll": "^14.2.0"
+    "smooth-scroll": "^14.2.0",
+    "socket.io": "^2.1.1"
   },
   "scripts": {
     "dev": "react-scripts start",
