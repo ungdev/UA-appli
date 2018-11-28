@@ -1,32 +1,25 @@
 import React from 'react'
-import { Table, Select, Icon, Button } from 'antd'
+import { Table, Select, Icon, Button, Tabs } from 'antd'
 import { connect } from 'react-redux'
 import { Object } from 'core-js';
 
 import AdminBar from './AdminBar'
 import { fetchUsers } from '../../../../modules/admin'
 
+const TabPane = Tabs.TabPane
+
 class Material extends React.Component {
   constructor(props) {
     super(props)
     
     this.state = {
-      by: 'material',
       searchName: null
     }
 
-    this.mainSelectChanged = this.mainSelectChanged.bind(this)
     this.setSearchName = this.setSearchName.bind(this)
     this.clearSearchName = this.clearSearchName.bind(this)
 
     this.props.fetchUsers()
-  }
-  
-  mainSelectChanged(e) {
-    this.setState({
-      by: e,
-      searchName: null
-    })
   }
 
   setSearchName(v) {
@@ -255,30 +248,25 @@ class Material extends React.Component {
 
     return (<React.Fragment>
       <AdminBar />
-
       <br />
 
-      <p>Affichage :</p>
-      <Select defaultValue="material" onChange={this.mainSelectChanged}>
-        <Select.Option value="material"><Icon type="desktop" theme="outlined" style={{marginRight: '10px'}} />Par matériel</Select.Option>
-        <Select.Option value="user"><Icon type="user" theme="outlined" style={{marginRight: '10px'}} />Par utilisateur</Select.Option>
-      </Select>
-
-      <br /><br />
-
-      {this.state.by === 'material' &&
-        <Table
-          columns={byMaterialColumns}
-          dataSource={byMaterialRows}
-          expandedRowRender={record => <p style={{ margin: 0 }}>{record.users || <span style={{ color: '#aaa' }}>(Vide)</span>}</p>}
-          locale={{ emptyText: 'Aucun résultat' }} />
-      }
-      {this.state.by === 'user' &&
-        <Table
-          columns={byUserColumns}
-          dataSource={byUserRows}
-          locale={{ emptyText: 'Aucun résultat' }} />
-      }
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Matériel" key="1">
+          <Table
+            columns={byMaterialColumns}
+            dataSource={byMaterialRows}
+            expandedRowRender={record => <p style={{ margin: 0 }}>{record.users || <span style={{ color: '#aaa' }}>(Vide)</span>}</p>}
+            locale={{ emptyText: 'Aucun résultat' }}
+          />
+        </TabPane>
+        <TabPane tab="Utilisateurs" key="2">
+          <Table
+            columns={byUserColumns}
+            dataSource={byUserRows}
+            locale={{ emptyText: 'Aucun résultat' }}
+          />
+        </TabPane>
+      </Tabs>
     </React.Fragment>)
   }
 }

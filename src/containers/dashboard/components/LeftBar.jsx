@@ -252,6 +252,12 @@ class LeftBar extends React.Component {
                 <span>Matériel</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="2-6">
+              <Link to={`/dashboard/admin/places`}>
+                <Icon type="profile" />
+                <span>Places</span>
+              </Link>
+            </Menu.Item>
           </SubMenu>
         ) : 
         <Menu.Item key="2.5">
