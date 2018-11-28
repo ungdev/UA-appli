@@ -7,7 +7,7 @@ import {
   fetchConversations,
   SET_CONVERSATIONS_LOADING
 } from '../../../../modules/conversations'
-import { List } from 'antd'
+import { List, Avatar } from 'antd'
 
 class Conversations extends React.Component {
   constructor(props) {
@@ -46,12 +46,31 @@ class Conversations extends React.Component {
       <List
         itemLayout="horizontal"
         dataSource={conversations.map(conversation => {
-          return { title: conversation.User2.name, idTo: conversation.User2.id }
+          return {
+            title: conversation.User2.name,
+            idTo: conversation.User2.id,
+            lastMessage: conversation.messages[0].senderId // only one element in messages[] got through API
+          }
         })}
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
               title={item.title}
+              avatar={
+                item.lastMessage === null ? (
+                  <Avatar
+                    icon="check-circle"
+                    style={{ backgroundColor: '#3FA9FF' }}
+                    theme="filled"
+                  />
+                ) : (
+                  <Avatar
+                    icon="exclamation-circle"
+                    style={{ backgroundColor: '#8E8C8A' }}
+                    theme="filled"
+                  />
+                )
+              }
               description={
                 <Link
                   to={{ pathname: `/dashboard/admin/messages/${item.idTo}` }}
