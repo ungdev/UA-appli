@@ -1,4 +1,24 @@
 
+.header {
+  padding-left: 0;
+}
+
+.logo {
+  color: #fff;
+  font-size: 24px;
+  float: left;
+  position: relative;
+  top: -3px;
+}
+
+.logo > img {
+  height: 65px;
+}
+
+.logo > span {
+  margin-left: 15px;
+}
+
 table {
   border: 1px solid #e8e8e8;
   border-bottom: none;

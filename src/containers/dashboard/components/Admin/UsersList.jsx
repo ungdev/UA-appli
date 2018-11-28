@@ -13,7 +13,9 @@ class UsersList extends React.Component {
 
     this.state = {
       searchName: null,
+      searchTeam: null
     }
+
     this.props.fetchUsers()
   }
 
@@ -26,6 +28,18 @@ class UsersList extends React.Component {
   clearSearchName = () => {
     this.setState({
       searchName: null
+    })
+  }
+
+  setSearchTeam = (v) => {
+    this.setState({
+      searchTeam: v
+    })
+  }
+
+  clearSearchTeam = () => {
+    this.setState({
+      searchTeam: null
     })
   }
 
@@ -46,10 +60,10 @@ class UsersList extends React.Component {
       if(user.permission && user.permission.admin) {
         role = '/Admin'
       }
-      if(user.respo && user.respo !== 0) {
-        role += `/Respo ${this.getTournamentNameById(user.respo)}`
+      else if(user.permission && user.permission.respo) {
+        role = `/Respo`
       }
-      if(role === '') {
+      else if(role === '') {
         role = '/Joueur'
       }
 
@@ -63,9 +77,19 @@ class UsersList extends React.Component {
       }
     })
 
+    let teams = []
+    users.forEach(user => {
+      if(!teams.includes(user.team)) {
+        teams.push(user.team)
+      }
+    })
+
     let rows = users
     if(this.state.searchName !== null) {
       rows = users.filter(user => user.fullname.includes(this.state.searchName))
+    }
+    if(this.state.searchTeam !== null) {
+      rows = users.filter(user => user.team.includes(this.state.searchTeam))
     }
 
     const columns = [
@@ -84,7 +108,7 @@ class UsersList extends React.Component {
             >
               {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
             </Select>
-            <Button title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
+            <Button type="primary" title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
           </div>
         ),
         filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
@@ -104,7 +128,7 @@ class UsersList extends React.Component {
             value: 'Admin',
           },
           {
-            text: 'Respo Tournoi',
+            text: 'Respo',
             value: 'Respo',
           },
           {
@@ -118,6 +142,21 @@ class UsersList extends React.Component {
         title: 'Équipe',
         dataIndex: 'team',
         key: 'team',
+        filterDropdown: (
+          <div className="custom-filter-dropdown">
+            <Select
+              showSearch
+              placeholder="Nom de l'équipe"
+              value={this.state.searchTeam !== null ? this.state.searchTeam : undefined}
+              onChange={this.setSearchTeam}
+              style={{ width: '200px' }}
+            >
+              {teams && teams.map((team, i) => <Select.Option value={team} key={i}>{team}</Select.Option>)}
+            </Select>
+            <Button type="primary" title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchTeam}><Icon type="close"></Icon></Button>
+          </div>
+        ),
+        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchTeam !== null ? '#108ee9' : '#aaa' }} />
       },
       {
         title: 'Tournoi',
@@ -156,6 +195,23 @@ class UsersList extends React.Component {
         onFilter: (value, record) => record.spotlight === value,
       },
       {
+        title: 'A payé',
+        key: 'paid',
+        dataIndex: 'paid',
+        render: (paid) => {return paid ? <Icon type="check" /> : <Icon type="close" />},
+        filters: [
+          {
+            text: 'Payé',
+            value: 'true',
+          },
+          {
+            text: 'Non payé',
+            value: 'false',
+          }
+        ],
+        onFilter: (value, record) => value === 'true' ? (record.paid) : (!record.paid)
+      },
+      {
         title: 'Actions',
         key: 'action',
         dataIndex: 'id',
@@ -163,10 +219,12 @@ class UsersList extends React.Component {
       }
     ]
 
-    return (<React.Fragment>
-      <AdminBar/>
-      <Table columns={columns} dataSource={rows} locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
-    </React.Fragment>)
+    return (
+      <React.Fragment>
+        <AdminBar/>
+        <Table columns={columns} dataSource={rows} locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
+      </React.Fragment>
+    )
   }
 }
 

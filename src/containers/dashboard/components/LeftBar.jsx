@@ -164,12 +164,12 @@ class LeftBar extends React.Component {
               <span>Règlement</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key={`3-${spotlight.id}-4`}>
+          {/* <Menu.Item key={`3-${spotlight.id}-4`}>
             <Link to={`/dashboard/tournois/${spotlight.id}/contact`}>
               <Icon type="customer-service" />
               <span>Contact</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key={`3-${spotlight.id}-5`}>
             <Link to={`/dashboard/tournois/${spotlight.id}/info`}>
               <Icon type="info-circle" />
@@ -203,7 +203,7 @@ class LeftBar extends React.Component {
             key="2"
             title={
               <span>
-                <Icon type="thunderbolt" />
+                <Icon type="crown" />
                 <span>Administration</span>
               </span>
             }
@@ -265,7 +265,7 @@ class LeftBar extends React.Component {
           title={
             <span>
               <Icon type="trophy" />
-              <span>Les tournois</span>
+              <span>Tournois</span>
             </span>
           }
           onClick={this.props.fetchSpotlights}
@@ -292,12 +292,12 @@ class LeftBar extends React.Component {
                 <span>Comparer mes jeux</span>
               </Link>
         </Menu.Item>*/}
-            <Menu.Item key={`3-${spotlights.length + 1}-4`}>
+            {/* <Menu.Item key={`3-${spotlights.length + 1}-4`}>
               <Link to={`/dashboard/tournois/libre/contact`}>
                 <Icon type="customer-service" />
                 <span>Contact</span>
               </Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item key={`3-${spotlights.length + 1}-5`}>
               <Link to={`/dashboard/tournois/libre/info`}>
                 <Icon type="info-circle" />

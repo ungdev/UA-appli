@@ -221,11 +221,6 @@ class Material extends React.Component {
         title: 'Nombre',
         dataIndex: 'count',
         key: 'count',
-      },
-      {
-        title: 'Utilisateurs',
-        dataIndex: 'users',
-        key: 'users',
       }
     ]
 
@@ -246,7 +241,7 @@ class Material extends React.Component {
             >
               {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
             </Select>
-            <Button title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
+            <Button type="primary" title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
           </div>
         ),
         filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
@@ -257,8 +252,6 @@ class Material extends React.Component {
         key: 'material'
       }
     ]
-
-    // ---------
 
     return (<React.Fragment>
       <AdminBar />
@@ -273,8 +266,19 @@ class Material extends React.Component {
 
       <br /><br />
 
-      {this.state.by === 'material' && <Table columns={byMaterialColumns} dataSource={byMaterialRows} locale={{ emptyText: 'Aucun résultat' }} />}
-      {this.state.by === 'user' && <Table columns={byUserColumns} dataSource={byUserRows} locale={{ emptyText: 'Aucun résultat' }} />}
+      {this.state.by === 'material' &&
+        <Table
+          columns={byMaterialColumns}
+          dataSource={byMaterialRows}
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.users || <span style={{ color: '#aaa' }}>(Vide)</span>}</p>}
+          locale={{ emptyText: 'Aucun résultat' }} />
+      }
+      {this.state.by === 'user' &&
+        <Table
+          columns={byUserColumns}
+          dataSource={byUserRows}
+          locale={{ emptyText: 'Aucun résultat' }} />
+      }
     </React.Fragment>)
   }
 }

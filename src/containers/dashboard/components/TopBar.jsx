@@ -5,27 +5,24 @@ import { Layout, Menu, Icon } from 'antd'
 import { logout } from '../../../modules/login'
 const { Header } = Layout
 
-
 class TopBar extends React.Component {
-
   render() {
-    const title = this.props.sidebar ? '' : <span style={{marginLeft: 15}}>UTT Arena</span>
     return (
-      <Header className="header" style={{ paddingLeft: 0 }}>
-        <div className='logo' style={{ color: 'white', fontSize: 24, float: 'left' }}>
-          <img src={Logo_UA} alt="LogoUA2018" style={{ height: 65 }} />
-          {title}
+      <Header className="header">
+        <div className="logo">
+          <img src={Logo_UA} alt="" />
+          <span>UTT Arena</span>
         </div>
+        
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={['2']}
           style={{ lineHeight: '64px', float: 'right' }}
         >
           <Menu.Item key="1" onClick={this.props.disconnect}>
             <div>
-              <Icon type='logout' /> Se déconnecter
-          </div>
+              <Icon type='logout' /> Déconnexion
+            </div>
           </Menu.Item>
 
         </Menu>
@@ -35,9 +32,7 @@ class TopBar extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  disconnect: () => {
-    dispatch(logout())
-  }
+  disconnect: () => dispatch(logout())
 })
 
 
