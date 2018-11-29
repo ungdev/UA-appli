@@ -24,7 +24,7 @@ class Conversations extends React.Component {
     this.props.getConversations()
   }
 
-  componentDidUpdate(prevProp) {
+  componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
         conversations: this.props.conversations,
