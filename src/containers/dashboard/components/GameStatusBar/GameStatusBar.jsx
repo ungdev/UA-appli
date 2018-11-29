@@ -83,13 +83,29 @@ class TournamentStatusBar extends React.Component {
     let spotlight = this.props.spotlights.find(s => `${s.id}` === game)
     if(!spotlight) return <Spin/>
 
+    let steps = spotlight.states && spotlight.states.length !== 0
+      ? <Steps current={this.state.etat} progressDot={this.customDot}>
+        {
+          spotlight.states.map(state => (
+            <Step
+              title={state.title}
+              description={state.desc}
+              key={state.id}
+            />
+          ))
+        }
+        </Steps>
+      : <p style={{ marginBottom: 0, color: '#999' }}>(Aucun état)</p>
+
     return (
       <div>
         <Modal
           title="Ajout d'un état"
           visible={this.state.modalVisible}
-          onOk={() => this.addState()}
+          onOk={this.addState}
           onCancel={this.closeModal}
+          okText="Ok"
+          cancelText="Annuler"
         >
           <Input
             value={this.state.title}
@@ -108,18 +124,9 @@ class TournamentStatusBar extends React.Component {
           />
         </Modal>
         <Card title={<h1>{spotlight.name}</h1>}>
-          <Steps current={this.state.etat} progressDot={this.customDot}>
-          {
-            spotlight.states && spotlight.states.map(state => (
-              <Step
-              title={state.title}
-              description={state.desc}
-              key={state.id}
-            />))
-          }
-          </Steps>
+          { steps }
         </Card>
-        {this.props.user && this.props.user.permission && this.props.user.permission.admin &&
+        {this.props.user && this.props.user.permission && (this.props.user.permission.admin || this.props.user.permission.respo.includes(this.props.game)) &&
           <div style={{ marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-around' }}>
             <Button type="danger" onClick={this.previousState}>État précédent</Button>
             <Button type="primary" onClick={this.openModal}>Ajouter un état</Button>

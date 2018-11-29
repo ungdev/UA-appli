@@ -203,7 +203,7 @@ class LeftBar extends React.Component {
             key="2"
             title={
               <span>
-                <Icon type="thunderbolt" />
+                <Icon type="crown" />
                 <span>Administration</span>
               </span>
             }
@@ -265,7 +265,7 @@ class LeftBar extends React.Component {
           title={
             <span>
               <Icon type="trophy" />
-              <span>Les tournois</span>
+              <span>Tournois</span>
             </span>
           }
           onClick={this.props.fetchSpotlights}

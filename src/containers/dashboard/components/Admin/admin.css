@@ -6,6 +6,10 @@
   z-index: 999;
 }
 
+.ant-checkbox-wrapper {
+  margin: 3px 0;
+}
+
 .admin-action-username {
   font-size: 20px;
   margin-bottom: 20px;
