@@ -42,8 +42,9 @@ class Conversations extends React.Component {
     //   )
     // })
     let conversationsList = ''
+    console.log(conversations)
+
     if (conversations && conversations.User2 && conversations.messages[0]) {
-      console.log(conversations)
       conversationsList = (
         <List
           itemLayout="horizontal"
