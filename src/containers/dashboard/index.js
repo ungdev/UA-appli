@@ -84,6 +84,9 @@ class Dashboard extends Component {
           if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
           if(tab[2] === 'material') component = <Material />
         }
+        else if(user.permission && user.permission.respo){
+          if(tab[2] === 'conversations') component = <Conversations />
+        }
         else {
           this.props.goToHome()
         }
