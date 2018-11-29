@@ -42,47 +42,49 @@ class Conversations extends React.Component {
     //   )
     // })
     let conversationsList = ''
-    conversationsList = (
-      <List
-        itemLayout="horizontal"
-        dataSource={conversations.map(conversation => {
-          return {
-            title: conversation.User2.name,
-            idTo: conversation.User2.id,
-            lastMessage: conversation.messages[0].senderId // only one element in messages[] got through API
-          }
-        })}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              title={item.title}
-              avatar={
-                item.lastMessage === null ? (
-                  <Avatar
-                    icon="check-circle"
-                    style={{ backgroundColor: '#3FA9FF' }}
-                    theme="filled"
-                  />
-                ) : (
-                  <Avatar
-                    icon="exclamation-circle"
-                    style={{ backgroundColor: '#8E8C8A' }}
-                    theme="filled"
-                  />
-                )
-              }
-              description={
-                <Link
-                  to={{ pathname: `/dashboard/admin/messages/${item.idTo}` }}
-                >
-                  Accéder à la conversation
-                </Link>
-              }
-            />
-          </List.Item>
-        )}
-      />
-    )
+    if (conversations && conversations.User2 && conversations.messages[0]) {
+      conversationsList = (
+        <List
+          itemLayout="horizontal"
+          dataSource={conversations.map(conversation => {
+            return {
+              title: conversation.User2.name,
+              idTo: conversation.User2.id,
+              lastMessage: conversation.messages[0].senderId // only one element in messages[] got through API
+            }
+          })}
+          renderItem={item => (
+            <List.Item>
+              <List.Item.Meta
+                title={item.title}
+                avatar={
+                  item.lastMessage === null ? (
+                    <Avatar
+                      icon="check-circle"
+                      style={{ backgroundColor: '#3FA9FF' }}
+                      theme="filled"
+                    />
+                  ) : (
+                    <Avatar
+                      icon="exclamation-circle"
+                      style={{ backgroundColor: '#8E8C8A' }}
+                      theme="filled"
+                    />
+                  )
+                }
+                description={
+                  <Link
+                    to={{ pathname: `/dashboard/admin/messages/${item.idTo}` }}
+                  >
+                    Accéder à la conversation
+                  </Link>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      )
+    }
     return <div>{conversationsList}</div>
   }
 }
