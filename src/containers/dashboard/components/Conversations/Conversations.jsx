@@ -26,7 +26,6 @@ class Conversations extends React.Component {
 
   componentDidUpdate(prevProp) {
     if (prevProps !== this.props) {
-      console.log('UPDATE PROPS')
       this.setState({
         conversations: this.props.conversations,
         user: this.props.user
