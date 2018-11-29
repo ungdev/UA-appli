@@ -26,9 +26,18 @@ class Conversations extends React.Component {
 
   componentDidUpdate(prevProps, prevStates) {
     if (prevProps !== this.props) {
+      console.log('UPDATE PROPS')
+
       this.setState({
         conversations: this.props.conversations,
         user: this.props.user
+      })
+    }
+    if(prevStates != this.state){
+      console.log('UPDATE STATES')
+      this.setState({
+        conversations: this.state.conversations,
+        user: this.state.user
       })
     }
   }
@@ -43,8 +52,7 @@ class Conversations extends React.Component {
     // })
     let conversationsList = ''
     console.log(conversations)
-
-    if (conversations && conversations.User2 && conversations.messages[0]) {
+    if (conversations) {
       conversationsList = (
         <List
           itemLayout="horizontal"
