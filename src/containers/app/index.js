@@ -23,6 +23,7 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/messages/:id'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/conversations'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/material'} exact component={Dashboard} />
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/validate'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/decks'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/mydecks'} component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/tournois/:game/arbre-tournois'} component={Dashboard} />
