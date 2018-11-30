@@ -133,6 +133,7 @@ class Validate extends React.Component {
       {infos.name &&
         <Card title={<h1>{infos.name} ({infos.firstname} {infos.lastname}) : {infos.plusone ? 'Visiteur' : 'Joueur'}</h1>}>
           {!infos.paid && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}>La personne n'a pas payé sa place !</h1>}
+          {infos.scanned && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}><Icon type="warning" /> La place a déjà été scannée !</h1>}
           {infos.tableLetter && <h1>Emplacement : Table {infos.tableLetter} place n°{infos.placeNumber}</h1>}
           {
             infos.orders && (
@@ -168,8 +169,8 @@ class Validate extends React.Component {
                 {infos.orders.streamingPC > 0 && <li>PC Streaming x{infos.orders.streamingPC}</li>}
                 {infos.orders.laptop > 0 && <li>PC portable x{infos.orders.laptop}</li>}
                 {infos.orders.tombola > 0 && <li>Tombola x{infos.orders.tombola}</li>}
-                {infos.orders.shirts.map(shirt => {
-                  return <li>T-shirt {shirt}</li>
+                {infos.orders.shirts.map((shirt, index) => {
+                  return <li key={index}>T-shirt {shirt}</li>
                 })}
                 </ul>
               </React.Fragment>
