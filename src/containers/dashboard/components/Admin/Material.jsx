@@ -251,7 +251,7 @@ class Material extends React.Component {
       <br />
 
       <Tabs defaultActiveKey="1">
-        <TabPane tab="Matériel" key="1">
+        <TabPane tab={<span><Icon type="desktop" /> Matériel</span>} key="1">
           <Table
             columns={byMaterialColumns}
             dataSource={byMaterialRows}
@@ -259,7 +259,7 @@ class Material extends React.Component {
             locale={{ emptyText: 'Aucun résultat' }}
           />
         </TabPane>
-        <TabPane tab="Utilisateurs" key="2">
+        <TabPane tab={<span><Icon type="user" /> Utilisateurs</span>} key="2">
           <Table
             columns={byUserColumns}
             dataSource={byUserRows}

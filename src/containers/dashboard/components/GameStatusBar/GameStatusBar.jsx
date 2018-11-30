@@ -126,7 +126,7 @@ class TournamentStatusBar extends React.Component {
         <Card title={<h1>{spotlight.name}</h1>}>
           { steps }
         </Card>
-        {this.props.user && this.props.user.permission && (this.props.user.permission.admin || this.props.user.permission.respo.includes(this.props.game)) &&
+        {this.props.user && this.props.user.permission && ((this.props.user.permission.respo && this.props.user.permission.respo.includes(this.props.game)) || this.props.user.permission.admin) &&
           <div style={{ marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-around' }}>
             <Button type="danger" onClick={this.previousState}>État précédent</Button>
             <Button type="primary" onClick={this.openModal}>Ajouter un état</Button>

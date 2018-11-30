@@ -28,8 +28,6 @@ table {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  border: 1px solid #e8e8e8;
-  border-radius: 2px;
 }
 
 .social-embed > div {

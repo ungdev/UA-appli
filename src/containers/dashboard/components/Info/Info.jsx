@@ -76,7 +76,7 @@ class Info extends React.Component {
     return (
       <div>
         {this.props.tournament !== 'libre' && <GameStatusBar game={this.props.tournament} noLastInfo />}
-        {user && user.permission && (user.permission.respo.includes(this.props.tournament) || user.permission.admin) ? ( // change for respo after
+        {user && user.permission && ((user.permission.respo && user.permission.respo.includes(this.props.tournament)) || user.permission.admin) ? (
           <React.Fragment>
             <TextArea
             style={{ marginTop: '20px', width: '25%' }}
@@ -107,7 +107,7 @@ class Info extends React.Component {
           dataSource={infos}
           locale={{ emptyText: 'Pas d\'informations à afficher' }}
           renderItem={info => (
-            <List.Item actions={user && user.permission && (user.permission.respo.includes(this.props.tournament) || user.permission.admin) ? [
+            <List.Item actions={user && user.permission && ((user.permission.respo && user.permission.respo.includes(this.props.tournament)) || user.permission.admin) ? [
               <Delete infoId={info.id} spotlightId={this.props.tournament} />] : null}>
               <Skeleton avatar title loading={info.loading} active>
                 <List.Item.Meta
