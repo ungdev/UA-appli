@@ -48,7 +48,6 @@ class UpdateUserPlace extends React.Component {
   render() {
     const users = this.props.users
 
-
     const columns = [
       {
         title: 'Utilisateur',

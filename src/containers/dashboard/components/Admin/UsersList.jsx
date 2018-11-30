@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Table, Select, Button, Spin } from 'antd'
+import { Icon, Table, Select, Button, Spin, Checkbox } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
@@ -14,6 +14,7 @@ class UsersList extends React.Component {
 
     this.state = {
       searchName: null,
+      searchEmail: null,
       searchTeam: null,
       searchPlace: null,
       selectedInfo: null
@@ -31,6 +32,18 @@ class UsersList extends React.Component {
   clearSearchName = () => {
     this.setState({
       searchName: null
+    })
+  }
+
+  setSearchEmail = (v) => {
+    this.setState({
+      searchEmail: v
+    })
+  }
+
+  clearSearchEmail = () => {
+    this.setState({
+      searchEmail: null
     })
   }
 
@@ -79,16 +92,14 @@ class UsersList extends React.Component {
     users = users.map(user => {
       let role = ''
       if(user.permission && user.permission.admin) {
-        role = '/Admin'
+        role = 'Admin'
       }
       else if(user.permission && user.permission.respo) {
-        role = `/Respo`
+        role = `Respo`
       }
-      else if(role === '') {
-        role = '/Joueur'
+      else {
+        role = 'Joueur'
       }
-
-      role = role.substr(1)
 
       return {
         ...user,
@@ -113,6 +124,9 @@ class UsersList extends React.Component {
     let rows = users
     if(this.state.searchName !== null) {
       rows = users.filter(user => user.fullname.includes(this.state.searchName))
+    }
+    if(this.state.searchEmail !== null) {
+      rows = users.filter(user => user.email.includes(this.state.searchEmail))
     }
     if(this.state.searchTeam !== null) {
       rows = users.filter(user => user.team.includes(this.state.searchTeam))
@@ -142,8 +156,23 @@ class UsersList extends React.Component {
         filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
       },
       {
-        title: 'Email',
-        dataIndex: 'email'
+        title: 'E-mail',
+        dataIndex: 'email',
+        filterDropdown: (
+          <div className="custom-filter-dropdown">
+            <Select
+              showSearch
+              placeholder="Adresse mail"
+              value={this.state.searchEmail !== null ? this.state.searchEmail : undefined}
+              onChange={this.setSearchEmail}
+              style={{ width: '200px' }}
+            >
+              {users.map((user, i) => <Select.Option value={user.email} key={i}>{user.email}</Select.Option>)}
+            </Select>
+            <Button type="primary" title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchEmail}><Icon type="close"></Icon></Button>
+          </div>
+        ),
+        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchEmail !== null ? '#108ee9' : '#aaa' }} />
       },
       {
         title: 'Rôle',
@@ -271,19 +300,14 @@ class UsersList extends React.Component {
     return (
       <React.Fragment>
         <AdminBar/>
-        <Select
-          mode="multiple"
-          onChange={this.selectChanged}
-          placeholder="Informations affichées"
-          style={{ minWidth: '200px', marginTop: '20px' }}
-        >
-          <Option value="email">Email</Option>
-          <Option value="role">Rôle</Option>
-          <Option value="team">Équipe</Option>
-          <Option value="spotlight">Tournoi</Option>
-          <Option value="place">Place</Option>
-          <Option value="paid">A payé</Option>
-        </Select>
+        <Checkbox.Group onChange={this.selectChanged} defaultValue={this.state.selectedInfo} style={{ marginTop: '20px' }}>
+          <Checkbox value="email">E-mail</Checkbox>
+          <Checkbox value="role">Rôle</Checkbox>
+          <Checkbox value="team">Équipe</Checkbox>
+          <Checkbox value="spotlight">Tournoi</Checkbox>
+          <Checkbox value="place">Place</Checkbox>
+          <Checkbox value="paid">A payé</Checkbox>
+        </Checkbox.Group>
         <Table
           columns={columns}
           dataSource={rows}
