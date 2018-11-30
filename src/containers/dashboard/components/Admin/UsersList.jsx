@@ -75,6 +75,22 @@ class UsersList extends React.Component {
     this.setState({
       selectedInfo
     })
+
+    if(!selectedInfo.includes("email")) {
+      this.setState({
+        searchEmail: null
+      })
+    }
+    if(!selectedInfo.includes("team")) {
+      this.setState({
+        searchTeam: null
+      })
+    }
+    if(!selectedInfo.includes("place")) {
+      this.setState({
+        searchPlace: null
+      })
+    }
   }
 
   getTournamentNameById = (id) => {
@@ -123,16 +139,16 @@ class UsersList extends React.Component {
 
     let rows = users
     if(this.state.searchName !== null) {
-      rows = users.filter(user => user.fullname.includes(this.state.searchName))
+      rows = rows.filter(user => user.fullname.includes(this.state.searchName))
     }
     if(this.state.searchEmail !== null) {
-      rows = users.filter(user => user.email.includes(this.state.searchEmail))
+      rows = rows.filter(user => user.email.includes(this.state.searchEmail))
     }
     if(this.state.searchTeam !== null) {
-      rows = users.filter(user => user.team.includes(this.state.searchTeam))
+      rows = rows.filter(user => user.team.includes(this.state.searchTeam))
     }
     if(this.state.searchPlace !== null) {
-      rows = users.filter(user => user.place.includes(this.state.searchPlace))
+      rows = rows.filter(user => user.place.includes(this.state.searchPlace))
     }
 
     let columns = [
@@ -183,7 +199,7 @@ class UsersList extends React.Component {
             value: 'Admin',
           },
           {
-            text: 'Respo',
+            text: 'Respo tournoi',
             value: 'Respo',
           },
           {
@@ -300,7 +316,8 @@ class UsersList extends React.Component {
     return (
       <React.Fragment>
         <AdminBar/>
-        <Checkbox.Group onChange={this.selectChanged} defaultValue={this.state.selectedInfo} style={{ marginTop: '20px' }}>
+        Affichage : 
+        <Checkbox.Group onChange={this.selectChanged} defaultValue={this.state.selectedInfo} style={{ margin: '20px 0 0 10px' }}>
           <Checkbox value="email">E-mail</Checkbox>
           <Checkbox value="role">Rôle</Checkbox>
           <Checkbox value="team">Équipe</Checkbox>
