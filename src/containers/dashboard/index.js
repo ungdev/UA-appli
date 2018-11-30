@@ -15,6 +15,8 @@ import UsersList from './components/Admin/UsersList'
 import Paids from './components/Admin/Paids'
 import Spotlights from './components/Admin/Spotlights'
 import Material from './components/Admin/Material'
+import Places from './components/Admin/Places'
+import Validate from './components/Admin/Validate'
 import Compare from './components/Libre/Compare'
 import Calendar from './components/Libre/Calendar'
 import DashboardLayout from './layout'
@@ -83,6 +85,8 @@ class Dashboard extends Component {
           if(tab[2] === 'conversations') component = <Conversations />
           if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
           if(tab[2] === 'material') component = <Material />
+          if(tab[2] === 'places') component = <Places />
+          if(tab[2] === 'validate') component = <Validate />
         }
         else {
           this.props.goToHome()

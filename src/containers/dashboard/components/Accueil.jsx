@@ -1,6 +1,8 @@
 import React from 'react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
-import { Divider, Card } from 'antd'
+import { connect } from 'react-redux'
+import { Card, Spin } from 'antd'
+import { fetchUser } from '../../../modules/user'
 //import qs from 'qs'
 
 const colorResult = (result) => {
@@ -25,12 +27,14 @@ const getTeam = (team) => {
 }
 
 class Accueil extends React.Component {
-constructor(props) {
+  constructor(props) {
     super(props)
 
     this.state = {
       matches: []
     }
+
+    props.fetchUser()
   }
 
   componentDidMount() {
@@ -65,37 +69,75 @@ constructor(props) {
   }
 
   render() {
+    const { user } = this.props
+
+    if(!user) {
+      return <Spin />
+    }
+
+    // Get user fullname, permissions and place
+    user.fullname = `${user.name} (${user.firstname} ${user.lastname})`
+    user.perm = null
+    if(user.permission) {
+      if(user.permission.admin) {
+        user.perm = 'Admin'
+      }
+      else if(user.permission.respo) {
+        user.perm = 'Respo'
+      }
+    }
+    user.place = null
+    if(user.tableLetter && user.placeNumber) {
+      user.place = `${user.tableLetter}${user.placeNumber}`
+    }
+
     return (
       <div style={{ height: '100%'}}>
         <h1>Accueil</h1>
 
-        {/*<Divider />
+        <Card
+          title="Vos informations"
+          style={{ marginBottom: '20px' }}
+        >
+          <div>Nom d'utilisateur : <strong>{user.fullname}</strong></div>
+          {user.perm ? <div>Permissions : <strong>{user.perm}</strong></div> : ''}
+          <div>A payé : {user.paid ? 'Oui' : <strong>Non</strong>}</div>
+          <div>Place : {user.place ? <strong>{user.place}</strong> : 'Aucune'}{user.plusone ? <strong> (Visiteur)</strong> : ''}</div>
+          {user.team && user.team.spotlight ? <div>Tournoi : {user.team.spotlight.name}</div> : ''}
+          {user.team && !user.team.soloTeam ? <div>Équipe : {user.team.name}</div> : ''}
+        </Card>
 
-        <h2>Mes matchs</h2>
+        <Card
+          title="Derniers posts"
+        >
+          <div className="social-embed">
+            <div>
+              <iframe title="Facebook UTTArena" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FUTTArena&tabs=timeline&width=500&height=700&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="500" height="700" scrolling="no" frameBorder="0" allowtransparency="true" allow="encrypted-media" style={{ border: 'none', overflow: 'hidden'}}></iframe>
+            </div>
 
-        <div className="matches">
-          {/*this.getMatches()}
-        </div>*/}
-
-        <Divider />
-
-        <h2>Derniers posts</h2>
-
-        <div className="social-embed">
-          <div>
-            <iframe title="Facebook UTTArena" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FUTTArena&tabs=timeline&width=500&height=700&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="500" height="700" scrolling="no" frameBorder="0" allowtransparency="true" allow="encrypted-media" style={{ border: 'none', overflow: 'hidden'}}></iframe>
+            <TwitterTimelineEmbed
+              sourceType="profile"
+              screenName="uttarena"
+              lang="fr"
+              noFooter={true}
+              options={{ height: 700, width: 500 }}
+            />
           </div>
-
-          <TwitterTimelineEmbed
-            sourceType="profile"
-            screenName="uttarena"
-            lang="fr"
-            noFooter={true}
-            options={{ height: 700, width: 500 }} />
-        </div>
+        </Card>
       </div>
     )
   }
 }
 
-export default Accueil
+const mapStateToProps = state => ({
+  user: state.user.user
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchUser: () => dispatch(fetchUser())
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Accueil)
