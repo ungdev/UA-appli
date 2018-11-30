@@ -29,7 +29,10 @@ class LeftBar extends React.Component {
           current = `2-2`
         }
         if(tab[2] === 'material') {
-          current = `2-3`
+          current = `2-5`
+        }
+        if(tab[2] === 'validate') {
+          current = `2-6`
         }
         if(tab.length >= 2 && tab[2] === 'spotlights') {
           openKeys.push('2-4')
@@ -256,6 +259,12 @@ class LeftBar extends React.Component {
               <Link to={`/dashboard/admin/places`}>
                 <Icon type="profile" />
                 <span>Places</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="2-7">
+              <Link to={`/dashboard/admin/validate`}>
+                <Icon type="barcode" />
+                <span>Valider l'entrée</span>
               </Link>
             </Menu.Item>
           </SubMenu>
