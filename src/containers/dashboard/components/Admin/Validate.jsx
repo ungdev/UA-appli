@@ -20,6 +20,9 @@ class Validate extends React.Component {
     this.props.fetchUsers()
   }
 
+  componentDidUpdate = () => {
+    this.input.focus()
+  }
   setSearchInput = (input) => {
     this.setState({
       searchInput: input
@@ -32,10 +35,6 @@ class Validate extends React.Component {
     console.log(barcode, searchInput)
     this.setState({ barcode: '', searchInput: null })
     this.props.getInfos(barcode, searchInput)
-  }
-
-  componentDidMount() {
-    //this.input.focus()
   }
 
   render() {
