@@ -25,14 +25,20 @@ class LeftBar extends React.Component {
         if(tab[2] === 'users') {
           current = `2-1`
         }
-        if(tab[2] === 'paids') {
+        if(tab[2] === 'conversations') {
           current = `2-2`
+        }
+        if(tab[2] === 'paids') {
+          current = `2-3`
         }
         if(tab[2] === 'material') {
           current = `2-5`
         }
-        if(tab[2] === 'validate') {
+        if(tab[2] === 'places') {
           current = `2-6`
+        }
+        if(tab[2] === 'validate') {
+          current = `2-7`
         }
         if(tab.length >= 2 && tab[2] === 'spotlights') {
           openKeys.push('2-4')
