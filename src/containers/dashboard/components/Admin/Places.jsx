@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import AdminBar from './AdminBar'
 import { fetchUsers } from '../../../../modules/admin'
 import UpdateUserPlace from './components/UpdateUserPlace'
+import SwitchUsersPlaces from './components/SwitchUsersPlaces'
 
 const TabPane = Tabs.TabPane
 
@@ -41,7 +42,8 @@ class Places extends React.Component {
             <UpdateUserPlace users={users} maxPlacesPerTable={500} />
           </TabPane>
           <TabPane tab={<span><Icon type="user" /> Échanger les places de 2 joueurs</span>} key="2">
-
+            <br />
+            <SwitchUsersPlaces users={users} />
           </TabPane>
           <TabPane tab={<span><Icon type="team" /> Échanger les places de 2 équipes</span>} key="3">
 

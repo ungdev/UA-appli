@@ -91,6 +91,7 @@ class UpdateUserPlace extends React.Component {
 
   changePlace = () => {
     this.props.setPlace(this.state.user.id, this.state.placeLetterValue, this.state.placeNumberValue)
+    this.closeModal()
   }
 
   render() {
@@ -176,19 +177,23 @@ class UpdateUserPlace extends React.Component {
               <div style={{ marginTop: '15px' }}>
                 Place :<br />
                 <InputGroup compact style={{ marginTop: '6px' }}>
-                  <Input
-                    value={this.state.placeLetterValue}
-                    onChange={e => this.placeLetterValueChanged(e)}
-                    style={{ display: 'inline-block', width: '60px' }}
-                  />
-                  <InputNumber
-                    id="placeNumber"
-                    min={1}
-                    max={this.props.maxPlacesPerTable}
-                    value={this.state.placeNumberValue}
-                    onChange={v => this.placeNumberValueChanged(v)}
-                    style={{ display: 'inline-block', width: '80px' }}
-                  />
+                  <Tooltip placement="bottom" title="Lettre de la table">
+                    <Input
+                      value={this.state.placeLetterValue}
+                      onChange={e => this.placeLetterValueChanged(e)}
+                      style={{ display: 'inline-block', width: '60px' }}
+                    />
+                  </Tooltip>
+                  <Tooltip placement="bottom" title="Numéro de la place">
+                    <InputNumber
+                      id="placeNumber"
+                      min={1}
+                      max={this.props.maxPlacesPerTable}
+                      value={this.state.placeNumberValue}
+                      onChange={v => this.placeNumberValueChanged(v)}
+                      style={{ display: 'inline-block', width: '80px' }}
+                    />
+                  </Tooltip>
                   <Tooltip placement="right" title="Modifier la place">
                     <Button
                       type="primary"

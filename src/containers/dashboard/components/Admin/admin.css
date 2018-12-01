@@ -37,3 +37,24 @@
 .admin-action-button i {
   color: #fff;
 }
+
+.switch-users-places-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.switch-users-places-container > * {
+  min-width: 400px;
+  width: calc(50% - 20px);
+  margin: 0 10px 20px 10px;
+}
+
+.check-circle-void {
+  position: relative;
+  top: -1px;
+  height: 18px;
+  width: 18px;
+  border: 2px solid #1890ff;
+  border-radius: 50%;
+}

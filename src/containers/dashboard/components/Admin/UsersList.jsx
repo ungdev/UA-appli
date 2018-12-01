@@ -6,8 +6,6 @@ import AdminBar from './AdminBar'
 import UserListActions from './components/UserListActions'
 import { fetchUsers } from '../../../../modules/admin'
 
-const Option = Select.Option
-
 class UsersList extends React.Component {
   constructor(props) {
     super(props)

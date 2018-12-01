@@ -11,6 +11,7 @@ export const SET_USER_ADMIN = 'admin/SET_USER_ADMIN'
 export const SET_USER_PAID = 'admin/SET_USER_PAID'
 export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
 export const SET_USER_PLACE = 'admin/SET_USER_PLACE'
+export const SWITCH_USERS_PLACES = 'admin/SWITCH_USERS_PLACES'
 
 const initialState = {
   users: [],
@@ -75,6 +76,19 @@ export default (state = initialState, action) => {
       else {
         users[userPlaceIndex].place = ''
       }
+      return {
+        ...state,
+        users
+      }
+    case SWITCH_USERS_PLACES:
+      const userIndex1 = users.findIndex(u => u.id === action.payload.id1)
+      const userIndex2 = users.findIndex(u => u.id === action.payload.id2)
+
+      const tmpPlace = users[userIndex1].place
+
+      users[userIndex1].place = users[userIndex2].place
+      users[userIndex2].place = tmpPlace
+
       return {
         ...state,
         users
@@ -366,7 +380,37 @@ export const setPlace = (id, placeLetter, placeNumber) => {
         dispatch({ type: SET_USER_PLACE, payload: { id, placeLetter, placeNumber } })
         dispatch(
           notifActions.notifSend({
-            message: 'Place modifiée',
+            message: 'La place de l\'utilisateur a été modifiée',
+            dismissAfter: 2000
+        }))
+      }
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
+export const switchPlaces = (id1, id2) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {      
+      const res = await axios.put(`admin/switchPlaces/${id1}/${id2}`, {}, { headers: { 'X-Token': authToken } })
+      if(res.status === 200) {
+        dispatch({ type: SWITCH_USERS_PLACES, payload: { id1, id2 } })
+        dispatch(
+          notifActions.notifSend({
+            message: 'Les places ont été échangées',
             dismissAfter: 2000
         }))
       }
