@@ -61,8 +61,11 @@ class LeftBar extends React.Component {
             if(tab[3] === 'teams') {
               current = `3-${tab[2]}-2`
             }
-            if(tab[3] === 'decks') {
+            if(tab[3] === 'players') {
               current = `3-${tab[2]}-2`
+            }
+            if(tab[3] === 'decks') {
+              current = `3-${tab[2]}-2.3`
             }
             if (tab[3] === 'mydecks') {
               current = `3-${tab[2]}-2.5`
