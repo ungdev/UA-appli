@@ -10,6 +10,7 @@ export const SET_CHARTDATA = 'admin/SET_CHARTDATA'
 export const SET_USER_ADMIN = 'admin/SET_USER_ADMIN'
 export const SET_USER_PAID = 'admin/SET_USER_PAID'
 export const REMOVE_USER_ADMIN = 'admin/REMOVE_USER_ADMIN'
+export const SET_USER_PLACE = 'admin/SET_USER_PLACE'
 
 const initialState = {
   users: [],
@@ -20,7 +21,7 @@ const initialState = {
 export default (state = initialState, action) => {
   let users = state.users.slice(0)
   const userId = action.payload
-  const index = users.findIndex(u => u.id === userId)
+  let index = null
 
   switch (action.type) {
     case SET_USERS:
@@ -46,19 +47,34 @@ export default (state = initialState, action) => {
         spotlights
       }
     case SET_USER_ADMIN:
+      index = users.findIndex(u => u.id === userId)
       users[index].permission.admin = true
       return {
         ...state,
         users
       }
     case REMOVE_USER_ADMIN:
+      index = users.findIndex(u => u.id === userId)
       users[index].permission.admin = false
       return {
         ...state,
         users
       }
     case SET_USER_PAID:
+      index = users.findIndex(u => u.id === userId)
       users[index].paid = 1
+      return {
+        ...state,
+        users
+      }
+    case SET_USER_PLACE:
+      const userPlaceIndex = users.findIndex(u => u.id === action.payload.id)
+      if(action.payload.placeLetter && action.payload.placeNumber) {
+        users[userPlaceIndex].place = `${action.payload.placeLetter}${action.payload.placeNumber}`
+      }
+      else {
+        users[userPlaceIndex].place = ''
+      }
       return {
         ...state,
         users
@@ -327,6 +343,38 @@ export const removeAdmin = (id) => {
       dispatch(
         notifActions.notifSend({
           message: 'Une erreur est survenue',
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}
+
+export const setPlace = (id, placeLetter, placeNumber) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      placeLetter = placeLetter.toUpperCase()
+      
+      const res = await axios.put(`admin/setPlace/${id}`, { placeLetter, placeNumber }, { headers: { 'X-Token': authToken } })
+      if(res.status === 200) {
+        dispatch({ type: SET_USER_PLACE, payload: { id, placeLetter, placeNumber } })
+        dispatch(
+          notifActions.notifSend({
+            message: 'Place modifiée',
+            dismissAfter: 2000
+        }))
+      }
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
           kind: 'danger',
           dismissAfter: 2000
       }))
