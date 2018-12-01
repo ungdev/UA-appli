@@ -44,8 +44,8 @@ class UpdateUserPlace extends React.Component {
 
     this.setState({
       modalVisible: true,
-      placeLetterValue: user.place.substring(0, 1),
-      placeNumberValue: user.place.substring(1),
+      placeLetterValue: user.place && user.place.substring(0, 1),
+      placeNumberValue: user.place && user.place.substring(1),
       user
     })
   }

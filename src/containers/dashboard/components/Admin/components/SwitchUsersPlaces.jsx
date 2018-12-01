@@ -91,6 +91,24 @@ class SwitchUserPlace extends React.Component {
     })
   }
 
+  unsetUser1 = () => {
+    let users = this.state.users
+    users[0] = null
+
+    this.setState({
+      users
+    })
+  }
+
+  unsetUser2 = () => {
+    let users = this.state.users
+    users[1] = null
+
+    this.setState({
+      users
+    })
+  }
+
   switchPlaces = () => {
     this.props.switchPlaces(this.state.users[0].id, this.state.users[1].id)
     this.setState({
@@ -115,7 +133,9 @@ class SwitchUserPlace extends React.Component {
         title: 'Sélectionner',
         dataIndex: 'id',
         render: (id) => this.state.users[0] && this.state.users[0].id === id
-          ? <Icon type="check-circle" theme="filled" style={{ fontSize: '18px', color: '#1890ff' }} />
+          ? <a onClick={this.unsetUser1}>
+              <Icon type="check-circle" theme="filled" style={{ fontSize: '18px' }} />
+            </a>
           : <a onClick={() => this.setUser1(id)}>
               <div className="check-circle-void"></div>
             </a>
@@ -135,7 +155,9 @@ class SwitchUserPlace extends React.Component {
         title: 'Sélectionner',
         dataIndex: 'id',
         render: (id) => this.state.users[1] && this.state.users[1].id === id
-          ? <Icon type="check-circle" theme="filled" style={{ fontSize: '18px', color: '#1890ff' }} />
+          ? <a onClick={this.unsetUser2}>
+              <Icon type="check-circle" theme="filled" style={{ fontSize: '18px' }} />
+            </a>
           : <a onClick={() => this.setUser2(id)}>
               <div className="check-circle-void"></div>
             </a>
