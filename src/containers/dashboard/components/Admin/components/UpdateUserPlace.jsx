@@ -57,14 +57,35 @@ class UpdateUserPlace extends React.Component {
   }
 
   placeLetterValueChanged = e => {
+    let value = e.target.value.substring(0, 1).toUpperCase()
+    let asciiVal = value.charCodeAt(0)
+    if(value.length > 0 && (asciiVal < 65 || asciiVal > 90)) {
+      return
+    }
+
+    if(value.length > 0 && this.state.placeLetterValue !== value) {
+      let placeNumberInput = document.getElementById('placeNumber')
+      if(placeNumberInput) {
+        placeNumberInput.focus()
+      }
+    }
+
     this.setState({
-      placeLetterValue: e.target.value.substring(0, 1).toUpperCase()
+      placeLetterValue: value
     })
   }
 
   placeNumberValueChanged = v => {
+    let value = parseInt(v)
+    if(value.toString() === 'NaN') {
+      value = ''
+    }
+    else if(value > this.props.maxPlacesPerTable) {
+      value = this.state.placeNumberValue
+    }
+
     this.setState({
-      placeNumberValue: v
+      placeNumberValue: value
     })
   }
 
@@ -161,18 +182,21 @@ class UpdateUserPlace extends React.Component {
                     style={{ display: 'inline-block', width: '60px' }}
                   />
                   <InputNumber
+                    id="placeNumber"
                     min={1}
-                    max={500}
+                    max={this.props.maxPlacesPerTable}
                     value={this.state.placeNumberValue}
                     onChange={v => this.placeNumberValueChanged(v)}
                     style={{ display: 'inline-block', width: '80px' }}
                   />
-                  <Button
-                    type="primary"
-                    onClick={this.changePlace}
-                  >
-                    <Icon type="edit" />
-                  </Button>
+                  <Tooltip placement="right" title="Modifier la place">
+                    <Button
+                      type="primary"
+                      onClick={this.changePlace}
+                    >
+                      <Icon type="edit" />
+                    </Button>
+                  </Tooltip>
                 </InputGroup>
               </div>
             </React.Fragment>

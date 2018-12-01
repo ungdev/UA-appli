@@ -17,7 +17,7 @@ class UsersList extends React.Component {
       searchEmail: null,
       searchTeam: null,
       searchPlace: null,
-      selectedInfo: null
+      selectedInfo: ['team', 'spotlight', 'paid']
     }
 
     this.props.fetchUsers()
