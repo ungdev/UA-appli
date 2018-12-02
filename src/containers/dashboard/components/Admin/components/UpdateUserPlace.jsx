@@ -169,7 +169,16 @@ class UpdateUserPlace extends React.Component {
         <Modal
           title="Modifier la place d'un joueur"
           visible={this.state.modalVisible}
-          footer={<Button onClick={this.closeModal}>Fermer</Button>}
+          footer={[
+            <Button onClick={this.closeModal}>Annuler</Button>,
+              <Button
+                type="primary"
+                onClick={this.changePlace}
+              >
+                <Icon type="edit" />
+                Modifier la place
+              </Button>
+          ]}
           onCancel={this.closeModal}
         >
           {this.state.user &&
@@ -194,14 +203,6 @@ class UpdateUserPlace extends React.Component {
                       onChange={v => this.placeNumberValueChanged(v)}
                       style={{ display: 'inline-block', width: '80px' }}
                     />
-                  </Tooltip>
-                  <Tooltip placement="right" title="Modifier la place">
-                    <Button
-                      type="primary"
-                      onClick={this.changePlace}
-                    >
-                      <Icon type="edit" />
-                    </Button>
                   </Tooltip>
                 </InputGroup>
               </div>

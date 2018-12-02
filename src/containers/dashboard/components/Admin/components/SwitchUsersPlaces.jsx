@@ -132,13 +132,11 @@ class SwitchUserPlace extends React.Component {
       {
         title: 'Sélectionner',
         dataIndex: 'id',
-        render: (id) => this.state.users[0] && this.state.users[0].id === id
-          ? <a onClick={this.unsetUser1}>
-              <Icon type="check-circle" theme="filled" style={{ fontSize: '18px' }} />
-            </a>
-          : <a onClick={() => this.setUser1(id)}>
-              <div className="check-circle-void"></div>
-            </a>
+        render: (id) => (
+          <a onClick={() => this.setUser1(id)}>
+            <Icon type="right-circle" theme="filled" style={{ fontSize: '18px' }} />
+          </a>
+        )
       }
     ]
 
@@ -154,150 +152,170 @@ class SwitchUserPlace extends React.Component {
       {
         title: 'Sélectionner',
         dataIndex: 'id',
-        render: (id) => this.state.users[1] && this.state.users[1].id === id
-          ? <a onClick={this.unsetUser2}>
-              <Icon type="check-circle" theme="filled" style={{ fontSize: '18px' }} />
-            </a>
-          : <a onClick={() => this.setUser2(id)}>
-              <div className="check-circle-void"></div>
-            </a>
+        render: (id) => (
+          <a onClick={() => this.setUser2(id)}>
+            <Icon type="right-circle" theme="filled" style={{ fontSize: '18px' }} />
+          </a>
+        )
       }
     ]
 
     let rows1 = users
+    // Apply filters
     if(this.state.searchName1) {
       rows1 = rows1.filter(row => row.fullname.includes(this.state.searchName1))
     }
     if(this.state.searchPlace1) {
       rows1 = rows1.filter(row => row.place.includes(this.state.searchPlace1))
     }
+    // Prevent from selecting the same user
+    if(this.state.users[1]) {
+      rows1 = rows1.filter(row => row.id !== this.state.users[1].id)
+    }
 
     let rows2 = users
+    // Apply filters
     if(this.state.searchName2) {
       rows2 = rows2.filter(row => row.fullname.includes(this.state.searchName2))
     }
     if(this.state.searchPlace2) {
       rows2 = rows2.filter(row => row.place.includes(this.state.searchPlace2))
     }
+    // Prevent from selecting the same user
+    if(this.state.users[0]) {
+      rows2 = rows2.filter(row => row.id !== this.state.users[0].id)
+    }
 
     return (
       <React.Fragment>
-        <div className="switch-users-places-container">
-          <Card
-            title="Utilisateur 1"
-          >
-            <Select
-              showSearch
-              placeholder="Nom de l'utilisateur"
-              value={this.state.searchName1 !== null ? this.state.searchName1 : undefined}
-              onChange={this.setSearchName1}
-              style={{ width: '200px' }}
-            >
-              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
-            </Select>
-            <span style={{ margin: '0 15px' }}>ou</span>
-            <Select
-              showSearch
-              placeholder="Place de l'utilisateur"
-              value={this.state.searchPlace1 !== null ? this.state.searchPlace1 : undefined}
-              onChange={this.setSearchPlace1}
-              style={{ width: '200px' }}
-            >
-              {users.map((user, i) => user.place ? <Select.Option value={user.place} key={i}>{user.place}</Select.Option> : '')}
-            </Select>
-            <Button
-              type="primary"
-              title="Réinitialiser"
-              onClick={this.resetFilters1}
-              style={{ marginLeft: '15px', padding: '0 10px' }}
-            >
-              <Icon type="close" />
-            </Button>
-
-            <br /><br />
-
-            <Table
-              columns={columns1}
-              dataSource={rows1}
-              rowKey="id"
-              locale={{ emptyText: 'Aucun utilisateur' }}
-            />
-          </Card>
-          
-          <Card
-            title="Utilisateur 2"
-          >
-            <Select
-              showSearch
-              placeholder="Nom de l'utilisateur"
-              value={this.state.searchName2 !== null ? this.state.searchName2 : undefined}
-              onChange={this.setSearchName2}
-              style={{ width: '200px' }}
-            >
-              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
-            </Select>
-            <span style={{ margin: '0 15px' }}>ou</span>
-            <Select
-              showSearch
-              placeholder="Place de l'utilisateur"
-              value={this.state.searchPlace2 !== null ? this.state.searchPlace2 : undefined}
-              onChange={this.setSearchPlace2}
-              style={{ width: '200px' }}
-            >
-              {users.map((user, i) => user.place ? <Select.Option value={user.place} key={i}>{user.place}</Select.Option> : '')}
-            </Select>
-            <Button
-              type="primary"
-              title="Réinitialiser"
-              onClick={this.resetFilters2}
-              style={{ marginLeft: '15px', padding: '0 10px' }}
-            >
-              <Icon type="close" />
-            </Button>
-
-            <br /><br />
-
-            <Table
-              columns={columns2}
-              dataSource={rows2}
-              rowKey="id"
-              locale={{ emptyText: 'Aucun utilisateur' }}
-            />
-          </Card>
-        </div>
-
         {this.state.users && this.state.users[0] && this.state.users[1] &&
           <Button
             type="primary"
             onClick={this.openModal}
-            style={{ marginLeft: '10px' }}
+            style={{ marginLeft: '10px', position: 'relative', top: '-20px' }}
           >
             <Icon type="swap" />
             Échanger les places
           </Button>
         }
 
+        <div className="switch-users-places-container">
+          <Card
+            title="Utilisateur 1"
+          >
+            {this.state.users[0]
+              ? <React.Fragment>
+                  <p>Utilisateur : <strong>{this.state.users[0].fullname}</strong></p>
+                  <p>Place : <strong>{this.state.users[0].place || '(Aucune)'}</strong></p>
+                  <Button onClick={this.unsetUser1}>
+                    <Icon type="stop" />
+                    Annuler
+                  </Button>
+                </React.Fragment>
+              : <React.Fragment>
+                  <Select
+                    showSearch
+                    placeholder="Nom de l'utilisateur"
+                    value={this.state.searchName1 !== null ? this.state.searchName1 : undefined}
+                    onChange={this.setSearchName1}
+                    style={{ width: '200px', marginBottom: '10px' }}
+                  >
+                    {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+                  </Select>
+                  <span style={{ margin: '0 15px' }}>ou</span>
+                  <Select
+                    showSearch
+                    placeholder="Place de l'utilisateur"
+                    value={this.state.searchPlace1 !== null ? this.state.searchPlace1 : undefined}
+                    onChange={this.setSearchPlace1}
+                    style={{ width: '200px', marginBottom: '10px' }}
+                  >
+                    {users.map((user, i) => user.place ? <Select.Option value={user.place} key={i}>{user.place}</Select.Option> : '')}
+                  </Select>
+                  <Button
+                    type="primary"
+                    title="Réinitialiser"
+                    onClick={this.resetFilters1}
+                    style={{ marginLeft: '15px', padding: '0 10px' }}
+                  >
+                    <Icon type="close" />
+                  </Button>
+                  <br />
+
+                  <Table
+                    columns={columns1}
+                    dataSource={rows1}
+                    rowKey="id"
+                    locale={{ emptyText: 'Aucun utilisateur' }}
+                    style={{ marginTop: '10px' }}
+                  />
+                </React.Fragment>
+            }
+          </Card>
+          
+          <Card
+            title="Utilisateur 2"
+          >
+            {this.state.users[1]
+              ? <React.Fragment>
+                  <p>Utilisateur : <strong>{this.state.users[1].fullname}</strong></p>
+                  <p>Place : <strong>{this.state.users[1].place || '(Aucune)'}</strong></p>
+                  <Button onClick={this.unsetUser2}>
+                    <Icon type="stop" />
+                    Annuler
+                  </Button>
+                </React.Fragment>
+              : <React.Fragment>
+                  <Select
+                    showSearch
+                    placeholder="Nom de l'utilisateur"
+                    value={this.state.searchName2 !== null ? this.state.searchName2 : undefined}
+                    onChange={this.setSearchName2}
+                    style={{ width: '200px', marginBottom: '10px' }}
+                  >
+                    {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+                  </Select>
+                  <span style={{ margin: '0 15px' }}>ou</span>
+                  <Select
+                    showSearch
+                    placeholder="Place de l'utilisateur"
+                    value={this.state.searchPlace2 !== null ? this.state.searchPlace2 : undefined}
+                    onChange={this.setSearchPlace2}
+                    style={{ width: '200px', marginBottom: '10px' }}
+                  >
+                    {users.map((user, i) => user.place ? <Select.Option value={user.place} key={i}>{user.place}</Select.Option> : '')}
+                  </Select>
+                  <Button
+                    type="primary"
+                    title="Réinitialiser"
+                    onClick={this.resetFilters2}
+                    style={{ marginLeft: '15px', padding: '0 10px' }}
+                  >
+                    <Icon type="close" />
+                  </Button>
+                  <br />
+
+                  <Table
+                    columns={columns2}
+                    dataSource={rows2}
+                    rowKey="id"
+                    locale={{ emptyText: 'Aucun utilisateur' }}
+                    style={{ marginTop: '10px' }}
+                  />
+                </React.Fragment>
+            }
+          </Card>
+        </div>
+
         <Modal
           title="Échanger les places de 2 joueurs"
           visible={this.state.modalVisible}
           onOk={this.switchPlaces}
           onCancel={this.closeModal}
-          okText="Échanger"
+          okText={<React.Fragment><Icon type="swap" /> Échanger</React.Fragment>}
           cancelText="Annuler"
         >
-          {this.state.users && this.state.users[0] && this.state.users[1] &&
-            <React.Fragment>
-              <p>Vous allez échanger les places de deux joueurs.</p>
-              <p>
-                <strong>Utilisateur 1 : {this.state.users[0].fullname}</strong><br />
-                Place : {this.state.users[0].place}
-              </p>
-              <p>
-                <strong>Utilisateur 2 : {this.state.users[1].fullname}</strong><br />
-                Place : {this.state.users[1].place}
-              </p>
-            </React.Fragment>
-          }
+          <p><strong>Vous allez échanger les places de deux joueurs.</strong></p>
         </Modal>
       </React.Fragment>
     )
