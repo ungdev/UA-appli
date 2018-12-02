@@ -167,7 +167,7 @@ class UpdateUserPlace extends React.Component {
 
     return (
       <React.Fragment>
-        <div style={{ position: 'relative', top: '-20px' }}>
+        <div style={{ marginBottom: '20px' }}>
           <Select
             mode="tags"
             placeholder="Nom de l'utilisateur"
@@ -189,13 +189,13 @@ class UpdateUserPlace extends React.Component {
             {places.map((place, i) => place ? <Select.Option value={place} key={i}>{place}</Select.Option> : '')}
           </Select>
           <Button
-          type="primary"
-          title="Réinitialiser"
-          onClick={this.resetFilters}
-          style={{ marginLeft: '15px', padding: '0 10px' }}
-        >
-          <Icon type="close" />
-        </Button>
+            type="primary"
+            title="Réinitialiser"
+            onClick={this.resetFilters}
+            style={{ marginLeft: '15px', padding: '0 10px' }}
+          >
+            <Icon type="close" />
+          </Button>
         </div>
 
         <Table

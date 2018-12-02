@@ -38,11 +38,9 @@ class Places extends React.Component {
 
         <Tabs defaultActiveKey="1">
           <TabPane tab={<span><Icon type="profile" /> Modifier la place d'un joueur</span>} key="1">
-            <br />
             <UpdateUserPlace users={users} maxPlacesPerTable={500} />
           </TabPane>
           <TabPane tab={<span><Icon type="user" /> Échanger les places de 2 joueurs</span>} key="2">
-            <br />
             <SwitchUsersPlaces users={users} />
           </TabPane>
           <TabPane tab={<span><Icon type="team" /> Échanger les places de 2 équipes</span>} key="3">
