@@ -76,7 +76,7 @@ class UpdateUserPlace extends React.Component {
   }
 
   placeNumberValueChanged = v => {
-    let value = parseInt(v)
+    let value = parseInt(v, 10)
     if(value.toString() === 'NaN') {
       value = ''
     }
@@ -162,6 +162,7 @@ class UpdateUserPlace extends React.Component {
         <Table
           columns={columns}
           dataSource={rows}
+          rowKey="id"
           locale={{ emptyText: 'Aucun utilisateur' }}
         />
 

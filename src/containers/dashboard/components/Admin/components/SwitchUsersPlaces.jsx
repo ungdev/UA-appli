@@ -219,6 +219,7 @@ class SwitchUserPlace extends React.Component {
             <Table
               columns={columns1}
               dataSource={rows1}
+              rowKey="id"
               locale={{ emptyText: 'Aucun utilisateur' }}
             />
           </Card>
@@ -259,6 +260,7 @@ class SwitchUserPlace extends React.Component {
             <Table
               columns={columns2}
               dataSource={rows2}
+              rowKey="id"
               locale={{ emptyText: 'Aucun utilisateur' }}
             />
           </Card>
