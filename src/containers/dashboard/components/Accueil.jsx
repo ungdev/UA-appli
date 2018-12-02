@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import { Divider, Card } from 'antd'
+import moment from 'moment';
 import { fetchMatches } from '../../../modules/matches'
 
 const colorResult = (result) => {
@@ -41,8 +42,18 @@ class Accueil extends React.Component {
     const { matches } = this.props
     if (matches.length > 0) {
       return matches.map((m,i) => (
-        <Card title={`Match ${i+1}`} key={i} style={{ width: 300, margin: '0 1rem' }}>
+        <Card
+        title={`Match ${i+1}`}
+        key={i}
+        style={{ width: 300, margin: '0 1rem' }}
+        extra={m.scheduled_datetime ? moment(m.scheduled_datetime).format('DD/MM HH:mm') : ''}>
           {m.opponents.map(team => getTeam(team))}
+          {m.private_note && (
+            <React.Fragment>
+              <Divider />
+              Note: {m.private_note}
+            </React.Fragment>
+          )}
         </Card>
       ))
     }
