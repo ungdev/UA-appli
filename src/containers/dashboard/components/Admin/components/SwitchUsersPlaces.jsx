@@ -8,10 +8,10 @@ class SwitchUserPlace extends React.Component {
     super(props)
 
     this.state = {
-      searchName1: null,
-      searchPlace1: null,
-      searchName2: null,
-      searchPlace2: null,
+      searchName1: [],
+      searchPlace1: [],
+      searchName2: [],
+      searchPlace2: [],
       users: [],
       modalVisible: false
     }
@@ -32,42 +32,42 @@ class SwitchUserPlace extends React.Component {
   setSearchName1 = (v) => {
     this.setState({
       searchName1: v,
-      searchPlace1: null
+      searchPlace1: []
     })
   }
 
   setSearchPlace1 = (v) => {
     this.setState({
       searchPlace1: v,
-      searchName1: null
+      searchName1: []
     })
   }
   
   resetFilters1 = () => {
     this.setState({
-      searchName1: null,
-      searchPlace1: null
+      searchName1: [],
+      searchPlace1: []
     })
   }
 
   setSearchName2 = (v) => {
     this.setState({
       searchName2: v,
-      searchPlace2: null
+      searchPlace2: []
     })
   }
 
   setSearchPlace2 = (v) => {
     this.setState({
       searchPlace2: v,
-      searchName2: null
+      searchName2: []
     })
   }
 
   resetFilters2 = () => {
     this.setState({
-      searchName2: null,
-      searchPlace2: null
+      searchName2: [],
+      searchPlace2: []
     })
   }
 
@@ -112,6 +112,10 @@ class SwitchUserPlace extends React.Component {
   switchPlaces = () => {
     this.props.switchPlaces(this.state.users[0].id, this.state.users[1].id)
     this.setState({
+      searchName1: [],
+      searchPlace1: [],
+      searchName2: [],
+      searchPlace2: [],
       users: [],
       modalVisible: false
     })
@@ -119,6 +123,14 @@ class SwitchUserPlace extends React.Component {
 
   render() {
     const { users } = this.props
+
+    // Get different places
+    let places = []
+    users.forEach(user => {
+      if(!places.includes(user.place) && user.place !== '') {
+        places.push(user.place)
+      }
+    })
 
     const columns1 = [
       {
@@ -162,37 +174,83 @@ class SwitchUserPlace extends React.Component {
 
     let rows1 = users
     // Apply filters
-    if(this.state.searchName1) {
-      rows1 = rows1.filter(row => row.fullname.includes(this.state.searchName1))
-    }
-    if(this.state.searchPlace1) {
-      rows1 = rows1.filter(row => row.place.includes(this.state.searchPlace1))
-    }
-    // Prevent from selecting the same user
+    rows1 = rows1.filter(user => {
+      let included = false
+
+      if(this.state.searchName1.length === 0 && this.state.searchPlace1.length === 0) {
+        included = true
+      }
+
+      if(this.state.searchName1.length > 0) {
+        this.state.searchName1.forEach(searchValue => {
+          if(user.fullname.toLowerCase().includes(searchValue.toLowerCase())) {
+            included = true
+          }
+        })
+      }
+
+      if(this.state.searchPlace1.length > 0) {
+        this.state.searchPlace1.forEach(searchValue => {
+          if(searchValue === ' ' && user.place === '') {
+            included = true
+          }
+          else if(user.place.toLowerCase().includes(searchValue.toLowerCase())) {
+            included = true
+          }
+        })
+      }
+
+      return included
+    })
+
+    // Prevent from selecting the same user twice
     if(this.state.users[1]) {
       rows1 = rows1.filter(row => row.id !== this.state.users[1].id)
     }
 
     let rows2 = users
     // Apply filters
-    if(this.state.searchName2) {
-      rows2 = rows2.filter(row => row.fullname.includes(this.state.searchName2))
-    }
-    if(this.state.searchPlace2) {
-      rows2 = rows2.filter(row => row.place.includes(this.state.searchPlace2))
-    }
-    // Prevent from selecting the same user
+    rows2 = rows2.filter(user => {
+      let included = false
+
+      if(this.state.searchName2.length === 0 && this.state.searchPlace2.length === 0) {
+        included = true
+      }
+
+      if(this.state.searchName2.length > 0) {
+        this.state.searchName2.forEach(searchValue => {
+          if(user.fullname.toLowerCase().includes(searchValue.toLowerCase())) {
+            included = true
+          }
+        })
+      }
+
+      if(this.state.searchPlace2.length > 0) {
+        this.state.searchPlace2.forEach(searchValue => {
+          if(searchValue === ' ' && user.place === '') {
+            included = true
+          }
+          else if(user.place.toLowerCase().includes(searchValue.toLowerCase())) {
+            included = true
+          }
+        })
+      }
+
+      return included
+    })
+
+    // Prevent from selecting the same user twice
     if(this.state.users[0]) {
       rows2 = rows2.filter(row => row.id !== this.state.users[0].id)
     }
 
     return (
-      <React.Fragment>
+      <div style={{ position: 'relative', top: '-20px' }}>
         {this.state.users && this.state.users[0] && this.state.users[1] &&
           <Button
             type="primary"
             onClick={this.openModal}
-            style={{ marginLeft: '10px', position: 'relative', top: '-20px' }}
+            style={{ margin: '0 0 20px 10px' }}
           >
             <Icon type="swap" />
             Échanger les places
@@ -214,9 +272,9 @@ class SwitchUserPlace extends React.Component {
                 </React.Fragment>
               : <React.Fragment>
                   <Select
-                    showSearch
+                    mode="tags"
                     placeholder="Nom de l'utilisateur"
-                    value={this.state.searchName1 !== null ? this.state.searchName1 : undefined}
+                    value={this.state.searchName1}
                     onChange={this.setSearchName1}
                     style={{ width: '200px', marginBottom: '10px' }}
                   >
@@ -224,13 +282,14 @@ class SwitchUserPlace extends React.Component {
                   </Select>
                   <span style={{ margin: '0 15px' }}>ou</span>
                   <Select
-                    showSearch
+                    mode="tags"
                     placeholder="Place de l'utilisateur"
-                    value={this.state.searchPlace1 !== null ? this.state.searchPlace1 : undefined}
+                    value={this.state.searchPlace1}
                     onChange={this.setSearchPlace1}
                     style={{ width: '200px', marginBottom: '10px' }}
                   >
-                    {users.map((user, i) => user.place ? <Select.Option value={user.place} key={i}>{user.place}</Select.Option> : '')}
+                    <Select.Option value=" ">(Aucune)</Select.Option>
+                    {places.map((place, i) => <Select.Option value={place} key={i}>{place}</Select.Option>)}
                   </Select>
                   <Button
                     type="primary"
@@ -267,9 +326,9 @@ class SwitchUserPlace extends React.Component {
                 </React.Fragment>
               : <React.Fragment>
                   <Select
-                    showSearch
+                    mode="tags"
                     placeholder="Nom de l'utilisateur"
-                    value={this.state.searchName2 !== null ? this.state.searchName2 : undefined}
+                    value={this.state.searchName2}
                     onChange={this.setSearchName2}
                     style={{ width: '200px', marginBottom: '10px' }}
                   >
@@ -277,13 +336,14 @@ class SwitchUserPlace extends React.Component {
                   </Select>
                   <span style={{ margin: '0 15px' }}>ou</span>
                   <Select
-                    showSearch
+                    mode="tags"
                     placeholder="Place de l'utilisateur"
-                    value={this.state.searchPlace2 !== null ? this.state.searchPlace2 : undefined}
+                    value={this.state.searchPlace2}
                     onChange={this.setSearchPlace2}
                     style={{ width: '200px', marginBottom: '10px' }}
                   >
-                    {users.map((user, i) => user.place ? <Select.Option value={user.place} key={i}>{user.place}</Select.Option> : '')}
+                    <Select.Option value=" ">(Aucune)</Select.Option>
+                    {places.map((place, i) => <Select.Option value={place} key={i}>{place}</Select.Option>)}
                   </Select>
                   <Button
                     type="primary"
@@ -317,7 +377,7 @@ class SwitchUserPlace extends React.Component {
         >
           <p><strong>Vous allez échanger les places de deux joueurs.</strong></p>
         </Modal>
-      </React.Fragment>
+      </div>
     )
   }
 }

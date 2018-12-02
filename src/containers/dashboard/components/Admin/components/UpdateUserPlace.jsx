@@ -10,32 +10,33 @@ class UpdateUserPlace extends React.Component {
     super(props)
 
     this.state = {
-      searchName: null,
-      searchPlace: null,
+      searchName: [],
+      searchPlace: [],
       placeLetterValue: '',
       placeNumberValue: 0,
-      user: null
+      user: null,
+      modalVisible: false
     }
   }
 
   setSearchName = (v) => {
     this.setState({
       searchName: v,
-      searchPlace: null
+      searchPlace: []
     })
   }
 
   setSearchPlace = (v) => {
     this.setState({
       searchPlace: v,
-      searchName: null
+      searchName: []
     })
   }
 
   resetFilters = () => {
     this.setState({
-      searchName: null,
-      searchPlace: null
+      searchName: [],
+      searchPlace: []
     })
   }
 
@@ -91,11 +92,25 @@ class UpdateUserPlace extends React.Component {
 
   changePlace = () => {
     this.props.setPlace(this.state.user.id, this.state.placeLetterValue, this.state.placeNumberValue)
-    this.closeModal()
+    this.setState({
+      searchName: [],
+      searchPlace: [],
+      modalVisible: false
+    })
   }
 
   render() {
     const { users } = this.props
+
+    // Get different places
+    let places = []
+    users.forEach(user => {
+      if(!places.includes(user.place)) {
+        places.push(user.place)
+      }
+    })
+    // Sort
+    places.sort()
 
     const columns = [
       {
@@ -120,35 +135,60 @@ class UpdateUserPlace extends React.Component {
     ]
 
     let rows = users
-    if(this.state.searchName) {
-      rows = rows.filter(row => row.fullname.includes(this.state.searchName))
-    }
-    if(this.state.searchPlace) {
-      rows = rows.filter(row => row.place.includes(this.state.searchPlace))
-    }
+    // Apply filters
+    rows = rows.filter(user => {
+      let included = false
+
+      if(this.state.searchName.length === 0 && this.state.searchPlace.length === 0) {
+        included = true
+      }
+
+      if(this.state.searchName.length > 0) {
+        this.state.searchName.forEach(searchValue => {
+          if(user.fullname.toLowerCase().includes(searchValue.toLowerCase())) {
+            included = true
+          }
+        })
+      }
+
+      if(this.state.searchPlace.length > 0) {
+        this.state.searchPlace.forEach(searchValue => {
+          if(searchValue === ' ' && user.place === '') {
+            included = true
+          }
+          else if(user.place.toLowerCase().includes(searchValue.toLowerCase())) {
+            included = true
+          }
+        })
+      }
+
+      return included
+    })
 
     return (
       <React.Fragment>
-        <Select
-          showSearch
-          placeholder="Nom de l'utilisateur"
-          value={this.state.searchName !== null ? this.state.searchName : undefined}
-          onChange={this.setSearchName}
-          style={{ width: '200px' }}
-        >
-          {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
-        </Select>
-        <span style={{ margin: '0 15px' }}>ou</span>
-        <Select
-          showSearch
-          placeholder="Place de l'utilisateur"
-          value={this.state.searchPlace !== null ? this.state.searchPlace : undefined}
-          onChange={this.setSearchPlace}
-          style={{ width: '200px' }}
-        >
-          {users.map((user, i) => user.place ? <Select.Option value={user.place} key={i}>{user.place}</Select.Option> : '')}
-        </Select>
-        <Button
+        <div style={{ position: 'relative', top: '-20px' }}>
+          <Select
+            mode="tags"
+            placeholder="Nom de l'utilisateur"
+            value={this.state.searchName}
+            onChange={this.setSearchName}
+            style={{ width: '200px' }}
+          >
+            {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+          </Select>
+          <span style={{ margin: '0 15px' }}>ou</span>
+          <Select
+            mode="tags"
+            placeholder="Place de l'utilisateur"
+            value={this.state.searchPlace}
+            onChange={this.setSearchPlace}
+            style={{ width: '200px' }}
+          >
+            <Select.Option value=" ">(Aucune)</Select.Option>
+            {places.map((place, i) => place ? <Select.Option value={place} key={i}>{place}</Select.Option> : '')}
+          </Select>
+          <Button
           type="primary"
           title="Réinitialiser"
           onClick={this.resetFilters}
@@ -156,8 +196,7 @@ class UpdateUserPlace extends React.Component {
         >
           <Icon type="close" />
         </Button>
-
-        <br /><br />
+        </div>
 
         <Table
           columns={columns}

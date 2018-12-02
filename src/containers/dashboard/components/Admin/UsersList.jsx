@@ -93,13 +93,18 @@ class UsersList extends React.Component {
       }
     })
     
-    // Get different teams and places
+    // Get different teams, emails, spotlights and places
     let teams = []
+    let emails = []
     let spotlights = []
     let places = []
     users.forEach(user => {
       if(!teams.includes(user.team)) {
         teams.push(user.team)
+      }
+      
+      if(!emails.includes(user.email)) {
+        emails.push(user.email)
       }
       
       if(!spotlights.includes(user.spotlight)) {
@@ -110,17 +115,27 @@ class UsersList extends React.Component {
         places.push(user.place)
       }
     })
+    // Sort teams and places
+    teams.sort((team1, team2) => team1.toLowerCase() > team2.toLowerCase())
+    emails.sort((email1, email2) => email1.toLowerCase() > email2.toLowerCase())
+    spotlights.sort()
+    places.sort()
 
     // Apply filters
     let rows = users
-    Object.keys(search).forEach((key, value) => {
+    Object.keys(search).forEach(key => {
       if(search[key].length > 0) {
         rows = rows.filter(user => {
           let included = false
 
           search[key].forEach(searchValue => {
-            if(typeof user[key] === 'string' && user[key].toLowerCase().includes(searchValue.toLowerCase())) {
-              included = true
+            if(typeof user[key] === 'string') {
+              if(searchValue === ' ' && user[key] === '') {
+                included = true
+              }
+              else if(user[key].toLowerCase().includes(searchValue.toLowerCase())) {
+                included = true
+              }
             }
             else if(typeof user[key] === 'boolean' && (user[key] ? 'true' : 'false') === searchValue) {
               included = true
@@ -227,7 +242,7 @@ class UsersList extends React.Component {
                 onChange={v => this.setSearch('email', v)}
                 style={{ width: '250px' }}
               >
-                {users.map((user, i) => <Select.Option value={user.email} key={i}>{user.email}</Select.Option>)}
+                {emails.map((email, i) => <Select.Option value={email} key={i}>{email}</Select.Option>)}
               </Select>
               <Tooltip title="Réinitialiser" placement="right">
                 <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('email')}><Icon type="close"></Icon></Button>
@@ -291,6 +306,7 @@ class UsersList extends React.Component {
                 onChange={v => this.setSearch('place', v)}
                 style={{ width: '150px' }}
               >
+                <Select.Option value=" ">(Aucune)</Select.Option>
                 {places.map((place, i) => <Select.Option value={place} key={i}>{place}</Select.Option>)}
               </Select>
               <Tooltip title="Réinitialiser" placement="right">
