@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Select, Icon, Button, Tabs } from 'antd'
+import { Table, Select, Icon, Button, Tabs, Input, Tooltip } from 'antd'
 import { connect } from 'react-redux'
 import { Object } from 'core-js';
 
@@ -7,30 +7,28 @@ import AdminBar from './AdminBar'
 import { fetchUsers } from '../../../../modules/admin'
 
 const TabPane = Tabs.TabPane
+const InputGroup = Input.Group
 
 class Material extends React.Component {
   constructor(props) {
     super(props)
     
     this.state = {
-      searchName: null
+      searchName: []
     }
-
-    this.setSearchName = this.setSearchName.bind(this)
-    this.clearSearchName = this.clearSearchName.bind(this)
 
     this.props.fetchUsers()
   }
 
-  setSearchName(v) {
+  setSearchName = v => {
     this.setState({
       searchName: v
     })
   }
 
-  clearSearchName() {
+  clearSearchName = () => {
     this.setState({
-      searchName: null
+      searchName: []
     })
   }
 
@@ -199,8 +197,18 @@ class Material extends React.Component {
       })
     })
 
-    if(this.state.searchName !== null) {
-      byUserRows = byUserRows.filter(row => row.fullname.includes(this.state.searchName))
+    if(this.state.searchName.length > 0) {
+      byUserRows = byUserRows.filter(row => {
+        let included = false
+        
+        this.state.searchName.forEach(name => {
+          if(row.fullname.toLowerCase().includes(name.toLowerCase())) {
+            included = true
+          }
+        })
+        
+        return included
+      })
     }
 
     // By material columns
@@ -221,28 +229,11 @@ class Material extends React.Component {
     const byUserColumns = [
       {
         title: 'Utilisateur',
-        dataIndex: 'fullname',
-        key: 'fullname',
-        filterDropdown: (
-          <div className="custom-filter-dropdown">
-            <Select
-              showSearch
-              placeholder="Nom d'utilisateur"
-              value={this.state.searchName !== null ? this.state.searchName : undefined}
-              onChange={this.setSearchName}
-              style={{ width: '200px' }}
-            >
-              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
-            </Select>
-            <Button type="primary" title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
-          </div>
-        ),
-        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
+        dataIndex: 'fullname'
       },
       {
         title: 'Matériel',
-        dataIndex: 'material',
-        key: 'material'
+        dataIndex: 'material'
       }
     ]
 
@@ -260,6 +251,21 @@ class Material extends React.Component {
           />
         </TabPane>
         <TabPane tab={<span><Icon type="user" /> Utilisateurs</span>} key="2">
+          <InputGroup compact style={{ margin: '10px 0 20px 0' }}>
+            <Select
+              mode="tags"
+              placeholder="Nom d'utilisateur"
+              value={this.state.searchName}
+              onChange={this.setSearchName}
+              style={{ width: '200px' }}
+            >
+              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+            </Select>
+            <Tooltip title="Réinitialiser" placement="right">
+              <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
+            </Tooltip>
+          </InputGroup>
+
           <Table
             columns={byUserColumns}
             dataSource={byUserRows}

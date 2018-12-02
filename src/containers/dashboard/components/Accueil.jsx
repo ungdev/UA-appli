@@ -75,15 +75,15 @@ class Accueil extends React.Component {
       return <Spin />
     }
 
-    // Get user fullname, permissions and place
+    // Get user fullname, role and place
     user.fullname = `${user.name} (${user.firstname} ${user.lastname})`
-    user.perm = null
+    user.role = null
     if(user.permission) {
       if(user.permission.admin) {
-        user.perm = 'Admin'
+        user.role = 'Admin'
       }
       else if(user.permission.respo) {
-        user.perm = 'Respo'
+        user.role = 'Respo'
       }
     }
     user.place = null
@@ -100,11 +100,11 @@ class Accueil extends React.Component {
           style={{ marginBottom: '20px' }}
         >
           <div>Nom d'utilisateur : <strong>{user.fullname}</strong></div>
-          {user.perm ? <div>Permissions : <strong>{user.perm}</strong></div> : ''}
-          <div>A payé : {user.paid ? 'Oui' : <strong>Non</strong>}</div>
-          <div>Place : {user.place ? <strong>{user.place}</strong> : 'Aucune'}{user.plusone ? <strong> (Visiteur)</strong> : ''}</div>
-          {user.team && user.team.spotlight ? <div>Tournoi : {user.team.spotlight.name}</div> : ''}
-          {user.team && !user.team.soloTeam ? <div>Équipe : {user.team.name}</div> : ''}
+          {user.role ? <div>Rôle : <strong>{user.role}</strong></div> : ''}
+          <div>A payé : <strong>{user.paid ? 'Oui' : 'Non'}</strong></div>
+          <div>Place : <strong>{user.place ? user.place : 'Aucune'}{user.plusone ? ' (Visiteur)' : ''}</strong></div>
+          {user.team && user.team.spotlight ? <div>Tournoi : <strong>{user.team.spotlight.name}</strong></div> : ''}
+          {user.team && !user.team.soloTeam ? <div>Équipe : <strong>{user.team.name}</strong></div> : ''}
         </Card>
 
         <Card

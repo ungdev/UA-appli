@@ -98,7 +98,7 @@ class Validate extends React.Component {
 
     return (<React.Fragment>
 
-      <h1>Valider une Entrée :</h1>
+      <h1>Valider une entrée :</h1>
 
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
@@ -117,7 +117,7 @@ class Validate extends React.Component {
             placeholder="Nom, prénom ou pseudo"
             value={this.state.searchInput !== null ? this.state.searchInput : undefined}
             onChange={this.setSearchInput}
-            style={{ width: '400px' }}
+            style={{ width: '300px' }}
             name="fullname"
             type="select"
           >
@@ -126,7 +126,7 @@ class Validate extends React.Component {
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit" className="login-form-button">
-            valider (ou appuyer sur entrer)
+            Valider (ou appuyer sur entrée)
           </Button>
         </FormItem>
       </Form>
@@ -134,7 +134,7 @@ class Validate extends React.Component {
         <Card title={<h1>{infos.name} ({infos.firstname} {infos.lastname}) : {infos.plusone ? 'Visiteur' : 'Joueur'}</h1>}>
           {!infos.paid && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}>La personne n'a pas payé sa place !</h1>}
           {infos.scanned && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}><Icon type="warning" /> La place a déjà été scannée !</h1>}
-          {infos.tableLetter && <h1>Emplacement : Table {infos.tableLetter} place n°{infos.placeNumber}</h1>}
+          {infos.tableLetter && <h1>Emplacement : table {infos.tableLetter}, place {infos.placeNumber}</h1>}
           {
             infos.orders && (
               infos.orders.ethernet > 0 ||
@@ -156,22 +156,22 @@ class Validate extends React.Component {
           {
             infos.orders && (<React.Fragment>
                 <ul style={{ fontSize: '30px', color: '#1890ff' }}>
-                {infos.orders.ethernet > 0 && <li>Câble ethernet 5m x{infos.orders.ethernet}</li>}
-                {infos.orders.ethernet7 > 0 && <li>Câble ethernet 7m x{infos.orders.ethernet7}</li>}
-                {infos.orders.kaliento > 0 && <li>Kaliento x{infos.orders.kaliento}</li>}
-                {infos.orders.mouse > 0 && <li>Souris Gaming x{infos.orders.mouse}</li>}
-                {infos.orders.keyboard > 0 && <li>Clavier Gaming x{infos.orders.keyboard}</li>}
-                {infos.orders.headset > 0 && <li>Casque Gaming x{infos.orders.headset}</li>}
-                {infos.orders.screen24 > 0 && <li>Écran 24" x{infos.orders.screen24}</li>}
-                {infos.orders.screen27 > 0 && <li>Écran 27" x{infos.orders.screen27}</li>}
-                {infos.orders.chair > 0 && <li>Chaise Gaming x{infos.orders.chair}</li>}
-                {infos.orders.gamingPC > 0 && <li>PC Gaming x{infos.orders.gamingPC}</li>}
-                {infos.orders.streamingPC > 0 && <li>PC Streaming x{infos.orders.streamingPC}</li>}
-                {infos.orders.laptop > 0 && <li>PC portable x{infos.orders.laptop}</li>}
-                {infos.orders.tombola > 0 && <li>Tombola x{infos.orders.tombola}</li>}
-                {infos.orders.shirts.map((shirt, index) => {
-                  return <li key={index}>T-shirt {shirt}</li>
-                })}
+                  {infos.orders.ethernet > 0 && <li>Câble ethernet 5m x{infos.orders.ethernet}</li>}
+                  {infos.orders.ethernet7 > 0 && <li>Câble ethernet 7m x{infos.orders.ethernet7}</li>}
+                  {infos.orders.kaliento > 0 && <li>Kaliento x{infos.orders.kaliento}</li>}
+                  {infos.orders.mouse > 0 && <li>Souris Gaming x{infos.orders.mouse}</li>}
+                  {infos.orders.keyboard > 0 && <li>Clavier Gaming x{infos.orders.keyboard}</li>}
+                  {infos.orders.headset > 0 && <li>Casque Gaming x{infos.orders.headset}</li>}
+                  {infos.orders.screen24 > 0 && <li>Écran 24" x{infos.orders.screen24}</li>}
+                  {infos.orders.screen27 > 0 && <li>Écran 27" x{infos.orders.screen27}</li>}
+                  {infos.orders.chair > 0 && <li>Chaise Gaming x{infos.orders.chair}</li>}
+                  {infos.orders.gamingPC > 0 && <li>PC Gaming x{infos.orders.gamingPC}</li>}
+                  {infos.orders.streamingPC > 0 && <li>PC Streaming x{infos.orders.streamingPC}</li>}
+                  {infos.orders.laptop > 0 && <li>PC portable x{infos.orders.laptop}</li>}
+                  {infos.orders.tombola > 0 && <li>Tombola x{infos.orders.tombola}</li>}
+                  {infos.orders.shirts.map((shirt, index) => {
+                    return <li key={index}>T-shirt {shirt}</li>
+                  })}
                 </ul>
               </React.Fragment>
             )

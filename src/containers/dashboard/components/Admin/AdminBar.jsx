@@ -86,13 +86,14 @@ class AdminBar extends React.Component {
               <em>Nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong>
             </li>
             <li>
-              <em>Nombre de joueurs par tournois : </em><span>LoL pro <strong>{this.props.counts.totalLolProPlayers}/80</strong>,
+              <em>Nombre de joueurs par tournoi : </em>
+              LoL pro <strong>{this.props.counts.totalLolProPlayers}/80</strong>,
               LoL amateur <strong>{this.props.counts.totalLolAmateurPlayers}/80</strong>,
               Fortnite <strong>{this.props.counts.totalFortnitePlayers}/96</strong>,
               CS:GO <strong>{this.props.counts.totalCSGOPlayers}/40</strong>,
               HS <strong>{this.props.counts.totalHSPlayers}/32</strong>,
               SSBU <strong>{this.props.counts.totalSSBUPlayers}/64</strong>,
-              osu! <strong>{this.props.counts.totalOSUPlayers}/16</strong></span>
+              osu! <strong>{this.props.counts.totalOSUPlayers}/16</strong>
               
             </li>
           </ul>)
