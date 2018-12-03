@@ -304,7 +304,7 @@ class LeftBar extends React.Component {
           </Link>
         </Menu.Item>
         {user && user.permission && user.permission.admin ? subMenuOrga : null}
-        {user && user.permission && !_.isUndefined(user.permission.role)
+        {user && user.permission && user.permission.respo !== null
           ? subMenuOrga
           : null}
         {user && !user.permission ? (
