@@ -2,8 +2,8 @@ import React from 'react'
 import { Icon, Tooltip, Modal, Button } from 'antd'
 import { connect } from 'react-redux'
 import { setAdmin, removeAdmin, validatePayment } from '../../../../../modules/admin'
-import { setRespoPermission } from '../../../../../modules/respoPermission'
-import RespoPermission from './RespoPermission'
+import { setRespo } from '../../../../../modules/respo'
+import Respo from './Respo'
 
 import '../admin.css'
 
@@ -15,8 +15,8 @@ class UserListActions extends React.Component {
       paymentModalVisible: false,
       setAdminModalVisible: false,
       removeAdminModalVisible: false,
-      respoPermissionModalVisible: false,
-      checkedRespoPermission: []
+      respoModalVisible: false,
+      checkedRespo: []
     }
   }
 
@@ -95,31 +95,31 @@ class UserListActions extends React.Component {
     })
   }
 
-  openRespoPermissionModal = () => {
+  openRespoModal = () => {
     this.setState({
-      respoPermissionModalVisible: true,
+      respoModalVisible: true,
       mainModalVisible: false
     })
   }
 
-  closeRespoPermissionModal = () => {
+  closeRespoModal = () => {
     this.setState({
-      respoPermissionModalVisible: false,
+      respoModalVisible: false,
       mainModalVisible: true
     })
   }
 
-  setRespoPermission = () => {
-    this.props.setRespoPermission(this.props.userId, this.state.checkedRespoPermission)
+  setRespo = () => {
+    this.props.setRespo(this.props.userId, this.state.checkedRespo)
     
     this.setState({
-      respoPermissionModalVisible: false
+      respoModalVisible: false
     })
   }
 
-  setCheckedRespoPermission = (checked) => {
+  setCheckedRespo = (checked) => {
     this.setState({
-      checkedRespoPermission: checked
+      checkedRespo: checked
     })
   }
 
@@ -132,13 +132,13 @@ class UserListActions extends React.Component {
     }
 
     let userIsAdmin = user.permission && user.permission.admin
-    let userRespoPermission = []
+    let userRespo = []
 
     if (user.permission && user.permission.respo) {
-      const respoPermission = user.permission.respo.split(',')
+      const respo = user.permission.respo.split(',')
       
-      respoPermission.forEach(respo => {
-        userRespoPermission.push(respo)
+      respo.forEach(respo => {
+        userRespo.push(respo)
       })
     }
 
@@ -194,25 +194,30 @@ class UserListActions extends React.Component {
           </div>
 
           <h2 className="admin-action-title">
-            <Icon type="safety" /> Permissions
+            <Icon type="safety" /> Responsable
           </h2>
           <div className="admin-action-content">
-            {userIsAdmin &&
-              <p>
-                L'utilisateur étant administrateur, toutes les permissions lui sont accordées.
-              </p>
+            {userIsAdmin
+              ? <p>
+                  L'utilisateur étant administrateur, toutes les permissions lui sont accordées.
+                </p>
+              : (
+                <React.Fragment>
+                  <Respo defaultCheckedRespo={userRespo} checkedRespo={(checked) => this.setCheckedRespo(checked)} />
+                  <br />
+                  <Tooltip placement="right" title="Modifier les permissions">
+                    <Button
+                      type="primary"
+                      onClick={this.openRespoModal}
+                      className="admin-action-button"
+                      style={{ marginTop: '10px' }}
+                    >
+                      <Icon type="save" />
+                    </Button>
+                  </Tooltip>
+                </React.Fragment>
+              )
             }
-            <RespoPermission permission={userRespoPermission} checkedPermission={(checked) => this.setCheckedRespoPermission(checked)} />
-            <Tooltip placement="right" title="Modifier les permissions">
-              <Button
-                type="primary"
-                onClick={this.openRespoPermissionModal}
-                className="admin-action-button"
-                style={{ margin: '10px 0 0 10px' }}
-              >
-                <Icon type="save" />
-              </Button>
-            </Tooltip>
           </div>
 
           {!user.paid ? (
@@ -246,8 +251,7 @@ class UserListActions extends React.Component {
           <h3>Valider un paiement</h3>
           <p>
             <strong>
-              Utilisateur :{' '}
-              {`${user.name} (${user.firstname} ${user.lastname})`}
+              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
             </strong>
           </p>
           <br />
@@ -290,9 +294,9 @@ class UserListActions extends React.Component {
 
         <Modal
           title="Êtes vous sûr ?"
-          visible={this.state.respoPermissionModalVisible}
-          onOk={this.setRespoPermission}
-          onCancel={this.closeRespoPermissionModal}
+          visible={this.state.respoModalVisible}
+          onOk={this.setRespo}
+          onCancel={this.closeRespoModal}
           cancelText="Annuler"
           okText="Ok"
         >
@@ -312,7 +316,7 @@ const mapDispatchToProps = dispatch => ({
   setAdmin: id => dispatch(setAdmin(id)),
   removeAdmin: id => dispatch(removeAdmin(id)),
   validatePayment: id => dispatch(validatePayment(id)),
-  setRespoPermission: (id, respo) => dispatch(setRespoPermission(id, respo))
+  setRespo: (id, respo) => dispatch(setRespo(id, respo))
 })
 
 export default connect(

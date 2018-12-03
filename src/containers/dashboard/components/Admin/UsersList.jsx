@@ -1,45 +1,61 @@
 import React from 'react'
-import { Icon, Table, Select, Button, Spin } from 'antd'
+import { Icon, Table, Select, Button, Spin, Checkbox, Input, Tooltip, Card } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
 import UserListActions from './components/UserListActions'
 import { fetchUsers } from '../../../../modules/admin'
 
+const InputGroup = Input.Group
 
 class UsersList extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      searchName: null,
-      searchTeam: null
+      search: {
+        fullname: [],
+        email: [],
+        role: [],
+        team: [],
+        spotlight: [],
+        place: [],
+        paid: []
+      },
+      displayInfo: ['team', 'spotlight', 'paid']
     }
 
     this.props.fetchUsers()
   }
 
-  setSearchName = (v) => {
+  setSearch = (searchField, searchValue) => {
+    let search = this.state.search
+    search[searchField] = searchValue
+
     this.setState({
-      searchName: v
+      search
     })
   }
 
-  clearSearchName = () => {
+  clearSearch = (searchField) => {
+    let search = this.state.search
+    search[searchField] = []
+
     this.setState({
-      searchName: null
+      search
     })
   }
 
-  setSearchTeam = (v) => {
+  displayInfoChanged = (displayInfo) => {
     this.setState({
-      searchTeam: v
+      displayInfo
     })
-  }
 
-  clearSearchTeam = () => {
-    this.setState({
-      searchTeam: null
+    // Unset hidden filters
+    Object.keys(this.state.search).forEach(key => {
+      if(!displayInfo.includes(key)) {
+        this.clearSearch(key)
+      }
     })
   }
 
@@ -50,24 +66,24 @@ class UsersList extends React.Component {
   
   render() {
     let { users } = this.props
+    const { search } = this.state
 
     if (!users) {
       return <Spin />
     }
 
+    // Get users fullname, role and spotlight
     users = users.map(user => {
       let role = ''
       if(user.permission && user.permission.admin) {
-        role = '/Admin'
+        role = 'Admin'
       }
       else if(user.permission && user.permission.respo) {
-        role = `/Respo`
+        role = `Respo`
       }
-      else if(role === '') {
-        role = '/Joueur'
+      else {
+        role = 'Joueur'
       }
-
-      role = role.substr(1)
 
       return {
         ...user,
@@ -76,136 +92,255 @@ class UsersList extends React.Component {
         spotlight: this.getTournamentNameById(user.spotlightId),
       }
     })
-
+    
+    // Get different teams, emails, spotlights and places
     let teams = []
+    let emails = []
+    let spotlights = []
+    let places = []
     users.forEach(user => {
       if(!teams.includes(user.team)) {
         teams.push(user.team)
       }
+      
+      if(!emails.includes(user.email)) {
+        emails.push(user.email)
+      }
+      
+      if(!spotlights.includes(user.spotlight)) {
+        spotlights.push(user.spotlight)
+      }
+
+      if(!places.includes(user.place) && user.place !== '') {
+        places.push(user.place)
+      }
+    })
+    // Sort teams and places
+    teams.sort((team1, team2) => team1.toLowerCase() > team2.toLowerCase())
+    emails.sort((email1, email2) => email1.toLowerCase() > email2.toLowerCase())
+    spotlights.sort()
+    places.sort()
+
+    // Apply filters
+    let rows = users
+    Object.keys(search).forEach(key => {
+      if(search[key].length > 0) {
+        rows = rows.filter(user => {
+          let included = false
+
+          search[key].forEach(searchValue => {
+            if(typeof user[key] === 'string') {
+              if(searchValue === ' ' && user[key] === '') {
+                included = true
+              }
+              else if(user[key].toLowerCase().includes(searchValue.toLowerCase())) {
+                included = true
+              }
+            }
+            else if(typeof user[key] === 'boolean' && (user[key] ? 'true' : 'false') === searchValue) {
+              included = true
+            }
+            else if(user[key] === searchValue) {
+              included = true
+            }
+          })
+  
+          return included
+        })
+      }
     })
 
-    let rows = users
-    if(this.state.searchName !== null) {
-      rows = users.filter(user => user.fullname.includes(this.state.searchName))
-    }
-    if(this.state.searchTeam !== null) {
-      rows = users.filter(user => user.team.includes(this.state.searchTeam))
-    }
-
-    const columns = [
+    // Apply column filters
+    let columns = [
       {
         title: 'Utilisateur',
-        dataIndex: 'fullname',
-        key: 'fullname',
-        filterDropdown: (
-          <div className="custom-filter-dropdown">
-            <Select
-              showSearch
-              placeholder="Nom d'utilisateur"
-              value={this.state.searchName !== null ? this.state.searchName : undefined}
-              onChange={this.setSearchName}
-              style={{ width: '200px' }}
-            >
-              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
-            </Select>
-            <Button type="primary" title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchName}><Icon type="close"></Icon></Button>
-          </div>
-        ),
-        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchName !== null ? '#108ee9' : '#aaa' }} />
+        dataIndex: 'fullname'
       },
       {
-        title: 'Mail',
-        dataIndex: 'email',
-        key: 'email',
+        title: 'E-mail',
+        dataIndex: 'email'
       },
       {
         title: 'Rôle',
-        dataIndex: 'role',
-        key: 'role',
-        filters: [
-          {
-            text: 'Admin',
-            value: 'Admin',
-          },
-          {
-            text: 'Respo',
-            value: 'Respo',
-          },
-          {
-            text: 'Joueur',
-            value: 'Joueur',
-          }
-        ],
-        onFilter: (value, record) => record.role ? record.role.includes(value) : false
+        dataIndex: 'role'
       },
       {
         title: 'Équipe',
-        dataIndex: 'team',
-        key: 'team',
-        filterDropdown: (
-          <div className="custom-filter-dropdown">
-            <Select
-              showSearch
-              placeholder="Nom de l'équipe"
-              value={this.state.searchTeam !== null ? this.state.searchTeam : undefined}
-              onChange={this.setSearchTeam}
-              style={{ width: '200px' }}
-            >
-              {teams && teams.map((team, i) => <Select.Option value={team} key={i}>{team}</Select.Option>)}
-            </Select>
-            <Button type="primary" title="Réinitialiser" style={{ paddingRight: '10px', paddingLeft: '10px', marginLeft: '10px' }} onClick={this.clearSearchTeam}><Icon type="close"></Icon></Button>
-          </div>
-        ),
-        filterIcon: <Icon type="filter" theme="filled" style={{ color: this.state.searchTeam !== null ? '#108ee9' : '#aaa' }} />
+        dataIndex: 'team'
       },
       {
         title: 'Tournoi',
-        dataIndex: 'spotlight',
-        key: 'spotlight',
-        filters: [
-          {
-            text: 'LoL (pro)',
-            value: 'LoL (pro)',
-          },
-          {
-            text: 'LoL (amateur)',
-            value: 'LoL (amateur)',
-          },
-          {
-            text: 'Fortnite',
-            value: 'Fortnite',
-          },
-          {
-            text: 'CS:GO',
-            value: 'CS:GO',
-          },
-          {
-            text: 'Hearthstone',
-            value: 'Hearthstone',
-          },
-          {
-            text: 'SSBU',
-            value: 'SSBU',
-          },
-          {
-            text: 'osu!',
-            value: 'osu!',
-          }
-        ],
-        onFilter: (value, record) => record.spotlight === value,
+        dataIndex: 'spotlight'
+      },
+      {
+        title: 'Place',
+        dataIndex: 'place'
+      },
+      {
+        title: 'A payé',
+        dataIndex: 'paid',
+        render: (paid) => {return paid ? <Icon type="check" /> : <Icon type="close" />}
       },
       {
         title: 'Actions',
-        key: 'action',
         dataIndex: 'id',
         render: (id) => <UserListActions userId={id} users={this.props.users} />
       }
     ]
 
-    return (<React.Fragment>
-      <AdminBar/>
-      <Table columns={columns} dataSource={rows} locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
-    </React.Fragment>)
+    columns = columns.filter(col => {
+      if(col.dataIndex === 'fullname' || col.dataIndex === 'id' || (this.state.displayInfo ? this.state.displayInfo.includes(col.dataIndex) : false)) {
+        return true
+      }
+
+      return false
+    })
+
+    return (
+      <React.Fragment>
+        <AdminBar/>
+        
+        <Card
+          title="Affichage"
+          style={{ marginTop: '20px' }}
+        >
+          <Checkbox.Group onChange={this.displayInfoChanged} defaultValue={this.state.displayInfo}>
+            <Checkbox value="email">E-mail</Checkbox>
+            <Checkbox value="role">Rôle</Checkbox>
+            <Checkbox value="team">Équipe</Checkbox>
+            <Checkbox value="spotlight">Tournoi</Checkbox>
+            <Checkbox value="place">Place</Checkbox>
+            <Checkbox value="paid">A payé</Checkbox>
+          </Checkbox.Group>
+        </Card>
+
+        <Card
+          title="Filtres"
+          style={{ marginTop: '20px' }}
+        >
+          <InputGroup compact>
+            <Select
+              mode="tags"
+              placeholder="Nom d'utilisateur"
+              value={this.state.search['fullname']}
+              onChange={v => this.setSearch('fullname', v)}
+              style={{ width: '250px' }}
+            >
+              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+            </Select>
+            <Tooltip title="Réinitialiser" placement="right">
+              <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('fullname')}><Icon type="close"></Icon></Button>
+            </Tooltip>
+          </InputGroup>
+
+          {this.state.displayInfo.includes('email') &&
+            <InputGroup compact style={{ marginTop: '10px' }}>
+              <Select
+                mode="tags"
+                placeholder="Adresse mail"
+                value={this.state.search['email']}
+                onChange={v => this.setSearch('email', v)}
+                style={{ width: '250px' }}
+              >
+                {emails.map((email, i) => <Select.Option value={email} key={i}>{email}</Select.Option>)}
+              </Select>
+              <Tooltip title="Réinitialiser" placement="right">
+                <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('email')}><Icon type="close"></Icon></Button>
+              </Tooltip>
+            </InputGroup>
+          }
+
+          {this.state.displayInfo.includes('role') &&
+            <Checkbox.Group
+              onChange={v => this.setSearch('role', v)}
+              defaultValue={[]}
+              style={{ display: 'block', marginTop: '10px' }}
+            >
+              <span style={{ marginRight: '10px' }}>Rôle : </span>
+              <Checkbox value="admin">Admin</Checkbox>
+              <Checkbox value="respo">Respo tournoi</Checkbox>
+              <Checkbox value="joueur">Joueur</Checkbox>
+            </Checkbox.Group>
+          }
+
+          {this.state.displayInfo.includes('team') &&
+            <InputGroup compact style={{ marginTop: '10px' }}>
+              <Select
+                mode="tags"
+                placeholder="Nom de l'équipe"
+                value={this.state.search['team']}
+                onChange={v => this.setSearch('team', v)}
+                style={{ width: '250px' }}
+              >
+                {teams.map((team, i) => <Select.Option value={team} key={i}>{team}</Select.Option>)}
+              </Select>
+              <Tooltip title="Réinitialiser" placement="right">
+                <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('team')}><Icon type="close"></Icon></Button>
+              </Tooltip>
+            </InputGroup>
+          }
+
+          {this.state.displayInfo.includes('spotlight') &&
+            <InputGroup compact style={{ marginTop: '10px' }}>
+              <Select
+                mode="tags"
+                placeholder="Tournoi"
+                value={this.state.search['spotlight']}
+                onChange={v => this.setSearch('spotlight', v)}
+                style={{ width: '250px' }}
+              >
+                {spotlights.map((spotlight, i) => <Select.Option value={spotlight} key={i}>{spotlight}</Select.Option>)}
+              </Select>
+              <Tooltip title="Réinitialiser" placement="right">
+                <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('spotlight')}><Icon type="close"></Icon></Button>
+              </Tooltip>
+            </InputGroup>
+          }
+
+          {this.state.displayInfo.includes('place') &&
+            <InputGroup compact style={{ marginTop: '10px' }}>
+              <Select
+                mode="tags"
+                placeholder="Place"
+                value={this.state.search['place']}
+                onChange={v => this.setSearch('place', v)}
+                style={{ width: '150px' }}
+              >
+                <Select.Option value=" ">(Aucune)</Select.Option>
+                {places.map((place, i) => <Select.Option value={place} key={i}>{place}</Select.Option>)}
+              </Select>
+              <Tooltip title="Réinitialiser" placement="right">
+                <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('place')}><Icon type="close"></Icon></Button>
+              </Tooltip>
+            </InputGroup>
+          }
+
+          {this.state.displayInfo.includes('paid') &&
+            <Checkbox.Group
+              onChange={v => this.setSearch('paid', v)}
+              defaultValue={[]}
+              style={{ display: 'block', marginTop: '10px' }}
+            >
+              <span style={{ marginRight: '10px' }}>A payé : </span>
+              <Checkbox value="true">Payé</Checkbox>
+              <Checkbox value="false">Non payé</Checkbox>
+            </Checkbox.Group>
+          }
+        </Card>
+
+        <p style={{ marginTop: '20px' }}>
+          <strong>{rows.length} résultat{rows.length > 1 ? 's' : ''}</strong>
+        </p>
+
+        <Table
+          columns={columns}
+          dataSource={rows}
+          rowKey="id"
+          locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }}
+          style={{ marginTop: '20px' }}
+        />
+      </React.Fragment>
+    )
   }
 }
 

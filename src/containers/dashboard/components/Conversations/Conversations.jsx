@@ -7,7 +7,7 @@ import {
   fetchConversations,
   SET_CONVERSATIONS_LOADING
 } from '../../../../modules/conversations'
-import { List } from 'antd'
+import { List, Avatar } from 'antd'
 
 class Conversations extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class Conversations extends React.Component {
     this.props.getConversations()
   }
 
-  componentDidUpdate(prevProps, prevStates) {
+  componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
         conversations: this.props.conversations,
@@ -42,28 +42,48 @@ class Conversations extends React.Component {
     //   )
     // })
     let conversationsList = ''
-    conversationsList = (
-      <List
-        itemLayout="horizontal"
-        dataSource={conversations.map(conversation => {
-          return { title: conversation.User2.name, idTo: conversation.User2.id }
-        })}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              title={item.title}
-              description={
-                <Link
-                  to={{ pathname: `/dashboard/admin/messages/${item.idTo}` }}
-                >
-                  Accéder à la conversation
-                </Link>
-              }
-            />
-          </List.Item>
-        )}
-      />
-    )
+      conversationsList = (
+        <List
+          itemLayout="horizontal"
+          dataSource={conversations.map(conversation => {
+            return {
+              title: conversation.User2.name,
+              idTo: conversation.User2.id,
+              lastMessage: conversation.messages[0].senderId // only one element in messages[] got through API
+            }
+          })}
+          renderItem={item => (
+            <List.Item>
+              <List.Item.Meta
+                title={item.title}
+                avatar={
+                  item.lastMessage === null ? (
+                    <Avatar
+                      icon="check-circle"
+                      style={{ backgroundColor: '#3FA9FF' }}
+                      theme="filled"
+                    />
+                  ) : (
+                    <Avatar
+                      icon="exclamation-circle"
+                      style={{ backgroundColor: '#8E8C8A' }}
+                      theme="filled"
+                    />
+                  )
+                }
+                description={
+                  <Link
+                    to={{ pathname: `/dashboard/admin/messages/${item.idTo}` }}
+                  >
+                    Accéder à la conversation
+                  </Link>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      )
+    
     return <div>{conversationsList}</div>
   }
 }

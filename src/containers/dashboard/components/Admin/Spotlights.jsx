@@ -23,7 +23,7 @@ class Spotlights extends React.Component {
   }
 
   render() {
-    let { spotlights, location } = this.props
+    let { spotlights, location, allspotlights } = this.props
     let { id } = this.state
 
     let currentId = location.split('/')[4]
@@ -33,18 +33,21 @@ class Spotlights extends React.Component {
       this.props.fetchAdminSpotlight(currentId)
     }
 
-    if (!spotlights || !spotlights[id]) {
+    if (!spotlights || !spotlights[id] || !allspotlights) {
       return <Spin/>
     }
-
-    let rows = spotlights[id].map(team => {
+    let thisSpotlight = allspotlights.find(s => s.id === parseInt(currentId, 10))
+    let rows = spotlights[id]
+    .sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at))
+    .map((team, index) => {
       let date = new Date(team.completed_at.substring(0, 19)) // Remove '+00:00' at the end
 
       date = date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR')
 
       return {
         ...team,
-        date: date
+        date: date,
+        name: { name: team.name, color: index + 1 > thisSpotlight.maxPlayers / thisSpotlight.perTeam ? '#ff0000' : '#000000' }
       }
     })
 
@@ -52,6 +55,7 @@ class Spotlights extends React.Component {
       {
         title: 'Équipe',
         dataIndex: 'name',
+        render: text => <span style={{ color: text.color }}>{text.name}</span>
       },
       {
         title: 'Date de complétion',
@@ -68,7 +72,8 @@ class Spotlights extends React.Component {
 const mapStateToProps = state => ({
   location: state.routing.location.pathname,
   users: state.admin.users,
-  spotlights: state.admin.spotlights
+  spotlights: state.admin.spotlights,
+  allspotlights: state.spotlights.spotlights
 })
 
 const mapDispatchToProps = dispatch => ({

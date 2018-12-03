@@ -2,11 +2,11 @@ import axios from '../lib/axios'
 import { actions as notifActions } from 'redux-notifications'
 
 export const SET_USERS = 'admin/SET_USERS'
-export const SET_USER_RESPO_PERMISSION = 'admin/SET_USER_RESPO_PERMISSION'
+export const SET_USER_RESPO = 'admin/SET_USER_RESPO'
 
 const initialState = {
   users: [],
-  respoPermission: [],
+  respo: [],
   chartData: { daily: [], cumul: [] },
 }
 
@@ -22,8 +22,8 @@ export default (state = initialState, action) => {
         users: action.payload
       }
     
-    case SET_USER_RESPO_PERMISSION:
-      users[index].permission.respoPermission = true
+    case SET_USER_RESPO:
+      users[index].permission.respo = true
       return {
         ...state,
         users
@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
   }
 }
 
-export const setRespoPermission = (id, respoPermission) => {
+export const setRespo = (id, respo) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -41,10 +41,10 @@ export const setRespoPermission = (id, respoPermission) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setRespoPermission/${id}`, { respoPermission }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/setRespo/${id}`, { respo }, { headers: { 'X-Token': authToken } })
 
       if(res.status === 200) {
-        dispatch({ type: SET_USER_RESPO_PERMISSION, payload: id })
+        dispatch({ type: SET_USER_RESPO, payload: id })
         dispatch(
           notifActions.notifSend({
             message: 'Les permissions de l\'utilisateur ont été modifiées',
