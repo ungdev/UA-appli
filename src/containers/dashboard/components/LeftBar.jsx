@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchSpotlights } from '../../../modules/spotlights'
+import _ from 'lodash'
 
 const SubMenu = Menu.SubMenu
 
@@ -16,13 +17,13 @@ class LeftBar extends React.Component {
     this.props.fetchSpotlights()
 
     let tab = this.props.location.split('/')
-    tab.splice(0, 1)  // remove first element because it's equal to ''
+    tab.splice(0, 1) // remove first element because it's equal to ''
 
-    if(tab[0] === 'dashboard') {
-      if(tab[1] === 'admin') {
+    if (tab[0] === 'dashboard') {
+      if (tab[1] === 'admin') {
         openKeys.push('2')
 
-        if(tab[2] === 'users') {
+        if (tab[2] === 'users') {
           current = `2-1`
         }
         if(tab[2] === 'conversations') {
@@ -46,19 +47,19 @@ class LeftBar extends React.Component {
         }
       }
 
-      if(tab[1] === 'tournois') {
+      if (tab[1] === 'tournois') {
         openKeys.push('3')
 
-        if(tab.length >= 2) {
+        if (tab.length >= 2) {
           tab[2] === 'libre'
             ? openKeys.push(`3-7`)
             : openKeys.push(`3-${tab[2]}`)
 
-          if(tab.length >= 4) {
-            if(tab[3] === 'arbre-tournois') {
+          if (tab.length >= 4) {
+            if (tab[3] === 'arbre-tournois') {
               current = `3-${tab[2]}-1`
             }
-            if(tab[3] === 'teams') {
+            if (tab[3] === 'teams') {
               current = `3-${tab[2]}-2`
             }
             if(tab[3] === 'players') {
@@ -70,23 +71,23 @@ class LeftBar extends React.Component {
             if (tab[3] === 'mydecks') {
               current = `3-${tab[2]}-2.5`
             }
-            if(tab[3] === 'rules') {
+            if (tab[3] === 'rules') {
               current = `3-${tab[2]}-3`
             }
-            if(tab[3] === 'contact') {
+            if (tab[3] === 'contact') {
               tab[2] === 'libre'
-                ? current = `3-7-4`
-                : current = `3-${tab[2]}-4`
+                ? (current = `3-7-4`)
+                : (current = `3-${tab[2]}-4`)
             }
-            if(tab[3] === 'info') {
+            if (tab[3] === 'info') {
               tab[2] === 'libre'
-                ? current = `3-7-5`
-                : current = `3-${tab[2]}-5`
+                ? (current = `3-7-5`)
+                : (current = `3-${tab[2]}-5`)
             }
-            if(tab[3] === 'calendar' && tab[2] === 'libre') {
+            if (tab[3] === 'calendar' && tab[2] === 'libre') {
               current = `3-7-1`
             }
-            if(tab[3] === 'compare' && tab[2] === 'libre') {
+            if (tab[3] === 'compare' && tab[2] === 'libre') {
               current = `3-7-2`
             }
           }
@@ -100,7 +101,7 @@ class LeftBar extends React.Component {
     this.state = { current, openKeys }
   }
 
-  handleClick = (e) => {
+  handleClick = e => {
     this.setState({
       current: e.key
     })
@@ -125,51 +126,53 @@ class LeftBar extends React.Component {
             </span>
           }
         >
-          {spotlight.toornamentID && <Menu.Item key={`3-${spotlight.id}-1`} selected>
-            <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
-              <Icon type="share-alt" />
-              <span>Arbre</span>
-            </Link>
-          </Menu.Item>}
-          {
-            spotlight.perTeam > 1 ?
+          {spotlight.toornamentID && (
+            <Menu.Item key={`3-${spotlight.id}-1`} selected>
+              <Link to={`/dashboard/tournois/${spotlight.id}/arbre-tournois`}>
+                <Icon type="share-alt" />
+                <span>Arbre</span>
+              </Link>
+            </Menu.Item>
+          )}
+          {spotlight.perTeam > 1 ? (
             <Menu.Item key={`3-${spotlight.id}-2`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/teams`}>
                 <Icon type="team" />
                 <span>Équipes</span>
               </Link>
             </Menu.Item>
-            : <Menu.Item key={`3-${spotlight.id}-2`}>
-            <Link to={`/dashboard/tournois/${spotlight.id}/players`}>
-              <Icon type="team" />
-              <span>Joueurs</span>
-            </Link>
-          </Menu.Item>
-          }
-          {
-            spotlight.name === 'Hearthstone' ?
+          ) : (
+            <Menu.Item key={`3-${spotlight.id}-2`}>
+              <Link to={`/dashboard/tournois/${spotlight.id}/players`}>
+                <Icon type="team" />
+                <span>Joueurs</span>
+              </Link>
+            </Menu.Item>
+          )}
+          {spotlight.name === 'Hearthstone' ? (
             <Menu.Item key={`3-${spotlight.id}-2.3`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/decks`}>
                 <Icon type="inbox" />
                 <span>Decks</span>
               </Link>
             </Menu.Item>
-            : ''
-          }
-          {
-            spotlight.name === 'Hearthstone' &&
-            user &&
-            user.team &&
-            user.team.spotlight &&
-            user.team.spotlight.name === 'Hearthstone' ?
+          ) : (
+            ''
+          )}
+          {spotlight.name === 'Hearthstone' &&
+          user &&
+          user.team &&
+          user.team.spotlight &&
+          user.team.spotlight.name === 'Hearthstone' ? (
             <Menu.Item key={`3-${spotlight.id}-2.5`}>
               <Link to={`/dashboard/tournois/${spotlight.id}/mydecks`}>
                 <Icon type="inbox" />
                 <span>Mes Decks</span>
               </Link>
             </Menu.Item>
-            : ''
-          }
+          ) : (
+            ''
+          )}
           <Menu.Item key={`3-${spotlight.id}-3`}>
             <Link to={`/dashboard/tournois/${spotlight.id}/rules`}>
               <Icon type="profile" />
@@ -190,28 +193,13 @@ class LeftBar extends React.Component {
           </Menu.Item>
         </SubMenu>
       ))
-    }
-    else {
+    } else {
       spotlights = []
     }
-
-    return (
-      <Menu
-        theme="dark"
-        mode="inline"
-        defaultSelectedKeys={[this.state.current]}
-        defaultOpenKeys={this.state.openKeys}
-        selectedKeys={[this.state.current]}
-        onClick={this.handleClick}
-      >
-        <Menu.Item key="1" style={{ marginTop: 0 }}>
-          <Link to="/dashboard/home">
-            <Icon type="home" />
-            <span>Accueil</span>
-          </Link>
-        </Menu.Item>
-        {user && user.permission && user.permission.admin ? (
-          <SubMenu
+    let subMenuOrga = ''
+    if (user && user.permission && user.permission.admin) {
+      subMenuOrga = (
+        <SubMenu
             key="2"
             title={
               <span>
@@ -277,13 +265,56 @@ class LeftBar extends React.Component {
               </Link>
             </Menu.Item>
           </SubMenu>
-        ) : 
-        <Menu.Item key="2.5">
-              <Link to={'/dashboard/messages'}>
-                <Icon type="message" />
-                <span>Messagerie</span>
-              </Link>
-            </Menu.Item>}
+      )
+    }
+    if (user && user.permission && user.permission.respo !== null) {
+      subMenuOrga = (
+        <SubMenu
+          key="2"
+          title={
+            <span>
+              <Icon type="crown" />
+              <span>Respo Tournoi</span>
+            </span>
+          }
+        >
+          <Menu.Item key="2-2">
+            <Link to={'/dashboard/admin/conversations'}>
+              <Icon type="message" />
+              <span>Messagerie tournoi</span>
+            </Link>
+          </Menu.Item>
+        </SubMenu>
+      )
+    }
+    
+    return (
+      <Menu
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={[this.state.current]}
+        defaultOpenKeys={this.state.openKeys}
+        selectedKeys={[this.state.current]}
+        onClick={this.handleClick}
+      >
+        <Menu.Item key="1" style={{ marginTop: 0 }}>
+          <Link to="/dashboard/home">
+            <Icon type="home" />
+            <span>Accueil</span>
+          </Link>
+        </Menu.Item>
+        {user && user.permission && user.permission.admin ? subMenuOrga : null}
+        {user && user.permission && !_.isUndefined(user.permission.role)
+          ? subMenuOrga
+          : null}
+        {user && !user.permission ? (
+          <Menu.Item key="2.5">
+            <Link to={'/dashboard/messages'}>
+              <Icon type="message" />
+              <span>Messagerie</span>
+            </Link>
+          </Menu.Item>
+        ) : null}
         <SubMenu
           key="3"
           title={
