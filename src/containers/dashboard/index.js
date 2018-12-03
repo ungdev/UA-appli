@@ -88,6 +88,9 @@ class Dashboard extends Component {
           if(tab[2] === 'places') component = <Places />
           if(tab[2] === 'validate') component = <Validate />
         }
+        else if(user.permission && user.permission.respo){
+          if(tab[2] === 'conversations') component = <Conversations />
+        }
         else {
           this.props.goToHome()
         }
