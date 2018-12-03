@@ -1,8 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Input, Button } from 'antd'
-import { autoLogin } from '../../modules/login'
-import { setPlaces } from '../../modules/admin'
+import { autoLogin } from '../../../modules/login'
+import { setPlaces } from '../../../modules/admin'
 
 class SetPlaces extends React.Component {
   constructor(props) {
