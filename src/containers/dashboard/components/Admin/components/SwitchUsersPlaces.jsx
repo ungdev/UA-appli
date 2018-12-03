@@ -245,7 +245,7 @@ class SwitchUserPlace extends React.Component {
     }
 
     return (
-      <div style={{ position: 'relative', top: '-20px' }}>
+      <React.Fragment>
         {this.state.users && this.state.users[0] && this.state.users[1] &&
           <Button
             type="primary"
@@ -377,7 +377,7 @@ class SwitchUserPlace extends React.Component {
         >
           <p><strong>Vous allez échanger les places de deux joueurs.</strong></p>
         </Modal>
-      </div>
+      </React.Fragment>
     )
   }
 }
