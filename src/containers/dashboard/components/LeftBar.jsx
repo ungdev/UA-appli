@@ -267,7 +267,7 @@ class LeftBar extends React.Component {
           </SubMenu>
       )
     }
-    if (user && user.permission && user.permission.respo !== null) {
+    if (user && user.permission && !_.isUndefined(user.permission.respo)) {
       subMenuOrga = (
         <SubMenu
           key="2"
@@ -304,7 +304,7 @@ class LeftBar extends React.Component {
           </Link>
         </Menu.Item>
         {user && user.permission && user.permission.admin ? subMenuOrga : null}
-        {user && user.permission && !_.isUndefined(user.permission.role)
+        {user && user.permission && !_.isUndefined(user.permission.respo)
           ? subMenuOrga
           : null}
         {user && !user.permission ? (
