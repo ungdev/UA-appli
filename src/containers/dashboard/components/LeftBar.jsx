@@ -335,12 +335,12 @@ class LeftBar extends React.Component {
               </span>
             }
           >
-            {/*<Menu.Item key={`3-${spotlights.length + 1}-1`}>
+            <Menu.Item key={`3-${spotlights.length + 1}-1`}>
               <Link to={`/dashboard/tournois/libre/calendar`}>
                 <Icon type="calendar" />
                 <span>Planning</span>
               </Link>
-          </Menu.Item>*/}
+            </Menu.Item>
             {/*<Menu.Item key={`3-${spotlights.length + 1}-2`}>
               <Link to={`/dashboard/tournois/libre/compare`}>
                 <Icon type="build" />
