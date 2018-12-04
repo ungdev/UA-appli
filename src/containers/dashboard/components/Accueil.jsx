@@ -73,7 +73,7 @@ class Accueil extends React.Component {
 
   fetchMatches() {
     const { user, matches, fetchMatches } = this.props
-    if (!matches.length && user) {
+    if (!matches.length && user && user.team && user.team.spotlight) {
       fetchMatches(user.team.spotlight.toornamentID, user.team.toornamentID)
     }
   }
