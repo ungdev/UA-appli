@@ -82,6 +82,7 @@ class Conversations extends React.Component {
               />
             </List.Item>
           )}
+          locale={{ emptyText: 'Aucune conversation' }}
         />
       )
     }
