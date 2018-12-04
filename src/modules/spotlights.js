@@ -106,7 +106,7 @@ export const setSpotlightState = (spotlightId, stateValue) => {
     if (!authToken || authToken.length === 0) return
       
     try{
-      const res = await axios.put(`spotlights/${spotlightId}/state`, { value: stateValue }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`states/${spotlightId}`, { value: stateValue }, { headers: { 'X-Token': authToken } })
       if(res.status === 200){
         dispatch({
           type: SET_SPOTLIGHT_STATE,
@@ -132,7 +132,7 @@ export const addState = (spotlightId, title, desc, popover) => {
     if (!authToken || authToken.length === 0) return
       
     try{
-      const res = await axios.post(`states`, { spotlightId, title, desc, popover }, { headers: { 'X-Token': authToken } })
+      const res = await axios.post(`states/${spotlightId}`, { title, desc, popover }, { headers: { 'X-Token': authToken } })
       if(res.status === 200){
         dispatch({
           type: ADD_SPOTLIGHT_STATE,
