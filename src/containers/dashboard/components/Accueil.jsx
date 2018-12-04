@@ -94,6 +94,9 @@ class Accueil extends React.Component {
       else if(user.permission.respo) {
         user.role = 'Respo'
       }
+      else if(user.permission.permission) {
+        user.role = 'Orga'
+      }
     }
     user.place = null
     if(user.tableLetter && user.placeNumber) {
