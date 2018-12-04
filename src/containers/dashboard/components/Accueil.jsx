@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Card, Spin } from 'antd'
+import { TwitterTimelineEmbed } from 'react-twitter-embed'
+import { Divider, Card, Spin } from 'antd'
+import moment from 'moment';
+import { fetchMatches } from '../../../modules/matches'
 import { fetchUser } from '../../../modules/user'
 
 const colorResult = (result) => {
@@ -25,6 +28,8 @@ const getTeam = (team) => {
 }
 
 class Accueil extends React.Component {
+
+  
   constructor(props) {
     super(props)
 
@@ -34,36 +39,43 @@ class Accueil extends React.Component {
 
     props.fetchUser()
   }
-
+  
   componentDidMount() {
-    //this.fetchMatches()
+    this.fetchMatches()
+  }
+
+  componentDidUpdate(prevProps) { 
+    if (prevProps.user !== this.props.user) {
+      this.fetchMatches()
+    }
   }
 
   getMatches() {
-    const { matches } = this.state
+    const { matches } = this.props
     if (matches.length > 0) {
       return matches.map((m,i) => (
-        <Card title={`Match ${i+1}`} key={i} style={{ width: 300, margin: '0 1rem' }}>
+        <Card
+        title={`Match ${i+1}`}
+        key={i}
+        style={{ width: 300, margin: '0 1rem' }}
+        extra={m.scheduled_datetime ? moment(m.scheduled_datetime).format('DD/MM HH:mm') : ''}>
           {m.opponents.map(team => getTeam(team))}
+          {m.private_note && (
+            <React.Fragment>
+              <Divider />
+              Note: {m.private_note}
+            </React.Fragment>
+          )}
         </Card>
       ))
     }
   }
 
-  async fetchMatches() {
-    /** TODO: -Remplacer par ID du tournoi du user
-     *        -Limiter call API via cache
-    */
-    // const data = await axiosToornament.get('1912315739670036480/matches',
-    //   {
-    //     headers: { Range: "matches=0-127"},
-    //     /** TODO: Récupérer l'ID toornament du joueur ou via le nom d'équipe */
-    //     params: { participant_ids: ["1912338498338021376"] },
-    //     paramsSerializer: function(params) {
-    //       return qs.stringify(params, { indices: false })
-    //     }
-    //   })
-    // this.setState({ matches: data.data })
+  fetchMatches() {
+    const { user, matches, fetchMatches } = this.props
+    if (!matches.length && user) {
+      fetchMatches(user.team.spotlight.toornamentID, user.team.toornamentID)
+    }
   }
 
   render() {
@@ -104,17 +116,27 @@ class Accueil extends React.Component {
           {user.team && user.team.spotlight ? <div>Tournoi : <strong>{user.team.spotlight.name}</strong></div> : ''}
           {user.team && !user.team.soloTeam ? <div>Équipe : <strong>{user.team.name}</strong></div> : ''}
         </Card>
+
+        <Divider />
+
+        <h2>Mes matchs</h2>
+
+        <div style={{ display: 'flex' }}>
+          {this.getMatches()}
+        </div>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.user.user
+  matches: state.matches.matches,
+  user: state.user.user,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: () => dispatch(fetchUser())
+  fetchUser: () => dispatch(fetchUser()),
+  fetchMatches: (spotlightID, participantID) => dispatch(fetchMatches(spotlightID, participantID)),
 })
 
 export default connect(

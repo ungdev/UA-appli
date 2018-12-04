@@ -24,7 +24,7 @@ class Conversations extends React.Component {
     this.props.getConversations()
   }
 
-  componentDidUpdate(prevProps, prevStates) {
+  componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
         conversations: this.props.conversations,
@@ -85,6 +85,7 @@ class Conversations extends React.Component {
         />
       )
     }
+    
     return <div>{conversationsList}</div>
   }
 }
