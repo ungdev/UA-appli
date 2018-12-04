@@ -69,7 +69,7 @@ class Messenger extends React.Component {
       this.loadMessages()
     }
     const { maxTextCaracters } = this.state
-    console.log(messages)
+
     let messagesList = (
       <List
         itemLayout="horizontal"

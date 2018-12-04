@@ -425,3 +425,40 @@ export const switchPlaces = (id1, id2) => {
     }
   }
 }
+
+export const setPlaces = (places) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      dispatch(
+        notifActions.notifSend({
+          message: 'Envoi en cours ...',
+          dismissAfter: 2000
+      }))
+      const res = await axios.post(`admin/setPlaces`, { places }, { headers: { 'X-Token': authToken } })
+      if(res.status === 200) {
+        dispatch(
+          notifActions.notifSend({
+            message: 'Places modifiées !',
+            dismissAfter: 2000
+        }))
+      }
+      else {
+        console.log(res)
+      }
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+      }))
+    }
+  }
+}

@@ -42,6 +42,7 @@ class Conversations extends React.Component {
     //   )
     // })
     let conversationsList = ''
+    if (conversations) {
       conversationsList = (
         <List
           itemLayout="horizontal"
@@ -83,6 +84,7 @@ class Conversations extends React.Component {
           )}
         />
       )
+    }
     
     return <div>{conversationsList}</div>
   }
