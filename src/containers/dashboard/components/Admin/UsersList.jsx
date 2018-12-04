@@ -81,6 +81,9 @@ class UsersList extends React.Component {
       else if(user.permission && user.permission.respo) {
         role = `Respo`
       }
+      else if(user.permission && user.permission.permission) {
+        role = `Orga`
+      }
       else {
         role = 'Joueur'
       }
@@ -258,7 +261,8 @@ class UsersList extends React.Component {
             >
               <span style={{ marginRight: '10px' }}>Rôle : </span>
               <Checkbox value="admin">Admin</Checkbox>
-              <Checkbox value="respo">Respo tournoi</Checkbox>
+              <Checkbox value="respo">Respo</Checkbox>
+              <Checkbox value="orga">Orga</Checkbox>
               <Checkbox value="joueur">Joueur</Checkbox>
             </Checkbox.Group>
           }
@@ -336,7 +340,7 @@ class UsersList extends React.Component {
           columns={columns}
           dataSource={rows}
           rowKey="id"
-          locale={{ filterConfirm: 'Ok', filterReset: 'Réinitialiser', emptyText: 'Aucun résultat' }}
+          locale={{ emptyText: 'Aucun utilisateur' }}
           style={{ marginTop: '20px' }}
         />
       </React.Fragment>
