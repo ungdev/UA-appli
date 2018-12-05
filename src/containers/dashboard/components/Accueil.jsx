@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import { Divider, Card, Spin } from 'antd'
 import moment from 'moment';
 import { fetchMatches } from '../../../modules/matches'
@@ -94,6 +93,9 @@ class Accueil extends React.Component {
       }
       else if(user.permission.respo) {
         user.role = 'Respo'
+      }
+      else if(user.permission.permission) {
+        user.role = 'Orga'
       }
     }
     user.place = null

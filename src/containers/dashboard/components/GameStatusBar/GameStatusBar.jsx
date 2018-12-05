@@ -56,11 +56,12 @@ class TournamentStatusBar extends React.Component {
   customDot = (dot, { index }) => {
     const { game, spotlights } = this.props
     const spotlight = spotlights.find(s => `${s.id}` === game)
-    return (
-    <Popover content={<span>{spotlight.states[index].popover}</span>}>
-      {dot}
-    </Popover>
-  )}
+    return spotlight.states[index].popover !== ''
+      ? <Popover content={<span>{spotlight.states[index].popover}</span>}>
+          {dot}
+        </Popover>
+      : dot
+  }
 
   nextState = () => {
     const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.game)
@@ -111,16 +112,19 @@ class TournamentStatusBar extends React.Component {
             value={this.state.title}
             onChange={e => this.setState({ title: e.target.value })}
             placeholder="Titre"
+            style={{ marginBottom: '5px' }}
           />
           <Input
             value={this.state.description}
             onChange={e => this.setState({ description: e.target.value })}
             placeholder="Description"
+            style={{ marginBottom: '5px' }}
           />
           <Input
             value={this.state.popup}
             onChange={e => this.setState({ popup: e.target.value })}
-            placeholder="Popup"
+            placeholder="Popup (facultatif)"
+            style={{ marginBottom: '5px' }}
           />
         </Modal>
         <Card title={<h1>{spotlight.name}</h1>}>
@@ -133,7 +137,7 @@ class TournamentStatusBar extends React.Component {
             <Button type="primary" onClick={this.nextState}>État suivant</Button>
           </div>
         }
-        {!this.props.noLastInfo ? <Card>Dernière info : {this.state.info}</Card> : null}
+        {!this.props.noLastInfo ? <Card style={{ marginTop: '20px' }}>Dernière info : {this.state.info}</Card> : null}
       </div>
     );
   }

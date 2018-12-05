@@ -41,6 +41,9 @@ class LeftBar extends React.Component {
         if(tab[2] === 'validate') {
           current = `2-7`
         }
+        if(tab[2] === 'payment') {
+          current = `2-8`
+        }
         if(tab.length >= 2 && tab[2] === 'spotlights') {
           openKeys.push('2-4')
           current = `2-4-${tab[3]}`
@@ -222,7 +225,7 @@ class LeftBar extends React.Component {
             </Menu.Item>
             <Menu.Item key="2-3">
               <Link to={`/dashboard/admin/paids`}>
-                <Icon type="euro" />
+                <Icon type="line-chart" />
                 <span>Mais qui a payé ?</span>
               </Link>
             </Menu.Item>
@@ -264,10 +267,16 @@ class LeftBar extends React.Component {
                 <span>Valider l'entrée</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="2-8">
+              <Link to={`/dashboard/admin/payment`}>
+                <Icon type="euro" />
+                <span>Valider un paiement</span>
+              </Link>
+            </Menu.Item>
           </SubMenu>
       )
     }
-    if (user && user.permission && user.permission.respo !== null) {
+    if (user && user.permission && user.permission.respo) {
       subMenuOrga = (
         <SubMenu
           key="2"
@@ -304,9 +313,7 @@ class LeftBar extends React.Component {
           </Link>
         </Menu.Item>
         {user && user.permission && user.permission.admin ? subMenuOrga : null}
-        {user && user.permission && user.permission.respo !== null
-          ? subMenuOrga
-          : null}
+        {user && user.permission && user.permission.respo ? subMenuOrga : null}
         {user && !user.permission ? (
           <Menu.Item key="2.5">
             <Link to={'/dashboard/messages'}>
