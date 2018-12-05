@@ -29,6 +29,8 @@ const App = props => (
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/places'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/admin/set-places'} component={SetPlaces} />
 
+      <Route path={process.env.REACT_APP_BASEURL + 'dashboard/respo/conversations'} exact component={Dashboard} />
+
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/orga/payment'} exact component={Dashboard} />
       <Route path={process.env.REACT_APP_BASEURL + 'dashboard/orga/validate'} exact component={Dashboard} />
 
