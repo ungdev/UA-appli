@@ -2,7 +2,6 @@ import React from 'react'
 import { Icon, Table, Select, Button, Spin, Checkbox, Input, Tooltip, Card, Modal } from 'antd'
 import { connect } from 'react-redux'
 
-import AdminBar from './AdminBar'
 import { fetchUsers, validatePayment } from '../../../../modules/admin'
 
 const InputGroup = Input.Group
@@ -148,7 +147,7 @@ class Payment extends React.Component {
 
     return (
       <React.Fragment>
-        <AdminBar/>
+        <h1>Valider un paiement</h1>
 
         <Card
           title="Filtres"
