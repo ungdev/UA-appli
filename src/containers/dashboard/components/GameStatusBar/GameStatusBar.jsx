@@ -56,11 +56,12 @@ class TournamentStatusBar extends React.Component {
   customDot = (dot, { index }) => {
     const { game, spotlights } = this.props
     const spotlight = spotlights.find(s => `${s.id}` === game)
-    return (
-    <Popover content={<span>{spotlight.states[index].popover}</span>}>
-      {dot}
-    </Popover>
-  )}
+    return spotlight.states[index].popover !== ''
+      ? <Popover content={<span>{spotlight.states[index].popover}</span>}>
+          {dot}
+        </Popover>
+      : dot
+  }
 
   nextState = () => {
     const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.game)
@@ -122,7 +123,7 @@ class TournamentStatusBar extends React.Component {
           <Input
             value={this.state.popup}
             onChange={e => this.setState({ popup: e.target.value })}
-            placeholder="Popup"
+            placeholder="Popup (facultatif)"
             style={{ marginBottom: '5px' }}
           />
         </Modal>
