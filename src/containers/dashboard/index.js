@@ -17,6 +17,7 @@ import Spotlights from './components/Admin/Spotlights'
 import Material from './components/Admin/Material'
 import Places from './components/Admin/Places'
 import Validate from './components/Admin/Validate'
+import Payment from './components/Admin/Payment'
 import Compare from './components/Libre/Compare'
 import Calendar from './components/Libre/Calendar'
 import DashboardLayout from './layout'
@@ -87,9 +88,42 @@ class Dashboard extends Component {
           if(tab[2] === 'material') component = <Material />
           if(tab[2] === 'places') component = <Places />
           if(tab[2] === 'validate') component = <Validate />
+          if(tab[2] === 'payment') component = <Payment />
         }
-        else if(user.permission && user.permission.respo){
+        else {
+          this.props.goToHome()
+        }
+      }
+    }
+
+
+    if(tab[1] === 'respo') {
+      let user = this.props.user
+
+      if(user) {
+        if(user.permission && user.permission.respo) {
           if(tab[2] === 'conversations') component = <Conversations />
+        }
+        else {
+          this.props.goToHome()
+        }
+      }
+    }
+
+    if(tab[1] === 'orga') {
+      let user = this.props.user
+
+      if(user) {
+        if(user.permission) {
+          if(user.permission.permission.includes('validate')) {
+            if(tab[2] === 'validate') component = <Validate />
+          }
+          else if(user.permission.permission.includes('payment')) {
+            if(tab[2] === 'payment') component = <Payment />
+          }
+          else {
+            this.props.goToHome()
+          }
         }
         else {
           this.props.goToHome()
@@ -100,7 +134,7 @@ class Dashboard extends Component {
     if(tab[1] === 'messages' && tab.length === 2) component = <Messenger />
     // if(tab[1] === 'conversations' && tab.length === 2) component = <Conversations />
 
-    if(component === null) {
+    if(component === null) {      
       return null
     }
 

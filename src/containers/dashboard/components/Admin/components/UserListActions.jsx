@@ -1,21 +1,23 @@
 import React from 'react'
-import { Icon, Tooltip, Modal, Button } from 'antd'
+import { Icon, Tooltip, Modal, Button, Checkbox } from 'antd'
 import { connect } from 'react-redux'
-import { setAdmin, removeAdmin, validatePayment } from '../../../../../modules/admin'
-import { setRespo } from '../../../../../modules/respo'
+import { setAdmin, removeAdmin, setPermission, setRespo } from '../../../../../modules/admin'
 import Respo from './Respo'
 
 import '../admin.css'
+
+const CheckboxGroup = Checkbox.Group
 
 class UserListActions extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      paymentModalVisible: false,
       setAdminModalVisible: false,
       removeAdminModalVisible: false,
+      permissionModalVisible: false,
       respoModalVisible: false,
+      checkedPermission: [],
       checkedRespo: []
     }
   }
@@ -31,13 +33,6 @@ class UserListActions extends React.Component {
     this.props.removeAdmin(this.props.userId)
     this.setState({
       removeAdminModalVisible: false
-    })
-  }
-
-  validatePayment = () => {
-    this.props.validatePayment(this.props.userId)
-    this.setState({
-      paymentModalVisible: false
     })
   }
 
@@ -81,17 +76,17 @@ class UserListActions extends React.Component {
     })
   }
 
-  openPaymentModal = () => {
+  openPermissionModal = () => {
     this.setState({
-      mainModalVisible: false,
-      paymentModalVisible: true
+      permissionModalVisible: true,
+      mainModalVisible: false
     })
   }
 
-  closePaymentModal = () => {
+  closePermissionModal = () => {
     this.setState({
-      mainModalVisible: true,
-      paymentModalVisible: false
+      permissionModalVisible: false,
+      mainModalVisible: true
     })
   }
 
@@ -109,11 +104,25 @@ class UserListActions extends React.Component {
     })
   }
 
+  setPermission = () => {
+    this.props.setPermission(this.props.userId, this.state.checkedPermission)
+    
+    this.setState({
+      permissionModalVisible: false
+    })
+  }
+
   setRespo = () => {
     this.props.setRespo(this.props.userId, this.state.checkedRespo)
     
     this.setState({
       respoModalVisible: false
+    })
+  }
+
+  setCheckedPermission = (checked) => {
+    this.setState({
+      checkedPermission: checked
     })
   }
 
@@ -132,8 +141,17 @@ class UserListActions extends React.Component {
     }
 
     let userIsAdmin = user.permission && user.permission.admin
-    let userRespo = []
 
+    let userPermission = []
+    if (user.permission && user.permission.permission) {
+      const permissions = user.permission.permission.split(',')
+      
+      permissions.forEach(permission => {
+        userPermission.push(permission)
+      })
+    }
+
+    let userRespo = []
     if (user.permission && user.permission.respo) {
       const respo = user.permission.respo.split(',')
       
@@ -177,87 +195,69 @@ class UserListActions extends React.Component {
                 </Button>
               </Tooltip>
             ) : (
-              <Tooltip
-                placement="right"
-                title="Enlever le rang d'administrateur"
-              >
-                <Button
-                  type="danger"
-                  onClick={this.openRemoveAdminModal}
-                  className="admin-action-button"
-                  style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}
+              <React.Fragment>
+                <Tooltip
+                  placement="right"
+                  title="Enlever le rang d'administrateur"
                 >
-                  <Icon type="arrow-down" />
-                </Button>
-              </Tooltip>
+                  <Button
+                    type="danger"
+                    onClick={this.openRemoveAdminModal}
+                    className="admin-action-button"
+                    style={{ backgroundColor: '#ff0000', borderColor: '#ff0000' }}
+                  >
+                    <Icon type="arrow-down" />
+                  </Button>
+                </Tooltip>
+                <p style={{ marginTop: '10px' }}>
+                  L'utilisateur étant administrateur, toutes les permissions lui sont accordées.
+                </p>
+              </React.Fragment>
             )}
           </div>
 
-          <h2 className="admin-action-title">
-            <Icon type="safety" /> Responsable
-          </h2>
-          <div className="admin-action-content">
-            {userIsAdmin
-              ? <p>
-                  L'utilisateur étant administrateur, toutes les permissions lui sont accordées.
-                </p>
-              : (
-                <React.Fragment>
-                  <Respo defaultCheckedRespo={userRespo} checkedRespo={(checked) => this.setCheckedRespo(checked)} />
-                  <br />
-                  <Tooltip placement="right" title="Modifier les permissions">
-                    <Button
-                      type="primary"
-                      onClick={this.openRespoModal}
-                      className="admin-action-button"
-                      style={{ marginTop: '10px' }}
-                    >
-                      <Icon type="save" />
-                    </Button>
-                  </Tooltip>
-                </React.Fragment>
-              )
-            }
-          </div>
-
-          {!user.paid ? (
+          {!userIsAdmin &&
             <React.Fragment>
               <h2 className="admin-action-title">
-                <Icon type="euro" style={{ fontSize: '17px' }} /> Paiement
+                <Icon type="tool" /> Permissions
               </h2>
               <div className="admin-action-content">
-                <Tooltip placement="right" title="Valider le paiement">
+                <CheckboxGroup onChange={this.setCheckedPermission} defaultValue={userPermission}>
+                  <Checkbox value="validate">Valider l'entrée</Checkbox><br />
+                  <Checkbox value="payment">Valider les paiements</Checkbox>
+                </CheckboxGroup>
+                <br />
+                <Tooltip placement="right" title="Modifier les permissions">
                   <Button
                     type="primary"
-                    onClick={this.openPaymentModal}
+                    onClick={this.openPermissionModal}
                     className="admin-action-button"
+                    style={{ marginTop: '10px' }}
                   >
-                    <Icon type="euro" />
+                    <Icon type="save" />
+                  </Button>
+                </Tooltip>
+              </div>
+
+              <h2 className="admin-action-title">
+                <Icon type="safety" /> Responsable
+              </h2>
+              <div className="admin-action-content">
+                <Respo defaultCheckedRespo={userRespo} checkedRespo={(checked) => this.setCheckedRespo(checked)} />
+                <br />
+                <Tooltip placement="right" title="Modifier les permissions de tournoi">
+                  <Button
+                    type="primary"
+                    onClick={this.openRespoModal}
+                    className="admin-action-button"
+                    style={{ marginTop: '10px' }}
+                  >
+                    <Icon type="save" />
                   </Button>
                 </Tooltip>
               </div>
             </React.Fragment>
-          ) : null}
-        </Modal>
-
-        <Modal
-          title="Êtes vous sûr ?"
-          visible={this.state.paymentModalVisible}
-          onOk={this.validatePayment}
-          onCancel={this.closePaymentModal}
-          cancelText="Annuler"
-          okText="Ok"
-        >
-          <h3>Valider un paiement</h3>
-          <p>
-            <strong>
-              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
-            </strong>
-          </p>
-          <br />
-          <p>
-            Cela validera le paiement de l'utilisateur et il recevra sa place par mail.
-          </p>
+          }
         </Modal>
 
         <Modal
@@ -294,13 +294,29 @@ class UserListActions extends React.Component {
 
         <Modal
           title="Êtes vous sûr ?"
+          visible={this.state.permissionModalVisible}
+          onOk={this.setPermission}
+          onCancel={this.closePermissionModal}
+          cancelText="Annuler"
+          okText="Ok"
+        >
+          <h3>Modifier les permissions</h3>
+          <p>
+            <strong>
+              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
+            </strong>
+          </p>
+        </Modal>
+
+        <Modal
+          title="Êtes vous sûr ?"
           visible={this.state.respoModalVisible}
           onOk={this.setRespo}
           onCancel={this.closeRespoModal}
           cancelText="Annuler"
           okText="Ok"
         >
-          <h3>Modifier les permissions</h3>
+          <h3>Modifier les permissions de tournoi</h3>
           <p>
             <strong>
               Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
@@ -315,7 +331,7 @@ class UserListActions extends React.Component {
 const mapDispatchToProps = dispatch => ({
   setAdmin: id => dispatch(setAdmin(id)),
   removeAdmin: id => dispatch(removeAdmin(id)),
-  validatePayment: id => dispatch(validatePayment(id)),
+  setPermission: (id, permission) => dispatch(setPermission(id, permission)),
   setRespo: (id, respo) => dispatch(setRespo(id, respo))
 })
 

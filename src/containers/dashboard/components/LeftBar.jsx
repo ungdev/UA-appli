@@ -199,9 +199,9 @@ class LeftBar extends React.Component {
     } else {
       spotlights = []
     }
-    let subMenuOrga = ''
+    let subMenuAdmin = ''
     if (user && user.permission && user.permission.admin) {
-      subMenuOrga = (
+      subMenuAdmin = (
         <SubMenu
             key="2"
             title={
@@ -276,10 +276,11 @@ class LeftBar extends React.Component {
           </SubMenu>
       )
     }
+    let subMenuRespo = ''
     if (user && user.permission && user.permission.respo) {
-      subMenuOrga = (
+      subMenuRespo = (
         <SubMenu
-          key="2"
+          key="2.1"
           title={
             <span>
               <Icon type="crown" />
@@ -287,12 +288,43 @@ class LeftBar extends React.Component {
             </span>
           }
         >
-          <Menu.Item key="2-2">
-            <Link to={'/dashboard/admin/conversations'}>
+          <Menu.Item key="2.1-1">
+            <Link to={'/dashboard/respo/conversations'}>
               <Icon type="message" />
               <span>Messagerie tournoi</span>
             </Link>
           </Menu.Item>
+        </SubMenu>
+      )
+    }
+    let subMenuOrga = ''
+    if (user && user.permission && user.permission.permission) {
+      subMenuOrga = (
+        <SubMenu
+          key="2.2"
+          title={
+            <span>
+              <Icon type="crown" />
+              <span>Organisateur</span>
+            </span>
+          }
+        >
+          {user.permission.permission.includes('validate') &&
+            <Menu.Item key="2.2-1">
+              <Link to={`/dashboard/orga/validate`}>
+                <Icon type="barcode" />
+                <span>Valider l'entrée</span>
+              </Link>
+            </Menu.Item>
+          }
+          {user.permission.permission.includes('payment') &&
+            <Menu.Item key="2.2-2">
+              <Link to={`/dashboard/orga/payment`}>
+                <Icon type="euro" />
+                <span>Valider un paiement</span>
+              </Link>
+            </Menu.Item>
+          }
         </SubMenu>
       )
     }
@@ -312,8 +344,9 @@ class LeftBar extends React.Component {
             <span>Accueil</span>
           </Link>
         </Menu.Item>
-        {user && user.permission && user.permission.admin ? subMenuOrga : null}
-        {user && user.permission && user.permission.respo ? subMenuOrga : null}
+        {subMenuAdmin}
+        {subMenuRespo}
+        {subMenuOrga}
         {user && !user.permission ? (
           <Menu.Item key="2.5">
             <Link to={'/dashboard/messages'}>
