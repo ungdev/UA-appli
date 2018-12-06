@@ -47,15 +47,16 @@ class UsersList extends React.Component {
   }
 
   displayInfoChanged = (displayInfo) => {
-    this.setState({
-      displayInfo
-    })
-
     // Unset hidden filters
-    Object.keys(this.state.search).forEach(key => {
+    this.state.displayInfo.forEach(key => {
       if(!displayInfo.includes(key)) {
+        console.log("clearing ", key)
         this.clearSearch(key)
       }
+    })
+
+    this.setState({
+      displayInfo
     })
   }
 
