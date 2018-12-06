@@ -27,7 +27,7 @@ class SetPlaces extends React.Component {
     const rows = placesText.split('\n')
     const users = rows.map(row => row.split(','))
     const places = users.map(user => {
-      return { id: user[0], tableLetter: user[6], placeNumber: user[5] }
+      return { id: user[0], tableLetter: user[3], placeNumber: user[4] }
     })
 
     this.props.setPlaces(places)
