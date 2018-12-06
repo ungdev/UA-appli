@@ -85,13 +85,14 @@ class TournamentStatusBar extends React.Component {
     if(!spotlight) return <Spin/>
 
     let steps = spotlight.states && spotlight.states.length !== 0
-      ? <Steps current={this.state.etat} progressDot={this.customDot}>
+      ? <Steps current={this.state.etat} progressDot={this.customDot} style={{ display: 'flex', flexWrap: 'wrap' }}>
         {
           spotlight.states.map(state => (
             <Step
               title={state.title}
               description={state.desc}
               key={state.id}
+              style={{ marginBottom: '10px' }}
             />
           ))
         }

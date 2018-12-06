@@ -39,7 +39,7 @@ export const getInfos = (barcode, fullname) => {
       }
       let name = fullname ? fullname.split('(')[0] : null
       if(name) name = name.substr(0, name.length -1)
-      const res = await axios.put(`/validate`, { barcode, name }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/validate`, { barcode, name }, { headers: { 'X-Token': authToken } })
       if(res.status === 200) {
         dispatch({ type: SET_INFOS, payload: res.data.user })
       }

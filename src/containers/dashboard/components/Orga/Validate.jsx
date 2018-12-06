@@ -32,7 +32,6 @@ class Validate extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { barcode, searchInput } = this.state
-    console.log(barcode, searchInput)
     this.setState({ barcode: '', searchInput: null })
     this.props.getInfos(barcode, searchInput)
   }
@@ -52,7 +51,6 @@ class Validate extends React.Component {
       }
     })
 
-    console.log(infos)
     if (infos.paid && infos.orders && !infos.orders.changed) {
       let orders = {
         ethernet: 0,
@@ -92,13 +90,11 @@ class Validate extends React.Component {
           orders.shirts.push(`${gender} ${size.toUpperCase()}`)
         }
       })
-      console.log(orders)
       infos.orders = orders
     }
 
     return (<React.Fragment>
-
-      <h1>Valider une entrée :</h1>
+      <h1>Valider une entrée</h1>
 
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
