@@ -47,15 +47,15 @@ class UsersList extends React.Component {
   }
 
   displayInfoChanged = (displayInfo) => {
-    this.setState({
-      displayInfo
-    })
-
     // Unset hidden filters
-    Object.keys(this.state.search).forEach(key => {
+    this.state.displayInfo.forEach(key => {
       if(!displayInfo.includes(key)) {
         this.clearSearch(key)
       }
+    })
+
+    this.setState({
+      displayInfo
     })
   }
 
@@ -102,7 +102,7 @@ class UsersList extends React.Component {
     let spotlights = []
     let places = []
     users.forEach(user => {
-      if(!teams.includes(user.team)) {
+      if(!teams.includes(user.team) && user.spotlight !== '/') {
         teams.push(user.team)
       }
       
@@ -110,7 +110,7 @@ class UsersList extends React.Component {
         emails.push(user.email)
       }
       
-      if(!spotlights.includes(user.spotlight)) {
+      if(!spotlights.includes(user.spotlight) && user.spotlight !== '/') {
         spotlights.push(user.spotlight)
       }
 
@@ -276,6 +276,7 @@ class UsersList extends React.Component {
                 onChange={v => this.setSearch('team', v)}
                 style={{ width: '250px' }}
               >
+                <Select.Option value="/">(Aucune)</Select.Option>
                 {teams.map((team, i) => <Select.Option value={team} key={i}>{team}</Select.Option>)}
               </Select>
               <Tooltip title="Réinitialiser" placement="right">
@@ -293,6 +294,7 @@ class UsersList extends React.Component {
                 onChange={v => this.setSearch('spotlight', v)}
                 style={{ width: '250px' }}
               >
+                <Select.Option value="/">(Aucun)</Select.Option>
                 {spotlights.map((spotlight, i) => <Select.Option value={spotlight} key={i}>{spotlight}</Select.Option>)}
               </Select>
               <Tooltip title="Réinitialiser" placement="right">

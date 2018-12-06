@@ -63,10 +63,13 @@ class Spotlights extends React.Component {
       }
     ]
 
-    return (<React.Fragment>
-      <AdminBar/>
-      <Table columns={columns} dataSource={rows} locale={{ emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
-    </React.Fragment>)
+    return (
+      <React.Fragment>
+        <AdminBar/>
+        <p style={{ marginTop: '10px' }}><strong>{rows.length} résultat{rows.length > 1 ? 's' : ''}</strong></p>
+        <Table columns={columns} dataSource={rows} locale={{ emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
+      </React.Fragment>
+    )
   }
 }
 const mapStateToProps = state => ({
