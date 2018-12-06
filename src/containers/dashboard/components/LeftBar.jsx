@@ -3,7 +3,6 @@ import { Menu, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchSpotlights } from '../../../modules/spotlights'
-import _ from 'lodash'
 
 const SubMenu = Menu.SubMenu
 

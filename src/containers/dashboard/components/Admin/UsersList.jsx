@@ -50,7 +50,6 @@ class UsersList extends React.Component {
     // Unset hidden filters
     this.state.displayInfo.forEach(key => {
       if(!displayInfo.includes(key)) {
-        console.log("clearing ", key)
         this.clearSearch(key)
       }
     })
@@ -111,7 +110,7 @@ class UsersList extends React.Component {
         emails.push(user.email)
       }
       
-      if(!spotlights.includes(user.spotlight) && user.spotlight != '/') {
+      if(!spotlights.includes(user.spotlight) && user.spotlight !== '/') {
         spotlights.push(user.spotlight)
       }
 

@@ -1,16 +1,13 @@
 import React from 'react'
-import { List, Divider, Collapse, Spin, Icon } from 'antd'
+import { List, Divider, Spin } from 'antd'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { connect } from 'react-redux'
 import { fetchTeamsBySpotlightId } from '../../../../modules/spotlights'
-
-const Panel = Collapse.Panel;
 
 class Players extends React.Component {
   constructor(props) {
     super(props)
     this.props.fetchTeams(props.tournament)
-    console.log('constr')
   }
 
   render() {
