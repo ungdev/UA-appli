@@ -56,7 +56,7 @@ class Accueil extends React.Component {
         <Card
         title={`Match ${i+1}`}
         key={i}
-        style={{ width: 300, margin: '0 1rem' }}
+        style={{ width: 300, margin: '1rem' }}
         extra={m.scheduled_datetime ? moment(m.scheduled_datetime).format('DD/MM HH:mm') : ''}>
           {m.opponents.map(team => getTeam(team))}
           {m.private_note && (
@@ -123,7 +123,7 @@ class Accueil extends React.Component {
 
         <h2>Mes matchs</h2>
 
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {this.getMatches()}
         </div>
       </div>
