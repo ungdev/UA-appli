@@ -130,7 +130,7 @@ class Validate extends React.Component {
         <Card title={<h1>{infos.name} ({infos.firstname} {infos.lastname}) : {infos.plusone ? 'Visiteur' : 'Joueur'}</h1>}>
           {!infos.paid && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}>La personne n'a pas payé sa place !</h1>}
           {infos.scanned && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}><Icon type="warning" /> La place a déjà été scannée !</h1>}
-          {infos.tableLetter && <h1>Emplacement : table {infos.tableLetter}, place {infos.placeNumber}</h1>}
+          <h1>Place : {infos.place}</h1>
           {
             infos.orders && (
               infos.orders.ethernet > 0 ||
