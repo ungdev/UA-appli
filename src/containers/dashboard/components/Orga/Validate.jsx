@@ -2,6 +2,7 @@ import React from 'react'
 import { Spin, Select, Form, Button, Input, Icon, Card } from 'antd'
 import { connect } from 'react-redux'
 import { fetchUsers } from '../../../../modules/admin'
+import { fetchTeams } from '../../../../modules/teams'
 import { getInfos } from '../../../../modules/validate'
 
 
@@ -15,9 +16,11 @@ class Validate extends React.Component {
       searchInput: null,
       focus: false,
       barcode: '',
+      user: null
     }
 
     this.props.fetchUsers()
+    this.props.fetchTeams()
   }
 
   componentDidUpdate = () => {
@@ -36,9 +39,27 @@ class Validate extends React.Component {
     this.props.getInfos(barcode, searchInput)
   }
 
+  getTournamentNameById = (id) => {
+    const spotlight = this.props.spotlights.find(spotlight => spotlight.id === id)
+    return spotlight ? spotlight.shortName : id
+  }
+
   render() {
-    let { users, infos } = this.props
- 
+    let { users, infos, teams } = this.props
+    let spotlightName = null
+
+    if(infos.id) {
+      let team = null
+      teams.teams.forEach(t => {
+        t.users.forEach(user => {
+          if(user.id === infos.id) {
+            team = t
+          }
+        })
+      })
+
+      spotlightName = team ? this.getTournamentNameById(team.spotlightId) : null
+    }
 
     if (!users) {
       return <Spin />
@@ -130,7 +151,8 @@ class Validate extends React.Component {
         <Card title={<h1>{infos.name} ({infos.firstname} {infos.lastname}) : {infos.plusone ? 'Visiteur' : 'Joueur'}</h1>}>
           {!infos.paid && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}>La personne n'a pas payé sa place !</h1>}
           {infos.scanned && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}><Icon type="warning" /> La place a déjà été scannée !</h1>}
-          <h1>Place : {infos.place}</h1>
+          <h1>Tournoi : {spotlightName || '(Aucun)'}</h1>
+          <h1>Place : {infos.place || '(Aucune)'}</h1>
           {
             infos.orders && (
               infos.orders.ethernet > 0 ||
@@ -179,11 +201,14 @@ class Validate extends React.Component {
 }
 const mapStateToProps = state => ({
   users: state.admin.users,
+  teams: state.teams,
+  spotlights: state.spotlights.spotlights,
   infos: state.validate.infos,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsers()),
+  fetchTeams: () => dispatch(fetchTeams()),
   getInfos: (barcode, fullname) => dispatch(getInfos(barcode, fullname))
 })
 
