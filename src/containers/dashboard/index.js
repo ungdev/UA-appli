@@ -65,7 +65,7 @@ class Dashboard extends Component {
     if(tab[1] === 'home' && tab.length === 2) component = <Accueil />
     if(tab[1] === 'tournois' && tab.length === 4) {
       if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6" && tab[2] !== "7") component = <Teams tournament={tab[2]} />
-      if(tab[3] === 'players' && (tab[2] === "5" || tab[2] === "6" || tab[2] === "7")) component = <Players tournament={tab[2]} />
+      if(tab[3] === 'players' && (tab[2] === "5" || tab[2] === "6" || tab[2] === "7" || tab[2] === "libre")) component = <Players tournament={tab[2]} />
       if(tab[3] === 'arbre-tournois') component = <Tournament tournament={tab[2]} />
       if(tab[3] === 'rules') component = <Rules tournament={tab[2]} />
       if(tab[3] === 'contact') component = <Contact tournament={tab[2]} />

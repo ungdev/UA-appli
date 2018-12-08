@@ -84,7 +84,9 @@ class LeftBar extends React.Component {
               current = `3-${tab[2]}-2`
             }
             if(tab[3] === 'players') {
-              current = `3-${tab[2]}-2`
+              tab[2] === 'libre'
+                ? (current = `3-7-2`)
+                : (current = `3-${tab[2]}-2`)
             }
             if(tab[3] === 'decks') {
               current = `3-${tab[2]}-2.3`
@@ -399,6 +401,12 @@ class LeftBar extends React.Component {
             }
           >
             <Menu.Item key={`3-${spotlights.length + 1}-1`}>
+              <Link to={`/dashboard/tournois/libre/players`}>
+                <Icon type="team" />
+                <span>Joueurs</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key={`3-${spotlights.length + 1}-2`}>
               <Link to={`/dashboard/tournois/libre/calendar`}>
                 <Icon type="calendar" />
                 <span>Planning</span>
