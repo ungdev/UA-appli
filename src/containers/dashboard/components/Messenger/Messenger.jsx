@@ -24,6 +24,7 @@ class Messenger extends React.Component {
       maxTitleCaracters: 100,
       maxTextCaracters: 1000
     }
+
     this.loadMessages()
   }
 
@@ -40,7 +41,7 @@ class Messenger extends React.Component {
 
   loadMessages() {
     this.props.setLoading()
-    if (this.props.user && this.props.user.permission && this.props.user.permission.admin) {
+    if (this.props.user && this.props.user.permission && (this.props.user.permission.admin || this.props.user.permission.respo)) {
       this.props.getMessagesByIdUser(this.props.idTo)
     } else {
       this.props.getMessages()
@@ -63,16 +64,17 @@ class Messenger extends React.Component {
   }
 
   render() {
-    
-    let { messages } = this.state
+    let { messages, maxTextCaracters } = this.state
     if (this.state.user !== this.props.user) {
-      this.loadMessages()
+      return ''
     }
-    const { maxTextCaracters } = this.state
+
+    console.log(messages)
 
     let messagesList = (
       <List
         itemLayout="horizontal"
+        locale={{ emptyText: 'Aucun message' }}
         dataSource={messages.map(message => {
           return {
             title:
@@ -89,6 +91,7 @@ class Messenger extends React.Component {
         )}
       />
     )
+
     return (
       <React.Fragment>
         <div>{messagesList}</div>

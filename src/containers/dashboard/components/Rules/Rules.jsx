@@ -33,7 +33,7 @@ class Rules extends React.Component {
         rulesToDisplay = <RulesSSBU />
         break
       default:
-        rulesToDisplay = 'Ce jeu n\'a pas de rêglement sur ce site'
+        rulesToDisplay = 'Ce jeu n\'a pas de règlement.'
     }
     return (
       <div>

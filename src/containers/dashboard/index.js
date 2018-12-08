@@ -103,6 +103,7 @@ class Dashboard extends Component {
       if(user) {
         if(user.permission && user.permission.respo) {
           if(tab[2] === 'conversations') component = <Conversations />
+          if(tab[2] === 'messages') component = <Messenger idTo={tab[3]} />
           if(tab[2] === 'scanned') component = <Scanned />
         }
         else {
