@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Spin, Icon, Collapse } from 'antd'
+import { Spin, Icon, Collapse } from 'antd'
 import { connect } from 'react-redux'
 import { fetchUser } from '../../../../modules/user'
 import { fetchScannedTeams } from '../../../../modules/teams'

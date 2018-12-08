@@ -20,7 +20,8 @@ class UsersList extends React.Component {
         team: [],
         spotlight: [],
         place: [],
-        paid: []
+        paid: [],
+        scanned: []
       },
       displayInfo: ['team', 'spotlight', 'paid']
     }
@@ -185,6 +186,11 @@ class UsersList extends React.Component {
         render: (paid) => {return paid ? <Icon type="check" /> : <Icon type="close" />}
       },
       {
+        title: 'Scanné',
+        dataIndex: 'scanned',
+        render: (scanned) => {return scanned ? <Icon type="check" /> : <Icon type="close" />}
+      },
+      {
         title: 'Actions',
         dataIndex: 'id',
         render: (id) => <UserListActions userId={id} users={this.props.users} />
@@ -214,6 +220,7 @@ class UsersList extends React.Component {
             <Checkbox value="spotlight">Tournoi</Checkbox>
             <Checkbox value="place">Place</Checkbox>
             <Checkbox value="paid">A payé</Checkbox>
+            <Checkbox value="scanned">Scanné</Checkbox>
           </Checkbox.Group>
         </Card>
 
@@ -330,6 +337,18 @@ class UsersList extends React.Component {
               <span style={{ marginRight: '10px' }}>A payé : </span>
               <Checkbox value="true">Payé</Checkbox>
               <Checkbox value="false">Non payé</Checkbox>
+            </Checkbox.Group>
+          }
+
+          {this.state.displayInfo.includes('scanned') &&
+            <Checkbox.Group
+              onChange={v => this.setSearch('scanned', v)}
+              defaultValue={[]}
+              style={{ display: 'block', marginTop: '10px' }}
+            >
+              <span style={{ marginRight: '10px' }}>Scanné : </span>
+              <Checkbox value="true">Scanné</Checkbox>
+              <Checkbox value="false">Non scanné</Checkbox>
             </Checkbox.Group>
           }
         </Card>
