@@ -23,6 +23,7 @@ import Calendar from './components/Libre/Calendar'
 import DashboardLayout from './layout'
 import Messenger from './components/Messenger/Messenger'
 import Conversations from './components/Conversations/Conversations'
+import Scanned from './components/Respo/Scanned'
 
 import { autoLogin } from '../../modules/login'
 
@@ -87,6 +88,7 @@ class Dashboard extends Component {
           if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
           if(tab[2] === 'material') component = <Material />
           if(tab[2] === 'places') component = <Places />
+          if(tab[2] === 'scanned') component = <Scanned />
         }
         else {
           this.props.goToHome()
@@ -101,6 +103,7 @@ class Dashboard extends Component {
       if(user) {
         if(user.permission && user.permission.respo) {
           if(tab[2] === 'conversations') component = <Conversations />
+          if(tab[2] === 'scanned') component = <Scanned />
         }
         else {
           this.props.goToHome()

@@ -37,6 +37,9 @@ class LeftBar extends React.Component {
         if(tab[2] === 'places') {
           current = `2-6`
         }
+        if(tab[2] === 'scanned') {
+          current = '2-7'
+        }
         if(tab.length >= 2 && tab[2] === 'spotlights') {
           openKeys.push('2-4')
           current = `2-4-${tab[3]}`
@@ -48,6 +51,9 @@ class LeftBar extends React.Component {
 
         if(tab[2] === 'conversations') {
           current = '2.1-1'
+        }
+        if(tab[2] === 'scanned') {
+          current = '2.1-2'
         }
       }
 
@@ -99,11 +105,16 @@ class LeftBar extends React.Component {
                 ? (current = `3-7-5`)
                 : (current = `3-${tab[2]}-5`)
             }
-            if (tab[3] === 'calendar' && tab[2] === 'libre') {
-              current = `3-7-1`
-            }
-            if (tab[3] === 'compare' && tab[2] === 'libre') {
-              current = `3-7-2`
+            if(tab[2] === 'libre') {
+              if (tab[3] === 'players') {
+                current = `3-7-1`
+              }
+              if (tab[3] === 'calendar') {
+                current = `3-7-2`
+              }
+              if (tab[3] === 'compare') {
+                current = `3-7-3`
+              }
             }
           }
         }
@@ -273,6 +284,12 @@ class LeftBar extends React.Component {
                 <span>Places</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="2-7">
+            <Link to={'/dashboard/admin/scanned'}>
+              <Icon type="schedule" />
+              <span>Équipes scannées</span>
+            </Link>
+          </Menu.Item>
           </SubMenu>
       )
     }
@@ -292,6 +309,12 @@ class LeftBar extends React.Component {
             <Link to={'/dashboard/respo/conversations'}>
               <Icon type="message" />
               <span>Messagerie tournoi</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="2.1-2">
+            <Link to={'/dashboard/respo/scanned'}>
+              <Icon type="schedule" />
+              <span>Équipes scannées</span>
             </Link>
           </Menu.Item>
         </SubMenu>
