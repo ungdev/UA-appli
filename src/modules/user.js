@@ -54,6 +54,15 @@ export const fetchUser = () => {
       dispatch({ type: SET_USER, payload: res.data.user })
       dispatch({ type: SET_TOKEN, payload: res.data.token })
       dispatch({ type: SET_PRICES, payload: res.data.prices })
+      if(res.data.hasChangedIp) {
+        dispatch(
+          notifActions.notifSend({
+            message: 'Vous serez connecté au réseau d\'ici 1 minute',
+            kind: 'warning',
+            dismissAfter: 20000
+          })
+        )
+      }
 
       var OneSignal = window.OneSignal || [];
       OneSignal.push(["init", {
