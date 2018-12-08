@@ -25,7 +25,7 @@ class LeftBar extends React.Component {
         if (tab[2] === 'users') {
           current = `2-1`
         }
-        if(tab[2] === 'conversations') {
+        if(tab[2] === 'conversations' || tab[2] === 'messages') {
           current = `2-2`
         }
         if(tab[2] === 'paids') {
@@ -49,7 +49,7 @@ class LeftBar extends React.Component {
       if(tab[1] === 'respo') {
         openKeys.push('2.1')
 
-        if(tab[2] === 'conversations') {
+        if(tab[2] === 'conversations' || tab[2] === 'messages') {
           current = '2.1-1'
         }
         if(tab[2] === 'scanned') {

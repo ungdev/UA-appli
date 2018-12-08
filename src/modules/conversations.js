@@ -33,13 +33,18 @@ export default (state = initialState, action) => {
 export const fetchConversations = () => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
+
     if (!authToken || authToken.length === 0) return
-    const conversations = await axios.get(`conversations`, {
+
+    const res = await axios.get(`conversations`, {
       headers: { 'X-Token': authToken }
     })
-    dispatch({
-      type: SET_CONVERSATIONS,
-      payload: conversations.data
-    })
+
+    if(res.status === 200) {
+      dispatch({
+        type: SET_CONVERSATIONS,
+        payload: res.data
+      })
+    }
   }
 }

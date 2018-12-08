@@ -21,11 +21,7 @@ export default (state = initialState, action) => {
       //test has new elements
       messages = state.messages.splice(0) // peut poser probleme de splice
       if (!messages) messages = []
-      action.payload.forEach(message => {
-        let found = messages.find(i => message.id === i.id) // if we find a matching spotlight
-        if (!found) messages.push(message) //we do not add it to the tab
-      })
-      // infos.sort((info1, info2) => info1.createdAt < info2.createdAt ? 1 : -1)
+      messages = action.payload
       return { messages: messages, loading: false }
     case SET_MESSAGES_LOADING:
       return { ...state, loading: true }

@@ -3,20 +3,27 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { autoLogin } from '../../../../modules/login'
+import { fetchUsers } from '../../../../modules/admin'
 import {
   fetchConversations,
   SET_CONVERSATIONS_LOADING
 } from '../../../../modules/conversations'
-import { List, Avatar } from 'antd'
+import { List, Avatar, Collapse, Input, Button, Tooltip, Icon, Select, Table } from 'antd'
+
+const InputGroup = Input.Group
 
 class Conversations extends React.Component {
   constructor(props) {
     super(props)
-    this.loadConversations()
+    
     this.state = {
       conversations: this.props.conversations,
-      user: this.props.user
+      user: this.props.user,
+      search: []
     }
+
+    this.loadConversations()
+    this.props.fetchUsers()
   }
 
   loadConversations() {
@@ -33,14 +40,39 @@ class Conversations extends React.Component {
     }
   }
 
+  setSearch = v => {
+    this.setState({
+      search: v
+    })
+  }
+
+  clearSearch = () => {
+    this.setState({
+      search: []
+    })
+  }
+
+  startConversation = (id) => {
+    this.props.goToConversation(window.location.pathname.split('/')[2], id)
+  }
+
+  getTournamentNameById = (id) => {
+    const spotlight = this.props.spotlights.find(spotlight => spotlight.id === id)
+    return spotlight ? spotlight.shortName : id
+  }
+
   render() {
     let { conversations } = this.state
-    // let conversationsList = conversations.map(conversation => {
-    //   return (
-    //     <Card
-    //       title={conversation.User2.name} />
-    //   )
-    // })
+    let { users } = this.props
+
+    users = users.map(user => {
+      return {
+        ...user,
+        fullname: `${user.name} (${user.firstname} ${user.lastname})`,
+        spotlight: this.getTournamentNameById(user.spotlightId)
+      }
+    })
+    
     let conversationsList = ''
     if (conversations) {
       conversationsList = (
@@ -50,7 +82,7 @@ class Conversations extends React.Component {
             return {
               title: conversation.User2.name,
               idTo: conversation.User2.id,
-              lastMessage: conversation.messages[0].senderId // only one element in messages[] got through API
+              lastMessage: conversation.messages[0] ? conversation.messages[0].senderId : null // only one element in messages[] got through API
             }
           })}
           renderItem={item => (
@@ -74,7 +106,7 @@ class Conversations extends React.Component {
                 }
                 description={
                   <Link
-                    to={{ pathname: `/dashboard/admin/messages/${item.idTo}` }}
+                    to={{ pathname: `/dashboard/${window.location.pathname.split('/')[2]}/messages/${item.idTo}` }}
                   >
                     Accéder à la conversation
                   </Link>
@@ -86,13 +118,74 @@ class Conversations extends React.Component {
         />
       )
     }
+
+    let columns = [
+      {
+        title: 'Utilisateur',
+        dataIndex: 'fullname'
+      },
+      {
+        title: 'Équipe',
+        dataIndex: 'team'
+      },
+      {
+        title: 'Tournoi',
+        dataIndex: 'spotlight'
+      },
+      {
+        title: 'Actions',
+        dataIndex: 'id',
+        render: (id) => <Tooltip title="Commencer une conversation"><Button type="primary" onClick={() => this.startConversation(id)}><Icon type="arrow-right" /></Button></Tooltip>
+      }
+    ]
+
+    let rows = users
+    if(this.state.search.length > 0) {
+      rows = rows.filter(user => {
+        return this.state.search.includes(user.fullname)
+      })
+    }
     
-    return <div>{conversationsList}</div>
+    return (
+      <div>
+        <Collapse>
+          <Collapse.Panel header="Commencer une conversation">
+            <InputGroup compact style={{ marginTop: '10px' }}>
+              <Select
+                mode="tags"
+                placeholder="Nom d'utilisateur"
+                value={this.state.search}
+                onChange={v => this.setSearch(v)}
+                style={{ width: '250px' }}
+              >
+                {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+              </Select>
+              <Tooltip title="Réinitialiser" placement="right">
+                <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={this.clearSearch}><Icon type="close"></Icon></Button>
+              </Tooltip>
+            </InputGroup>
+
+            <Table
+              columns={columns}
+              dataSource={rows}
+              rowKey="id"
+              locale={{ emptyText: 'Aucun utilisateur' }}
+              style={{ marginTop: '20px' }}
+            />
+          </Collapse.Panel>
+        </Collapse>
+        <br />
+
+        {conversationsList}
+      </div>
+    )
   }
 }
 
 const mapStateToProps = state => ({
   user: state.user.user,
+  users: state.admin.users,
+  spotlights: state.spotlights.spotlights,
   conversations: state.conversations.conversations,
   loading: state.conversations.loading,
   location: state.routing.location.pathname
@@ -103,8 +196,9 @@ const mapDispatchToProps = dispatch => ({
   redirectToHome: () => dispatch(push('/dashboard/home')),
   goToHome: () => dispatch(push('/dashboard/home')),
   getConversations: () => dispatch(fetchConversations()),
-  // sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
-  setLoading: () => dispatch({ type: SET_CONVERSATIONS_LOADING })
+  fetchUsers: () => dispatch(fetchUsers()),
+  setLoading: () => dispatch({ type: SET_CONVERSATIONS_LOADING }),
+  goToConversation: (role, id) => {console.log(`/dashboard/${role}/messages/${id}`); dispatch(push(`/dashboard/${role}/messages/${id}`))}
 })
 
 export default connect(

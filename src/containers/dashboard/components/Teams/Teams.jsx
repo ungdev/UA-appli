@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Divider, Collapse, Spin, Icon } from 'antd'
+import { List, Divider, Collapse, Spin, Icon, Tooltip } from 'antd'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 import { connect } from 'react-redux'
 import { fetchTeamsBySpotlightId } from '../../../../modules/spotlights'
@@ -33,7 +33,7 @@ class Teams extends React.Component {
                 renderItem={item => (
                   <List.Item>
                     <List.Item.Meta
-                      title={<div>{team.captainId === item.id ? <Icon type='star'/> : ''} {item.name}</div>}
+                      title={<div>{team.captainId === item.id ? <Tooltip title="Chef d'équipe"><Icon type="star" style={{ color: '#1890ff', marginRight: '5px' }} /></Tooltip> : ''} {item.name}</div>}
                       description={item.role ? item.role : ''}
                     />
                   </List.Item>
