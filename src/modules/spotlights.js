@@ -8,6 +8,7 @@ export const SET_SPOTLIGHT_STATE = 'spotlights/SET_SPOTLIGHT_STATE'
 export const ADD_SPOTLIGHT_STATE = 'spotlights/ADD_SPOTLIGHT_STATE'
 export const SET_SPOTLIGHT_STAGES = 'spotlights/SET_SPOTLIGHT_STAGES'
 export const SET_SPOTLIGHT_MATCHES = 'spotlights/SET_SPOTLIGHT_MATCHES'
+export const SET_LIBRE_PLAYERS = 'spotlights/SET_LIBRE_PLAYERS'
 
 const initialState = {
   spotlights: [],
@@ -34,9 +35,14 @@ export default (state = initialState, action) => {
     case SET_SPOTLIGHT_STATE:
       spotlights = state.spotlights.splice(0)
       index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10))
-      if(index === -1) return state
+      if(index === -1) {
+        return state
+      }
       spotlights[index].state = action.payload.stateValue
-      return { ...state, spotlights}
+      return {
+        ...state,
+        spotlights
+      }
     case ADD_SPOTLIGHT_STATE:
       spotlights = state.spotlights.splice(0)
       index = spotlights.findIndex(spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10))
@@ -70,6 +76,11 @@ export default (state = initialState, action) => {
           ...state.matches,
           [action.payload.spotlightId]: action.payload.matches
         }
+      }
+    case SET_LIBRE_PLAYERS:
+      return {
+        ...state,
+        librePlayers: action.payload
       }
     default:
       return state
@@ -192,6 +203,32 @@ export const fetchTeamsBySpotlightId = (id) => {
       const req = await axios.get(`spotlights/${id}/teams`, { headers: { 'X-Token': authToken } })
       dispatch({
         type: SET_SPOTLIGHT_TEAMS,
+        payload: req.data
+      })
+    } catch(err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: errorToString(err.response.data.error),
+          kind: 'danger',
+          dismissAfter: 2000
+        })
+      )
+    }
+  }
+}
+
+export const fetchLibrePlayers = () => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+    try {
+      const req = await axios.get(`spotlights/libre/players`, { headers: { 'X-Token': authToken } })
+      dispatch({
+        type: SET_LIBRE_PLAYERS,
         payload: req.data
       })
     } catch(err) {
