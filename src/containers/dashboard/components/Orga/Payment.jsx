@@ -210,7 +210,7 @@ class Payment extends React.Component {
           okText="Ok"
           cancelText="Annuler"
         >
-          <p>Cela validera le paiement de l'utilisateur et il recevra sa place par mail.</p>
+          <p>Cela validera le paiement de l'utilisateur, le marquera comme scanné et il recevra sa place par mail.</p>
         </Modal>
       </React.Fragment>
     )
