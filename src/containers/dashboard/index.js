@@ -38,14 +38,14 @@ class Dashboard extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidReceiveProps(nextProps) {
     this.setState({
       path: nextProps.match.path,
       pathname: nextProps.location.pathname
     })
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.autoLogin()
   }
 

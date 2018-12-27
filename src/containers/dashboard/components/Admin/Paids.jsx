@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
 import { fetchChartData } from '../../../../modules/admin'
-import {Line} from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 
 
 class Paids extends React.Component {
@@ -18,7 +18,7 @@ class Paids extends React.Component {
     this.props.fetchChartData()
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  componentDidReceiveProps = (nextProps) => {
     if (nextProps.data !== this.state.data) {
       this.setState({
         data: nextProps.data,

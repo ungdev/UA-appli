@@ -10,11 +10,9 @@ class Pizza extends React.Component {
     this.state = {
       show: false
     }
-
-    this.trigger = this.trigger.bind(this)
   }
 
-  trigger() {
+  trigger = () => {
     this.setState({
       show: true
     })

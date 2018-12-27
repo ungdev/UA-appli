@@ -9,7 +9,7 @@ class CustomBreadcrumb extends React.Component {
       path: this.props.path,
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidReceiveProps(nextProps) {
     this.setState({ path: nextProps.path })
   }
   render() {

@@ -10,7 +10,7 @@ import { autoLogin } from "../../modules/login"
 import { push } from "react-router-redux"
 
 class Home extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchCanLogin()
     this.props.autoLogin()
   }
