@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import Accueil from './components/Accueil'
+import Home from './components/Home'
 import HsDecks from './components/hs/HsDecks'
 import MyHsDecks from './components/hs/MyHsDecks'
 import Tournament from './components/Tournament'
@@ -62,7 +62,7 @@ class Dashboard extends Component {
       this.props.goToHome()
     }
     
-    if(tab[1] === 'home' && tab.length === 2) component = <Accueil />
+    if(tab[1] === 'home' && tab.length === 2) component = <Home />
     if(tab[1] === 'tournois' && tab.length === 4) {
       if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6" && tab[2] !== "7") component = <Teams tournament={tab[2]} />
       if(tab[3] === 'players' && (tab[2] === "5" || tab[2] === "6" || tab[2] === "7" || tab[2] === "libre")) component = <Players tournament={tab[2]} />

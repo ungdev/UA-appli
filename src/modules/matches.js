@@ -18,19 +18,21 @@ export default (state = initialState, action) => {
   }
 }
 
-
 export const fetchMatches = (spotlightID, participantID) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
-    if (!authToken || authToken.length === 0) return
+    if (!authToken || authToken.length === 0) {
+      return
+    }
 
     const res = await axios.get(`matches/${participantID}`,
-    {
-      headers: { 'X-Token': authToken },
-      params: { spotlightID }
-    })
-    if(res.status === 200){
+      {
+        headers: { 'X-Token': authToken },
+        params: { spotlightID }
+      })
+
+    if(res.status === 200) {
       dispatch({
         type: SET_MATCHES,
         payload: res.data

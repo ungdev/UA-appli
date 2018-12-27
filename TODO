@@ -1,14 +1,10 @@
-- infos -> infos gobales, infos réseau
-- page d'accueil home
+- infos -> infos globales, infos réseau
 - responsive
 - contact avec slack et système de thread
 - ajouter un bouton refresh aux infos
 - ajouter des notifications aux infos
-- ajouter toornament
 - ajouter un lien vers le discord
 - ajouter steam
 - ajouter les features du libre
 - ajouter twitch sur le site
-
-- assignement/changement de places
 - refresh les infos lors d'un ajout

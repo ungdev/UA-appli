@@ -9,7 +9,6 @@ import Delete from './Delete'
 const { TextArea } = Input
 
 class Info extends React.Component {
-
   constructor(props) {
     super(props)
     this.loadData(0, 5)
@@ -69,7 +68,7 @@ class Info extends React.Component {
     }
     const loadMore = ( !loading ? (
       <div style={{ textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px' }}>
-        <Button onClick={this.loadMoreData}>voir plus ancien</Button>
+        <Button onClick={this.loadMoreData}>Plus ancien</Button>
       </div>
     ) : null)
     

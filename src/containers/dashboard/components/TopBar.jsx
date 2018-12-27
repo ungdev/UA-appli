@@ -22,9 +22,6 @@ class TopBar extends React.Component {
           <img src={Logo_UA} alt="" />
           <span>UTT Arena</span>
         </div>
-        {user &&
-          <div style={{ position: 'absolute', left: '260px', color: '#fff' }}>{user.name} (Place : {user.place})</div>
-        }
         
         <Menu
           theme="dark"
