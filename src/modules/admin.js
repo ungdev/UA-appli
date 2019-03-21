@@ -14,6 +14,7 @@ export const SET_USER_PLACE = 'admin/SET_USER_PLACE'
 export const SWITCH_USERS_PLACES = 'admin/SWITCH_USERS_PLACES'
 export const SET_USER_RESPO = 'admin/SET_USER_RESPO'
 export const SET_USER_PERMISSION = 'admin/SET_USER_PERMISSION'
+export const RENAME_USER = 'admin/RENAME_USER'
 
 const initialState = {
   users: [],
@@ -109,6 +110,13 @@ export default (state = initialState, action) => {
     case SET_USER_PERMISSION:
       index = users.findIndex(u => u.id === action.payload.id)
       users[index].permission.permission = action.payload.permission.toString()
+      return {
+        ...state,
+        users
+      }
+    case RENAME_USER:
+      index = users.findIndex(u => u.id === action.payload.id)
+      users[index] = {...users[index], ...action.payload.newName}
       return {
         ...state,
         users
@@ -539,6 +547,38 @@ export const setPermission = (id, permission) => {
           kind: 'danger',
           dismissAfter: 2000
       }))
+    }
+  }
+}
+
+export const renameUser = (id, newName) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      console.log({...newName})
+      const res = await axios.put(`/admin/renameUser/${id}`, { ...newName }, { headers: { 'X-Token': authToken } })
+
+      if(res.status === 200) {
+        dispatch({ type: RENAME_USER, payload: { id, newName } })
+        dispatch(
+          notifActions.notifSend({
+            message: 'Le nom de l`\'utilisateur à bien été modifié',
+            dismissAfter: 2000
+          }))
+      }
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: 'Une erreur est survenue',
+          kind: 'danger',
+          dismissAfter: 2000
+        }))
     }
   }
 }
