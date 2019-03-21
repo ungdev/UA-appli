@@ -40,7 +40,12 @@ class Players extends React.Component {
             ? <List
                 bordered
                 dataSource={teams}
-                renderItem={item => (<List.Item>{item.name.substring(0, item.name.length - 10)}</List.Item>)}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta title={item.name.substring(0, item.name.length - 10)}/>
+                    <div>{item.users[0].place}</div>
+                  </List.Item>
+                )}
               />
             : <Spin />
           }

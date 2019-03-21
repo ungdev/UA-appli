@@ -36,6 +36,7 @@ class Teams extends React.Component {
                       title={<div>{team.captainId === item.id ? <Tooltip title="Chef d'équipe"><Icon type="star" style={{ color: '#1890ff', marginRight: '5px' }} /></Tooltip> : ''} {item.name}</div>}
                       description={item.role ? item.role : ''}
                     />
+                    <div>{item.place}</div>
                   </List.Item>
                 )}
               />
