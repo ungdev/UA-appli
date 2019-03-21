@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
 import { fetchAdminSpotlight } from '../../../../modules/admin'
+import SpotlightsActions from "./components/SpotlightsActions";
 
 
 class Spotlights extends React.Component {
@@ -60,6 +61,11 @@ class Spotlights extends React.Component {
       {
         title: 'Date de complétion',
         dataIndex: 'date',
+      },
+      {
+        title: 'Actions',
+        dataIndex: 'id',
+        render: (id) => <SpotlightsActions teamId={id} spotlightId={thisSpotlight.id} teams={rows}/>
       }
     ]
 

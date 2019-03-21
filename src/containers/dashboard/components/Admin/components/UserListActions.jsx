@@ -14,7 +14,6 @@ class UserListActions extends React.Component {
 
     const { users, userId } = props;
     const user = users.find(u => u.id === userId)
-    console.log(user);
     this.state = {
       setAdminModalVisible: false,
       removeAdminModalVisible: false,
@@ -114,7 +113,7 @@ class UserListActions extends React.Component {
   }
 
   openRenameModal = () => {
-    if(this.isNewNameValid() && this.isNewNameValid() && this.isNewLastnameValid())
+    if(this.isNewNameValid() && this.isNewFirstnameValid() && this.isNewLastnameValid())
       this.setState({
         renameModalVisible: true,
         mainModalVisible: false

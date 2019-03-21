@@ -61,7 +61,7 @@ class SpotlightsActions extends React.Component {
   }
 
   renameTeam = () => {
-    this.props.renameTeam(this.props.teamId, this.state.newName)
+    this.props.renameTeam(this.props.teamId, this.props.spotlightId, this.state.newName)
 
     this.setState({
       renameModalVisible: false
@@ -135,15 +135,11 @@ class SpotlightsActions extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {state: state}
-}
-
 const mapDispatchToProps = dispatch => ({
-  renameTeam: (id, newName) => dispatch(renameTeam(id, newName))
+  renameTeam: (teamId, spotlightId, newName) => dispatch(renameTeam(teamId, spotlightId, newName))
 })
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(SpotlightsActions)
