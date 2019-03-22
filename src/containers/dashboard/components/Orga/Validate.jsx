@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spin, Select, Form, Button, Input, Icon, Card } from 'antd'
+import { Spin, Form, Button, Input, Icon, Card, AutoComplete } from "antd";
 import { connect } from 'react-redux'
 import { fetchUsers } from '../../../../modules/admin'
 import { fetchTeams } from '../../../../modules/teams'
@@ -13,30 +13,40 @@ class Validate extends React.Component {
     super(props)
     
     this.state = {
-      searchInput: null,
-      focus: false,
       barcode: '',
-      user: null
+      users: null,
+      fullName: null
     }
 
     this.props.fetchUsers()
     this.props.fetchTeams()
   }
 
-  componentDidUpdate = () => {
-    this.input.focus()
+  handleAutocomplete = (value) => {
+    const users = this.props.users
+      .map(user => `${user.name} (${user.firstname} ${user.lastname})`)
+      .filter(user => user.toUpperCase().includes(value.toUpperCase())) // Filter case insensitive
+      .slice(0, 10)
+
+    this.setState(
+      {
+        users: users,
+        fullName: value
+      })
   }
-  setSearchInput = (input) => {
+
+  selectUser = (value) => {
     this.setState({
-      searchInput: input
+      fullName: value
     })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const { barcode, searchInput } = this.state
-    this.setState({ barcode: '', searchInput: null })
-    this.props.getInfos(barcode, searchInput)
+    const { barcode, fullName } = this.state
+    this.setState({ barcode: '', fullName: null })
+    this.input.focus()
+    this.props.getInfos(barcode, fullName)
   }
 
   getTournamentNameById = (id) => {
@@ -64,13 +74,6 @@ class Validate extends React.Component {
     if (!users) {
       return <Spin />
     }
-
-    users = users.map(user => {
-      return {
-        ...user,
-        fullname: `${user.name} (${user.firstname} ${user.lastname})`,
-      }
-    })
 
     if (infos.paid && infos.orders && !infos.orders.changed) {
       let orders = {
@@ -129,17 +132,13 @@ class Validate extends React.Component {
         </FormItem>
         ou <br/>
         <FormItem>
-          <Select
-            showSearch
+          <AutoComplete
+            dataSource={this.state.users}
+            value={this.state.fullName}
+            onSearch={this.handleAutocomplete}
+            onSelect={this.selectUser}
             placeholder="Nom, prénom ou pseudo"
-            value={this.state.searchInput !== null ? this.state.searchInput : undefined}
-            onChange={this.setSearchInput}
-            style={{ width: '300px' }}
-            name="fullname"
-            type="select"
-          >
-            {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
-          </Select>
+          />
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit" className="login-form-button">
