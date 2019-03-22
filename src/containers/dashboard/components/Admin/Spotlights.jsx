@@ -65,7 +65,7 @@ class Spotlights extends React.Component {
       {
         title: 'Actions',
         dataIndex: 'id',
-        render: (id) => <SpotlightsActions teamId={id} spotlightId={thisSpotlight.id} teams={rows}/>
+        render: (id) => <SpotlightsActions teamId={id} spotlightId={thisSpotlight.id} teams={this.props.spotlights[thisSpotlight.id]}/>
       }
     ]
 

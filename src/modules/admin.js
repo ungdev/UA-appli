@@ -16,6 +16,7 @@ export const SET_USER_RESPO = 'admin/SET_USER_RESPO'
 export const SET_USER_PERMISSION = 'admin/SET_USER_PERMISSION'
 export const RENAME_USER = 'admin/RENAME_USER'
 export const RENAME_TEAM = 'admin/RENAME_TEAM'
+export const SET_CAPTAIN = 'admin/SET_CAPTAIN'
 
 const initialState = {
   users: [],
@@ -28,6 +29,7 @@ export default (state = initialState, action) => {
   let users = state.users.slice(0)
   let spotlights = state.spotlights.slice(0)
   let userId = null
+  let spotlightId = null
   let index = null
 
   switch (action.type) {
@@ -123,10 +125,18 @@ export default (state = initialState, action) => {
         users
       }
     case RENAME_TEAM:
-      const spotlightId = action.payload.spotlightId;
+      spotlightId = action.payload.spotlightId;
       index = spotlights[spotlightId].findIndex(s => s.id === action.payload.teamId)
-      spotlights[spotlightId][index] = {...spotlights[spotlightId][index], name: action.payload.newName}
+      spotlights[spotlightId][index] = {...spotlights[spotlightId][index], name: action.payload.teamName}
+      return {
+        ...state,
+        spotlights
+      }
 
+    case SET_CAPTAIN:
+      spotlightId = action.payload.spotlightId;
+      index = spotlights[spotlightId].findIndex(s => s.id === action.payload.teamId)
+      spotlights[spotlightId][index] = {...spotlights[spotlightId][index], captainId: action.payload.captainId}
       return {
         ...state,
         spotlights
@@ -577,7 +587,7 @@ export const renameUser = (id, newName) => {
         dispatch({ type: RENAME_USER, payload: { id, newName } })
         dispatch(
           notifActions.notifSend({
-            message: 'Le nom de l`\'utilisateur à bien été modifié',
+            message: 'Le nom de l\'utilisateur a été modifié',
             dismissAfter: 2000
           }))
       }
@@ -593,7 +603,7 @@ export const renameUser = (id, newName) => {
   }
 }
 
-export const renameTeam = (teamId, spotlightId, newName) => {
+export const renameTeam = (teamId, spotlightId, teamName) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -602,13 +612,44 @@ export const renameTeam = (teamId, spotlightId, newName) => {
     }
 
     try {
-      const res = await axios.put(`/admin/renameTeam/${teamId}`, { name: newName }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(`/admin/renameTeam/${teamId}`, { name: teamName }, { headers: { 'X-Token': authToken } })
 
       if(res.status === 200) {
-        dispatch({ type: RENAME_TEAM, payload: { teamId, spotlightId, newName } })
+        dispatch({ type: RENAME_TEAM, payload: {teamId, spotlightId, teamName}})
         dispatch(
           notifActions.notifSend({
-            message: 'Le nom de l\'équipe a bien été modifié',
+            message: 'Le nom de l\'équipe a été modifié',
+            dismissAfter: 2000
+          }))
+      }
+    } catch (err) {
+      console.log(err)
+      dispatch(
+        notifActions.notifSend({
+          message: 'Une erreur est survenue',
+          kind: 'danger',
+          dismissAfter: 2000
+        }))
+    }
+  }
+}
+
+export const setCaptain = (teamId, spotlightId, captainId) => {
+  return async (dispatch, getState) => {
+    const authToken = getState().login.token
+
+    if (!authToken || authToken.length === 0) {
+      return
+    }
+
+    try {
+      const res = await axios.put(`/admin/setCaptain/${teamId}`, { userId: captainId }, { headers: { 'X-Token': authToken } })
+
+      if(res.status === 200) {
+        dispatch({ type: SET_CAPTAIN, payload: {teamId, spotlightId, captainId}})
+        dispatch(
+          notifActions.notifSend({
+            message: `Le capitaine d'équipe a été modifié`,
             dismissAfter: 2000
           }))
       }
