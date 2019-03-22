@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Icon, Input, List, Modal, Table, Tooltip } from "antd";
+import { Button, Icon, Input, List, Modal, Tooltip } from "antd";
 import { connect } from "react-redux";
 import { renameTeam, setCaptain } from "../../../../../modules/admin";
 
@@ -8,7 +8,7 @@ class SpotlightsActions extends React.Component {
 
   constructor(props) {
     super(props)
-    const { teamId, teams, spotlightId } = props;
+    const { teamId, teams } = props;
     const team = teams.find(t => t.id === teamId);
 
     this.state = {
@@ -103,7 +103,7 @@ class SpotlightsActions extends React.Component {
       }}
     )
       .sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0) // Sort alphabetically
-      .sort((a, b) => a.id === team.captainId ? -1 : b.id === team.captainId ? 1 : 0)
+      .sort((a, b) => a.id === team.captainId ? -1 : b.id === team.captainId ? 1 : 0) // Captain first
 
     return (
       <React.Fragment>
@@ -152,7 +152,7 @@ class SpotlightsActions extends React.Component {
                   <Tooltip placement="left" title="Rendre chef d'équipe">
                     <Button
                       type="primary"
-                      onClick={() => {this.state.captainId = user.id; return this.openSetCaptainModal()}}
+                      onClick={() => {this.setState({captainId: user.id}); return this.openSetCaptainModal()}}
                       className="admin-action-button">
                       <Icon type="arrow-up" />
                     </Button>

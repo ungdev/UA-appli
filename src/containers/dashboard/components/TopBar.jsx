@@ -14,8 +14,6 @@ class TopBar extends React.Component {
   }
 
   render() {
-    const { user } = this.props
-
     return (
       <Header className="header">
         <div className="logo">
