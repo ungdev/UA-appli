@@ -1,4 +1,4 @@
-# UTT Arena 2018
+# Appli UTT Arena
 
 ## Requirements
 
@@ -8,11 +8,11 @@
 ## Installation
 
 ```
-git clone git@github.com:ungdev/UA-App-2018.git
+git clone git@github.com:ungdev/UA-appli.git
 # or
-git clone https://github.com/ungdev/UA-App-2018.git
+git clone https://github.com/ungdev/UA-appli.git
 
-cd arena.utt.fr-2018
+cd UA-appli
 yarn
 ```
 
@@ -44,7 +44,7 @@ yarn lint   # prettier lint
 ## Structure
 
 ```
-UA-App-2018/
+UA-appli/
 ├── public/                       # public assets that will be served directly (should not be used for fonts, images nor css)
 ├── src/                          # base directory
 │   ├── assets/                      # assets (eg. fonts, images, css)
