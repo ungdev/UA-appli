@@ -1,4 +1,7 @@
-# Appli UTT Arena
+# UA-appli
+Application web de l'UTT Arena permettant aux joueurs d'accéder à des informations sur les tournois et au staff de gérer l'événement
+
+[https://uttarena.app](https://uttarena.app)
 
 ## Requirements
 
