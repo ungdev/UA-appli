@@ -1,13 +1,13 @@
-import React from "react"
-import { connect } from "react-redux"
+import React from 'react'
+import { connect } from 'react-redux'
 
-import "./home.css"
+import './home.css'
 
-import Intro from "./components/intro"
+import Intro from './components/intro'
 
-import { fetchCanLogin } from "../../modules/canLogin"
-import { autoLogin } from "../../modules/login"
-import { push } from "react-router-redux"
+import { fetchCanLogin } from '../../modules/canLogin'
+import { autoLogin } from '../../modules/login'
+import { push } from 'react-router-redux'
 
 class Home extends React.Component {
   componentWillMount() {
@@ -37,7 +37,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCanLogin: () => dispatch(fetchCanLogin()),
   autoLogin: () => dispatch(autoLogin()),
-  gotoDashboard: () => dispatch(push("/dashboard/home"))
+  gotoDashboard: () => dispatch(push('/dashboard/home'))
 })
 
 export default connect(

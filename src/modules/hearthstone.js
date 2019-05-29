@@ -8,7 +8,7 @@ export const DELETE_DECK = 'hearthstone/DELETE_DECK'
 
 const initialState = {
   players: [],
-  decks: [],
+  decks: []
 }
 
 export default (state = initialState, action) => {
@@ -30,7 +30,9 @@ export default (state = initialState, action) => {
       decks = state.decks.splice(0)
       let players = state.players.splice(0)
       decks[action.payload] = null
-      const playerIndex = players.findIndex(player => player.decks.find(deck => deck.id === action.payload) !== undefined)
+      const playerIndex = players.findIndex(
+        player => player.decks.find(deck => deck.id === action.payload) !== undefined
+      )
       const deckIndex = players[playerIndex].decks.findIndex(deck => deck.id === action.payload)
       players[playerIndex].decks.splice(deckIndex)
       return {
@@ -60,7 +62,8 @@ export const fetchHSPlayers = () => {
           message: errorToString(err.response.data.error),
           kind: 'danger',
           dismissAfter: 2000
-      }))
+        })
+      )
     }
   }
 }
@@ -74,7 +77,11 @@ export const addDeck = (name, deckstring) => {
     }
 
     try {
-      await axios.post(`hearthstone/decks`, { name, deckstring }, { headers: { 'X-Token': authToken } })
+      await axios.post(
+        `hearthstone/decks`,
+        { name, deckstring },
+        { headers: { 'X-Token': authToken } }
+      )
       dispatch(fetchHSPlayers())
     } catch (err) {
       console.log(err)
@@ -83,13 +90,13 @@ export const addDeck = (name, deckstring) => {
           message: errorToString(err.response.data.error),
           kind: 'danger',
           dismissAfter: 2000
-      }))
+        })
+      )
     }
   }
 }
 
-
-export const deleteDeck = (id) => {
+export const deleteDeck = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -107,13 +114,13 @@ export const deleteDeck = (id) => {
           message: errorToString(err.response.data.error),
           kind: 'danger',
           dismissAfter: 2000
-      }))
+        })
+      )
     }
   }
 }
 
-
-export const getDeck = (id) => {
+export const getDeck = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -131,7 +138,8 @@ export const getDeck = (id) => {
           message: errorToString(err.response.data.error),
           kind: 'danger',
           dismissAfter: 2000
-      }))
+        })
+      )
     }
   }
 }

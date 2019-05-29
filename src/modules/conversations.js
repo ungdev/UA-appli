@@ -40,7 +40,7 @@ export const fetchConversations = () => {
       headers: { 'X-Token': authToken }
     })
 
-    if(res.status === 200) {
+    if (res.status === 200) {
       dispatch({
         type: SET_CONVERSATIONS,
         payload: res.data

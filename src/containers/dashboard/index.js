@@ -56,96 +56,91 @@ class Dashboard extends Component {
   render() {
     let component = null
     let tab = this.props.location.split('/')
-    tab.splice(0,1) // remove first element because it's equal to ''
+    tab.splice(0, 1) // remove first element because it's equal to ''
 
-    if(tab[0] !== 'dashboard') {
+    if (tab[0] !== 'dashboard') {
       this.props.goToHome()
     }
-    
-    if(tab[1] === 'home' && tab.length === 2) component = <Accueil />
-    if(tab[1] === 'tournois' && tab.length === 4) {
-      if(tab[3] === 'teams' && tab[2] !== "5" && tab[2] !== "6" && tab[2] !== "7") component = <Teams tournament={tab[2]} />
-      if(tab[3] === 'players' && (tab[2] === "5" || tab[2] === "6" || tab[2] === "7" || tab[2] === "libre")) component = <Players tournament={tab[2]} />
-      if(tab[3] === 'arbre-tournois') component = <Tournament tournament={tab[2]} />
-      if(tab[3] === 'rules') component = <Rules tournament={tab[2]} />
-      if(tab[3] === 'contact') component = <Contact tournament={tab[2]} />
-      if(tab[3] === 'decks' && tab[2] === "5") component = <HsDecks />
-      if(tab[3] === 'mydecks' && tab[2] === "5") component = <MyHsDecks />
-      if(tab[3] === 'info') component = <Info tournament={tab[2]} />
-      if(tab[3] === 'compare' && tab[2] === 'libre') component = <Compare />
-      if(tab[3] === 'calendar' && tab[2] === 'libre') component = <Calendar />
+
+    if (tab[1] === 'home' && tab.length === 2) component = <Accueil />
+    if (tab[1] === 'tournois' && tab.length === 4) {
+      if (tab[3] === 'teams' && tab[2] !== '5' && tab[2] !== '6' && tab[2] !== '7')
+        component = <Teams tournament={tab[2]} />
+      if (
+        tab[3] === 'players' &&
+        (tab[2] === '5' || tab[2] === '6' || tab[2] === '7' || tab[2] === 'libre')
+      )
+        component = <Players tournament={tab[2]} />
+      if (tab[3] === 'arbre-tournois') component = <Tournament tournament={tab[2]} />
+      if (tab[3] === 'rules') component = <Rules tournament={tab[2]} />
+      if (tab[3] === 'contact') component = <Contact tournament={tab[2]} />
+      if (tab[3] === 'decks' && tab[2] === '5') component = <HsDecks />
+      if (tab[3] === 'mydecks' && tab[2] === '5') component = <MyHsDecks />
+      if (tab[3] === 'info') component = <Info tournament={tab[2]} />
+      if (tab[3] === 'compare' && tab[2] === 'libre') component = <Compare />
+      if (tab[3] === 'calendar' && tab[2] === 'libre') component = <Calendar />
     }
 
-    if(tab[1] === 'admin') {
+    if (tab[1] === 'admin') {
       let user = this.props.user
 
-      if(user) {
-        if(user.permission && user.permission.admin) {
-          if(tab[2] === 'users') component = <UsersList />
-          if(tab[2] === 'paids') component = <Paids />
-          if(tab[2] === 'spotlights') component = <Spotlights />
-          if(tab[2] === 'conversations') component = <Conversations />
-          if(tab[2] === 'messages') component = <Messenger idTo={tab[3]}/>
-          if(tab[2] === 'material') component = <Material />
-          if(tab[2] === 'places') component = <Places />
-          if(tab[2] === 'scanned') component = <Scanned />
-        }
-        else {
+      if (user) {
+        if (user.permission && user.permission.admin) {
+          if (tab[2] === 'users') component = <UsersList />
+          if (tab[2] === 'paids') component = <Paids />
+          if (tab[2] === 'spotlights') component = <Spotlights />
+          if (tab[2] === 'conversations') component = <Conversations />
+          if (tab[2] === 'messages') component = <Messenger idTo={tab[3]} />
+          if (tab[2] === 'material') component = <Material />
+          if (tab[2] === 'places') component = <Places />
+          if (tab[2] === 'scanned') component = <Scanned />
+        } else {
           this.props.goToHome()
         }
       }
     }
 
-
-    if(tab[1] === 'respo') {
+    if (tab[1] === 'respo') {
       let user = this.props.user
 
-      if(user) {
-        if(user.permission && user.permission.respo) {
-          if(tab[2] === 'conversations') component = <Conversations />
-          if(tab[2] === 'messages') component = <Messenger idTo={tab[3]} />
-          if(tab[2] === 'scanned') component = <Scanned />
-        }
-        else {
+      if (user) {
+        if (user.permission && user.permission.respo) {
+          if (tab[2] === 'conversations') component = <Conversations />
+          if (tab[2] === 'messages') component = <Messenger idTo={tab[3]} />
+          if (tab[2] === 'scanned') component = <Scanned />
+        } else {
           this.props.goToHome()
         }
       }
     }
 
-    if(tab[1] === 'orga') {
+    if (tab[1] === 'orga') {
       let user = this.props.user
 
-      if(user) {
-        if(user.permission) {
-          if(user.permission.permission.includes('validate') || user.permission.admin) {
-            if(tab[2] === 'validate') component = <Validate />
+      if (user) {
+        if (user.permission) {
+          if (user.permission.permission.includes('validate') || user.permission.admin) {
+            if (tab[2] === 'validate') component = <Validate />
           }
-          if(user.permission.permission.includes('payment') || user.permission.admin) {
-            if(tab[2] === 'payment') component = <Payment />
-          }
-          else {
+          if (user.permission.permission.includes('payment') || user.permission.admin) {
+            if (tab[2] === 'payment') component = <Payment />
+          } else {
             this.props.goToHome()
           }
-        }
-        else {
+        } else {
           this.props.goToHome()
         }
       }
     }
-    
-    if(tab[1] === 'messages' && tab.length === 2) component = <Messenger />
+
+    if (tab[1] === 'messages' && tab.length === 2) component = <Messenger />
     // if(tab[1] === 'conversations' && tab.length === 2) component = <Conversations />
 
-    if(component === null) {      
+    if (component === null) {
       return null
     }
 
-    return (
-      <DashboardLayout
-        path={this.state.pathname}
-        component={component}
-      />
-    )
+    return <DashboardLayout path={this.state.pathname} component={component} />
   }
 }
 

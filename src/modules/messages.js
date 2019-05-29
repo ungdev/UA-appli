@@ -2,7 +2,6 @@ import axios from '../lib/axios'
 import { actions as notifActions } from 'redux-notifications'
 import moment from 'moment'
 
-
 export const SET_MESSAGES = 'messages/SET_MESSAGES'
 export const SET_MESSAGES_LOADING = 'messages/SET_MESSAGES'
 export const SET_LAST_MESSAGE_TIME = 'messages/LAST_MESSAGE_TIME'
@@ -66,7 +65,7 @@ export const sendMessage = (to, message, spotlight) => {
     if (!authToken || authToken.length === 0) return
     try {
       const { lastMessageTime } = getState().messages
-      if(lastMessageTime && lastMessageTime + 30000 > moment().valueOf()){
+      if (lastMessageTime && lastMessageTime + 30000 > moment().valueOf()) {
         const diff = Math.ceil((lastMessageTime + 30000 - moment().valueOf()) / 1000)
         return dispatch(
           notifActions.notifSend({

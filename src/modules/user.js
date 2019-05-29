@@ -50,51 +50,53 @@ export const fetchUser = () => {
 
     try {
       const res = await axios.get('user', { headers: { 'X-Token': authToken } })
-      
+
       dispatch({ type: SET_USER, payload: res.data.user })
       dispatch({ type: SET_TOKEN, payload: res.data.token })
       dispatch({ type: SET_PRICES, payload: res.data.prices })
-      if(res.data.hasChangedIp) {
+      if (res.data.hasChangedIp) {
         dispatch(
           notifActions.notifSend({
-            message: 'Vous serez connecté au réseau d\'ici 1 minute',
+            message: "Vous serez connecté au réseau d'ici 1 minute",
             kind: 'warning',
             dismissAfter: 20000
           })
         )
       }
 
-      var OneSignal = window.OneSignal || [];
-      OneSignal.push(["init", {
-        appId: "cac7c5b1-3b95-4c2d-b5df-b631b3c3646b",
-        autoRegister: true, /* Set to true for HTTP Slide Prompt */
-        httpPermissionRequest: {
-          enable: true
-        },
-        notifyButton: {
+      var OneSignal = window.OneSignal || []
+      OneSignal.push([
+        'init',
+        {
+          appId: 'cac7c5b1-3b95-4c2d-b5df-b631b3c3646b',
+          autoRegister: true /* Set to true for HTTP Slide Prompt */,
+          httpPermissionRequest: {
+            enable: true
+          },
+          notifyButton: {
             enable: false /* Set to false to hide */
-        },
-        welcomeNotification: {
-          "title": "Les notifications sont maintenant activées !",
-          "message": "Vous recevrez maintenant toutes les news de l'UTT Arena",
-          // "url": "" /* Leave commented for the notification to not open a window on Chrome and Firefox (on Safari, it opens to your webpage) */
-        },
-        promptOptions: {
-          /* actionMessage limited to 90 characters */
-          actionMessage: "Nous utilisons les notifications pour vous informer pendant la LAN",
-          /* acceptButtonText limited to 15 characters */
-          acceptButtonText: "Autoriser",
-          /* cancelButtonText limited to 15 characters */
-          cancelButtonText: "Refuser"
+          },
+          welcomeNotification: {
+            title: 'Les notifications sont maintenant activées !',
+            message: "Vous recevrez maintenant toutes les news de l'UTT Arena"
+            // "url": "" /* Leave commented for the notification to not open a window on Chrome and Firefox (on Safari, it opens to your webpage) */
+          },
+          promptOptions: {
+            /* actionMessage limited to 90 characters */
+            actionMessage: 'Nous utilisons les notifications pour vous informer pendant la LAN',
+            /* acceptButtonText limited to 15 characters */
+            acceptButtonText: 'Autoriser',
+            /* cancelButtonText limited to 15 characters */
+            cancelButtonText: 'Refuser'
+          }
         }
-      }]);
+      ])
       OneSignal.push(() => {
         OneSignal.sendTags({
           id: res.data.user.id,
-          spotlightId: res.data.user.spotlightId,
+          spotlightId: res.data.user.spotlightId
         })
       })
-
     } catch (err) {
       dispatch(logout())
     }

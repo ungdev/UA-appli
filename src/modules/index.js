@@ -36,5 +36,5 @@ export default combineReducers({
   conversations,
   hearthstone,
   matches,
-  validate,
+  validate
 })

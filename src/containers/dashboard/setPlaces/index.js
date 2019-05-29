@@ -1,5 +1,5 @@
-import React from "react"
-import { connect } from "react-redux"
+import React from 'react'
+import { connect } from 'react-redux'
 import { Input, Button } from 'antd'
 import { autoLogin } from '../../../modules/login'
 import { setPlaces } from '../../../modules/admin'
@@ -15,7 +15,7 @@ class SetPlaces extends React.Component {
     this.props.autoLogin()
   }
 
-  textareaChanged = (e) => {
+  textareaChanged = e => {
     this.setState({
       textareaValue: e.target.value
     })
@@ -46,10 +46,7 @@ class SetPlaces extends React.Component {
           value={this.state.textareaValue}
         />
 
-        <Button
-          type="primary"
-          onClick={this.send}
-        >
+        <Button type="primary" onClick={this.send}>
           Envoyer
         </Button>
       </div>
@@ -59,7 +56,7 @@ class SetPlaces extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   autoLogin: () => dispatch(autoLogin()),
-  setPlaces: (places) => dispatch(setPlaces(places))
+  setPlaces: places => dispatch(setPlaces(places))
 })
 
 export default connect(

@@ -19,11 +19,11 @@ export default (state = initialState, action) => {
       //test has new elements
       infos = state.infos.slice()
       if (!infos) infos = []
-      action.payload.forEach((info) => {
+      action.payload.forEach(info => {
         let found = infos.find(i => info.id === i.id) // if we find a matching spotlight
         if (!found) infos.push(info) //we do not add it to the tab
       })
-      infos.sort((info1, info2) => info1.createdAt < info2.createdAt ? 1 : -1)
+      infos.sort((info1, info2) => (info1.createdAt < info2.createdAt ? 1 : -1))
       return { infos: infos, loading: false }
     case SET_INFOS_LOADING:
       return { ...state, loading: true }
@@ -43,13 +43,14 @@ export const fetchInfos = (spotlight, start, end) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
-    if(spotlight === 'libre') spotlight = 7
-    const infos = await axios.get(`infos/${spotlight}/${start}-${end}`, { headers: { 'X-Token': authToken } })
+    if (spotlight === 'libre') spotlight = 7
+    const infos = await axios.get(`infos/${spotlight}/${start}-${end}`, {
+      headers: { 'X-Token': authToken }
+    })
     dispatch({
       type: SET_INFOS,
       payload: infos.data
     })
-    
   }
 }
 
@@ -58,8 +59,12 @@ export const sendMessage = (spotlight, title, content) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
     try {
-      const res = await axios.post(`infos/${spotlight}`, { title, content }, { headers: { 'X-Token': authToken } })
-      if(res.status === 200) {
+      const res = await axios.post(
+        `infos/${spotlight}`,
+        { title, content },
+        { headers: { 'X-Token': authToken } }
+      )
+      if (res.status === 200) {
         dispatch(
           notifActions.notifSend({
             message: 'Message envoyé avec succès',
@@ -67,8 +72,7 @@ export const sendMessage = (spotlight, title, content) => {
           })
         )
       }
-    }
-    catch (e){
+    } catch (e) {
       console.log(e)
       dispatch(
         notifActions.notifSend({
@@ -78,7 +82,6 @@ export const sendMessage = (spotlight, title, content) => {
         })
       )
     }
-    
   }
 }
 
@@ -88,8 +91,10 @@ export const deleteInfo = (infoId, spotlightId) => {
     if (!authToken || authToken.length === 0) return
 
     try {
-      const res = await axios.delete(`infos/${spotlightId}/${infoId}`, { headers: { 'X-Token': authToken } })
-      if(res.status === 200) {
+      const res = await axios.delete(`infos/${spotlightId}/${infoId}`, {
+        headers: { 'X-Token': authToken }
+      })
+      if (res.status === 200) {
         dispatch(
           notifActions.notifSend({
             message: 'Message supprimé',
@@ -101,7 +106,7 @@ export const deleteInfo = (infoId, spotlightId) => {
           payload: infoId
         })
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e)
       dispatch(
         notifActions.notifSend({

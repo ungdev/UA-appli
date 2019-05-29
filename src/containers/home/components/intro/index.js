@@ -12,7 +12,7 @@ import smbu from '../../../../assets/smbu.jpg'
 
 const Intro = props => {
   const imgs = [smbu, lol, csgo, fortnite, hearthstone].map(img => ({
-    backgroundImage: `url(${img})`,
+    backgroundImage: `url(${img})`
   }))
 
   imgs[1].backgroundPosition = 'right'

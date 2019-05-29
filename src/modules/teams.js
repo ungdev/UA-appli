@@ -27,7 +27,6 @@ export default (state = initialState, action) => {
   }
 }
 
-
 export const fetchTeams = () => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
@@ -39,16 +38,16 @@ export const fetchTeams = () => {
 
     try {
       const req = await axios.get('teams', { headers: { 'X-Token': authToken } })
-      
-      if(req.status === 200) {
-        if(!oldTeams || oldTeams.length !== req.data.length){
+
+      if (req.status === 200) {
+        if (!oldTeams || oldTeams.length !== req.data.length) {
           dispatch({
             type: SET_TEAMS,
             payload: req.data
           })
         }
       }
-    } catch(err) {
+    } catch (err) {
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
@@ -70,14 +69,14 @@ export const fetchScannedTeams = () => {
 
     try {
       const req = await axios.get(`scanned`, { headers: { 'X-Token': authToken } })
-    
-      if(req.status === 200) {
+
+      if (req.status === 200) {
         dispatch({
           type: SET_SCANNED_TEAMS,
           payload: req.data
         })
       }
-    } catch(err) {
+    } catch (err) {
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
