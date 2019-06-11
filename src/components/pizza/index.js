@@ -1,31 +1,31 @@
-import React from 'react'
-import Konami from 'react-konami'
+import React from 'react';
+import Konami from 'react-konami';
 
-import './pizza.css'
+import './pizza.css';
 
 class Pizza extends React.Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
-      show: false
-    }
+      show: false,
+    };
 
-    this.trigger = this.trigger.bind(this)
+    this.trigger = this.trigger.bind(this);
   }
 
   trigger() {
     this.setState({
-      show: true
-    })
+      show: true,
+    });
 
     setTimeout(
       () =>
         this.setState({
-          show: false
+          show: false,
         }),
       2000
-    )
+    );
   }
 
   render() {
@@ -37,8 +37,8 @@ class Pizza extends React.Component {
           <img src={`${process.env.PUBLIC_URL}/pizza.svg`} alt="" />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Pizza
+export default Pizza;

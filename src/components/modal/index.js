@@ -1,7 +1,7 @@
-import React from 'react'
-import ReactModal from 'react-modal'
+import React from 'react';
+import ReactModal from 'react-modal';
 
-ReactModal.setAppElement('#root')
+ReactModal.setAppElement('#root');
 
 const styles = {
   overlay: {
@@ -11,7 +11,7 @@ const styles = {
     right: 0,
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,.75)',
-    zIndex: '999'
+    zIndex: '999',
   },
   content: {
     position: 'absolute',
@@ -27,14 +27,14 @@ const styles = {
     borderRadius: '3px',
     outline: 'none',
     padding: '0',
-    zIndex: '1000'
-  }
-}
+    zIndex: '1000',
+  },
+};
 
 const Modal = props => (
   <ReactModal isOpen={props.isOpen} onRequestClose={props.onClose} style={styles}>
     {props.children}
   </ReactModal>
-)
+);
 
-export default Modal
+export default Modal;

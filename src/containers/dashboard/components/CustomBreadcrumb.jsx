@@ -4,14 +4,16 @@ import { Breadcrumb } from 'antd';
 
 class CustomBreadcrumb extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       path: this.props.path,
-    }
+    };
   }
+
   componentWillReceiveProps(nextProps) {
-    this.setState({ path: nextProps.path })
+    this.setState({ path: nextProps.path });
   }
+
   render() {
     // let fullPath = '';
     return (

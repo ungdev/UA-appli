@@ -1,29 +1,29 @@
-import axios from '../lib/axios'
+import axios from '../lib/axios';
 
-export const SET_CANLOGIN = 'canLogin/SET_CANLOGIN'
+export const SET_CANLOGIN = 'canLogin/SET_CANLOGIN';
 
 const initialState = {
-  canLogin: false
-}
+  canLogin: false,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CANLOGIN:
       return {
-        canLogin: action.payload
-      }
+        canLogin: action.payload,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export const fetchCanLogin = () => {
   return async dispatch => {
-    const canLogin = await axios.get('user/canLogin')
+    const canLogin = await axios.get('user/canLogin');
 
     dispatch({
       type: SET_CANLOGIN,
-      payload: canLogin.data.canLogin
-    })
-  }
-}
+      payload: canLogin.data.canLogin,
+    });
+  };
+};

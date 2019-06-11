@@ -1,11 +1,11 @@
-import React from 'react'
-import { Layout } from 'antd'
+import React from 'react';
+import { Layout } from 'antd';
 
-import LeftBar from './components/LeftBar'
-import TopBar from './components/TopBar'
-import CustomBreadcrumb from './components/CustomBreadcrumb'
-const { Content, Sider } = Layout
+import LeftBar from './components/LeftBar';
+import TopBar from './components/TopBar';
+import CustomBreadcrumb from './components/CustomBreadcrumb';
 
+const { Content, Sider } = Layout;
 
 const DashboardLayout = props => {
   return (
@@ -14,13 +14,12 @@ const DashboardLayout = props => {
         <TopBar sidebar={props.collapsed} />
         <Layout>
           <Sider width="250px">
-            <LeftBar/>
+            <LeftBar />
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
               <CustomBreadcrumb path={props.path} />
-              <div
-                style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 {props.component}
               </div>
             </Content>
@@ -28,7 +27,7 @@ const DashboardLayout = props => {
         </Layout>
       </Layout>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

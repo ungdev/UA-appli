@@ -11,7 +11,7 @@ const maxCalculator = stats => {
   return max;
 };
 const statMaker = deck => {
-  let stats = {
+  const stats = {
     '0': 0,
     '1': 0,
     '2': 0,
@@ -19,7 +19,7 @@ const statMaker = deck => {
     '4': 0,
     '5': 0,
     '6': 0,
-    '7+': 0
+    '7+': 0,
   };
   deck.cards.forEach(card => {
     if (card.cost > 6) {
@@ -35,16 +35,18 @@ class HsDecksStats extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stats: statMaker(this.props.deck)
+      stats: statMaker(this.props.deck),
     };
   }
 
   render() {
-    const { hero } = this.props.deck
+    const { hero } = this.props.deck;
     return (
       <Card bordered={false} style={{ display: 'flex', justifyContent: 'center' }}>
         <img
-          src={`http://media.services.zam.com/v1/media/byName/hs/cards/enus/animated/${hero.id}_premium.gif`}
+          src={`http://media.services.zam.com/v1/media/byName/hs/cards/enus/animated/${
+            hero.id
+          }_premium.gif`}
           alt={hero.name}
           width={204}
           height={310}
@@ -55,7 +57,7 @@ class HsDecksStats extends React.Component {
               <List.Item key={key}>
                 <Tag color="#2db7f5">{entry[0]}</Tag>
                 <Progress
-                  percent={entry[1] / maxCalculator(this.state.stats) * 100}
+                  percent={(entry[1] / maxCalculator(this.state.stats)) * 100}
                   size="small"
                   status="active"
                   format={() => {

@@ -41,10 +41,19 @@
     "start": "static build --host-address 0.0.0.0 --port 8080 --spa",
     "serve": "pm2 serve build -i max --name arena.utt.fr-2018",
     "reload": "pm2 reload arena.utt.fr-2018 --update-env",
-    "lint": "prettier --single-quote --print-width 100 --tab-width 2 --no-semi --write \"src/**/*.js\""
+    "lint": "eslint --ext .jsx,.js src/",
+    "lintfix": "eslint --fix --ext .jsx,.js src/"
   },
   "proxy": "http://localhost:3000",
   "devDependencies": {
-    "prettier": "^1.13.4"
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "prettier": "^1.17.1"
   }
 }
