@@ -1,7 +1,13 @@
 import React from 'react'
-import { Icon, Tooltip, Modal, Button, Checkbox, Input } from "antd";
+import { Icon, Tooltip, Modal, Button, Checkbox, Input } from 'antd'
 import { connect } from 'react-redux'
-import { setAdmin, removeAdmin, setPermission, setRespo, renameUser } from "../../../../../modules/admin";
+import {
+  setAdmin,
+  removeAdmin,
+  setPermission,
+  setRespo,
+  renameUser,
+} from '../../../../../modules/admin'
 import Respo from './Respo'
 
 import '../admin.css'
@@ -12,7 +18,7 @@ class UserListActions extends React.Component {
   constructor(props) {
     super(props)
 
-    const { users, userId } = props;
+    const { users, userId } = props
     const user = users.find(u => u.id === userId)
     this.state = {
       setAdminModalVisible: false,
@@ -25,105 +31,105 @@ class UserListActions extends React.Component {
       newName: {
         name: user.name,
         firstname: user.firstname,
-        lastname: user.lastname
-      }
+        lastname: user.lastname,
+      },
     }
   }
 
   setAdmin = () => {
     this.props.setAdmin(this.props.userId)
     this.setState({
-      setAdminModalVisible: false
+      setAdminModalVisible: false,
     })
   }
 
   removeAdmin = () => {
     this.props.removeAdmin(this.props.userId)
     this.setState({
-      removeAdminModalVisible: false
+      removeAdminModalVisible: false,
     })
   }
 
   openMainModal = () => {
     this.setState({
-      mainModalVisible: true
+      mainModalVisible: true,
     })
   }
 
   closeMainModal = () => {
     this.setState({
-      mainModalVisible: false
+      mainModalVisible: false,
     })
   }
 
   openSetAdminModal = () => {
     this.setState({
       mainModalVisible: false,
-      setAdminModalVisible: true
+      setAdminModalVisible: true,
     })
   }
 
   closeSetAdminModal = () => {
     this.setState({
       mainModalVisible: true,
-      setAdminModalVisible: false
+      setAdminModalVisible: false,
     })
   }
 
   openRemoveAdminModal = () => {
     this.setState({
       mainModalVisible: false,
-      removeAdminModalVisible: true
+      removeAdminModalVisible: true,
     })
   }
 
   closeRemoveAdminModal = () => {
     this.setState({
       mainModalVisible: true,
-      removeAdminModalVisible: false
+      removeAdminModalVisible: false,
     })
   }
 
   openPermissionModal = () => {
     this.setState({
       permissionModalVisible: true,
-      mainModalVisible: false
+      mainModalVisible: false,
     })
   }
 
   closePermissionModal = () => {
     this.setState({
       permissionModalVisible: false,
-      mainModalVisible: true
+      mainModalVisible: true,
     })
   }
 
   openRespoModal = () => {
     this.setState({
       respoModalVisible: true,
-      mainModalVisible: false
+      mainModalVisible: false,
     })
   }
 
   closeRespoModal = () => {
     this.setState({
       respoModalVisible: false,
-      mainModalVisible: true
+      mainModalVisible: true,
     })
   }
 
   openRenameModal = () => {
-    if(this.isNewNameValid() && this.isNewFirstnameValid() && this.isNewLastnameValid())
+    if (this.isNewNameValid() && this.isNewFirstnameValid() && this.isNewLastnameValid())
       this.setState({
         renameModalVisible: true,
-        mainModalVisible: false
+        mainModalVisible: false,
       })
   }
 
   closeRenameModal = () => {
     this.setState({
       renameModalVisible: false,
-      mainModalVisible: true
+      mainModalVisible: true,
     })
   }
 
@@ -131,7 +137,7 @@ class UserListActions extends React.Component {
     this.props.setPermission(this.props.userId, this.state.checkedPermission)
 
     this.setState({
-      permissionModalVisible: false
+      permissionModalVisible: false,
     })
   }
 
@@ -139,69 +145,69 @@ class UserListActions extends React.Component {
     this.props.setRespo(this.props.userId, this.state.checkedRespo)
 
     this.setState({
-      respoModalVisible: false
+      respoModalVisible: false,
     })
   }
 
-  setCheckedPermission = (checked) => {
+  setCheckedPermission = checked => {
     this.setState({
-      checkedPermission: checked
+      checkedPermission: checked,
     })
   }
 
-  setCheckedRespo = (checked) => {
+  setCheckedRespo = checked => {
     this.setState({
-      checkedRespo: checked
+      checkedRespo: checked,
     })
   }
 
-  setNameEntry = (newName) => {
-    this.setState({
-      newName: {
-        ...this.state.newName,
-        name: newName
-      }
-    })
-  }
-
-  setFirstnameEntry = (newName) => {
+  setNameEntry = newName => {
     this.setState({
       newName: {
         ...this.state.newName,
-        firstname: newName
-      }
+        name: newName,
+      },
     })
   }
 
-  setLastnameEntry = (newName) => {
+  setFirstnameEntry = newName => {
     this.setState({
       newName: {
         ...this.state.newName,
-        lastname: newName
-      }
+        firstname: newName,
+      },
+    })
+  }
+
+  setLastnameEntry = newName => {
+    this.setState({
+      newName: {
+        ...this.state.newName,
+        lastname: newName,
+      },
     })
   }
 
   isNewNameValid = () => {
-    const name = this.state.newName.name;
-    return name.length >= 3 && name.length <= 90;
+    const name = this.state.newName.name
+    return name.length >= 3 && name.length <= 90
   }
 
   isNewFirstnameValid = () => {
-    const name = this.state.newName.firstname;
-    return name.length >= 2 && name.length <= 200;
+    const name = this.state.newName.firstname
+    return name.length >= 2 && name.length <= 200
   }
 
   isNewLastnameValid = () => {
-    const name = this.state.newName.lastname;
-    return name.length >= 2 && name.length <= 200;
+    const name = this.state.newName.lastname
+    return name.length >= 2 && name.length <= 200
   }
 
   renameUser = () => {
     this.props.renameUser(this.props.userId, this.state.newName)
 
     this.setState({
-      renameModalVisible: false
+      renameModalVisible: false,
     })
   }
 
@@ -245,7 +251,9 @@ class UserListActions extends React.Component {
           title="Actions"
           visible={this.state.mainModalVisible}
           footer={
-            <Button type="primary" onClick={this.closeMainModal}>Ok</Button>
+            <Button type="primary" onClick={this.closeMainModal}>
+              Ok
+            </Button>
           }
           onCancel={this.closeMainModal}
         >
@@ -257,27 +265,29 @@ class UserListActions extends React.Component {
             <Icon type="edit" /> Nom
           </h2>
           <div className="admin-action-content">
-            <Input placeholder="Nom d'utilisateur"
-                   onChange={(e) => this.setNameEntry(e.target.value)}
-                   style={!this.isNewNameValid() ? {borderColor: '#C00'} : undefined}
-                   className="rename-input"
-                   value={this.state.newName.name}/>
-            <Input placeholder="Prénom"
-                   onChange={(e) => this.setFirstnameEntry(e.target.value)}
-                   style={!this.isNewFirstnameValid() ? {borderColor: '#C00'} : undefined}
-                   className="rename-input"
-                   value={this.state.newName.firstname}/>
-            <Input placeholder="Nom de famille"
-                   onChange={(e) => this.setLastnameEntry(e.target.value)}
-                   style={!this.isNewLastnameValid() ? {borderColor: '#C00'} : undefined}
-                   className="rename-input"
-                   value={this.state.newName.lastname}/>
+            <Input
+              placeholder="Nom d'utilisateur"
+              onChange={e => this.setNameEntry(e.target.value)}
+              style={!this.isNewNameValid() ? { borderColor: '#C00' } : undefined}
+              className="rename-input"
+              value={this.state.newName.name}
+            />
+            <Input
+              placeholder="Prénom"
+              onChange={e => this.setFirstnameEntry(e.target.value)}
+              style={!this.isNewFirstnameValid() ? { borderColor: '#C00' } : undefined}
+              className="rename-input"
+              value={this.state.newName.firstname}
+            />
+            <Input
+              placeholder="Nom de famille"
+              onChange={e => this.setLastnameEntry(e.target.value)}
+              style={!this.isNewLastnameValid() ? { borderColor: '#C00' } : undefined}
+              className="rename-input"
+              value={this.state.newName.lastname}
+            />
             <Tooltip placement="right" title="Renommer l'utilisateur">
-              <Button
-                type="primary"
-                onClick={this.openRenameModal}
-                className="admin-action-button"
-              >
+              <Button type="primary" onClick={this.openRenameModal} className="admin-action-button">
                 <Icon type="save" />
               </Button>
             </Tooltip>
@@ -299,10 +309,7 @@ class UserListActions extends React.Component {
               </Tooltip>
             ) : (
               <React.Fragment>
-                <Tooltip
-                  placement="right"
-                  title="Enlever le rang d'administrateur"
-                >
+                <Tooltip placement="right" title="Enlever le rang d'administrateur">
                   <Button
                     type="danger"
                     onClick={this.openRemoveAdminModal}
@@ -319,14 +326,15 @@ class UserListActions extends React.Component {
             )}
           </div>
 
-          {!userIsAdmin &&
+          {!userIsAdmin && (
             <React.Fragment>
               <h2 className="admin-action-title">
                 <Icon type="tool" /> Permissions
               </h2>
               <div className="admin-action-content">
                 <CheckboxGroup onChange={this.setCheckedPermission} defaultValue={userPermission}>
-                  <Checkbox value="validate">Valider l'entrée</Checkbox><br />
+                  <Checkbox value="validate">Valider l'entrée</Checkbox>
+                  <br />
                   <Checkbox value="payment">Valider les paiements</Checkbox>
                 </CheckboxGroup>
                 <br />
@@ -346,7 +354,10 @@ class UserListActions extends React.Component {
                 <Icon type="safety" /> Responsable
               </h2>
               <div className="admin-action-content">
-                <Respo defaultCheckedRespo={userRespo} checkedRespo={(checked) => this.setCheckedRespo(checked)} />
+                <Respo
+                  defaultCheckedRespo={userRespo}
+                  checkedRespo={checked => this.setCheckedRespo(checked)}
+                />
                 <br />
                 <Tooltip placement="right" title="Modifier les permissions de tournoi">
                   <Button
@@ -360,7 +371,7 @@ class UserListActions extends React.Component {
                 </Tooltip>
               </div>
             </React.Fragment>
-          }
+          )}
         </Modal>
 
         <Modal
@@ -373,9 +384,7 @@ class UserListActions extends React.Component {
         >
           <h3>Rendre administrateur</h3>
           <p>
-            <strong>
-              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
-            </strong>
+            <strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong>
           </p>
         </Modal>
 
@@ -389,9 +398,7 @@ class UserListActions extends React.Component {
         >
           <h3>Enlever le rang d'administrateur</h3>
           <p>
-            <strong>
-              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
-            </strong>
+            <strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong>
           </p>
         </Modal>
 
@@ -405,9 +412,7 @@ class UserListActions extends React.Component {
         >
           <h3>Modifier les permissions</h3>
           <p>
-            <strong>
-              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
-            </strong>
+            <strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong>
           </p>
         </Modal>
 
@@ -421,9 +426,7 @@ class UserListActions extends React.Component {
         >
           <h3>Modifier les permissions de tournoi</h3>
           <p>
-            <strong>
-              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
-            </strong>
+            <strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong>
           </p>
         </Modal>
 
@@ -437,15 +440,16 @@ class UserListActions extends React.Component {
         >
           <h3>Renommer l'utilisateur</h3>
           <p>
-            <i>Ancien:</i><br/>
-            <strong>
-              Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}
-            </strong>
+            <i>Ancien:</i>
+            <br />
+            <strong>Utilisateur : {`${user.name} (${user.firstname} ${user.lastname})`}</strong>
           </p>
           <p>
-            <i>Nouveau:</i><br/>
+            <i>Nouveau:</i>
+            <br />
             <strong>
-              Utilisateur : {`${this.state.newName.name} (${this.state.newName.firstname} ${this.state.newName.lastname})`}
+              Utilisateur :{' '}
+              {`${this.state.newName.name} (${this.state.newName.firstname} ${this.state.newName.lastname})`}
             </strong>
           </p>
         </Modal>
@@ -459,7 +463,7 @@ const mapDispatchToProps = dispatch => ({
   removeAdmin: id => dispatch(removeAdmin(id)),
   setPermission: (id, permission) => dispatch(setPermission(id, permission)),
   setRespo: (id, respo) => dispatch(setRespo(id, respo)),
-  renameUser: (id, newName) => dispatch(renameUser(id, newName))
+  renameUser: (id, newName) => dispatch(renameUser(id, newName)),
 })
 
 export default connect(

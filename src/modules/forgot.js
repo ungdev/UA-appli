@@ -1,7 +1,7 @@
+import { actions as notifActions } from 'redux-notifications'
 import axios from '../lib/axios'
 import fail from '../lib/store.fail'
 import errorToString from '../lib/errorToString'
-import { actions as notifActions } from 'redux-notifications'
 
 const initialState = {}
 
@@ -20,7 +20,7 @@ export const sendResetMail = ({ email }) => {
       dispatch(
         notifActions.notifSend({
           message: 'Mail envoyé avec succès',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     } catch (err) {
@@ -28,7 +28,7 @@ export const sendResetMail = ({ email }) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }
@@ -47,7 +47,7 @@ export const resetPassword = resetInfos => {
       dispatch(
         notifActions.notifSend({
           message: 'Mot de passe changé',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     } catch (err) {
@@ -55,7 +55,7 @@ export const resetPassword = resetInfos => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }

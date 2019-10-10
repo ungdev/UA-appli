@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { fetchUser } from '../../../../modules/user'
 import { fetchScannedTeams } from '../../../../modules/teams'
 
-const Panel = Collapse.Panel
+const { Panel } = Collapse
 
 class Scanned extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class Scanned extends React.Component {
   render() {
     let { user, scannedTeams } = this.props
 
-    if(!user || !scannedTeams) {
+    if (!user || !scannedTeams) {
       return <Spin />
     }
 
@@ -26,17 +26,35 @@ class Scanned extends React.Component {
         <h2>Équipes {scannedTeam.spotlightName}</h2>
         <Collapse>
           {scannedTeam.teams.map(team => (
-            <Panel header={
-              <React.Fragment>
-                {team.name}
-                <span style={{ marginLeft: '20px', color: team.scannedCount/team.perTeam === 1 ? '#1890ff' : (team.scannedCount === 0 ? '#f00' : undefined) }}>
-                  <strong>{team.scannedCount}/{team.perTeam}</strong>
-                </span>
-              </React.Fragment>}>
-
+            <Panel
+              header={
+                <React.Fragment>
+                  {team.name}
+                  <span
+                    style={{
+                      marginLeft: '20px',
+                      color:
+                        team.scannedCount / team.perTeam === 1
+                          ? '#1890ff'
+                          : team.scannedCount === 0
+                          ? '#f00'
+                          : undefined,
+                    }}
+                  >
+                    <strong>
+                      {team.scannedCount}/{team.perTeam}
+                    </strong>
+                  </span>
+                </React.Fragment>
+              }
+            >
               {team.users.map((user, i) => (
                 <div key={i} style={{ marginTop: '5px' }}>
-                  {user.scanned ? <Icon type="check-circle" style={{ color: '#1890ff', fontSize: '18px' }} /> : <Icon type="close" style={{ color: '#a00', fontSize: '18px' }} />}
+                  {user.scanned ? (
+                    <Icon type="check-circle" style={{ color: '#1890ff', fontSize: '18px' }} />
+                  ) : (
+                    <Icon type="close" style={{ color: '#a00', fontSize: '18px' }} />
+                  )}
                   <span style={{ marginLeft: '10px' }}>{user.name}</span>
                 </div>
               ))}
@@ -52,15 +70,15 @@ class Scanned extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user.user,
-  scannedTeams: state.teams.scannedTeams
+  scannedTeams: state.teams.scannedTeams,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(fetchUser()),
-  fetchScannedTeams: () => dispatch(fetchScannedTeams())
+  fetchScannedTeams: () => dispatch(fetchScannedTeams()),
 })
 
-
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(Scanned)
+  mapStateToProps,
+  mapDispatchToProps
+)(Scanned)

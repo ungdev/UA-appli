@@ -6,7 +6,7 @@ import {
   fetchMessages,
   sendMessage,
   SET_MESSAGES_LOADING,
-  fetchMessagesByIdUser
+  fetchMessagesByIdUser,
 } from '../../../../modules/messages'
 
 import { List, Input, Button } from 'antd'
@@ -22,32 +22,34 @@ class Messenger extends React.Component {
       spotlight: '',
       textValue: '',
       maxTitleCaracters: 100,
-      maxTextCaracters: 1000
+      maxTextCaracters: 1000,
     }
 
     this.loadMessages()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-
     if (prevProps !== this.props) {
       this.setState({
         messages: this.props.messages,
         user: this.props.user,
-        userTo: this.props.idTo
+        userTo: this.props.idTo,
       })
     }
   }
 
   loadMessages() {
     this.props.setLoading()
-    if (this.props.user && this.props.user.permission && (this.props.user.permission.admin || this.props.user.permission.respo)) {
+    if (
+      this.props.user &&
+      this.props.user.permission &&
+      (this.props.user.permission.admin || this.props.user.permission.respo)
+    ) {
       this.props.getMessagesByIdUser(this.props.idTo)
     } else {
       this.props.getMessages()
     }
-
- }
+  }
 
   onTextChange = e => {
     let message = e.target.value
@@ -77,11 +79,8 @@ class Messenger extends React.Component {
         locale={{ emptyText: 'Aucun message' }}
         dataSource={messages.map(message => {
           return {
-            title:
-              message.From === null
-                ? 'UTT Arena Administration'
-                : message.From.name,
-            message: message.message
+            title: message.From === null ? 'UTT Arena Administration' : message.From.name,
+            message: message.message,
           }
         })}
         renderItem={item => (
@@ -107,11 +106,7 @@ class Messenger extends React.Component {
             Envoyer
           </Button>
           <span
-            style={
-              this.state.textValue.length > maxTextCaracters - 50
-                ? { color: '#ff0000' }
-                : {}
-            }
+            style={this.state.textValue.length > maxTextCaracters - 50 ? { color: '#ff0000' } : {}}
           >
             {maxTextCaracters - this.state.textValue.length} caractères restants
           </span>
@@ -125,7 +120,7 @@ const mapStateToProps = state => ({
   user: state.user.user,
   messages: state.messages.messages,
   loading: state.messages.loading,
-  location: state.routing.location.pathname
+  location: state.routing.location.pathname,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -135,7 +130,7 @@ const mapDispatchToProps = dispatch => ({
   getMessages: () => dispatch(fetchMessages()),
   getMessagesByIdUser: idTo => dispatch(fetchMessagesByIdUser(idTo)),
   sendMessage: (to, message, spotlight) => dispatch(sendMessage(to, message, spotlight)),
-  setLoading: () => dispatch({ type: SET_MESSAGES_LOADING })
+  setLoading: () => dispatch({ type: SET_MESSAGES_LOADING }),
 })
 
 export default connect(

@@ -1,6 +1,6 @@
+import { actions as notifActions } from 'redux-notifications'
 import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
-import { actions as notifActions } from 'redux-notifications'
 
 export const SET_PLAYERS = 'hearthstone/SET_PLAYERS'
 export const ADD_DECKS = 'hearthstone/ADD_DECKS'
@@ -17,26 +17,28 @@ export default (state = initialState, action) => {
     case SET_PLAYERS:
       return {
         ...state,
-        players: action.payload
+        players: action.payload,
       }
     case ADD_DECKS:
       decks = state.decks.splice(0)
       decks[action.payload.id] = action.payload.deck
       return {
         ...state,
-        decks
+        decks,
       }
     case DELETE_DECK:
       decks = state.decks.splice(0)
-      let players = state.players.splice(0)
+      const players = state.players.splice(0)
       decks[action.payload] = null
-      const playerIndex = players.findIndex(player => player.decks.find(deck => deck.id === action.payload) !== undefined)
+      const playerIndex = players.findIndex(
+        player => player.decks.find(deck => deck.id === action.payload) !== undefined
+      )
       const deckIndex = players[playerIndex].decks.findIndex(deck => deck.id === action.payload)
       players[playerIndex].decks.splice(deckIndex)
       return {
         ...state,
         decks,
-        players
+        players,
       }
     default:
       return state
@@ -59,8 +61,9 @@ export const fetchHSPlayers = () => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -74,7 +77,11 @@ export const addDeck = (name, deckstring) => {
     }
 
     try {
-      await axios.post(`hearthstone/decks`, { name, deckstring }, { headers: { 'X-Token': authToken } })
+      await axios.post(
+        `hearthstone/decks`,
+        { name, deckstring },
+        { headers: { 'X-Token': authToken } }
+      )
       dispatch(fetchHSPlayers())
     } catch (err) {
       console.log(err)
@@ -82,14 +89,14 @@ export const addDeck = (name, deckstring) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
 
-
-export const deleteDeck = (id) => {
+export const deleteDeck = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -106,14 +113,14 @@ export const deleteDeck = (id) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
 
-
-export const getDeck = (id) => {
+export const getDeck = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -130,8 +137,9 @@ export const getDeck = (id) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }

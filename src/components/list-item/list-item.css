@@ -8,10 +8,10 @@
   font-size: 24px;
   background-color: #222;
   border: 2px solid transparent;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px;
   color: #fff;
-  transition: .1s border ease-out;
+  transition: 0.1s border ease-out;
 }
 
 .a-list-item:not([nomouse]):hover {

@@ -8,7 +8,7 @@ class Delete extends React.Component {
     super(props)
 
     this.state = {
-      modalVisible: false
+      modalVisible: false,
     }
   }
 
@@ -19,20 +19,22 @@ class Delete extends React.Component {
 
   openModal = () => {
     this.setState({
-      modalVisible: true
+      modalVisible: true,
     })
   }
 
   closeModal = () => {
     this.setState({
-      modalVisible: false
+      modalVisible: false,
     })
   }
-  
+
   render() {
     return (
       <React.Fragment>
-        <a onClick={this.openModal}><Icon type="delete" theme="filled" style={{ color: '#f00' }} /></a>
+        <a onClick={this.openModal}>
+          <Icon type="delete" theme="filled" style={{ color: '#f00' }} />
+        </a>
 
         <Modal
           title="Êtes-vous sûr ?"
@@ -57,7 +59,7 @@ const mapDispatchToProps = dispatch => ({
   getInfos: (spotlight, start, end) => dispatch(fetchInfos(spotlight, start, end)),
   sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
   setLoading: () => dispatch({ type: SET_INFOS_LOADING }),
-  deleteInfo: (infoId, spotlightId) => dispatch(deleteInfo(infoId, spotlightId))
+  deleteInfo: (infoId, spotlightId) => dispatch(deleteInfo(infoId, spotlightId)),
 })
 
 export default connect(

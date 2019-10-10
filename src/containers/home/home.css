@@ -3,9 +3,9 @@
   background-size: 100% 100%;
 }
 
-.a-home-bg{
-  display:flex;
-  flex-direction:column;
+.a-home-bg {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 

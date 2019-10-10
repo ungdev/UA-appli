@@ -1,6 +1,6 @@
+import { actions as notifActions } from 'redux-notifications'
 import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
-import { actions as notifActions } from 'redux-notifications'
 
 const initialState = {}
 
@@ -30,7 +30,7 @@ export const payment = basket => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }

@@ -1,13 +1,13 @@
+import { actions as notifActions } from 'redux-notifications'
 import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
-import { actions as notifActions } from 'redux-notifications'
 
 export const SET_TEAMS = 'teams/SET_TEAMS'
 export const SET_SCANNED_TEAMS = 'teams/SET_SCANNED_TEAMS'
 
 const initialState = {
   teams: [],
-  scannedTeams: []
+  scannedTeams: [],
 }
 
 export default (state = initialState, action) => {
@@ -15,18 +15,17 @@ export default (state = initialState, action) => {
     case SET_TEAMS:
       return {
         ...state,
-        teams: action.payload
+        teams: action.payload,
       }
     case SET_SCANNED_TEAMS:
       return {
         ...state,
-        scannedTeams: action.payload
+        scannedTeams: action.payload,
       }
     default:
       return state
   }
 }
-
 
 export const fetchTeams = () => {
   return async (dispatch, getState) => {
@@ -38,22 +37,24 @@ export const fetchTeams = () => {
     }
 
     try {
-      const req = await axios.get('teams', { headers: { 'X-Token': authToken } })
-      
-      if(req.status === 200) {
-        if(!oldTeams || oldTeams.length !== req.data.length){
+      const req = await axios.get('teams', {
+        headers: { 'X-Token': authToken },
+      })
+
+      if (req.status === 200) {
+        if (!oldTeams || oldTeams.length !== req.data.length) {
           dispatch({
             type: SET_TEAMS,
-            payload: req.data
+            payload: req.data,
           })
         }
       }
-    } catch(err) {
+    } catch (err) {
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }
@@ -69,20 +70,22 @@ export const fetchScannedTeams = () => {
     }
 
     try {
-      const req = await axios.get(`scanned`, { headers: { 'X-Token': authToken } })
-    
-      if(req.status === 200) {
+      const req = await axios.get(`scanned`, {
+        headers: { 'X-Token': authToken },
+      })
+
+      if (req.status === 200) {
         dispatch({
           type: SET_SCANNED_TEAMS,
-          payload: req.data
+          payload: req.data,
         })
       }
-    } catch(err) {
+    } catch (err) {
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }

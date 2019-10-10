@@ -1,47 +1,45 @@
 import React from 'react'
-import { Spin, Form, Button, Input, Icon, Card, AutoComplete } from "antd";
+import { Spin, Form, Button, Input, Icon, Card, AutoComplete } from 'antd'
 import { connect } from 'react-redux'
 import { fetchUsers } from '../../../../modules/admin'
 import { fetchTeams } from '../../../../modules/teams'
 import { getInfos } from '../../../../modules/validate'
-
 
 const FormItem = Form.Item
 
 class Validate extends React.Component {
   constructor(props) {
     super(props)
-    
+
     this.state = {
       barcode: '',
       users: null,
-      fullName: null
+      fullName: null,
     }
 
     this.props.fetchUsers()
     this.props.fetchTeams()
   }
 
-  handleAutocomplete = (value) => {
+  handleAutocomplete = value => {
     const users = this.props.users
       .map(user => `${user.name} (${user.firstname} ${user.lastname})`)
       .filter(user => user.toUpperCase().includes(value.toUpperCase())) // Filter case insensitive
       .slice(0, 10)
 
-    this.setState(
-      {
-        users: users,
-        fullName: value
-      })
-  }
-
-  selectUser = (value) => {
     this.setState({
-      fullName: value
+      users: users,
+      fullName: value,
     })
   }
 
-  handleSubmit = (e) => {
+  selectUser = value => {
+    this.setState({
+      fullName: value,
+    })
+  }
+
+  handleSubmit = e => {
     e.preventDefault()
     const { barcode, fullName } = this.state
     this.setState({ barcode: '', fullName: null })
@@ -49,7 +47,7 @@ class Validate extends React.Component {
     this.props.getInfos(barcode, fullName)
   }
 
-  getTournamentNameById = (id) => {
+  getTournamentNameById = id => {
     const spotlight = this.props.spotlights.find(spotlight => spotlight.id === id)
     return spotlight ? spotlight.shortName : id
   }
@@ -58,11 +56,11 @@ class Validate extends React.Component {
     let { users, infos, teams } = this.props
     let spotlightName = null
 
-    if(infos.id) {
+    if (infos.id) {
       let team = null
       teams.teams.forEach(t => {
         t.users.forEach(user => {
-          if(user.id === infos.id) {
+          if (user.id === infos.id) {
             team = t
           }
         })
@@ -91,90 +89,107 @@ class Validate extends React.Component {
         laptop: 0,
         tombola: 0,
         shirts: [],
-        changed: true
+        changed: true,
       }
-      infos.orders.filter(order => order.paid).forEach(order => {
-        if(order.ethernet) orders.ethernet += 1
-        if(order.ethernet7) orders.ethernet7 += 1
-        if(order.kaliento) orders.kaliento += 1
-        if(order.mouse) orders.mouse += 1
-        if(order.keyboard) orders.keyboard += 1
-        if(order.headset) orders.headset += 1
-        if(order.screen24) orders.screen24 += 1
-        if(order.screen27) orders.screen27 += 1
-        if(order.chair) orders.chair += 1
-        if(order.gamingPC) orders.gamingPC += 1
-        if(order.streamingPC) orders.streamingPC += 1
-        if(order.laptop) orders.laptop += 1
-        orders.tombola += order.tombola
-        if(order.shirt !== 'none') {
-          let gender = order.shirt.substr(0, 1)
-          gender = gender==='h' ? 'Homme' : 'Femme'
-          let size = order.shirt.substr(1, order.shirt.length)
-          orders.shirts.push(`${gender} ${size.toUpperCase()}`)
-        }
-      })
+      infos.orders
+        .filter(order => order.paid)
+        .forEach(order => {
+          if (order.ethernet) orders.ethernet += 1
+          if (order.ethernet7) orders.ethernet7 += 1
+          if (order.kaliento) orders.kaliento += 1
+          if (order.mouse) orders.mouse += 1
+          if (order.keyboard) orders.keyboard += 1
+          if (order.headset) orders.headset += 1
+          if (order.screen24) orders.screen24 += 1
+          if (order.screen27) orders.screen27 += 1
+          if (order.chair) orders.chair += 1
+          if (order.gamingPC) orders.gamingPC += 1
+          if (order.streamingPC) orders.streamingPC += 1
+          if (order.laptop) orders.laptop += 1
+          orders.tombola += order.tombola
+          if (order.shirt !== 'none') {
+            let gender = order.shirt.substr(0, 1)
+            gender = gender === 'h' ? 'Homme' : 'Femme'
+            let size = order.shirt.substr(1, order.shirt.length)
+            orders.shirts.push(`${gender} ${size.toUpperCase()}`)
+          }
+        })
       infos.orders = orders
     }
 
-    return (<React.Fragment>
-      <h1>Valider une entrée</h1>
+    return (
+      <React.Fragment>
+        <h1>Valider une entrée</h1>
 
-      <Form onSubmit={this.handleSubmit} className="login-form">
-        <FormItem>
-          <Input
-            ref={(input) => this.input = input}
-            prefix={<Icon type="barcode" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder="Scanner ici..."
-            onChange={(e) => this.setState({ barcode: e.target.value })}
-            value={this.state.barcode}
-          />
-        </FormItem>
-        ou <br/>
-        <FormItem>
-          <AutoComplete
-            dataSource={this.state.users}
-            value={this.state.fullName}
-            onSearch={this.handleAutocomplete}
-            onSelect={this.selectUser}
-            placeholder="Nom, prénom ou pseudo"
-          />
-        </FormItem>
-        <FormItem>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Valider (ou appuyer sur entrée)
-          </Button>
-        </FormItem>
-      </Form>
-      {infos.name &&
-        <Card title={<h1>{infos.name} ({infos.firstname} {infos.lastname}) : {infos.plusone ? 'Visiteur' : 'Joueur'}</h1>}>
-          {!infos.paid && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}>La personne n'a pas payé sa place !</h1>}
-          {infos.scanned && <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}><Icon type="warning" /> La place a déjà été scannée !</h1>}
-          <h1>Tournoi : {spotlightName || '(Aucun)'}</h1>
-          <h1>Place : {infos.place || '(Aucune)'}</h1>
-          {
-            infos.orders && (
-              infos.orders.ethernet > 0 ||
-              infos.orders.ethernet7 > 0 ||
-              infos.orders.kaliento > 0 ||
-              infos.orders.mouse > 0 ||
-              infos.orders.keyboard > 0 ||
-              infos.orders.headset > 0 ||
-              infos.orders.screen24 > 0 ||
-              infos.orders.screen27 > 0 ||
-              infos.orders.chair > 0 ||
-              infos.orders.gamingPC > 0 ||
-              infos.orders.streamingPC > 0 ||
-              infos.orders.laptop > 0 ||
-              infos.orders.tombola > 0 ||
-              infos.orders.shirts.length > 0) && 
-              <h1>Materiel (à récupérer au bar)</h1>
-          }
-          {
-            infos.orders && (<React.Fragment>
+        <Form onSubmit={this.handleSubmit} className="login-form">
+          <FormItem>
+            <Input
+              ref={input => (this.input = input)}
+              prefix={<Icon type="barcode" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Scanner ici..."
+              onChange={e => this.setState({ barcode: e.target.value })}
+              value={this.state.barcode}
+            />
+          </FormItem>
+          ou <br />
+          <FormItem>
+            <AutoComplete
+              dataSource={this.state.users}
+              value={this.state.fullName}
+              onSearch={this.handleAutocomplete}
+              onSelect={this.selectUser}
+              placeholder="Nom, prénom ou pseudo"
+            />
+          </FormItem>
+          <FormItem>
+            <Button type="primary" htmlType="submit" className="login-form-button">
+              Valider (ou appuyer sur entrée)
+            </Button>
+          </FormItem>
+        </Form>
+        {infos.name && (
+          <Card
+            title={
+              <h1>
+                {infos.name} ({infos.firstname} {infos.lastname}) :{' '}
+                {infos.plusone ? 'Visiteur' : 'Joueur'}
+              </h1>
+            }
+          >
+            {!infos.paid && (
+              <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}>
+                La personne n'a pas payé sa place !
+              </h1>
+            )}
+            {infos.scanned && (
+              <h1 style={{ color: '#ff0000', fontWeight: 'bold' }}>
+                <Icon type="warning" /> La place a déjà été scannée !
+              </h1>
+            )}
+            <h1>Tournoi : {spotlightName || '(Aucun)'}</h1>
+            <h1>Place : {infos.place || '(Aucune)'}</h1>
+            {infos.orders &&
+              (infos.orders.ethernet > 0 ||
+                infos.orders.ethernet7 > 0 ||
+                infos.orders.kaliento > 0 ||
+                infos.orders.mouse > 0 ||
+                infos.orders.keyboard > 0 ||
+                infos.orders.headset > 0 ||
+                infos.orders.screen24 > 0 ||
+                infos.orders.screen27 > 0 ||
+                infos.orders.chair > 0 ||
+                infos.orders.gamingPC > 0 ||
+                infos.orders.streamingPC > 0 ||
+                infos.orders.laptop > 0 ||
+                infos.orders.tombola > 0 ||
+                infos.orders.shirts.length > 0) && <h1>Materiel (à récupérer au bar)</h1>}
+            {infos.orders && (
+              <React.Fragment>
                 <ul style={{ fontSize: '30px', color: '#1890ff' }}>
                   {infos.orders.ethernet > 0 && <li>Câble ethernet 5m x{infos.orders.ethernet}</li>}
-                  {infos.orders.ethernet7 > 0 && <li>Câble ethernet 7m x{infos.orders.ethernet7}</li>}
+                  {infos.orders.ethernet7 > 0 && (
+                    <li>Câble ethernet 7m x{infos.orders.ethernet7}</li>
+                  )}
                   {infos.orders.kaliento > 0 && <li>Kaliento x{infos.orders.kaliento}</li>}
                   {infos.orders.mouse > 0 && <li>Souris Gaming x{infos.orders.mouse}</li>}
                   {infos.orders.keyboard > 0 && <li>Clavier Gaming x{infos.orders.keyboard}</li>}
@@ -183,7 +198,9 @@ class Validate extends React.Component {
                   {infos.orders.screen27 > 0 && <li>Écran 27" x{infos.orders.screen27}</li>}
                   {infos.orders.chair > 0 && <li>Chaise Gaming x{infos.orders.chair}</li>}
                   {infos.orders.gamingPC > 0 && <li>PC Gaming x{infos.orders.gamingPC}</li>}
-                  {infos.orders.streamingPC > 0 && <li>PC Streaming x{infos.orders.streamingPC}</li>}
+                  {infos.orders.streamingPC > 0 && (
+                    <li>PC Streaming x{infos.orders.streamingPC}</li>
+                  )}
                   {infos.orders.laptop > 0 && <li>PC portable x{infos.orders.laptop}</li>}
                   {infos.orders.tombola > 0 && <li>Tombola x{infos.orders.tombola}</li>}
                   {infos.orders.shirts.map((shirt, index) => {
@@ -191,11 +208,11 @@ class Validate extends React.Component {
                   })}
                 </ul>
               </React.Fragment>
-            )
-          }
-        </Card>
-      }
-    </React.Fragment>)
+            )}
+          </Card>
+        )}
+      </React.Fragment>
+    )
   }
 }
 const mapStateToProps = state => ({
@@ -208,10 +225,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsers()),
   fetchTeams: () => dispatch(fetchTeams()),
-  getInfos: (barcode, fullname) => dispatch(getInfos(barcode, fullname))
+  getInfos: (barcode, fullname) => dispatch(getInfos(barcode, fullname)),
 })
 
 const WrappedApp = Form.create()(Validate)
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(WrappedApp)
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappedApp)

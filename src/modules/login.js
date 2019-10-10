@@ -1,7 +1,7 @@
-import axios from '../lib/axios'
-import errorToString from '../lib/errorToString'
 import { push } from 'react-router-redux'
 import { actions as notifActions } from 'redux-notifications'
+import axios from '../lib/axios'
+import errorToString from '../lib/errorToString'
 import { fetchUser, SET_USER, SET_PRICES } from './user'
 import { SET_TEAMS } from './teams'
 import { SET_SPOTLIGHTS } from './spotlights'
@@ -9,7 +9,7 @@ import { SET_SPOTLIGHTS } from './spotlights'
 export const SET_TOKEN = 'login/SET_TOKEN'
 
 const initialState = {
-  token: null
+  token: null,
 }
 
 export default (state = initialState, action) => {
@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
     case SET_TOKEN:
       return {
         ...state,
-        token: action.payload
+        token: action.payload,
       }
     default:
       return state
@@ -29,13 +29,12 @@ export const autoLogin = () => {
     if (localStorage.hasOwnProperty('arena-2018-token')) {
       dispatch({
         type: SET_TOKEN,
-        payload: localStorage.getItem('arena-2018-token')
+        payload: localStorage.getItem('arena-2018-token'),
       })
 
       return dispatch(fetchUser())
-    } else {
-      return dispatch(logout())
     }
+    return dispatch(logout())
   }
 }
 
@@ -49,7 +48,7 @@ export const tryLogin = user => {
       dispatch(
         notifActions.notifSend({
           message: 'Connexion validée',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     } catch (err) {
@@ -57,7 +56,7 @@ export const tryLogin = user => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }
@@ -68,7 +67,7 @@ export const saveToken = token => {
   return async dispatch => {
     dispatch({
       type: SET_TOKEN,
-      payload: token
+      payload: token,
     })
 
     localStorage.setItem('arena-2018-token', token)

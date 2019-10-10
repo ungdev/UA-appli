@@ -36,23 +36,23 @@ export default (state = initialState, action) => {
     case SET_USERS:
       return {
         ...state,
-        users: action.payload
+        users: action.payload,
       }
     case SET_COUNTS:
       return {
         ...state,
-        counts: action.payload
+        counts: action.payload,
       }
     case SET_CHARTDATA:
       return {
         ...state,
-        chartData: action.payload
+        chartData: action.payload,
       }
     case SET_SPOTLIGHT:
       spotlights[action.payload.id] = action.payload.spotlight
       return {
         ...state,
-        spotlights
+        spotlights,
       }
     case SET_USER_ADMIN:
       userId = action.payload
@@ -60,7 +60,7 @@ export default (state = initialState, action) => {
       users[index].permission.admin = true
       return {
         ...state,
-        users
+        users,
       }
     case REMOVE_USER_ADMIN:
       userId = action.payload
@@ -68,7 +68,7 @@ export default (state = initialState, action) => {
       users[index].permission.admin = false
       return {
         ...state,
-        users
+        users,
       }
     case SET_USER_PAID:
       userId = action.payload
@@ -76,19 +76,18 @@ export default (state = initialState, action) => {
       users[index].paid = 1
       return {
         ...state,
-        users
+        users,
       }
     case SET_USER_PLACE:
       const userPlaceIndex = users.findIndex(u => u.id === action.payload.id)
-      if(action.payload.placeLetter && action.payload.placeNumber) {
+      if (action.payload.placeLetter && action.payload.placeNumber) {
         users[userPlaceIndex].place = `${action.payload.placeLetter}${action.payload.placeNumber}`
-      }
-      else {
+      } else {
         users[userPlaceIndex].place = ''
       }
       return {
         ...state,
-        users
+        users,
       }
     case SWITCH_USERS_PLACES:
       const userIndex1 = users.findIndex(u => u.id === action.payload.id1)
@@ -101,45 +100,51 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        users
+        users,
       }
     case SET_USER_RESPO:
       index = users.findIndex(u => u.id === action.payload.id)
       users[index].permission.respo = action.payload.respo.toString()
       return {
         ...state,
-        users
+        users,
       }
     case SET_USER_PERMISSION:
       index = users.findIndex(u => u.id === action.payload.id)
       users[index].permission.permission = action.payload.permission.toString()
       return {
         ...state,
-        users
+        users,
       }
     case RENAME_USER:
       index = users.findIndex(u => u.id === action.payload.id)
-      users[index] = {...users[index], ...action.payload.newName}
+      users[index] = { ...users[index], ...action.payload.newName }
       return {
         ...state,
-        users
+        users,
       }
     case RENAME_TEAM:
-      spotlightId = action.payload.spotlightId;
+      spotlightId = action.payload.spotlightId
       index = spotlights[spotlightId].findIndex(s => s.id === action.payload.teamId)
-      spotlights[spotlightId][index] = {...spotlights[spotlightId][index], name: action.payload.teamName}
+      spotlights[spotlightId][index] = {
+        ...spotlights[spotlightId][index],
+        name: action.payload.teamName,
+      }
       return {
         ...state,
-        spotlights
+        spotlights,
       }
 
     case SET_CAPTAIN:
-      spotlightId = action.payload.spotlightId;
+      spotlightId = action.payload.spotlightId
       index = spotlights[spotlightId].findIndex(s => s.id === action.payload.teamId)
-      spotlights[spotlightId][index] = {...spotlights[spotlightId][index], captainId: action.payload.captainId}
+      spotlights[spotlightId][index] = {
+        ...spotlights[spotlightId][index],
+        captainId: action.payload.captainId,
+      }
       return {
         ...state,
-        spotlights
+        spotlights,
       }
 
     default:
@@ -165,13 +170,14 @@ export const fetchUsers = () => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
 
-export const fetchAdminSpotlight = (id) => {
+export const fetchAdminSpotlight = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -189,13 +195,14 @@ export const fetchAdminSpotlight = (id) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
 
-export const validatePayment = (userId) => {
+export const validatePayment = userId => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -206,17 +213,23 @@ export const validatePayment = (userId) => {
       notifActions.notifSend({
         message: 'Demande de paiement reçue, merci de patienter...',
         kind: 'warning',
-        dismissAfter: 2000
-    }))
+        dismissAfter: 2000,
+      })
+    )
     try {
-      const res = await axios.post(`admin/forcepay`, { userId }, { headers: { 'X-Token': authToken } })
-      if(res.status === 200) {
+      const res = await axios.post(
+        `admin/forcepay`,
+        { userId },
+        { headers: { 'X-Token': authToken } }
+      )
+      if (res.status === 200) {
         dispatch({ type: SET_USER_PAID, payload: userId })
         dispatch(
           notifActions.notifSend({
             message: 'Paiement validé',
-            dismissAfter: 2000
-        }))
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -224,8 +237,9 @@ export const validatePayment = (userId) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -239,28 +253,37 @@ export const fetchChartData = () => {
     }
 
     try {
-      const res = await axios.post(`admin/chart`, {
-        start: '2018-10-16',
-        end: moment().format('YYYY-MM-DD'),
-        step: 'day',
-        mode: 'daily',
-      }, { headers: { 'X-Token': authToken } })
-      const res2 = await axios.post(`admin/chart`, {
-        start: '2018-10-16',
-        end: moment().format('YYYY-MM-DD'),
-        step: 'day',
-        mode: 'cumul',
-      }, { headers: { 'X-Token': authToken } })
+      const res = await axios.post(
+        `admin/chart`,
+        {
+          start: '2018-10-16',
+          end: moment().format('YYYY-MM-DD'),
+          step: 'day',
+          mode: 'daily',
+        },
+        { headers: { 'X-Token': authToken } }
+      )
+      const res2 = await axios.post(
+        `admin/chart`,
+        {
+          start: '2018-10-16',
+          end: moment().format('YYYY-MM-DD'),
+          step: 'day',
+          mode: 'cumul',
+        },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      dispatch({ type: SET_CHARTDATA, payload: { daily: res.data, cumul: res2.data} })
+      dispatch({ type: SET_CHARTDATA, payload: { daily: res.data, cumul: res2.data } })
     } catch (err) {
       console.log(err)
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -277,22 +300,25 @@ export const sendReminderMails = () => {
       dispatch(
         notifActions.notifSend({
           message: 'Envoi en cours ...',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
       const res = await axios.get(`admin/remindersMail`, { headers: { 'X-Token': authToken } })
       dispatch(
         notifActions.notifSend({
           message: JSON.stringify(res.data),
-          dismissAfter: 15000
-      }))
+          dismissAfter: 15000,
+        })
+      )
     } catch (err) {
       console.log(err)
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -309,22 +335,25 @@ export const sendInformationsMails = () => {
       dispatch(
         notifActions.notifSend({
           message: 'Envoi en cours ...',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
       const res = await axios.get(`admin/informationsMail`, { headers: { 'X-Token': authToken } })
       dispatch(
         notifActions.notifSend({
           message: JSON.stringify(res.data),
-          dismissAfter: 15000
-      }))
+          dismissAfter: 15000,
+        })
+      )
     } catch (err) {
       console.log(err)
       dispatch(
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -346,14 +375,14 @@ export const fetchCounts = () => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }
   }
 }
 
-export const setAdmin = (id) => {
+export const setAdmin = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -361,15 +390,20 @@ export const setAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setAdmin/${id}`, { admin: true }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(
+        `/admin/setAdmin/${id}`,
+        { admin: true },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      if(res.status === 200) {
+      if (res.status === 200) {
         dispatch({ type: SET_USER_ADMIN, payload: id })
         dispatch(
           notifActions.notifSend({
-            message: 'L\'utilisateur est maintenant administrateur',
-            dismissAfter: 2000
-        }))
+            message: "L'utilisateur est maintenant administrateur",
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -377,13 +411,14 @@ export const setAdmin = (id) => {
         notifActions.notifSend({
           message: 'Une erreur est survenue',
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
 
-export const removeAdmin = (id) => {
+export const removeAdmin = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -391,15 +426,20 @@ export const removeAdmin = (id) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setAdmin/${id}`, { admin: false }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(
+        `/admin/setAdmin/${id}`,
+        { admin: false },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      if(res.status === 200) {
+      if (res.status === 200) {
         dispatch({ type: REMOVE_USER_ADMIN, payload: id })
         dispatch(
           notifActions.notifSend({
-            message: 'L\'utilisateur n\'est maintenant plus administrateur',
-            dismissAfter: 2000
-        }))
+            message: "L'utilisateur n'est maintenant plus administrateur",
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -407,8 +447,9 @@ export const removeAdmin = (id) => {
         notifActions.notifSend({
           message: 'Une erreur est survenue',
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -423,15 +464,20 @@ export const setPlace = (id, placeLetter, placeNumber) => {
 
     try {
       placeLetter = placeLetter.toUpperCase()
-      
-      const res = await axios.put(`admin/setPlace/${id}`, { placeLetter, placeNumber }, { headers: { 'X-Token': authToken } })
-      if(res.status === 200) {
+
+      const res = await axios.put(
+        `admin/setPlace/${id}`,
+        { placeLetter, placeNumber },
+        { headers: { 'X-Token': authToken } }
+      )
+      if (res.status === 200) {
         dispatch({ type: SET_USER_PLACE, payload: { id, placeLetter, placeNumber } })
         dispatch(
           notifActions.notifSend({
-            message: 'La place de l\'utilisateur a été modifiée',
-            dismissAfter: 2000
-        }))
+            message: "La place de l'utilisateur a été modifiée",
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -439,8 +485,9 @@ export const setPlace = (id, placeLetter, placeNumber) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -453,15 +500,20 @@ export const switchPlaces = (id1, id2) => {
       return
     }
 
-    try {      
-      const res = await axios.put(`admin/switchPlaces/${id1}/${id2}`, {}, { headers: { 'X-Token': authToken } })
-      if(res.status === 200) {
+    try {
+      const res = await axios.put(
+        `admin/switchPlaces/${id1}/${id2}`,
+        {},
+        { headers: { 'X-Token': authToken } }
+      )
+      if (res.status === 200) {
         dispatch({ type: SWITCH_USERS_PLACES, payload: { id1, id2 } })
         dispatch(
           notifActions.notifSend({
             message: 'Les places ont été échangées',
-            dismissAfter: 2000
-        }))
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -469,13 +521,14 @@ export const switchPlaces = (id1, id2) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
 
-export const setPlaces = (places) => {
+export const setPlaces = places => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -487,17 +540,22 @@ export const setPlaces = (places) => {
       dispatch(
         notifActions.notifSend({
           message: 'Envoi en cours ...',
-          dismissAfter: 2000
-      }))
-      const res = await axios.post(`admin/setPlaces`, { places }, { headers: { 'X-Token': authToken } })
-      if(res.status === 200) {
+          dismissAfter: 2000,
+        })
+      )
+      const res = await axios.post(
+        `admin/setPlaces`,
+        { places },
+        { headers: { 'X-Token': authToken } }
+      )
+      if (res.status === 200) {
         dispatch(
           notifActions.notifSend({
             message: 'Places modifiées !',
-            dismissAfter: 2000
-        }))
-      }
-      else {
+            dismissAfter: 2000,
+          })
+        )
+      } else {
         console.log(res)
       }
     } catch (err) {
@@ -506,8 +564,9 @@ export const setPlaces = (places) => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -520,15 +579,20 @@ export const setRespo = (id, respo) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setRespo/${id}`, { respo }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(
+        `/admin/setRespo/${id}`,
+        { respo },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      if(res.status === 200) {
+      if (res.status === 200) {
         dispatch({ type: SET_USER_RESPO, payload: { id, respo } })
         dispatch(
           notifActions.notifSend({
-            message: 'Les permissions de l\'utilisateur ont été modifiées',
-            dismissAfter: 2000
-        }))
+            message: "Les permissions de l'utilisateur ont été modifiées",
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -536,8 +600,9 @@ export const setRespo = (id, respo) => {
         notifActions.notifSend({
           message: 'Une erreur est survenue',
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -550,15 +615,20 @@ export const setPermission = (id, permission) => {
       return
     }
     try {
-      const res = await axios.put(`/admin/setPermission/${id}`, { permission }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(
+        `/admin/setPermission/${id}`,
+        { permission },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      if(res.status === 200) {
+      if (res.status === 200) {
         dispatch({ type: SET_USER_PERMISSION, payload: { id, permission } })
         dispatch(
           notifActions.notifSend({
-            message: 'Les permissions de l\'utilisateur ont été modifiées',
-            dismissAfter: 2000
-        }))
+            message: "Les permissions de l'utilisateur ont été modifiées",
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -566,8 +636,9 @@ export const setPermission = (id, permission) => {
         notifActions.notifSend({
           message: 'Une erreur est survenue',
           kind: 'danger',
-          dismissAfter: 2000
-      }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -581,15 +652,20 @@ export const renameUser = (id, newName) => {
     }
 
     try {
-      const res = await axios.put(`/admin/renameUser/${id}`, { ...newName }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(
+        `/admin/renameUser/${id}`,
+        { ...newName },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      if(res.status === 200) {
+      if (res.status === 200) {
         dispatch({ type: RENAME_USER, payload: { id, newName } })
         dispatch(
           notifActions.notifSend({
-            message: 'Le nom de l\'utilisateur a été modifié',
-            dismissAfter: 2000
-          }))
+            message: "Le nom de l'utilisateur a été modifié",
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -597,8 +673,9 @@ export const renameUser = (id, newName) => {
         notifActions.notifSend({
           message: 'Une erreur est survenue',
           kind: 'danger',
-          dismissAfter: 2000
-        }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -612,15 +689,20 @@ export const renameTeam = (teamId, spotlightId, teamName) => {
     }
 
     try {
-      const res = await axios.put(`/admin/renameTeam/${teamId}`, { name: teamName }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(
+        `/admin/renameTeam/${teamId}`,
+        { name: teamName },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      if(res.status === 200) {
-        dispatch({ type: RENAME_TEAM, payload: {teamId, spotlightId, teamName}})
+      if (res.status === 200) {
+        dispatch({ type: RENAME_TEAM, payload: { teamId, spotlightId, teamName } })
         dispatch(
           notifActions.notifSend({
-            message: 'Le nom de l\'équipe a été modifié',
-            dismissAfter: 2000
-          }))
+            message: "Le nom de l'équipe a été modifié",
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -628,8 +710,9 @@ export const renameTeam = (teamId, spotlightId, teamName) => {
         notifActions.notifSend({
           message: 'Une erreur est survenue',
           kind: 'danger',
-          dismissAfter: 2000
-        }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }
@@ -643,15 +726,20 @@ export const setCaptain = (teamId, spotlightId, captainId) => {
     }
 
     try {
-      const res = await axios.put(`/admin/setCaptain/${teamId}`, { userId: captainId }, { headers: { 'X-Token': authToken } })
+      const res = await axios.put(
+        `/admin/setCaptain/${teamId}`,
+        { userId: captainId },
+        { headers: { 'X-Token': authToken } }
+      )
 
-      if(res.status === 200) {
-        dispatch({ type: SET_CAPTAIN, payload: {teamId, spotlightId, captainId}})
+      if (res.status === 200) {
+        dispatch({ type: SET_CAPTAIN, payload: { teamId, spotlightId, captainId } })
         dispatch(
           notifActions.notifSend({
             message: `Le capitaine d'équipe a été modifié`,
-            dismissAfter: 2000
-          }))
+            dismissAfter: 2000,
+          })
+        )
       }
     } catch (err) {
       console.log(err)
@@ -659,8 +747,9 @@ export const setCaptain = (teamId, spotlightId, captainId) => {
         notifActions.notifSend({
           message: 'Une erreur est survenue',
           kind: 'danger',
-          dismissAfter: 2000
-        }))
+          dismissAfter: 2000,
+        })
+      )
     }
   }
 }

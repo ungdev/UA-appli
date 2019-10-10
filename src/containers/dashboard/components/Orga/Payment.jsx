@@ -14,9 +14,9 @@ class Payment extends React.Component {
       search: {
         fullname: [],
         email: [],
-        paid: []
+        paid: [],
       },
-      modalVisible: false
+      modalVisible: false,
     }
 
     this.props.fetchUsers()
@@ -27,29 +27,29 @@ class Payment extends React.Component {
     search[searchField] = searchValue
 
     this.setState({
-      search
+      search,
     })
   }
 
-  clearSearch = (searchField) => {
+  clearSearch = searchField => {
     let search = this.state.search
     search[searchField] = []
 
     this.setState({
-      search
+      search,
     })
   }
 
-  openModal = (id) => {
+  openModal = id => {
     this.setState({
       userId: id,
-      modalVisible: true
+      modalVisible: true,
     })
   }
 
   closeModal = () => {
     this.setState({
-      modalVisible: false
+      modalVisible: false,
     })
   }
 
@@ -57,7 +57,7 @@ class Payment extends React.Component {
     this.props.validatePayment(this.state.userId)
     this.closeModal()
   }
-  
+
   render() {
     let { users } = this.props
     const { search } = this.state
@@ -70,14 +70,14 @@ class Payment extends React.Component {
     users = users.map(user => {
       return {
         ...user,
-        fullname: `${user.name} (${user.firstname} ${user.lastname})`
+        fullname: `${user.name} (${user.firstname} ${user.lastname})`,
       }
     })
-    
+
     // Get different emails
     let emails = []
-    users.forEach(user => {      
-      if(!emails.includes(user.email)) {
+    users.forEach(user => {
+      if (!emails.includes(user.email)) {
         emails.push(user.email)
       }
     })
@@ -86,27 +86,27 @@ class Payment extends React.Component {
     // Apply filters
     let rows = users
     Object.keys(search).forEach(key => {
-      if(search[key].length > 0) {
+      if (search[key].length > 0) {
         rows = rows.filter(user => {
           let included = false
 
           search[key].forEach(searchValue => {
-            if(typeof user[key] === 'string') {
-              if(searchValue === ' ' && user[key] === '') {
+            if (typeof user[key] === 'string') {
+              if (searchValue === ' ' && user[key] === '') {
+                included = true
+              } else if (user[key].toLowerCase().includes(searchValue.toLowerCase())) {
                 included = true
               }
-              else if(user[key].toLowerCase().includes(searchValue.toLowerCase())) {
-                included = true
-              }
-            }
-            else if(typeof user[key] === 'boolean' && (user[key] ? 'true' : 'false') === searchValue) {
+            } else if (
+              typeof user[key] === 'boolean' &&
+              (user[key] ? 'true' : 'false') === searchValue
+            ) {
               included = true
-            }
-            else if(user[key] === searchValue) {
+            } else if (user[key] === searchValue) {
               included = true
             }
           })
-  
+
           return included
         })
       }
@@ -116,43 +116,46 @@ class Payment extends React.Component {
     let columns = [
       {
         title: 'Utilisateur',
-        dataIndex: 'fullname'
+        dataIndex: 'fullname',
       },
       {
         title: 'E-mail',
-        dataIndex: 'email'
+        dataIndex: 'email',
       },
       {
         title: 'Place',
-        dataIndex: 'place'
+        dataIndex: 'place',
       },
       {
         title: 'A payé',
         dataIndex: 'paid',
-        render: (paid) => {return paid ? <Icon type="check" /> : <Icon type="close" />}
+        render: paid => {
+          return paid ? <Icon type="check" /> : <Icon type="close" />
+        },
       },
       {
         title: 'Valider le paiement',
         dataIndex: 'id',
-        render: (id) => {
+        render: id => {
           let user = users.find(u => u.id === id)
-          if(!user.paid) {
-            return <a onClick={() => this.openModal(id)}><Icon type="euro" style={{ fontSize: '18px' }} /></a>
+          if (!user.paid) {
+            return (
+              <a onClick={() => this.openModal(id)}>
+                <Icon type="euro" style={{ fontSize: '18px' }} />
+              </a>
+            )
           }
-          
+
           return ''
-        }
-      }
+        },
+      },
     ]
 
     return (
       <React.Fragment>
         <h1>Valider un paiement</h1>
 
-        <Card
-          title="Filtres"
-          style={{ marginTop: '20px' }}
-        >
+        <Card title="Filtres" style={{ marginTop: '20px' }}>
           <InputGroup compact>
             <Select
               mode="tags"
@@ -161,10 +164,20 @@ class Payment extends React.Component {
               onChange={v => this.setSearch('fullname', v)}
               style={{ width: '250px' }}
             >
-              {users.map((user, i) => <Select.Option value={user.fullname} key={i}>{user.fullname}</Select.Option>)}
+              {users.map((user, i) => (
+                <Select.Option value={user.fullname} key={i}>
+                  {user.fullname}
+                </Select.Option>
+              ))}
             </Select>
             <Tooltip title="Réinitialiser" placement="right">
-              <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('fullname')}><Icon type="close"></Icon></Button>
+              <Button
+                type="primary"
+                style={{ paddingRight: '10px', paddingLeft: '10px' }}
+                onClick={() => this.clearSearch('fullname')}
+              >
+                <Icon type="close"></Icon>
+              </Button>
             </Tooltip>
           </InputGroup>
 
@@ -176,13 +189,23 @@ class Payment extends React.Component {
               onChange={v => this.setSearch('email', v)}
               style={{ width: '250px' }}
             >
-              {emails.map((email, i) => <Select.Option value={email} key={i}>{email}</Select.Option>)}
+              {emails.map((email, i) => (
+                <Select.Option value={email} key={i}>
+                  {email}
+                </Select.Option>
+              ))}
             </Select>
             <Tooltip title="Réinitialiser" placement="right">
-              <Button type="primary" style={{ paddingRight: '10px', paddingLeft: '10px' }} onClick={() => this.clearSearch('email')}><Icon type="close"></Icon></Button>
+              <Button
+                type="primary"
+                style={{ paddingRight: '10px', paddingLeft: '10px' }}
+                onClick={() => this.clearSearch('email')}
+              >
+                <Icon type="close"></Icon>
+              </Button>
             </Tooltip>
           </InputGroup>
-          
+
           <Checkbox.Group
             onChange={v => this.setSearch('paid', v)}
             defaultValue={[]}
@@ -210,7 +233,10 @@ class Payment extends React.Component {
           okText="Ok"
           cancelText="Annuler"
         >
-          <p>Cela validera le paiement de l'utilisateur, le marquera comme scanné et il recevra sa place par mail.</p>
+          <p>
+            Cela validera le paiement de l'utilisateur, le marquera comme scanné et il recevra sa
+            place par mail.
+          </p>
         </Modal>
       </React.Fragment>
     )
@@ -219,12 +245,12 @@ class Payment extends React.Component {
 
 const mapStateToProps = state => ({
   users: state.admin.users,
-  spotlights: state.spotlights.spotlights
+  spotlights: state.spotlights.spotlights,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsers()),
-  validatePayment: (id) => dispatch(validatePayment(id))
+  validatePayment: id => dispatch(validatePayment(id)),
 })
 
 export default connect(

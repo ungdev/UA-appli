@@ -8,19 +8,19 @@ class Pizza extends React.Component {
     super()
 
     this.state = {
-      show: false
+      show: false,
     }
   }
 
   trigger = () => {
     this.setState({
-      show: true
+      show: true,
     })
 
     setTimeout(
       () =>
         this.setState({
-          show: false
+          show: false,
         }),
       2000
     )

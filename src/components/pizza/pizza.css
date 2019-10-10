@@ -2,7 +2,7 @@
   display: none;
 }
 
-.a-pizza-modal[active=true] {
+.a-pizza-modal[active='true'] {
   display: block;
   position: fixed;
   top: 50%;

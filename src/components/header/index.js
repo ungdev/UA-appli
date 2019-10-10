@@ -31,7 +31,7 @@ const mapDispatchToProps = dispatch => {
     back(e) {
       e && e.preventDefault()
       dispatch(goBack())
-    }
+    },
   }
 }
 

@@ -10,10 +10,10 @@ import RulesSSBU from './RulesSSBU'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
 
 class Rules extends React.Component {
-
   render() {
+    const { tournament } = this.props
     let rulesToDisplay = ''
-    switch (this.props.tournament) {
+    switch (tournament) {
       case '1':
         rulesToDisplay = <RulesLOL />
         break
@@ -22,7 +22,7 @@ class Rules extends React.Component {
         break
       case '3':
         rulesToDisplay = <RulesFortnite />
-        break;
+        break
       case '4':
         rulesToDisplay = <RulesCSGO />
         break
@@ -33,7 +33,7 @@ class Rules extends React.Component {
         rulesToDisplay = <RulesSSBU />
         break
       default:
-        rulesToDisplay = 'Ce jeu n\'a pas de règlement.'
+        rulesToDisplay = "Ce jeu n'a pas de règlement."
     }
     return (
       <div>
@@ -41,7 +41,7 @@ class Rules extends React.Component {
         <Divider />
         {rulesToDisplay}
       </div>
-    );
+    )
   }
 }
 

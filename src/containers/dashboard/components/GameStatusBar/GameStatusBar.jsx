@@ -1,18 +1,17 @@
 import React from 'react'
 import { Card, Popover, Steps, Spin, Button, Modal, Input } from 'antd'
 import { connect } from 'react-redux'
-import { setSpotlightState } from '../../../../modules/spotlights'
+import { setSpotlightState, addState } from '../../../../modules/spotlights'
 import { fetchInfos } from '../../../../modules/infos'
-import { addState } from '../../../../modules/spotlights'
 
-const Step = Steps.Step
+const { Step } = Steps
 
 class TournamentStatusBar extends React.Component {
   constructor(props) {
     super(props)
 
     props.getInfos(props.game, 0, 1)
-    
+
     const spotlight = props.spotlights.find(s => `${s.id}` === props.game)
 
     this.state = {
@@ -25,24 +24,24 @@ class TournamentStatusBar extends React.Component {
     }
   }
 
-  static getDerivedStateFromProps (props, state) {
+  static getDerivedStateFromProps(props, state) {
     const spotlight = props.spotlights.find(s => `${s.id}` === props.game)
     return {
       ...state,
       etat: spotlight ? spotlight.state : 0,
-      info: props.infos && props.infos.length > 0 ? props.infos[0].title : ''
+      info: props.infos && props.infos.length > 0 ? props.infos[0].title : '',
     }
   }
 
-  openModal = () => {
-    this.setState({ modalVisible: true })
-  }
-
-  closeModal = () => {
+  closeModal() {
     this.setState({ modalVisible: false })
   }
 
-  addState = () => {
+  openModal() {
+    this.setState({ modalVisible: true })
+  }
+
+  addState() {
     const { title, description, popup } = this.state
     this.props.addState(this.props.game, title, description, popup)
     this.setState({
@@ -53,17 +52,17 @@ class TournamentStatusBar extends React.Component {
     })
   }
 
-  customDot = (dot, { index }) => {
+  customDot(dot, { index }) {
     const { game, spotlights } = this.props
     const spotlight = spotlights.find(s => `${s.id}` === game)
-    return spotlight.states[index].popover !== ''
-      ? <Popover content={<span>{spotlight.states[index].popover}</span>}>
-          {dot}
-        </Popover>
-      : dot
+    return spotlight.states[index].popover !== '' ? (
+      <Popover content={<span>{spotlight.states[index].popover}</span>}>{dot}</Popover>
+    ) : (
+      dot
+    )
   }
 
-  nextState = () => {
+  nextState() {
     const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.game)
     let etat = this.state.etat + 1
     etat = etat > spotlight.states.length - 1 ? spotlight.states.length - 1 : etat
@@ -71,7 +70,7 @@ class TournamentStatusBar extends React.Component {
     this.setState({ etat })
   }
 
-  previousState = () => {
+  previousState() {
     const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.game)
     let etat = this.state.etat - 1
     etat = etat >= 0 ? etat : 0
@@ -81,23 +80,28 @@ class TournamentStatusBar extends React.Component {
 
   render() {
     const { game } = this.props
-    let spotlight = this.props.spotlights.find(s => `${s.id}` === game)
-    if(!spotlight) return <Spin/>
+    const spotlight = this.props.spotlights.find(s => `${s.id}` === game)
+    if (!spotlight) return <Spin />
 
-    let steps = spotlight.states && spotlight.states.length !== 0
-      ? <Steps current={this.state.etat} progressDot={this.customDot} style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {
-          spotlight.states.map(state => (
+    const steps =
+      spotlight.states && spotlight.states.length !== 0 ? (
+        <Steps
+          current={this.state.etat}
+          progressDot={this.customDot}
+          style={{ display: 'flex', flexWrap: 'wrap' }}
+        >
+          {spotlight.states.map(state => (
             <Step
               title={state.title}
               description={state.desc}
               key={state.id}
               style={{ marginBottom: '10px' }}
             />
-          ))
-        }
+          ))}
         </Steps>
-      : <p style={{ marginBottom: 0, color: '#999' }}>(Aucun état)</p>
+      ) : (
+        <p style={{ marginBottom: 0, color: '#999' }}>(Aucun état)</p>
+      )
 
     return (
       <div>
@@ -128,19 +132,36 @@ class TournamentStatusBar extends React.Component {
             style={{ marginBottom: '5px' }}
           />
         </Modal>
-        <Card title={<h1>{spotlight.name}</h1>}>
-          { steps }
-        </Card>
-        {this.props.user && this.props.user.permission && ((this.props.user.permission.respo && this.props.user.permission.respo.includes(this.props.game)) || this.props.user.permission.admin) &&
-          <div style={{ marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-around' }}>
-            <Button type="danger" onClick={this.previousState}>État précédent</Button>
-            <Button type="primary" onClick={this.openModal}>Ajouter un état</Button>
-            <Button type="primary" onClick={this.nextState}>État suivant</Button>
-          </div>
-        }
-        {!this.props.noLastInfo ? <Card style={{ marginTop: '20px' }}>Dernière info : {this.state.info}</Card> : null}
+        <Card title={<h1>{spotlight.name}</h1>}>{steps}</Card>
+        {this.props.user &&
+          this.props.user.permission &&
+          ((this.props.user.permission.respo &&
+            this.props.user.permission.respo.includes(this.props.game)) ||
+            this.props.user.permission.admin) && (
+            <div
+              style={{
+                marginTop: '10px',
+                marginBottom: '10px',
+                display: 'flex',
+                justifyContent: 'space-around',
+              }}
+            >
+              <Button type="danger" onClick={this.previousState}>
+                État précédent
+              </Button>
+              <Button type="primary" onClick={this.openModal}>
+                Ajouter un état
+              </Button>
+              <Button type="primary" onClick={this.nextState}>
+                État suivant
+              </Button>
+            </div>
+          )}
+        {!this.props.noLastInfo ? (
+          <Card style={{ marginTop: '20px' }}>Dernière info : {this.state.info}</Card>
+        ) : null}
       </div>
-    );
+    )
   }
 }
 
@@ -151,9 +172,14 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setSpotlightState: (spotlightId, stateValue) => dispatch(setSpotlightState(spotlightId, stateValue)),
+  setSpotlightState: (spotlightId, stateValue) =>
+    dispatch(setSpotlightState(spotlightId, stateValue)),
   getInfos: (spotlight, start, end) => dispatch(fetchInfos(spotlight, start, end)),
-  addState: (spotlightId, title, desc, popup) => dispatch(addState(spotlightId, title, desc, popup)),
+  addState: (spotlightId, title, desc, popup) =>
+    dispatch(addState(spotlightId, title, desc, popup)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TournamentStatusBar)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TournamentStatusBar)

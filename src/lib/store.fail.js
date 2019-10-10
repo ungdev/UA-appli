@@ -4,14 +4,14 @@ export default opts => {
   if (opts.mutationSuccess) {
     opts.dispatch({
       type: opts.mutationSuccess,
-      payload: false
+      payload: false,
     })
   }
 
   if (opts.mutationError) {
     opts.dispatch({
       type: opts.mutationError,
-      payload: opts.err
+      payload: opts.err,
     })
   }
 
@@ -19,7 +19,7 @@ export default opts => {
     if (opts.mutationError) {
       opts.dispatch({
         type: opts.mutationError,
-        payload: null
+        payload: null,
       })
     }
   }, 2000)

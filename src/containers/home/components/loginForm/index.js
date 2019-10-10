@@ -1,18 +1,18 @@
-import React from "react"
-import { connect } from "react-redux"
+import React from 'react'
+import { connect } from 'react-redux'
 
-import { Form, Icon, Input, Button } from "antd"
+import { Form, Icon, Input, Button } from 'antd'
 
-import { register } from "../../../../modules/register"
-import { tryLogin } from "../../../../modules/login"
-import { fetchUser } from "../../../../modules/user"
+import { register } from '../../../../modules/register'
+import { tryLogin } from '../../../../modules/login'
+import { fetchUser } from '../../../../modules/user'
 
-import "./loginForm.css"
+import './loginForm.css'
 
 const FormItem = Form.Item
 
 class LoginForm extends React.Component {
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -26,43 +26,37 @@ class LoginForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator("name", {
+          {getFieldDecorator('name', {
             rules: [
               {
                 required: true,
-                message: "Veuillez saisir votre nom d'utilisateur"
-              }
-            ]
+                message: "Veuillez saisir votre nom d'utilisateur",
+              },
+            ],
           })(
             <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)", marginLeft: "-3px" }} />}
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)', marginLeft: '-3px' }} />}
               placeholder="Nom d'utilisateur"
               autoFocus={true}
             />
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator("password", {
-            rules: [
-              { required: true, message: "Veuillez saisir votre mot de passe" }
-            ]
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Veuillez saisir votre mot de passe' }],
           })(
             <Input
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)", marginLeft: "-3px" }} />}
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)', marginLeft: '-3px' }} />}
               type="password"
               placeholder="Mot de passe"
             />
           )}
         </FormItem>
-        <div style={{ marginBottom: "5px", marginTop: "20px", fontSize: "0.9em" }}>
+        <div style={{ marginBottom: '5px', marginTop: '20px', fontSize: '0.9em' }}>
           Pas de compte ? <a href="https://arena.utt.fr">Cliquez ici !</a>
         </div>
         <FormItem>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <Button type="primary" htmlType="submit" className="login-form-button">
             Connexion
           </Button>
         </FormItem>
@@ -72,7 +66,7 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  canLogin: state.canLogin.canLogin
+  canLogin: state.canLogin.canLogin,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -81,7 +75,7 @@ const mapDispatchToProps = dispatch => ({
       dispatch(fetchUser())
     })
   },
-  register: user => dispatch(register(user))
+  register: user => dispatch(register(user)),
 })
 
 export default connect(

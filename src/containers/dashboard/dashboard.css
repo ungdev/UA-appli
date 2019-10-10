@@ -1,4 +1,3 @@
-
 .header {
   padding-left: 0;
 }
@@ -75,14 +74,14 @@ table {
   width: 47%;
 }
 
-.sender{
-  max-width:50%;
+.sender {
+  max-width: 50%;
   margin-left: 50%;
   margin-bottom: 10px;
 }
 
-.receiver{
-  max-width:50%;
+.receiver {
+  max-width: 50%;
   margin-right: 50%;
   margin-bottom: 10px;
 }

@@ -1,5 +1,5 @@
 export default error => {
-  if(!error) return 'Une erreur est survenue'
+  if (!error) return 'Une erreur est survenue'
   switch (error) {
     case 'DISABLED_LOGIN':
       return 'Inscription désactivée'

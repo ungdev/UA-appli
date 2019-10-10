@@ -1,7 +1,7 @@
+import { actions as notifActions } from 'redux-notifications'
 import axios from '../lib/axios'
 import fail from '../lib/store.fail'
 import errorToString from '../lib/errorToString'
-import { actions as notifActions } from 'redux-notifications'
 import { saveToken } from './login'
 
 const initialState = {}
@@ -25,7 +25,7 @@ export const register = user => {
       dispatch(
         notifActions.notifSend({
           message: 'Inscription réussie',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     } catch (err) {
@@ -33,7 +33,7 @@ export const register = user => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }
@@ -50,7 +50,7 @@ export const validate = token => {
       dispatch(
         notifActions.notifSend({
           message: 'Inscription validée',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     } catch (err) {
@@ -58,7 +58,7 @@ export const validate = token => {
         notifActions.notifSend({
           message: errorToString(err.response.data.error),
           kind: 'danger',
-          dismissAfter: 2000
+          dismissAfter: 2000,
         })
       )
     }

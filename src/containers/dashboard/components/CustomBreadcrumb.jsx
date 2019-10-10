@@ -1,5 +1,5 @@
-import React from 'react';
-import { Breadcrumb } from 'antd';
+import React from 'react'
+import { Breadcrumb } from 'antd'
 // import { Link } from 'react-router-dom';
 
 class CustomBreadcrumb extends React.Component {
@@ -12,6 +12,7 @@ class CustomBreadcrumb extends React.Component {
   componentDidReceiveProps(nextProps) {
     this.setState({ path: nextProps.path })
   }
+
   render() {
     // let fullPath = '';
     return (
@@ -30,8 +31,8 @@ class CustomBreadcrumb extends React.Component {
             );
           })} */}
       </Breadcrumb>
-    );
+    )
   }
 }
 
-export default CustomBreadcrumb;
+export default CustomBreadcrumb

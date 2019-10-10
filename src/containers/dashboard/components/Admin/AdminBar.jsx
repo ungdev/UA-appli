@@ -11,9 +11,9 @@ class AdminBar extends React.Component {
 
     this.state = {
       modalVisible: false,
-      modalVisible2: false
+      modalVisible2: false,
     }
-    
+
     this.props.fetchCounts()
   }
 
@@ -56,48 +56,61 @@ class AdminBar extends React.Component {
   render() {
     return (
       <Card title={<h1>Panneau d'administration</h1>}>
-        <p><i>"Un grand pouvoir implique de grandes responsabilités"</i><strong> Oncle Ben</strong></p>
-        <p>Alors <strong>ne cassez pas tout !</strong></p>
+        <p>
+          <i>"Un grand pouvoir implique de grandes responsabilités"</i>
+          <strong> Oncle Ben</strong>
+        </p>
+        <p>
+          Alors <strong>ne cassez pas tout !</strong>
+        </p>
 
-        {this.props.counts ?
-          (<ul>
+        {this.props.counts ? (
+          <ul>
             <li>
               <em>Nombre de joueurs inscrits : </em> <strong>{this.props.counts.totalUsers}</strong>
             </li>
             <li>
-              <em>Nombre de joueurs ayant payé : </em> <strong>{this.props.counts.totalPaidPlayers}</strong>
+              <em>Nombre de joueurs ayant payé : </em>{' '}
+              <strong>{this.props.counts.totalPaidPlayers}</strong>
             </li>
             <li>
-              <em>Nombre d'inscrits n'ayant pas payé : </em> <strong>{this.props.counts.totalUnpaid}</strong>
+              <em>Nombre d'inscrits n'ayant pas payé : </em>{' '}
+              <strong>{this.props.counts.totalUnpaid}</strong>
             </li>
             <li>
-              <em>Nombre de visiteurs : </em><strong>{this.props.counts.totalPaidVisitors}</strong>
+              <em>Nombre de visiteurs : </em>
+              <strong>{this.props.counts.totalPaidVisitors}</strong>
             </li>
             <li>
-              <em>Nombre de joueurs libre : </em><strong>{this.props.counts.totalFreePlayers}</strong>
+              <em>Nombre de joueurs libre : </em>
+              <strong>{this.props.counts.totalFreePlayers}</strong>
             </li>
             <li>
-              <em>Nombre d'équipes : </em><strong>{this.props.counts.totalTeams}</strong>
+              <em>Nombre d'équipes : </em>
+              <strong>{this.props.counts.totalTeams}</strong>
             </li>
             <li>
-              <em>Nombre d'équipes complètes : </em><strong>{this.props.counts.totalFullTeams}</strong>
+              <em>Nombre d'équipes complètes : </em>
+              <strong>{this.props.counts.totalFullTeams}</strong>
             </li>
             <li>
-              <em>Nombre d'équipes ayant payé : </em><strong>{this.props.counts.totalPaidTeams}</strong>
+              <em>Nombre d'équipes ayant payé : </em>
+              <strong>{this.props.counts.totalPaidTeams}</strong>
             </li>
             <li>
               <em>Nombre de joueurs par tournoi : </em>
-              LoL pro <strong>{this.props.counts.totalLolProPlayers}/80</strong>,
-              LoL amateur <strong>{this.props.counts.totalLolAmateurPlayers}/80</strong>,
-              Fortnite <strong>{this.props.counts.totalFortnitePlayers}/96</strong>,
-              CS:GO <strong>{this.props.counts.totalCSGOPlayers}/40</strong>,
-              HS <strong>{this.props.counts.totalHSPlayers}/32</strong>,
-              SSBU <strong>{this.props.counts.totalSSBUPlayers}/64</strong>,
-              osu! <strong>{this.props.counts.totalOSUPlayers}/16</strong>
-              
+              LoL pro <strong>{this.props.counts.totalLolProPlayers}/80</strong>, LoL amateur{' '}
+              <strong>{this.props.counts.totalLolAmateurPlayers}/80</strong>, Fortnite{' '}
+              <strong>{this.props.counts.totalFortnitePlayers}/96</strong>, CS:GO{' '}
+              <strong>{this.props.counts.totalCSGOPlayers}/40</strong>, HS{' '}
+              <strong>{this.props.counts.totalHSPlayers}/32</strong>, SSBU{' '}
+              <strong>{this.props.counts.totalSSBUPlayers}/64</strong>, osu!{' '}
+              <strong>{this.props.counts.totalOSUPlayers}/16</strong>
             </li>
-          </ul>)
-        : <Spin/>}
+          </ul>
+        ) : (
+          <Spin />
+        )}
 
         <Button type="danger" onClick={this.openModal}>
           Envoyer les mails de rappel
@@ -113,7 +126,10 @@ class AdminBar extends React.Component {
           okText="Ok"
           cancelText="Annuler"
         >
-          <p>Cela enverra une grande quantité de mails, ne faites ça que si vous êtes sûr de ce que vous faites.</p>
+          <p>
+            Cela enverra une grande quantité de mails, ne faites ça que si vous êtes sûr de ce que
+            vous faites.
+          </p>
         </Modal>
         <Modal
           title="Êtes vous sûr ?"
@@ -123,7 +139,10 @@ class AdminBar extends React.Component {
           okText="Ok"
           cancelText="Annuler"
         >
-          <p>Cela enverra une grande quantitée de mails, ne faites ça que si vous êtes sûr de ce que vous faites</p>
+          <p>
+            Cela enverra une grande quantitée de mails, ne faites ça que si vous êtes sûr de ce que
+            vous faites
+          </p>
         </Modal>
       </Card>
     )
@@ -131,17 +150,17 @@ class AdminBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  counts: state.admin.counts
+  counts: state.admin.counts,
 })
 
 const mapDispatchToProps = dispatch => ({
   redirectToHome: () => dispatch(push('/dashboard/home')),
   fetchCounts: () => dispatch(fetchCounts()),
   sendReminderMails: () => dispatch(sendReminderMails()),
-  sendInformationsMails: () => dispatch(sendInformationsMails())
+  sendInformationsMails: () => dispatch(sendInformationsMails()),
 })
 
-
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(AdminBar)
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminBar)

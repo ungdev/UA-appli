@@ -4,22 +4,21 @@ import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
 import { fetchAdminSpotlight } from '../../../../modules/admin'
-import SpotlightsActions from "./components/SpotlightsActions";
-
+import SpotlightsActions from './components/SpotlightsActions'
 
 class Spotlights extends React.Component {
   constructor(props) {
     super(props)
-    
+
     this.state = {
       searchText: '',
-      id: this.props.location.split('/')[4]
+      id: this.props.location.split('/')[4],
     }
 
     this.props.fetchAdminSpotlight(this.state.id)
   }
-  
-  handleSearch = (e) => {
+
+  handleSearch = e => {
     this.setState({ searchText: e.target.value })
   }
 
@@ -29,34 +28,38 @@ class Spotlights extends React.Component {
 
     let currentId = location.split('/')[4]
 
-    if(currentId !== id) {
+    if (currentId !== id) {
       this.setState({ id: currentId })
       this.props.fetchAdminSpotlight(currentId)
     }
 
     if (!spotlights || !spotlights[id] || !allspotlights) {
-      return <Spin/>
+      return <Spin />
     }
     let thisSpotlight = allspotlights.find(s => s.id === parseInt(currentId, 10))
     let rows = spotlights[id]
-    .sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at))
-    .map((team, index) => {
-      let date = new Date(team.completed_at.substring(0, 19)) // Remove '+00:00' at the end
+      .sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at))
+      .map((team, index) => {
+        let date = new Date(team.completed_at.substring(0, 19)) // Remove '+00:00' at the end
 
-      date = date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR')
+        date = date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR')
 
-      return {
-        ...team,
-        date: date,
-        name: { name: team.name, color: index + 1 > thisSpotlight.maxPlayers / thisSpotlight.perTeam ? '#ff0000' : '#000000' }
-      }
-    })
+        return {
+          ...team,
+          date: date,
+          name: {
+            name: team.name,
+            color:
+              index + 1 > thisSpotlight.maxPlayers / thisSpotlight.perTeam ? '#ff0000' : '#000000',
+          },
+        }
+      })
 
     const columns = [
       {
         title: 'Équipe',
         dataIndex: 'name',
-        render: text => <span style={{ color: text.color }}>{text.name}</span>
+        render: text => <span style={{ color: text.color }}>{text.name}</span>,
       },
       {
         title: 'Date de complétion',
@@ -65,15 +68,31 @@ class Spotlights extends React.Component {
       {
         title: 'Actions',
         dataIndex: 'id',
-        render: (teamId) => <SpotlightsActions teamId={teamId} spotlightId={thisSpotlight.id} teams={spotlights[id]}/>
-      }
+        render: teamId => (
+          <SpotlightsActions
+            teamId={teamId}
+            spotlightId={thisSpotlight.id}
+            teams={spotlights[id]}
+          />
+        ),
+      },
     ]
 
     return (
       <React.Fragment>
-        <AdminBar/>
-        <p style={{ marginTop: '10px' }}><strong>{rows.length} résultat{rows.length > 1 ? 's' : ''}</strong></p>
-        <Table columns={columns} dataSource={rows} locale={{ emptyText: 'Aucun résultat' }} style={{ marginTop: '20px' }} rowKey="id" />
+        <AdminBar />
+        <p style={{ marginTop: '10px' }}>
+          <strong>
+            {rows.length} résultat{rows.length > 1 ? 's' : ''}
+          </strong>
+        </p>
+        <Table
+          columns={columns}
+          dataSource={rows}
+          locale={{ emptyText: 'Aucun résultat' }}
+          style={{ marginTop: '20px' }}
+          rowKey="id"
+        />
       </React.Fragment>
     )
   }
@@ -82,14 +101,14 @@ const mapStateToProps = state => ({
   location: state.routing.location.pathname,
   users: state.admin.users,
   spotlights: state.admin.spotlights,
-  allspotlights: state.spotlights.spotlights
+  allspotlights: state.spotlights.spotlights,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAdminSpotlight: (id) => dispatch(fetchAdminSpotlight(id))
+  fetchAdminSpotlight: id => dispatch(fetchAdminSpotlight(id)),
 })
 
-
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(Spotlights)
+  mapStateToProps,
+  mapDispatchToProps
+)(Spotlights)
