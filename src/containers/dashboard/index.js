@@ -30,13 +30,12 @@ import { autoLogin } from '../../modules/login'
 import './dashboard.css'
 
 class Dashboard extends Component {
-
   componentDidMount() {
     this.props.autoLogin()
   }
 
-
   render() {
+    const { user } = this.props
     console.log('DASHBOARD')
     let component = null
     const tab = this.props.location.split('/')
@@ -66,10 +65,9 @@ class Dashboard extends Component {
     }
 
     if (tab[1] === 'admin') {
-      const { user } = this.props
 
       if (user) {
-        if (user.permission && user.permission.admin) {
+        if (user.permissions.admin) {
           if (tab[2] === 'users') component = <UsersList />
           if (tab[2] === 'paids') component = <Paids />
           if (tab[2] === 'tournaments') component = <Tournaments />
@@ -85,35 +83,27 @@ class Dashboard extends Component {
     }
 
     if (tab[1] === 'respo') {
-      const { user } = this.props
 
-      if (user) {
-        if (user.permission && user.permission.respo) {
-          if (tab[2] === 'conversations') component = <Conversations />
-          if (tab[2] === 'messages') component = <Messenger idTo={tab[3]} />
-          if (tab[2] === 'scanned') component = <Scanned />
-        } else {
-          this.props.goToHome()
-        }
+      if (user && user.permissions.respo) {
+        if (tab[2] === 'conversations') component = <Conversations />
+        if (tab[2] === 'messages') component = <Messenger idTo={tab[3]} />
+        if (tab[2] === 'scanned') component = <Scanned />
+      } else {
+        this.props.goToHome()
       }
     }
 
     if (tab[1] === 'orga') {
-      const { user } = this.props
 
       if (user) {
-        if (user.permission) {
-          if (user.permission.permission.includes('validate') || user.permission.admin) {
+          if (user.permissions.validate || user.permissions.admin) {
             if (tab[2] === 'validate') component = <Validate />
           }
-          if (user.permission.permission.includes('payment') || user.permission.admin) {
+          else if (user.permissions.payment || user.permissions.admin) {
             if (tab[2] === 'payment') component = <Payment />
           } else {
             this.props.goToHome()
           }
-        } else {
-          this.props.goToHome()
-        }
       }
     }
 

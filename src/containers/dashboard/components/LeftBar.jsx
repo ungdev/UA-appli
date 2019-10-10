@@ -217,7 +217,7 @@ class LeftBar extends React.Component {
       tournaments = []
     }
     let subMenuAdmin = ''
-    if (user && user.permission && user.permission.admin) {
+    if (user && user.permissions.admin) {
       subMenuAdmin = (
         <SubMenu
           key="2"
@@ -286,7 +286,7 @@ class LeftBar extends React.Component {
       )
     }
     let subMenuRespo = ''
-    if (user && user.permission && user.permission.respo) {
+    if (user && user.permissions.respo) {
       subMenuRespo = (
         <SubMenu
           key="2.1"
@@ -313,7 +313,7 @@ class LeftBar extends React.Component {
       )
     }
     let subMenuOrga = ''
-    if (user && user.permission && (user.permission.permission || user.permission.admin)) {
+    if (user && user.permissions && user.permissions.admin) {
       subMenuOrga = (
         <SubMenu
           key="2.2"
@@ -324,7 +324,7 @@ class LeftBar extends React.Component {
             </span>
           }
         >
-          {(user.permission.permission.includes('validate') || user.permission.admin) && (
+          {(user.permissions.validate || user.permissions.admin) && (
             <Menu.Item key="2.2-1">
               <Link to={`/dashboard/orga/validate`}>
                 <Icon type="barcode" />
@@ -332,7 +332,7 @@ class LeftBar extends React.Component {
               </Link>
             </Menu.Item>
           )}
-          {(user.permission.permission.includes('payment') || user.permission.admin) && (
+          {(user.permissions.payment || user.permissions.admin) && (
             <Menu.Item key="2.2-2">
               <Link to={`/dashboard/orga/payment`}>
                 <Icon type="euro" />
@@ -362,14 +362,12 @@ class LeftBar extends React.Component {
         {subMenuAdmin}
         {subMenuRespo}
         {subMenuOrga}
-        {user && !user.permission ? (
-          <Menu.Item key="2.5">
-            <Link to={'/dashboard/messages'}>
-              <Icon type="message" />
-              <span>Messagerie</span>
-            </Link>
-          </Menu.Item>
-        ) : null}
+        <Menu.Item key="2.5">
+          <Link to={'/dashboard/messages'}>
+            <Icon type="message" />
+            <span>Messagerie</span>
+          </Link>
+        </Menu.Item>
         <SubMenu
           key="3"
           title={

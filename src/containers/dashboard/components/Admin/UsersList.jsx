@@ -76,11 +76,11 @@ class UsersList extends React.Component {
     // Get users fullname, role and tournament
     users = users.map(user => {
       let role = ''
-      if (user.permission && user.permission.admin) {
+      if (user.permissions.admin) {
         role = 'Admin'
-      } else if (user.permission && user.permission.respo) {
+      } else if (user.permissions.respo) {
         role = `Respo`
-      } else if (user.permission && user.permission.permission) {
+      } else if (user.permissions.orga) {
         role = `Orga`
       } else {
         role = 'Joueur'

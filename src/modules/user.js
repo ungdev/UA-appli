@@ -1,7 +1,7 @@
 import { actions as notifActions } from 'redux-notifications'
 import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
-import { logout, SET_TOKEN } from './login'
+import { logout } from './login'
 
 export const SET_USER = 'user/SET_USER'
 export const SET_PRICES = 'user/SET_PRICES'
@@ -50,14 +50,23 @@ export const fetchUser = () => {
 
     try {
       const userId = localStorage.getItem('utt-arena-userid')
+      console.log('FETCHUSER')
       if (!userId) dispatch(logout())
       const res = await axios.get(`users/${userId}`, {
         headers: { 'X-Token': authToken },
       })
-
-      dispatch({ type: SET_USER, payload: res.data.user })
-      dispatch({ type: SET_TOKEN, payload: res.data.token })
-      dispatch({ type: SET_PRICES, payload: res.data.prices })
+      console.log('USER :', res.data)
+      dispatch({
+        type: SET_USER,
+        payload: {
+          ...res.data,
+          permissions: {
+            admin: res.data.permissions.indexOf('admin') !== -1,
+            respo: {}, // add respo type here
+            orga: res.data.permissions.indexOf('orga') !== -1,
+          },
+        },
+      })
       if (res.data.hasChangedIp) {
         dispatch(
           notifActions.notifSend({
@@ -97,12 +106,14 @@ export const fetchUser = () => {
         ])
         OneSignal.push(() => {
           OneSignal.sendTags({
-            id: res.data.user.id,
-            tournamentId: res.data.user.tournamentId,
+            id: res.data.id,
+            //tournamentId: res.data.user.tournamentId, // TODO GET USER TOURNAMENT AND SEND IT TO ONESIGNAL
           })
         })
       }
     } catch (err) {
+      console.log(err)
+      console.log(err.response)
       dispatch(logout())
     }
   }

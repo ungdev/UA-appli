@@ -88,16 +88,14 @@ class Home extends React.Component {
     }
 
     // Get user fullname, role and place
-    user.fullname = `${user.name} (${user.firstname} ${user.lastname})`
+    user.fullname = `${user.username} (${user.firstname} ${user.lastname})`
     user.role = null
-    if (user.permission) {
-      if (user.permission.admin) {
-        user.role = 'Admin'
-      } else if (user.permission.respo) {
-        user.role = 'Responsable tournoi'
-      } else if (user.permission.permission) {
-        user.role = 'Organisateur'
-      }
+    if (user.permissions.admin) {
+      user.role = 'Admin'
+    } else if (user.permissions.respo) {
+      user.role = 'Responsable tournoi'
+    } else if (user.permissions.orga) {
+      user.role = 'Organisateur'
     }
     user.place = null
     if (user.tableLetter && user.placeNumber) {
@@ -162,7 +160,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(fetchUser()),
-  fetchMatches: (tournamentId, participantId) => dispatch(fetchMatches(tournamentId, participantId)),
+  fetchMatches: (tournamentId, participantId) =>
+    dispatch(fetchMatches(tournamentId, participantId)),
 })
 
 export default connect(

@@ -84,8 +84,8 @@ class Info extends React.Component {
         )}
         {user &&
         user.permission &&
-        ((user.permission.respo && user.permission.respo.includes(this.props.tournament)) ||
-          user.permission.admin) ? (
+        ((user.permissions.respo && user.permissions.respo[this.props.tournament]) ||
+          user.permissions.admin) ? (
           <React.Fragment>
             <TextArea
               style={{ marginTop: '20px', width: '25%' }}
