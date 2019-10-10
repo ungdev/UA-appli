@@ -71,11 +71,12 @@ export const saveToken = token => {
       payload: token,
     })
 
-    localStorage.setItem('arena-2018-token', token)
+    localStorage.setItem('utt-arena-token', token)
   }
 }
 
 export const logout = () => {
+  console.log('LOGOUT')
   return async dispatch => {
     dispatch({ type: SET_TOKEN, payload: null })
     dispatch({ type: SET_USER, payload: null })
@@ -83,7 +84,8 @@ export const logout = () => {
     dispatch({ type: SET_TEAMS, payload: null })
     dispatch({ type: SET_PRICES, payload: null })
 
-    localStorage.removeItem('arena-2018-token')
+    localStorage.removeItem('utt-arena-token')
+    localStorage.removeItem('utt-arena-userid')
 
     return dispatch(push('/'))
   }

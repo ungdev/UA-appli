@@ -30,28 +30,11 @@ import { autoLogin } from '../../modules/login'
 import './dashboard.css'
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      path: this.props.match.path,
-      pathname: this.props.location.pathname,
-    }
-  }
-
-  componentDidReceiveProps(nextProps) {
-    this.setState({
-      path: nextProps.match.path,
-      pathname: nextProps.location.pathname,
-    })
-  }
 
   componentDidMount() {
     this.props.autoLogin()
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !!(nextProps !== this.props || nextState !== this.state)
-  }
 
   render() {
     console.log('DASHBOARD')
@@ -141,7 +124,7 @@ class Dashboard extends Component {
       return null
     }
 
-    return <DashboardLayout path={this.state.pathname} component={component} />
+    return <DashboardLayout path={this.props.location.pathname} component={component} />
   }
 }
 
