@@ -59,7 +59,7 @@ export const fetchMessagesByIdUser = idTo => {
   }
 }
 
-export const sendMessage = (to, message, spotlight) => {
+export const sendMessage = (to, message, tournament) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
@@ -81,7 +81,7 @@ export const sendMessage = (to, message, spotlight) => {
       })
       const res = await axios.post(
         `messages`,
-        { to, message, spotlight },
+        { to, message, tournament },
         { headers: { 'X-Token': authToken } }
       )
       if (res.status === 200) {

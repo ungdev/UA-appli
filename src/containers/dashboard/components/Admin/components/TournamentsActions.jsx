@@ -3,7 +3,7 @@ import { Button, Icon, Input, List, Modal, Tooltip } from 'antd'
 import { connect } from 'react-redux'
 import { renameTeam, setCaptain } from '../../../../../modules/admin'
 
-class SpotlightsActions extends React.Component {
+class TournamentsActions extends React.Component {
   constructor(props) {
     super(props)
     const { teamId, teams } = props
@@ -71,7 +71,7 @@ class SpotlightsActions extends React.Component {
   }
 
   renameTeam = () => {
-    this.props.renameTeam(this.props.teamId, this.props.spotlightId, this.state.teamName)
+    this.props.renameTeam(this.props.teamId, this.props.tournamentId, this.state.teamName)
 
     this.setState({
       renameModalVisible: false,
@@ -79,7 +79,7 @@ class SpotlightsActions extends React.Component {
   }
 
   setCaptain = () => {
-    this.props.setCaptain(this.props.teamId, this.props.spotlightId, this.state.captainId)
+    this.props.setCaptain(this.props.teamId, this.props.tournamentId, this.state.captainId)
 
     this.setState({
       setCaptainModalVisible: false,
@@ -95,12 +95,12 @@ class SpotlightsActions extends React.Component {
         return {
           id: user.id,
           teamId: team.id,
-          spotlightId: this.props.spotlightId,
-          name: user.name,
+          tournamentId: this.props.tournamentId,
+          username: user.username,
           isCaptain: user.id === team.captainId,
         }
       })
-      .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)) // Sort alphabetically
+      .sort((a, b) => (a.username < b.username ? -1 : a.username > b.username ? 1 : 0)) // Sort alphabetically
       .sort((a, b) => (a.id === team.captainId ? -1 : b.id === team.captainId ? 1 : 0)) // Captain first
 
     return (
@@ -155,7 +155,7 @@ class SpotlightsActions extends React.Component {
                         ) : (
                           ''
                         )}{' '}
-                        {user.name}
+                        {user.username}
                       </div>
                     }
                   />
@@ -215,12 +215,12 @@ class SpotlightsActions extends React.Component {
           <p>
             <i>Ancien capitaine</i>
             <br />
-            <strong>{team.users.find(u => u.id === team.captainId).name}</strong>
+            <strong>{team.users.find(u => u.id === team.captainId).username}</strong>
           </p>
           <p>
             <i>Nouveau capitaine</i>
             <br />
-            <strong>{team.users.find(u => u.id === this.state.captainId).name}</strong>
+            <strong>{team.users.find(u => u.id === this.state.captainId).username}</strong>
           </p>
         </Modal>
       </React.Fragment>
@@ -229,13 +229,13 @@ class SpotlightsActions extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  renameTeam: (teamId, spotlightId, teamName) =>
-    dispatch(renameTeam(teamId, spotlightId, teamName)),
-  setCaptain: (teamId, spotlightId, captainId) =>
-    dispatch(setCaptain(teamId, spotlightId, captainId)),
+  renameTeam: (teamId, tournamentId, teamName) =>
+    dispatch(renameTeam(teamId, tournamentId, teamName)),
+  setCaptain: (teamId, tournamentId, captainId) =>
+    dispatch(setCaptain(teamId, tournamentId, captainId)),
 })
 
 export default connect(
   null,
   mapDispatchToProps
-)(SpotlightsActions)
+)(TournamentsActions)

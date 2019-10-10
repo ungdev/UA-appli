@@ -65,7 +65,7 @@ class Info extends React.Component {
     let { infos } = this.props
     const { maxTextCaracters } = this.state
     infos = infos.filter(
-      info => `${info.spotlightId}` === (tournament === 'libre' ? '7' : tournament)
+      info => `${info.tournamentId}` === (tournament === 'libre' ? '7' : tournament)
     )
     if (tournament !== this.state.tournament) {
       this.loadData(0, 5)
@@ -131,7 +131,7 @@ class Info extends React.Component {
                 user.permission &&
                 ((user.permission.respo && user.permission.respo.includes(this.props.tournament)) ||
                   user.permission.admin)
-                  ? [<Delete infoId={info.id} spotlightId={this.props.tournament} />]
+                  ? [<Delete infoId={info.id} tournamentId={this.props.tournament} />]
                   : null
               }
             >
@@ -160,8 +160,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getInfos: (spotlight, start, end) => dispatch(fetchInfos(spotlight, start, end)),
-  sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
+  getInfos: (tournament, start, end) => dispatch(fetchInfos(tournament, start, end)),
+  sendMessage: (tournament, title, text) => dispatch(sendMessage(tournament, title, text)),
   setLoading: () => dispatch({ type: SET_INFOS_LOADING }),
 })
 

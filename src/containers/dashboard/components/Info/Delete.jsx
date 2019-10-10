@@ -13,7 +13,7 @@ class Delete extends React.Component {
   }
 
   validate = () => {
-    this.props.deleteInfo(this.props.infoId, this.props.spotlightId)
+    this.props.deleteInfo(this.props.infoId, this.props.tournamentId)
     this.closeModal()
   }
 
@@ -56,10 +56,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getInfos: (spotlight, start, end) => dispatch(fetchInfos(spotlight, start, end)),
-  sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
+  getInfos: (tournament, start, end) => dispatch(fetchInfos(tournament, start, end)),
+  sendMessage: (tournament, title, text) => dispatch(sendMessage(tournament, title, text)),
   setLoading: () => dispatch({ type: SET_INFOS_LOADING }),
-  deleteInfo: (infoId, spotlightId) => dispatch(deleteInfo(infoId, spotlightId)),
+  deleteInfo: (infoId, tournamentId) => dispatch(deleteInfo(infoId, tournamentId)),
 })
 
 export default connect(

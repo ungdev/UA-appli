@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
       conversations = state.conversations.splice(0) // peut poser probleme de splice
       if (!conversations) conversations = []
       action.payload.forEach(conversation => {
-        const found = conversations.find(i => conversation.id === i.id) // if we find a matching spotlight
+        const found = conversations.find(i => conversation.id === i.id) // if we find a matching tournament
         if (!found) conversations.push(conversation) // we do not add it to the tab
       })
       // infos.sort((info1, info2) => info1.createdAt < info2.createdAt ? 1 : -1)

@@ -20,10 +20,10 @@ class HsDecks extends React.Component {
   render() {
     const { hsplayers } = this.props
     const players = hsplayers
-      .filter(p => p.name.toUpperCase().indexOf(this.state.filteredName.toUpperCase()) !== -1)
+      .filter(p => p.username.toUpperCase().indexOf(this.state.filteredName.toUpperCase()) !== -1)
       .sort((a, b) => {
-        if (a.name > b.name) return 1
-        if (a.name < b.name) return -1
+        if (a.username > b.username) return 1
+        if (a.username < b.username) return -1
         return 0
       })
     if (!this.props.user) return <Spin />
@@ -39,7 +39,7 @@ class HsDecks extends React.Component {
           filterOption={(inputValue, option) =>
             option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           }
-          dataSource={hsplayers.map(player => player.name)}
+          dataSource={hsplayers.map(player => player.username)}
           onSelect={value => this.setState({ filteredName: value })}
         />
         <Button
@@ -56,7 +56,7 @@ class HsDecks extends React.Component {
         <span>Cartes en dorée</span>
         <Collapse accordion>
           {players.map((user, key) => (
-            <Panel header={user.name} key={key} disabled={user.decks.length === 0}>
+            <Panel header={user.username} key={key} disabled={user.decks.length === 0}>
               <Card
                 style={{
                   width: '100%',

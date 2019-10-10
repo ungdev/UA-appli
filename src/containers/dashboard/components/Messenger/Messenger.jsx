@@ -19,7 +19,7 @@ class Messenger extends React.Component {
       messages: this.props.messages,
       user: this.props.user,
       userTo: this.props.idTo ? this.props.idTo : null,
-      spotlight: '',
+      tournament: '',
       textValue: '',
       maxTitleCaracters: 100,
       maxTextCaracters: 1000,
@@ -60,7 +60,7 @@ class Messenger extends React.Component {
     this.props.sendMessage(
       this.props.idTo,
       this.state.textValue,
-      this.props.user.team == null ? null : this.props.user.team.spotlightId
+      this.props.user.team == null ? null : this.props.user.team.tournamentId
     )
     this.setState({ textValue: '' })
   }
@@ -129,7 +129,7 @@ const mapDispatchToProps = dispatch => ({
   goToHome: () => dispatch(push('/dashboard/home')),
   getMessages: () => dispatch(fetchMessages()),
   getMessagesByIdUser: idTo => dispatch(fetchMessagesByIdUser(idTo)),
-  sendMessage: (to, message, spotlight) => dispatch(sendMessage(to, message, spotlight)),
+  sendMessage: (to, message, tournament) => dispatch(sendMessage(to, message, tournament)),
   setLoading: () => dispatch({ type: SET_MESSAGES_LOADING }),
 })
 

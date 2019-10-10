@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
   }
 }
 
-export const fetchMatches = (spotlightID, participantID) => {
+export const fetchMatches = (tournamentID, participantID) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -28,7 +28,7 @@ export const fetchMatches = (spotlightID, participantID) => {
 
     const res = await axios.get(`matches/${participantID}`, {
       headers: { 'X-Token': authToken },
-      params: { spotlightID },
+      params: { tournamentID },
     })
 
     if (res.status === 200) {

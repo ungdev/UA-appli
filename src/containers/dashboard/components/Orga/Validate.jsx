@@ -48,13 +48,13 @@ class Validate extends React.Component {
   }
 
   getTournamentNameById = id => {
-    const spotlight = this.props.spotlights.find(spotlight => spotlight.id === id)
-    return spotlight ? spotlight.shortName : id
+    const tournament = this.props.tournaments.find(tournament => tournament.id === id)
+    return tournament ? tournament.shortName : id
   }
 
   render() {
     let { users, infos, teams } = this.props
-    let spotlightName = null
+    let tournamentName = null
 
     if (infos.id) {
       let team = null
@@ -66,7 +66,7 @@ class Validate extends React.Component {
         })
       })
 
-      spotlightName = team ? this.getTournamentNameById(team.spotlightId) : null
+      tournamentName = team ? this.getTournamentNameById(team.tournamentId) : null
     }
 
     if (!users) {
@@ -166,7 +166,7 @@ class Validate extends React.Component {
                 <Icon type="warning" /> La place a déjà été scannée !
               </h1>
             )}
-            <h1>Tournoi : {spotlightName || '(Aucun)'}</h1>
+            <h1>Tournoi : {tournamentName || '(Aucun)'}</h1>
             <h1>Place : {infos.place || '(Aucune)'}</h1>
             {infos.orders &&
               (infos.orders.ethernet > 0 ||
@@ -218,7 +218,7 @@ class Validate extends React.Component {
 const mapStateToProps = state => ({
   users: state.admin.users,
   teams: state.teams,
-  spotlights: state.spotlights.spotlights,
+  tournaments: state.tournaments.tournaments,
   infos: state.validate.infos,
 })
 

@@ -65,7 +65,7 @@ class Places extends React.Component {
 
 const mapStateToProps = state => ({
   users: state.admin.users,
-  spotlights: state.spotlights.spotlights,
+  tournaments: state.tournaments.tournaments,
 })
 
 const mapDispatchToProps = dispatch => ({

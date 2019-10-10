@@ -54,8 +54,8 @@ class Conversations extends React.Component {
   }
 
   getTournamentNameById = id => {
-    const spotlight = this.props.spotlights.find(spotlight => spotlight.id === id)
-    return spotlight ? spotlight.shortName : id
+    const tournament = this.props.tournaments.find(tournament => tournament.id === id)
+    return tournament ? tournament.shortName : id
   }
 
   render() {
@@ -66,7 +66,7 @@ class Conversations extends React.Component {
       return {
         ...user,
         fullname: `${user.name} (${user.firstname} ${user.lastname})`,
-        spotlight: this.getTournamentNameById(user.spotlightId),
+        tournament: this.getTournamentNameById(user.tournamentId),
       }
     })
 
@@ -131,7 +131,7 @@ class Conversations extends React.Component {
       },
       {
         title: 'Tournoi',
-        dataIndex: 'spotlight',
+        dataIndex: 'tournament',
       },
       {
         title: 'Actions',
@@ -202,7 +202,7 @@ class Conversations extends React.Component {
 const mapStateToProps = state => ({
   user: state.user.user,
   users: state.admin.users,
-  spotlights: state.spotlights.spotlights,
+  tournaments: state.tournaments.tournaments,
   conversations: state.conversations.conversations,
   loading: state.conversations.loading,
   location: state.routing.location.pathname,

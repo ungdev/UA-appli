@@ -19,12 +19,12 @@ export default class RulesHS extends React.Component {
         </p>
         <h1>Tournoi Libre</h1>
         <p>
-          En parallèle des tournois "Spotlights" (Lol, HS, CS:GO, Fortnite, SSBU) se déroulera un
+          En parallèle des tournois "Tournaments" (Lol, HS, CS:GO, Fortnite, SSBU) se déroulera un
           tournoi libre. Celui-ci sera composé de différents mini-tournois, sur des jeux divers et
           variés.
           <strong>
             {' '}
-            Tout joueur de tournoi Spotlight éliminé rejoindra automatiquement le tournoi Libre.
+            Tout joueur de tournoi Tournament éliminé rejoindra automatiquement le tournoi Libre.
           </strong>{' '}
           Il pourra ainsi profiter d'animations même s'il n'est plus dans la compétition.
         </p>

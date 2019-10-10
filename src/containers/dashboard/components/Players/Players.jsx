@@ -2,7 +2,7 @@ import React from 'react'
 import { List, Divider, Spin } from 'antd'
 import { connect } from 'react-redux'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
-import { fetchTeamsBySpotlightId, fetchLibrePlayers } from '../../../../modules/spotlights'
+import { fetchTeamsByTournamentId, fetchLibrePlayers } from '../../../../modules/tournaments'
 
 class Players extends React.Component {
   constructor(props) {
@@ -18,13 +18,13 @@ class Players extends React.Component {
   render() {
     if (this.props.tournament !== 'libre') {
       const teams = this.props.teams
-        .filter(team => team.spotlightId === parseInt(this.props.tournament, 10))
-        .filter(team => `${team.spotlightId}` === this.props.tournament)
-        .filter(team => team.isInSpotlight)
+        .filter(team => team.tournamentId === parseInt(this.props.tournament, 10))
+        .filter(team => `${team.tournamentId}` === this.props.tournament)
+        .filter(team => team.isInTournament)
 
-      const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
+      const tournament = this.props.tournaments.find(s => `${s.id}` === this.props.tournament)
 
-      if (!spotlight) {
+      if (!tournament) {
         return <Spin />
       }
 
@@ -33,7 +33,7 @@ class Players extends React.Component {
           <GameStatusBar game={this.props.tournament} />
           <Divider />
 
-          <h1>{`Joueurs pour ${spotlight.name}`}</h1>
+          <h1>{`Joueurs pour ${tournament.name}`}</h1>
 
           {teams.length > 0 ? (
             <List
@@ -76,13 +76,13 @@ class Players extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  teams: state.spotlights.teams || [],
-  librePlayers: state.spotlights.librePlayers,
-  spotlights: state.spotlights.spotlights,
+  teams: state.tournaments.teams || [],
+  librePlayers: state.tournaments.librePlayers,
+  tournaments: state.tournaments.tournaments,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchTeams: spotlightId => dispatch(fetchTeamsBySpotlightId(spotlightId)),
+  fetchTeams: tournamentId => dispatch(fetchTeamsByTournamentId(tournamentId)),
   fetchLibrePlayers: () => dispatch(fetchLibrePlayers()),
 })
 

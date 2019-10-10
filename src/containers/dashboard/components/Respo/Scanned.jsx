@@ -23,7 +23,7 @@ class Scanned extends React.Component {
 
     scannedTeams = scannedTeams.map(scannedTeam => (
       <div style={{ marginBottom: '20px' }}>
-        <h2>Équipes {scannedTeam.spotlightName}</h2>
+        <h2>Équipes {scannedTeam.tournamentName}</h2>
         <Collapse>
           {scannedTeam.teams.map(team => (
             <Panel
@@ -55,7 +55,7 @@ class Scanned extends React.Component {
                   ) : (
                     <Icon type="close" style={{ color: '#a00', fontSize: '18px' }} />
                   )}
-                  <span style={{ marginLeft: '10px' }}>{user.name}</span>
+                  <span style={{ marginLeft: '10px' }}>{user.username}</span>
                 </div>
               ))}
             </Panel>

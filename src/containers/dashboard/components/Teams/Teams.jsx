@@ -2,7 +2,7 @@ import React from 'react'
 import { List, Divider, Collapse, Spin, Icon, Tooltip } from 'antd'
 import { connect } from 'react-redux'
 import GameStatusBar from '../GameStatusBar/GameStatusBar'
-import { fetchTeamsBySpotlightId } from '../../../../modules/spotlights'
+import { fetchTeamsByTournamentId } from '../../../../modules/tournaments'
 
 const { Panel } = Collapse
 
@@ -14,14 +14,14 @@ class Teams extends React.Component {
 
   render() {
     let teams = this.props.teams.filter(
-      team => team.spotlightId === parseInt(this.props.tournament, 10)
+      team => team.tournamentId === parseInt(this.props.tournament, 10)
     )
     teams = teams
-      .filter(team => `${team.spotlightId}` === this.props.tournament)
-      .filter(team => team.isInSpotlight)
-    const spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
-    if (!spotlight) return <Spin />
-    const teamsToDisplay = `Équipes pour ${spotlight.name}`
+      .filter(team => `${team.tournamentId}` === this.props.tournament)
+      .filter(team => team.isInTournament)
+    const tournament = this.props.tournaments.find(s => `${s.id}` === this.props.tournament)
+    if (!tournament) return <Spin />
+    const teamsToDisplay = `Équipes pour ${tournament.name}`
     return (
       <div>
         <GameStatusBar game={this.props.tournament} />
@@ -49,7 +49,7 @@ class Teams extends React.Component {
                             ) : (
                               ''
                             )}{' '}
-                            {item.name}
+                            {item.username}
                           </div>
                         }
                         description={item.role ? item.role : ''}
@@ -68,12 +68,12 @@ class Teams extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  teams: state.spotlights.teams || [],
-  spotlights: state.spotlights.spotlights,
+  teams: state.tournaments.teams || [],
+  tournaments: state.tournaments.tournaments,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchTeams: spotlightId => dispatch(fetchTeamsBySpotlightId(spotlightId)),
+  fetchTeams: tournamentId => dispatch(fetchTeamsByTournamentId(tournamentId)),
 })
 
 export default connect(

@@ -29,7 +29,7 @@ class UserListActions extends React.Component {
       checkedPermission: [],
       checkedRespo: [],
       newName: {
-        name: user.name,
+        username: user.username,
         firstname: user.firstname,
         lastname: user.lastname,
       },
@@ -189,8 +189,8 @@ class UserListActions extends React.Component {
   }
 
   isNewNameValid = () => {
-    const name = this.state.newName.name
-    return name.length >= 3 && name.length <= 90
+    const { username } = this.state.newName
+    return username.length >= 3 && username.length <= 90
   }
 
   isNewFirstnameValid = () => {
@@ -258,7 +258,7 @@ class UserListActions extends React.Component {
           onCancel={this.closeMainModal}
         >
           <h1 className="admin-action-username">
-            {`${user.name} (${user.firstname} ${user.lastname})`}
+            {`${user.username} (${user.firstname} ${user.lastname})`}
           </h1>
 
           <h2 className="admin-action-title">
@@ -449,7 +449,9 @@ class UserListActions extends React.Component {
             <br />
             <strong>
               Utilisateur :{' '}
-              {`${this.state.newName.name} (${this.state.newName.firstname} ${this.state.newName.lastname})`}
+              {`${this.state.newName.name} (${this.state.newName.firstname} ${
+                this.state.newName.lastname
+              })`}
             </strong>
           </p>
         </Modal>

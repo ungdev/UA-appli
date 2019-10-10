@@ -18,12 +18,12 @@ class UsersList extends React.Component {
         email: [],
         role: [],
         team: [],
-        spotlight: [],
+        tournament: [],
         place: [],
         paid: [],
         scanned: [],
       },
-      displayInfo: ['team', 'spotlight', 'paid'],
+      displayInfo: ['team', 'tournament', 'paid'],
     }
 
     this.props.fetchUsers()
@@ -61,8 +61,8 @@ class UsersList extends React.Component {
   }
 
   getTournamentNameById = id => {
-    const spotlight = this.props.spotlights.find(spotlight => spotlight.id === id)
-    return spotlight ? spotlight.shortName : id
+    const tournament = this.props.tournaments.find(tournament => tournament.id === id)
+    return tournament ? tournament.shortName : id
   }
 
   render() {
@@ -73,7 +73,7 @@ class UsersList extends React.Component {
       return <Spin />
     }
 
-    // Get users fullname, role and spotlight
+    // Get users fullname, role and tournament
     users = users.map(user => {
       let role = ''
       if (user.permission && user.permission.admin) {
@@ -88,19 +88,19 @@ class UsersList extends React.Component {
 
       return {
         ...user,
-        fullname: `${user.name} (${user.firstname} ${user.lastname})`,
+        fullname: `${user.username} (${user.firstname} ${user.lastname})`,
         role,
-        spotlight: this.getTournamentNameById(user.spotlightId),
+        tournament: this.getTournamentNameById(user.tournamentId),
       }
     })
 
-    // Get different teams, emails, spotlights and places
+    // Get different teams, emails, tournaments and places
     let teams = []
     let emails = []
-    let spotlights = []
+    let tournaments = []
     let places = []
     users.forEach(user => {
-      if (!teams.includes(user.team) && user.spotlight !== '/') {
+      if (!teams.includes(user.team) && user.tournament !== '/') {
         teams.push(user.team)
       }
 
@@ -108,8 +108,8 @@ class UsersList extends React.Component {
         emails.push(user.email)
       }
 
-      if (!spotlights.includes(user.spotlight) && user.spotlight !== '/') {
-        spotlights.push(user.spotlight)
+      if (!tournaments.includes(user.tournament) && user.tournament !== '/') {
+        tournaments.push(user.tournament)
       }
 
       if (!places.includes(user.place) && user.place !== '') {
@@ -119,7 +119,7 @@ class UsersList extends React.Component {
     // Sort teams and places
     teams.sort((team1, team2) => team1.toLowerCase() > team2.toLowerCase())
     emails.sort((email1, email2) => email1.toLowerCase() > email2.toLowerCase())
-    spotlights.sort()
+    tournaments.sort()
     places.sort()
 
     // Apply filters
@@ -171,7 +171,7 @@ class UsersList extends React.Component {
       },
       {
         title: 'Tournoi',
-        dataIndex: 'spotlight',
+        dataIndex: 'tournament',
       },
       {
         title: 'Place',
@@ -219,7 +219,7 @@ class UsersList extends React.Component {
             <Checkbox value="email">E-mail</Checkbox>
             <Checkbox value="role">Rôle</Checkbox>
             <Checkbox value="team">Équipe</Checkbox>
-            <Checkbox value="spotlight">Tournoi</Checkbox>
+            <Checkbox value="tournament">Tournoi</Checkbox>
             <Checkbox value="place">Place</Checkbox>
             <Checkbox value="paid">A payé</Checkbox>
             <Checkbox value="scanned">Scanné</Checkbox>
@@ -321,19 +321,19 @@ class UsersList extends React.Component {
             </InputGroup>
           )}
 
-          {this.state.displayInfo.includes('spotlight') && (
+          {this.state.displayInfo.includes('tournament') && (
             <InputGroup compact style={{ marginTop: '10px' }}>
               <Select
                 mode="tags"
                 placeholder="Tournoi"
-                value={this.state.search['spotlight']}
-                onChange={v => this.setSearch('spotlight', v)}
+                value={this.state.search['tournament']}
+                onChange={v => this.setSearch('tournament', v)}
                 style={{ width: '250px' }}
               >
                 <Select.Option value="/">(Aucun)</Select.Option>
-                {spotlights.map((spotlight, i) => (
-                  <Select.Option value={spotlight} key={i}>
-                    {spotlight}
+                {tournaments.map((tournament, i) => (
+                  <Select.Option value={tournament} key={i}>
+                    {tournament}
                   </Select.Option>
                 ))}
               </Select>
@@ -341,7 +341,7 @@ class UsersList extends React.Component {
                 <Button
                   type="primary"
                   style={{ paddingRight: '10px', paddingLeft: '10px' }}
-                  onClick={() => this.clearSearch('spotlight')}
+                  onClick={() => this.clearSearch('tournament')}
                 >
                   <Icon type="close"></Icon>
                 </Button>
@@ -422,7 +422,7 @@ class UsersList extends React.Component {
 
 const mapStateToProps = state => ({
   users: state.admin.users,
-  spotlights: state.spotlights.spotlights,
+  tournaments: state.tournaments.tournaments,
 })
 
 const mapDispatchToProps = dispatch => ({

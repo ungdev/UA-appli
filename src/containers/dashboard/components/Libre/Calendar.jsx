@@ -28,8 +28,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getInfos: (spotlight, start, end) => dispatch(fetchInfos(spotlight, start, end)),
-  sendMessage: (spotlight, title, text) => dispatch(sendMessage(spotlight, title, text)),
+  getInfos: (tournament, start, end) => dispatch(fetchInfos(tournament, start, end)),
+  sendMessage: (tournament, title, text) => dispatch(sendMessage(tournament, title, text)),
   setLoading: () => dispatch({ type: SET_INFOS_LOADING }),
 })
 

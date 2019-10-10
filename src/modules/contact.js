@@ -48,10 +48,10 @@ export const sendMessageToSlack = (message, sendingLocation) => {
         payload: moment().valueOf(),
       })
       const { user } = getState().user
-      const { spotlights } = getState().spotlights
-      let spotlight = spotlights.find(s => `${s.id}` === `${sendingLocation}`)
-      if (sendingLocation === 'libre') spotlight = { name: 'libre' }
-      let data = `/!\\ Message en provenance de ${user.firstname} ${user.lastname} (${user.email}) depuis l'onglet contact de l'application pour le jeu ${spotlight.name} /!\\ `
+      const { tournaments } = getState().tournaments
+      let tournament = tournaments.find(s => `${s.id}` === `${sendingLocation}`)
+      if (sendingLocation === 'libre') tournament = { name: 'libre' }
+      let data = `/!\\ Message en provenance de ${user.firstname} ${user.lastname} (${user.email}) depuis l'onglet contact de l'application pour le jeu ${tournament.name} /!\\ `
       if (sendingLocation === 'libre')
         data = `/!\\ Message en provenance de ${user.firstname} ${user.lastname} (${user.email}) depuis l'onglet contact de l'application pour le tournoi libre /!\\ `
       await axios.post(

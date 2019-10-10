@@ -22,7 +22,7 @@ class Respo extends React.Component {
   }
 
   render() {
-    const spotlights = [
+    const tournaments = [
       {
         name: 'LoL (pro)',
         id: '1',
@@ -55,10 +55,10 @@ class Respo extends React.Component {
 
     return (
       <Checkbox.Group onChange={this.onChange} defaultValue={this.state.checkedRespo}>
-        {spotlights.map(spotlight => {
+        {tournaments.map(tournament => {
           return (
-            <React.Fragment key={spotlight.id}>
-              <Checkbox value={spotlight.id}>Tournoi {spotlight.name}</Checkbox>
+            <React.Fragment key={tournament.id}>
+              <Checkbox value={tournament.id}>Tournoi {tournament.name}</Checkbox>
               <br />
             </React.Fragment>
           )

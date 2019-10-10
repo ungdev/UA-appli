@@ -37,11 +37,11 @@ export const getInfos = (barcode, fullname) => {
         )
         return
       }
-      let name = fullname ? fullname.split('(')[0] : null
-      if (name) name = name.substr(0, name.length - 1)
+      let username = fullname ? fullname.split('(')[0] : null
+      if (username) username = username.substr(0, username.length - 1)
       const res = await axios.put(
         `/admin/validate`,
-        { barcode, name },
+        { barcode, username },
         { headers: { 'X-Token': authToken } }
       )
       if (res.status === 200) {

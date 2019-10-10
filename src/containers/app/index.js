@@ -5,15 +5,12 @@ import { Notifs as Notifications } from 'redux-notifications'
 import 'antd/dist/antd.css'
 
 import Home from '../home'
-import asyncComponent from '../../components/async'
 
-import DashboardComponent from '../dashboard'
+import Dashboard from '../dashboard'
 import SetPlaces from '../dashboard/setPlaces'
 
-import AsyncPizzaComponent from '../../components/pizza'
+import AsyncPizza from '../../components/pizza'
 
-const AsyncPizza = asyncComponent(() => AsyncPizzaComponent)
-const Dashboard = asyncComponent(() => DashboardComponent)
 
 const App = () => (
   <div>
@@ -34,7 +31,7 @@ const App = () => (
         component={Dashboard}
       />
       <Route
-        path={`${process.env.REACT_APP_BASEURL}dashboard/admin/spotlights/:id`}
+        path={`${process.env.REACT_APP_BASEURL}dashboard/admin/tournaments/:id`}
         exact
         component={Dashboard}
       />

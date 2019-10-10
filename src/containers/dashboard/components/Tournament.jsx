@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Divider, Card } from 'antd'
 import moment from 'moment'
-import { fetchSpotlightStages, fetchSpotlightMatches } from '../../../modules/spotlights'
+import { fetchTournamentStages, fetchTournamentMatches } from '../../../modules/tournaments'
 import GameStatusBar from './GameStatusBar/GameStatusBar'
 
 /** TODO: -replace by real Toornament ID and add to DB
@@ -48,10 +48,10 @@ class Tournament extends React.Component {
 
   async fetchStages() {
     if (!this.props.stages[this.props.tournament]) {
-      this.props.fetchSpotlightStages(this.props.tournament)
+      this.props.fetchTournamentStages(this.props.tournament)
     }
     if (!this.props.matches[this.props.tournament]) {
-      this.props.fetchSpotlightMatches(this.props.tournament)
+      this.props.fetchTournamentMatches(this.props.tournament)
     }
   }
 
@@ -109,16 +109,16 @@ class Tournament extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  spotlights: state.spotlights.spotlights,
-  stages: state.spotlights.stages,
+  tournaments: state.tournaments.tournaments,
+  stages: state.tournaments.stages,
   user: state.user.user,
   infos: state.infos.infos,
-  matches: state.spotlights.matches,
+  matches: state.tournaments.matches,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchSpotlightStages: id => dispatch(fetchSpotlightStages(id)),
-  fetchSpotlightMatches: id => dispatch(fetchSpotlightMatches(id)),
+  fetchTournamentStages: id => dispatch(fetchTournamentStages(id)),
+  fetchTournamentMatches: id => dispatch(fetchTournamentMatches(id)),
 })
 
 export default withRouter(

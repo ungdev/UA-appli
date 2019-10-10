@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
       infos = state.infos.slice()
       if (!infos) infos = []
       action.payload.forEach(info => {
-        const found = infos.find(i => info.id === i.id) // if we find a matching spotlight
+        const found = infos.find(i => info.id === i.id) // if we find a matching tournament
         if (!found) infos.push(info) // we do not add it to the tab
       })
       infos.sort((info1, info2) => (info1.createdAt < info2.createdAt ? 1 : -1))
@@ -39,12 +39,12 @@ export default (state = initialState, action) => {
   }
 }
 
-export const fetchInfos = (spotlight, start, end) => {
+export const fetchInfos = (tournament, start, end) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
-    if (spotlight === 'libre') spotlight = 7
-    const infos = await axios.get(`infos/${spotlight}/${start}-${end}`, {
+    if (tournament === 'libre') tournament = 7
+    const infos = await axios.get(`infos/${tournament}/${start}-${end}`, {
       headers: { 'X-Token': authToken },
     })
     dispatch({
@@ -54,13 +54,13 @@ export const fetchInfos = (spotlight, start, end) => {
   }
 }
 
-export const sendMessage = (spotlight, title, content) => {
+export const sendMessage = (tournament, title, content) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
     try {
       const res = await axios.post(
-        `infos/${spotlight}`,
+        `infos/${tournament}`,
         { title, content },
         { headers: { 'X-Token': authToken } }
       )
@@ -85,13 +85,13 @@ export const sendMessage = (spotlight, title, content) => {
   }
 }
 
-export const deleteInfo = (infoId, spotlightId) => {
+export const deleteInfo = (infoId, tournamentId) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
     if (!authToken || authToken.length === 0) return
 
     try {
-      const res = await axios.delete(`infos/${spotlightId}/${infoId}`, {
+      const res = await axios.delete(`infos/${tournamentId}/${infoId}`, {
         headers: { 'X-Token': authToken },
       })
       if (res.status === 200) {

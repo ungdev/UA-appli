@@ -21,15 +21,15 @@ export const SET_CAPTAIN = 'admin/SET_CAPTAIN'
 const initialState = {
   users: [],
   respo: [],
-  spotlights: [],
+  tournaments: [],
   chartData: { daily: [], cumul: [] },
 }
 
 export default (state = initialState, action) => {
   let users = state.users.slice(0)
-  let spotlights = state.spotlights.slice(0)
+  let tournaments = state.tournaments.slice(0)
   let userId = null
-  let spotlightId = null
+  let tournamentId = null
   let index = null
 
   switch (action.type) {
@@ -49,10 +49,10 @@ export default (state = initialState, action) => {
         chartData: action.payload,
       }
     case SET_SPOTLIGHT:
-      spotlights[action.payload.id] = action.payload.spotlight
+      tournaments[action.payload.id] = action.payload.tournament
       return {
         ...state,
-        spotlights,
+        tournaments,
       }
     case SET_USER_ADMIN:
       userId = action.payload
@@ -124,27 +124,27 @@ export default (state = initialState, action) => {
         users,
       }
     case RENAME_TEAM:
-      spotlightId = action.payload.spotlightId
-      index = spotlights[spotlightId].findIndex(s => s.id === action.payload.teamId)
-      spotlights[spotlightId][index] = {
-        ...spotlights[spotlightId][index],
+      tournamentId = action.payload.tournamentId
+      index = tournaments[tournamentId].findIndex(s => s.id === action.payload.teamId)
+      tournaments[tournamentId][index] = {
+        ...tournaments[tournamentId][index],
         name: action.payload.teamName,
       }
       return {
         ...state,
-        spotlights,
+        tournaments,
       }
 
     case SET_CAPTAIN:
-      spotlightId = action.payload.spotlightId
-      index = spotlights[spotlightId].findIndex(s => s.id === action.payload.teamId)
-      spotlights[spotlightId][index] = {
-        ...spotlights[spotlightId][index],
+      tournamentId = action.payload.tournamentId
+      index = tournaments[tournamentId].findIndex(s => s.id === action.payload.teamId)
+      tournaments[tournamentId][index] = {
+        ...tournaments[tournamentId][index],
         captainId: action.payload.captainId,
       }
       return {
         ...state,
-        spotlights,
+        tournaments,
       }
 
     default:
@@ -177,7 +177,7 @@ export const fetchUsers = () => {
   }
 }
 
-export const fetchAdminSpotlight = id => {
+export const fetchAdminTournament = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -186,9 +186,9 @@ export const fetchAdminSpotlight = id => {
     }
 
     try {
-      const res = await axios.get(`admin/spotlight/${id}`, { headers: { 'X-Token': authToken } })
+      const res = await axios.get(`admin/tournament/${id}`, { headers: { 'X-Token': authToken } })
 
-      dispatch({ type: SET_SPOTLIGHT, payload: { id, spotlight: res.data } })
+      dispatch({ type: SET_SPOTLIGHT, payload: { id, tournament: res.data } })
     } catch (err) {
       console.log(err)
       dispatch(
@@ -680,7 +680,7 @@ export const renameUser = (id, newName) => {
   }
 }
 
-export const renameTeam = (teamId, spotlightId, teamName) => {
+export const renameTeam = (teamId, tournamentId, teamName) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -696,7 +696,7 @@ export const renameTeam = (teamId, spotlightId, teamName) => {
       )
 
       if (res.status === 200) {
-        dispatch({ type: RENAME_TEAM, payload: { teamId, spotlightId, teamName } })
+        dispatch({ type: RENAME_TEAM, payload: { teamId, tournamentId, teamName } })
         dispatch(
           notifActions.notifSend({
             message: "Le nom de l'équipe a été modifié",
@@ -717,7 +717,7 @@ export const renameTeam = (teamId, spotlightId, teamName) => {
   }
 }
 
-export const setCaptain = (teamId, spotlightId, captainId) => {
+export const setCaptain = (teamId, tournamentId, captainId) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -733,7 +733,7 @@ export const setCaptain = (teamId, spotlightId, captainId) => {
       )
 
       if (res.status === 200) {
-        dispatch({ type: SET_CAPTAIN, payload: { teamId, spotlightId, captainId } })
+        dispatch({ type: SET_CAPTAIN, payload: { teamId, tournamentId, captainId } })
         dispatch(
           notifActions.notifSend({
             message: `Le capitaine d'équipe a été modifié`,

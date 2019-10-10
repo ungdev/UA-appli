@@ -13,7 +13,7 @@ import Info from './components/Info/Info'
 import Contact from './components/Contact/Contact'
 import UsersList from './components/Admin/UsersList'
 import Paids from './components/Admin/Paids'
-import Spotlights from './components/Admin/Spotlights'
+import Tournaments from './components/Admin/Tournaments'
 import Material from './components/Admin/Material'
 import Places from './components/Admin/Places'
 import Validate from './components/Orga/Validate'
@@ -54,6 +54,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log('DASHBOARD')
     let component = null
     const tab = this.props.location.split('/')
     tab.splice(0, 1) // remove first element because it's equal to ''
@@ -88,7 +89,7 @@ class Dashboard extends Component {
         if (user.permission && user.permission.admin) {
           if (tab[2] === 'users') component = <UsersList />
           if (tab[2] === 'paids') component = <Paids />
-          if (tab[2] === 'spotlights') component = <Spotlights />
+          if (tab[2] === 'tournaments') component = <Tournaments />
           if (tab[2] === 'conversations') component = <Conversations />
           if (tab[2] === 'messages') component = <Messenger idTo={tab[3]} />
           if (tab[2] === 'material') component = <Material />

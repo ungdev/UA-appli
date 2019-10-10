@@ -4,7 +4,7 @@ import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
 import { fetchUser, SET_USER, SET_PRICES } from './user'
 import { SET_TEAMS } from './teams'
-import { SET_SPOTLIGHTS } from './spotlights'
+import { SET_SPOTLIGHTS } from './tournaments'
 
 export const SET_TOKEN = 'login/SET_TOKEN'
 
@@ -26,10 +26,10 @@ export default (state = initialState, action) => {
 
 export const autoLogin = () => {
   return async dispatch => {
-    if (localStorage.hasOwnProperty('arena-2018-token')) {
+    if (localStorage.hasOwnProperty('utt-arena-token')) {
       dispatch({
         type: SET_TOKEN,
-        payload: localStorage.getItem('arena-2018-token'),
+        payload: localStorage.getItem('utt-arena-token'),
       })
 
       return dispatch(fetchUser())
@@ -41,7 +41,8 @@ export const autoLogin = () => {
 export const tryLogin = user => {
   return async dispatch => {
     try {
-      const res = await axios.put('user/login', user)
+      const res = await axios.post('auth/login', user)
+      localStorage.setItem('utt-arena-userid', res.data.user.id);
 
       dispatch(saveToken(res.data.token))
       dispatch(push('/dashboard'))

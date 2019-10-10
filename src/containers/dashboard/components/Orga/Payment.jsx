@@ -70,7 +70,7 @@ class Payment extends React.Component {
     users = users.map(user => {
       return {
         ...user,
-        fullname: `${user.name} (${user.firstname} ${user.lastname})`,
+        fullname: `${user.username} (${user.firstname} ${user.lastname})`,
       }
     })
 
@@ -245,7 +245,7 @@ class Payment extends React.Component {
 
 const mapStateToProps = state => ({
   users: state.admin.users,
-  spotlights: state.spotlights.spotlights,
+  tournaments: state.tournaments.tournaments,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -26,7 +26,7 @@ class LoginForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('name', {
+          {getFieldDecorator('username', {
             rules: [
               {
                 required: true,

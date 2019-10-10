@@ -2,57 +2,57 @@ import { actions as notifActions } from 'redux-notifications'
 import axios from '../lib/axios'
 import errorToString from '../lib/errorToString'
 
-export const SET_SPOTLIGHTS = 'spotlights/SET_SPOTLIGHTS'
-export const SET_SPOTLIGHT_TEAMS = 'spotlights/SET_SPOTLIGHT_TEAMS'
-export const SET_SPOTLIGHT_STATE = 'spotlights/SET_SPOTLIGHT_STATE'
-export const ADD_SPOTLIGHT_STATE = 'spotlights/ADD_SPOTLIGHT_STATE'
-export const SET_SPOTLIGHT_STAGES = 'spotlights/SET_SPOTLIGHT_STAGES'
-export const SET_SPOTLIGHT_MATCHES = 'spotlights/SET_SPOTLIGHT_MATCHES'
-export const SET_LIBRE_PLAYERS = 'spotlights/SET_LIBRE_PLAYERS'
+export const SET_SPOTLIGHTS = 'tournaments/SET_SPOTLIGHTS'
+export const SET_SPOTLIGHT_TEAMS = 'tournaments/SET_SPOTLIGHT_TEAMS'
+export const SET_SPOTLIGHT_STATE = 'tournaments/SET_SPOTLIGHT_STATE'
+export const ADD_SPOTLIGHT_STATE = 'tournaments/ADD_SPOTLIGHT_STATE'
+export const SET_SPOTLIGHT_STAGES = 'tournaments/SET_SPOTLIGHT_STAGES'
+export const SET_SPOTLIGHT_MATCHES = 'tournaments/SET_SPOTLIGHT_MATCHES'
+export const SET_LIBRE_PLAYERS = 'tournaments/SET_LIBRE_PLAYERS'
 
 const initialState = {
-  spotlights: [],
+  tournaments: [],
   teams: [],
   stages: {},
   matches: {},
 }
 
 export default (state = initialState, action) => {
-  let spotlights
+  let tournaments
   let index
   switch (action.type) {
     case SET_SPOTLIGHTS:
       if (!action.payload) return state
-      if (!state.spotlights) state.spotlights = []
-      spotlights = state.spotlights.slice()
-      if (!spotlights) spotlights = []
-      action.payload.forEach(spotlight => {
-        const found = spotlights.find(s => spotlight.id === s.id) // if we find a matching spotlight
-        if (!found) spotlights.push(spotlight) // we do not add it to the tab
+      if (!state.tournaments) state.tournaments = []
+      tournaments = state.tournaments.slice()
+      if (!tournaments) tournaments = []
+      action.payload.forEach(tournament => {
+        const found = tournaments.find(s => tournament.id === s.id) // if we find a matching tournament
+        if (!found) tournaments.push(tournament) // we do not add it to the tab
       })
-      spotlights.sort((s1, s2) => (s1.id > s2.id ? 1 : -1))
-      return { ...state, spotlights }
+      tournaments.sort((s1, s2) => (s1.id > s2.id ? 1 : -1))
+      return { ...state, tournaments }
     case SET_SPOTLIGHT_STATE:
-      spotlights = state.spotlights.splice(0)
-      index = spotlights.findIndex(
-        spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10)
+      tournaments = state.tournaments.splice(0)
+      index = tournaments.findIndex(
+        tournament => tournament.id === parseInt(action.payload.tournamentId, 10)
       )
       if (index === -1) {
         return state
       }
-      spotlights[index].state = action.payload.stateValue
+      tournaments[index].state = action.payload.stateValue
       return {
         ...state,
-        spotlights,
+        tournaments,
       }
     case ADD_SPOTLIGHT_STATE:
-      spotlights = state.spotlights.splice(0)
-      index = spotlights.findIndex(
-        spotlight => spotlight.id === parseInt(action.payload.spotlightId, 10)
+      tournaments = state.tournaments.splice(0)
+      index = tournaments.findIndex(
+        tournament => tournament.id === parseInt(action.payload.tournamentId, 10)
       )
       if (index === -1) return state
-      spotlights[index].states.push(action.payload.newState)
-      return { ...state, spotlights }
+      tournaments[index].states.push(action.payload.newState)
+      return { ...state, tournaments }
     case SET_SPOTLIGHT_TEAMS:
       const teams = state.teams.splice(0)
       action.payload.forEach(newteam => {
@@ -70,7 +70,7 @@ export default (state = initialState, action) => {
         ...state,
         stages: {
           ...state.stages,
-          [action.payload.spotlightId]: action.payload.stages,
+          [action.payload.tournamentId]: action.payload.stages,
         },
       }
     case SET_SPOTLIGHT_MATCHES:
@@ -78,7 +78,7 @@ export default (state = initialState, action) => {
         ...state,
         matches: {
           ...state.matches,
-          [action.payload.spotlightId]: action.payload.matches,
+          [action.payload.tournamentId]: action.payload.matches,
         },
       }
     case SET_LIBRE_PLAYERS:
@@ -91,50 +91,50 @@ export default (state = initialState, action) => {
   }
 }
 
-export const fetchSpotlights = () => {
+export const fetchTournaments = () => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
-    const oldSpotlights = getState().spotlights.spotlights
+    const oldTournaments = getState().tournaments.tournaments
 
     if (!authToken || authToken.length === 0) return
 
-    const spotlights = await axios.get('spotlights', {
+    const tournaments = await axios.get('tournaments', {
       headers: { 'X-Token': authToken },
     })
-    if (oldSpotlights.length !== spotlights.data.length) {
+    if (oldTournaments.length !== tournaments.data.length) {
       dispatch({
         type: SET_SPOTLIGHTS,
-        payload: spotlights.data,
+        payload: tournaments.data,
       })
     }
   }
 }
 
-export const fetchSpotlightStages = spotlightId => {
+export const fetchTournamentStages = tournamentId => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
     if (!authToken || authToken.length === 0) return
 
-    const res = await axios.get(`spotlights/${spotlightId}/stages`, {
+    const res = await axios.get(`tournaments/${tournamentId}/stages`, {
       headers: { 'X-Token': authToken },
     })
     if (res.status === 200) {
       dispatch({
         type: SET_SPOTLIGHT_STAGES,
-        payload: { spotlightId, stages: res.data },
+        payload: { tournamentId, stages: res.data },
       })
     }
   }
 }
 
-export const fetchSpotlightMatches = spotlightId => {
+export const fetchTournamentMatches = tournamentId => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
     if (!authToken || authToken.length === 0) return
 
-    const res = await axios.get(`spotlights/${spotlightId}/matches`, {
+    const res = await axios.get(`tournaments/${tournamentId}/matches`, {
       headers: { 'X-Token': authToken },
     })
     if (res.status === 200) {
@@ -142,14 +142,14 @@ export const fetchSpotlightMatches = spotlightId => {
         type: SET_SPOTLIGHT_MATCHES,
         payload: {
           matches: res.data,
-          spotlightId,
+          tournamentId,
         },
       })
     }
   }
 }
 
-export const setSpotlightState = (spotlightId, stateValue) => {
+export const setTournamentState = (tournamentId, stateValue) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -157,14 +157,14 @@ export const setSpotlightState = (spotlightId, stateValue) => {
 
     try {
       const res = await axios.put(
-        `states/${spotlightId}`,
+        `states/${tournamentId}`,
         { value: stateValue },
         { headers: { 'X-Token': authToken } }
       )
       if (res.status === 200) {
         dispatch({
           type: SET_SPOTLIGHT_STATE,
-          payload: { spotlightId, stateValue },
+          payload: { tournamentId, stateValue },
         })
       }
     } catch (err) {
@@ -179,7 +179,7 @@ export const setSpotlightState = (spotlightId, stateValue) => {
   }
 }
 
-export const addState = (spotlightId, title, desc, popover) => {
+export const addState = (tournamentId, title, desc, popover) => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -187,14 +187,14 @@ export const addState = (spotlightId, title, desc, popover) => {
 
     try {
       const res = await axios.post(
-        `states/${spotlightId}`,
+        `states/${tournamentId}`,
         { title, desc, popover },
         { headers: { 'X-Token': authToken } }
       )
       if (res.status === 200) {
         dispatch({
           type: ADD_SPOTLIGHT_STATE,
-          payload: { spotlightId, newState: res.data },
+          payload: { tournamentId, newState: res.data },
         })
       }
     } catch (err) {
@@ -209,7 +209,7 @@ export const addState = (spotlightId, title, desc, popover) => {
   }
 }
 
-export const fetchTeamsBySpotlightId = id => {
+export const fetchTeamsByTournamentId = id => {
   return async (dispatch, getState) => {
     const authToken = getState().login.token
 
@@ -217,7 +217,7 @@ export const fetchTeamsBySpotlightId = id => {
       return
     }
     try {
-      const req = await axios.get(`spotlights/${id}/teams`, {
+      const req = await axios.get(`tournaments/${id}/teams`, {
         headers: { 'X-Token': authToken },
       })
       dispatch({
@@ -245,7 +245,7 @@ export const fetchLibrePlayers = () => {
       return
     }
     try {
-      const req = await axios.get(`spotlights/libre/players`, {
+      const req = await axios.get(`tournaments/libre/players`, {
         headers: { 'X-Token': authToken },
       })
       dispatch({

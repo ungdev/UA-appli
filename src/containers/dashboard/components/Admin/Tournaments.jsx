@@ -3,10 +3,10 @@ import { Table, Spin } from 'antd'
 import { connect } from 'react-redux'
 
 import AdminBar from './AdminBar'
-import { fetchAdminSpotlight } from '../../../../modules/admin'
-import SpotlightsActions from './components/SpotlightsActions'
+import { fetchAdminTournament } from '../../../../modules/admin'
+import TournamentsActions from './components/TournamentsActions'
 
-class Spotlights extends React.Component {
+class Tournaments extends React.Component {
   constructor(props) {
     super(props)
 
@@ -15,7 +15,7 @@ class Spotlights extends React.Component {
       id: this.props.location.split('/')[4],
     }
 
-    this.props.fetchAdminSpotlight(this.state.id)
+    this.props.fetchAdminTournament(this.state.id)
   }
 
   handleSearch = e => {
@@ -23,21 +23,21 @@ class Spotlights extends React.Component {
   }
 
   render() {
-    let { spotlights, location, allspotlights } = this.props
+    let { tournaments, location, alltournaments } = this.props
     let { id } = this.state
 
     let currentId = location.split('/')[4]
 
     if (currentId !== id) {
       this.setState({ id: currentId })
-      this.props.fetchAdminSpotlight(currentId)
+      this.props.fetchAdminTournament(currentId)
     }
 
-    if (!spotlights || !spotlights[id] || !allspotlights) {
+    if (!tournaments || !tournaments[id] || !alltournaments) {
       return <Spin />
     }
-    let thisSpotlight = allspotlights.find(s => s.id === parseInt(currentId, 10))
-    let rows = spotlights[id]
+    let thisTournament = alltournaments.find(s => s.id === parseInt(currentId, 10))
+    let rows = tournaments[id]
       .sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at))
       .map((team, index) => {
         let date = new Date(team.completed_at.substring(0, 19)) // Remove '+00:00' at the end
@@ -50,7 +50,7 @@ class Spotlights extends React.Component {
           name: {
             name: team.name,
             color:
-              index + 1 > thisSpotlight.maxPlayers / thisSpotlight.perTeam ? '#ff0000' : '#000000',
+              index + 1 > thisTournament.maxPlayers / thisTournament.perTeam ? '#ff0000' : '#000000',
           },
         }
       })
@@ -69,10 +69,10 @@ class Spotlights extends React.Component {
         title: 'Actions',
         dataIndex: 'id',
         render: teamId => (
-          <SpotlightsActions
+          <TournamentsActions
             teamId={teamId}
-            spotlightId={thisSpotlight.id}
-            teams={spotlights[id]}
+            tournamentId={thisTournament.id}
+            teams={tournaments[id]}
           />
         ),
       },
@@ -100,15 +100,15 @@ class Spotlights extends React.Component {
 const mapStateToProps = state => ({
   location: state.routing.location.pathname,
   users: state.admin.users,
-  spotlights: state.admin.spotlights,
-  allspotlights: state.spotlights.spotlights,
+  tournaments: state.admin.tournaments,
+  alltournaments: state.tournaments.tournaments,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAdminSpotlight: id => dispatch(fetchAdminSpotlight(id)),
+  fetchAdminTournament: id => dispatch(fetchAdminTournament(id)),
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Spotlights)
+)(Tournaments)

@@ -28,11 +28,11 @@ class Contact extends React.Component {
 
   render() {
     const { maxCaracters } = this.state
-    let spotlight
-    if (this.props.tournament === 'libre') spotlight = { name: 'Libre' }
-    else spotlight = this.props.spotlights.find(s => `${s.id}` === this.props.tournament)
-    if (!spotlight) return <Spin />
-    let contactToDisplay = `Envoyer un message en rapport avec le tournoi ${spotlight.name}`
+    let tournament
+    if (this.props.tournament === 'libre') tournament = { name: 'Libre' }
+    else tournament = this.props.tournaments.find(s => `${s.id}` === this.props.tournament)
+    if (!tournament) return <Spin />
+    let contactToDisplay = `Envoyer un message en rapport avec le tournoi ${tournament.name}`
     return (
       <div>
         {this.props.tournament !== 'libre' && (
@@ -63,7 +63,7 @@ class Contact extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  spotlights: state.spotlights.spotlights,
+  tournaments: state.tournaments.tournaments,
 })
 
 const mapDispatchToProps = dispatch => ({

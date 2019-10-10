@@ -3,7 +3,6 @@ import { Layout } from 'antd'
 
 import LeftBar from './components/LeftBar'
 import TopBar from './components/TopBar'
-import CustomBreadcrumb from './components/CustomBreadcrumb'
 
 const { Content, Sider } = Layout
 
@@ -18,7 +17,6 @@ const DashboardLayout = props => {
           </Sider>
           <Layout>
             <Content style={{ margin: '0 16px' }}>
-              <CustomBreadcrumb path={props.path} />
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 {props.component}
               </div>

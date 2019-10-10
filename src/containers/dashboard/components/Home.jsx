@@ -75,8 +75,8 @@ class Home extends React.Component {
   fetchMatches() {
     const { user, matches, fetchMatches } = this.props
 
-    if (!matches.length && user && user.team && user.team.spotlight) {
-      fetchMatches(user.team.spotlight.toornamentID, user.team.toornamentID)
+    if (!matches.length && user && user.team && user.team.tournament) {
+      fetchMatches(user.team.tournament.toornamentID, user.team.toornamentID)
     }
   }
 
@@ -129,9 +129,9 @@ class Home extends React.Component {
               {user.plusone ? ' (Visiteur)' : ''}
             </strong>
           </div>
-          {user.team && user.team.spotlight ? (
+          {user.team && user.team.tournament ? (
             <div>
-              Tournoi : <strong>{user.team.spotlight.name}</strong>
+              Tournoi : <strong>{user.team.tournament.name}</strong>
             </div>
           ) : (
             ''
@@ -162,7 +162,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(fetchUser()),
-  fetchMatches: (spotlightId, participantId) => dispatch(fetchMatches(spotlightId, participantId)),
+  fetchMatches: (tournamentId, participantId) => dispatch(fetchMatches(tournamentId, participantId)),
 })
 
 export default connect(

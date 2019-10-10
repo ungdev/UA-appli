@@ -30,11 +30,11 @@ export default class RulesLOL extends React.Component {
 
         <h1>Tournoi Libre</h1>
         <p>
-          En parallèle des tournois "Spotlights" (LoL, Hearthstone, CS:GO, Fortnite, SSBU) se
+          En parallèle des tournois "Tournaments" (LoL, Hearthstone, CS:GO, Fortnite, SSBU) se
           déroulera un tournoi libre. Celui-ci sera composé de différents mini-tournois, sur des
           jeux divers et variés.
           <strong>
-            Tout joueur de tournoi Spotlight éliminé rejoindra automatiquement le tournoi Libre.
+            Tout joueur de tournoi Tournament éliminé rejoindra automatiquement le tournoi Libre.
           </strong>{' '}
           Il pourra ainsi profiter d'animations même s'il n'est plus dans la compétition.
         </p>
