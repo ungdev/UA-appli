@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-import './list.css'
+import './list.css';
 
-const List = props => <ul className="a-list">{props.children}</ul>
+const List = (props) => <ul className="a-list">{props.children}</ul>;
 
-export default List
+export default List;

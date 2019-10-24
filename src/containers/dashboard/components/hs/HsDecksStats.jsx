@@ -1,16 +1,16 @@
-import React from 'react'
-import { Card, List, Progress, Tag } from 'antd'
+import React from 'react';
+import { Card, List, Progress, Tag } from 'antd';
 
-const maxCalculator = stats => {
-  let max = 0
-  Object.entries(stats).forEach(value => {
+const maxCalculator = (stats) => {
+  let max = 0;
+  Object.entries(stats).forEach((value) => {
     if (value[1] > max) {
-      max = value[1]
+      max = value[1];
     }
-  })
-  return max
-}
-const statMaker = deck => {
+  });
+  return max;
+};
+const statMaker = (deck) => {
   const stats = {
     '0': 0,
     '1': 0,
@@ -20,27 +20,28 @@ const statMaker = deck => {
     '5': 0,
     '6': 0,
     '7+': 0,
-  }
-  deck.cards.forEach(card => {
+  };
+  deck.cards.forEach((card) => {
     if (card.cost > 6) {
-      stats['7+']++
-    } else {
-      stats[card.cost]++
+      stats['7+']++;
     }
-  })
-  return stats
-}
+ else {
+      stats[card.cost]++;
+    }
+  });
+  return stats;
+};
 
 class HsDecksStats extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       stats: statMaker(this.props.deck),
-    }
+    };
   }
 
   render() {
-    const { hero } = this.props.deck
+    const { hero } = this.props.deck;
     return (
       <Card bordered={false} style={{ display: 'flex', justifyContent: 'center' }}>
         <img
@@ -59,15 +60,15 @@ class HsDecksStats extends React.Component {
                   size="small"
                   status="active"
                   format={() => {
-                    return `x${entry[1]}`
+                    return `x${entry[1]}`;
                   }}
                 />
               </List.Item>
-            )
+            );
           })}
         </List>
       </Card>
-    )
+    );
   }
 }
-export default HsDecksStats
+export default HsDecksStats;

@@ -1,29 +1,29 @@
 //import axios from '../lib/axios'
 
-export const SET_CANLOGIN = 'canLogin/SET_CANLOGIN'
+export const SET_CANLOGIN = 'canLogin/SET_CANLOGIN';
 
 const initialState = {
   canLogin: false,
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CANLOGIN:
       return {
         canLogin: action.payload,
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export const fetchCanLogin = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     //const canLogin = await axios.get('user/canLogin')
     // feat removed in 2019, before asked api if user can log in
     dispatch({
       type: SET_CANLOGIN,
       payload: true,
-    })
-  }
-}
+    });
+  };
+};

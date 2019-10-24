@@ -1,27 +1,27 @@
-import React from 'react'
-import { List, Divider, Collapse, Spin, Icon, Tooltip } from 'antd'
-import { connect } from 'react-redux'
-import GameStatusBar from '../GameStatusBar/GameStatusBar'
-import { fetchTeamsByTournamentId } from '../../../../modules/tournaments'
+import React from 'react';
+import { List, Divider, Collapse, Spin, Icon, Tooltip } from 'antd';
+import { connect } from 'react-redux';
+import GameStatusBar from '../GameStatusBar/GameStatusBar';
+import { fetchTeamsByTournamentId } from '../../../../modules/tournaments';
 
-const { Panel } = Collapse
+const { Panel } = Collapse;
 
 class Teams extends React.Component {
   constructor(props) {
-    super(props)
-    this.props.fetchTeams(props.tournament)
+    super(props);
+    this.props.fetchTeams(props.tournament);
   }
 
   render() {
     let teams = this.props.teams.filter(
-      team => team.tournamentId === parseInt(this.props.tournament, 10)
-    )
+      (team) => team.tournamentId === parseInt(this.props.tournament, 10)
+    );
     teams = teams
-      .filter(team => `${team.tournamentId}` === this.props.tournament)
-      .filter(team => team.isInTournament)
-    const tournament = this.props.tournaments.find(s => `${s.id}` === this.props.tournament)
-    if (!tournament) return <Spin />
-    const teamsToDisplay = `Équipes pour ${tournament.name}`
+      .filter((team) => `${team.tournamentId}` === this.props.tournament)
+      .filter((team) => team.isInTournament);
+    const tournament = this.props.tournaments.find((s) => `${s.id}` === this.props.tournament);
+    if (!tournament) return <Spin />;
+    const teamsToDisplay = `Équipes pour ${tournament.name}`;
     return (
       <div>
         <GameStatusBar game={this.props.tournament} />
@@ -29,12 +29,12 @@ class Teams extends React.Component {
         <h1>{teamsToDisplay}</h1>
         {teams.length > 0 ? (
           <Collapse>
-            {teams.map(team => (
+            {teams.map((team) => (
               <Panel header={team.name} key={team.id}>
                 <List
                   itemLayout="horizontal"
                   dataSource={team.users}
-                  renderItem={item => (
+                  renderItem={(item) => (
                     <List.Item>
                       <List.Item.Meta
                         title={
@@ -64,19 +64,19 @@ class Teams extends React.Component {
           <Spin />
         )}
       </div>
-    )
+    );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   teams: state.tournaments.teams || [],
   tournaments: state.tournaments.tournaments,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
-  fetchTeams: tournamentId => dispatch(fetchTeamsByTournamentId(tournamentId)),
-})
+const mapDispatchToProps = (dispatch) => ({
+  fetchTeams: (tournamentId) => dispatch(fetchTeamsByTournamentId(tournamentId)),
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Teams)
+)(Teams);

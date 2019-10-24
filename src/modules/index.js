@@ -1,22 +1,22 @@
-import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
-import { reducer as notificationsReducer } from 'redux-notifications'
-import canLogin from './canLogin'
-import login from './login'
-import register from './register'
-import user from './user'
-import payment from './payment'
-import teams from './teams'
-import tournaments from './tournaments'
-import forgot from './forgot'
-import contact from './contact'
-import infos from './infos'
-import admin from './admin'
-import messages from './messages'
-import conversations from './conversations'
-import hearthstone from './hearthstone'
-import matches from './matches'
-import validate from './validate'
+import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
+import { reducer as notificationsReducer } from 'redux-notifications';
+import canLogin from './canLogin';
+import login from './login';
+import register from './register';
+import user from './user';
+import payment from './payment';
+import teams from './teams';
+import tournaments from './tournaments';
+import forgot from './forgot';
+import contact from './contact';
+import infos from './infos';
+import admin from './admin';
+import messages from './messages';
+import conversations from './conversations';
+import hearthstone from './hearthstone';
+import matches from './matches';
+import validate from './validate';
 
 export default combineReducers({
   routing: routerReducer,
@@ -37,4 +37,4 @@ export default combineReducers({
   hearthstone,
   matches,
   validate,
-})
+});

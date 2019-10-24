@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default class RulesHS extends React.Component {
   render() {
@@ -175,6 +175,6 @@ export default class RulesHS extends React.Component {
           </strong>
         </p>
       </div>
-    )
+    );
   }
 }

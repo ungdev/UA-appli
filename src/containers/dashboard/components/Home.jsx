@@ -1,34 +1,34 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Divider, Card, Spin } from 'antd'
-import moment from 'moment'
-import { fetchMatches } from '../../../modules/matches'
-import { fetchUser } from '../../../modules/user'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Divider, Card, Spin } from 'antd';
+import moment from 'moment';
+import { fetchMatches } from '../../../modules/matches';
+import { fetchUser } from '../../../modules/user';
 
-const getResultStyle = result => {
+const getResultStyle = (result) => {
   switch (result) {
     case 'L':
-      return { color: 'red' }
+      return { color: 'red' };
     case 'W':
-      return { color: 'green' }
+      return { color: 'green' };
     default:
-      return null
+      return null;
   }
-}
+};
 
 class Home extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       matches: [],
-    }
+    };
 
-    props.fetchUser()
+    props.fetchUser();
   }
 
   componentDidMount() {
-    this.fetchMatches()
+    this.fetchMatches();
   }
 
   getTeam(team) {
@@ -36,19 +36,19 @@ class Home extends React.Component {
       <p style={{ fontWeight: team.result === 'win' ? 'bold' : null }}>{team.participant.name}</p>
     ) : (
       <p>A définir</p>
-    )
-    const labelResult = team.result ? team.result.toUpperCase()[0] : null
-    const result = team.result ? <p style={getResultStyle(labelResult)}>{labelResult}</p> : ''
+    );
+    const labelResult = team.result ? team.result.toUpperCase()[0] : null;
+    const result = team.result ? <p style={getResultStyle(labelResult)}>{labelResult}</p> : '';
 
     return (
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         {name} {result}
       </div>
-    )
+    );
   }
 
   getMatches() {
-    const { matches } = this.props
+    const { matches } = this.props;
 
     if (matches.length > 0) {
       return matches.map((match, i) => (
@@ -60,7 +60,7 @@ class Home extends React.Component {
             match.scheduled_datetime ? moment(match.scheduled_datetime).format('DD/MM HH:mm') : ''
           }
         >
-          {match.opponents.map(team => this.getTeam(team))}
+          {match.opponents.map((team) => this.getTeam(team))}
           {match.private_note && (
             <React.Fragment>
               <Divider />
@@ -68,38 +68,40 @@ class Home extends React.Component {
             </React.Fragment>
           )}
         </Card>
-      ))
+      ));
     }
   }
 
   fetchMatches() {
-    const { user, matches, fetchMatches } = this.props
+    const { user, matches, fetchMatches } = this.props;
 
     if (!matches.length && user && user.team && user.team.tournament) {
-      fetchMatches(user.team.tournament.toornamentID, user.team.toornamentID)
+      fetchMatches(user.team.tournament.toornamentID, user.team.toornamentID);
     }
   }
 
   render() {
-    const { user } = this.props
+    const { user } = this.props;
 
     if (!user) {
-      return <Spin />
+      return <Spin />;
     }
 
     // Get user fullname, role and place
-    user.fullname = `${user.username} (${user.firstname} ${user.lastname})`
-    user.role = null
+    user.fullname = `${user.username} (${user.firstname} ${user.lastname})`;
+    user.role = null;
     if (user.permissions.admin) {
-      user.role = 'Admin'
-    } else if (user.permissions.respo) {
-      user.role = 'Responsable tournoi'
-    } else if (user.permissions.orga) {
-      user.role = 'Organisateur'
+      user.role = 'Admin';
     }
-    user.place = null
+ else if (user.permissions.respo) {
+      user.role = 'Responsable tournoi';
+    }
+ else if (user.permissions.orga) {
+      user.role = 'Organisateur';
+    }
+    user.place = null;
     if (user.tableLetter && user.placeNumber) {
-      user.place = `${user.tableLetter}${user.placeNumber}`
+      user.place = `${user.tableLetter}${user.placeNumber}`;
     }
 
     return (
@@ -149,22 +151,22 @@ class Home extends React.Component {
           </div>
         </Card>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   matches: state.matches.matches,
   user: state.user.user,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchUser: () => dispatch(fetchUser()),
   fetchMatches: (tournamentId, participantId) =>
     dispatch(fetchMatches(tournamentId, participantId)),
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home)
+)(Home);

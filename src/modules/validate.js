@@ -1,11 +1,11 @@
-import { actions as notifActions } from 'redux-notifications'
-import axios from '../lib/axios'
+import { actions as notifActions } from 'redux-notifications';
+import axios from '../lib/axios';
 
-export const SET_INFOS = 'validate/SET_INFOS'
+export const SET_INFOS = 'validate/SET_INFOS';
 
 const initialState = {
   infos: {},
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -13,18 +13,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         infos: action.payload,
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export const getInfos = (barcode, fullname) => {
   return async (dispatch, getState) => {
-    const authToken = getState().login.token
+    const authToken = getState().login.token;
 
     if (!authToken || authToken.length === 0) {
-      return
+      return;
     }
     try {
       if (!barcode && !fullname) {
@@ -34,30 +34,31 @@ export const getInfos = (barcode, fullname) => {
             kind: 'danger',
             dismissAfter: 2000,
           })
-        )
-        return
+        );
+        return;
       }
-      let username = fullname ? fullname.split('(')[0] : null
-      if (username) username = username.substr(0, username.length - 1)
+      let username = fullname ? fullname.split('(')[0] : null;
+      if (username) username = username.substr(0, username.length - 1);
       const res = await axios.put(
-        `/admin/validate`,
+        '/admin/validate',
         { barcode, username },
         { headers: { 'X-Token': authToken } }
-      )
+      );
       if (res.status === 200) {
-        dispatch({ type: SET_INFOS, payload: res.data.user })
+        dispatch({ type: SET_INFOS, payload: res.data.user });
       }
-    } catch (err) {
-      console.log(err)
+    }
+ catch (err) {
+      console.log(err);
       if (err.response.status === 404) {
         dispatch(
           notifActions.notifSend({
-            message: "La place n'a pas été trouvée",
+            message: 'La place n\'a pas été trouvée',
             kind: 'danger',
             dismissAfter: 2000,
           })
-        )
-        return
+        );
+        return;
       }
       dispatch(
         notifActions.notifSend({
@@ -65,7 +66,7 @@ export const getInfos = (barcode, fullname) => {
           kind: 'danger',
           dismissAfter: 2000,
         })
-      )
+      );
     }
-  }
-}
+  };
+};

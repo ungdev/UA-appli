@@ -1,32 +1,32 @@
-import React from 'react'
-import { AutoComplete, Button, Collapse, Divider, Card, Spin, Switch } from 'antd'
-import { connect } from 'react-redux'
-import HsDecksCards from './HsDecksCards'
-import GameStatusBar from '../GameStatusBar/GameStatusBar'
-import { fetchHSPlayers } from '../../../../modules/hearthstone'
+import React from 'react';
+import { AutoComplete, Button, Collapse, Divider, Card, Spin, Switch } from 'antd';
+import { connect } from 'react-redux';
+import HsDecksCards from './HsDecksCards';
+import GameStatusBar from '../GameStatusBar/GameStatusBar';
+import { fetchHSPlayers } from '../../../../modules/hearthstone';
 
-const { Panel } = Collapse
+const { Panel } = Collapse;
 
 class HsDecks extends React.Component {
   constructor(props) {
-    super(props)
-    this.props.fetchHSPlayers()
+    super(props);
+    this.props.fetchHSPlayers();
     this.state = {
       golden: false,
       filteredName: '',
-    }
+    };
   }
 
   render() {
-    const { hsplayers } = this.props
+    const { hsplayers } = this.props;
     const players = hsplayers
-      .filter(p => p.username.toUpperCase().indexOf(this.state.filteredName.toUpperCase()) !== -1)
+      .filter((p) => p.username.toUpperCase().indexOf(this.state.filteredName.toUpperCase()) !== -1)
       .sort((a, b) => {
-        if (a.username > b.username) return 1
-        if (a.username < b.username) return -1
-        return 0
-      })
-    if (!this.props.user) return <Spin />
+        if (a.username > b.username) return 1;
+        if (a.username < b.username) return -1;
+        return 0;
+      });
+    if (!this.props.user) return <Spin />;
     return (
       <div>
         <GameStatusBar game="5" />
@@ -39,19 +39,19 @@ class HsDecks extends React.Component {
           filterOption={(inputValue, option) =>
             option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           }
-          dataSource={hsplayers.map(player => player.username)}
-          onSelect={value => this.setState({ filteredName: value })}
+          dataSource={hsplayers.map((player) => player.username)}
+          onSelect={(value) => this.setState({ filteredName: value })}
         />
         <Button
           icon="reload"
-          onClick={e => {
-            this.props.fetchHSPlayers()
+          onClick={(e) => {
+            this.props.fetchHSPlayers();
           }}
         />
         <Switch
           defaultChecked={this.state.golden}
           style={{ marginLeft: '20px', marginRight: '20px' }}
-          onChange={e => this.setState({ golden: e })}
+          onChange={(e) => this.setState({ golden: e })}
         />
         <span>Cartes en dorée</span>
         <Collapse accordion>
@@ -68,20 +68,20 @@ class HsDecks extends React.Component {
           ))}
         </Collapse>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   hsplayers: state.hearthstone.players || [],
   user: state.user.user,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchHSPlayers: () => dispatch(fetchHSPlayers()),
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HsDecks)
+)(HsDecks);

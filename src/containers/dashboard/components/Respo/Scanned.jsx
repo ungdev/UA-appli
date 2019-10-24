@@ -1,31 +1,31 @@
-import React from 'react'
-import { Spin, Icon, Collapse } from 'antd'
-import { connect } from 'react-redux'
-import { fetchUser } from '../../../../modules/user'
-import { fetchScannedTeams } from '../../../../modules/teams'
+import React from 'react';
+import { Spin, Icon, Collapse } from 'antd';
+import { connect } from 'react-redux';
+import { fetchUser } from '../../../../modules/user';
+import { fetchScannedTeams } from '../../../../modules/teams';
 
-const { Panel } = Collapse
+const { Panel } = Collapse;
 
 class Scanned extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.props.fetchUser()
-    this.props.fetchScannedTeams()
+    this.props.fetchUser();
+    this.props.fetchScannedTeams();
   }
 
   render() {
-    let { user, scannedTeams } = this.props
+    let { user, scannedTeams } = this.props;
 
     if (!user || !scannedTeams) {
-      return <Spin />
+      return <Spin />;
     }
 
-    scannedTeams = scannedTeams.map(scannedTeam => (
+    scannedTeams = scannedTeams.map((scannedTeam) => (
       <div style={{ marginBottom: '20px' }}>
         <h2>Équipes {scannedTeam.tournamentName}</h2>
         <Collapse>
-          {scannedTeam.teams.map(team => (
+          {scannedTeam.teams.map((team) => (
             <Panel
               header={
                 <React.Fragment>
@@ -62,23 +62,23 @@ class Scanned extends React.Component {
           ))}
         </Collapse>
       </div>
-    ))
+    ));
 
-    return scannedTeams
+    return scannedTeams;
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user.user,
   scannedTeams: state.teams.scannedTeams,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchUser: () => dispatch(fetchUser()),
   fetchScannedTeams: () => dispatch(fetchScannedTeams()),
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Scanned)
+)(Scanned);

@@ -1,7 +1,7 @@
-import React from 'react'
-import { Divider, Spin, Button } from 'antd'
-import { connect } from 'react-redux'
-import { fetchInfos, sendMessage, SET_INFOS_LOADING } from '../../../../modules/infos'
+import React from 'react';
+import { Divider, Spin, Button } from 'antd';
+import { connect } from 'react-redux';
+import { fetchInfos, sendMessage, SET_INFOS_LOADING } from '../../../../modules/infos';
 // import axios from '../../../../lib/axios'
 
 class Compare extends React.Component {
@@ -12,7 +12,7 @@ class Compare extends React.Component {
         <Spin />
         <Button onClick={this.buttonclicked} />
       </div>
-    )
+    );
   }
 
   buttonclicked() {
@@ -20,20 +20,20 @@ class Compare extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user.user,
   infos: state.infos.infos,
   loading: state.infos.loading,
   location: state.routing.location.pathname,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getInfos: (tournament, start, end) => dispatch(fetchInfos(tournament, start, end)),
   sendMessage: (tournament, title, text) => dispatch(sendMessage(tournament, title, text)),
   setLoading: () => dispatch({ type: SET_INFOS_LOADING }),
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Compare)
+)(Compare);

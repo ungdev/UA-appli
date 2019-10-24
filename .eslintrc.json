@@ -1,33 +1,42 @@
 {
-  "extends": [
-    "airbnb",
-    "plugin:prettier/recommended",
-    "prettier/react"
-  ],
   "env": {
     "browser": true,
-    "commonjs": true,
     "es6": true,
-    "jest": true,
     "node": true
   },
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
   "rules": {
-    "jsx-a11y/href-no-hash": ["off"],
-    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
-    "max-len": [
-      "warn",
-      {
-        "semi": "never",
-        "code": 100,
-        "tabWidth": 2,
-        "comments": 100,
-        "ignoreComments": false,
-        "ignoreTrailingComments": true,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreRegExpLiterals": true
-      }
-    ]
+    "linebreak-style": ["warn", "windows"],
+    "react/require-default-props": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unescaped-entities": "off",
+    "semi": "error",
+    "comma-dangle": ["warn", "always-multiline"],
+    "object-curly-spacing": ["warn", "always"],
+    "quotes": ["warn", "single"],
+    "arrow-parens": ["error", "always"],
+    "no-console": "error",
+    "no-alert": "error",
+    "brace-style": ["warn", "stroustrup"]
   }
 }

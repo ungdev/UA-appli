@@ -1,15 +1,15 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import { Notifs as Notifications } from 'redux-notifications'
-import 'antd/dist/antd.css'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { Notifs as Notifications } from 'redux-notifications';
+import 'antd/dist/antd.css';
 
-import Home from '../home'
+import Home from '../home';
 
-import Dashboard from '../dashboard'
-import SetPlaces from '../dashboard/setPlaces'
+import Dashboard from '../dashboard';
+import SetPlaces from '../dashboard/setPlaces';
 
-import AsyncPizza from '../../components/pizza'
+import AsyncPizza from '../../components/pizza';
 
 
 const App = () => (
@@ -141,10 +141,10 @@ const App = () => (
       <Redirect from="*" to="/dashboard/home" />
     </Switch>
   </div>
-)
+);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.user.user,
-})
+});
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(App);

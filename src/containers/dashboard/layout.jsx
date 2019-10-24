@@ -1,12 +1,12 @@
-import React from 'react'
-import { Layout } from 'antd'
+import React from 'react';
+import { Layout } from 'antd';
 
-import LeftBar from './components/LeftBar'
-import TopBar from './components/TopBar'
+import LeftBar from './components/LeftBar';
+import TopBar from './components/TopBar';
 
-const { Content, Sider } = Layout
+const { Content, Sider } = Layout;
 
-const DashboardLayout = props => {
+const DashboardLayout = (props) => {
   return (
     <div className="App">
       <Layout style={{ minHeight: '100vh' }}>
@@ -25,7 +25,7 @@ const DashboardLayout = props => {
         </Layout>
       </Layout>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

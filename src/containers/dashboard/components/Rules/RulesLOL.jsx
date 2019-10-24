@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default class RulesLOL extends React.Component {
   render() {
@@ -243,6 +243,6 @@ export default class RulesLOL extends React.Component {
           de ne pas mettre en retard votre équipe.
         </p>
       </div>
-    )
+    );
   }
 }

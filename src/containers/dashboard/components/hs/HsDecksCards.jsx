@@ -1,11 +1,11 @@
-import React from 'react'
-import { Tabs, Spin, Button } from 'antd'
-import { connect } from 'react-redux'
-import HsDecksDeckList from './HsDecksDeckList'
-import HsDecksStats from './HsDecksStats'
-import { getDeck, deleteDeck } from '../../../../modules/hearthstone'
+import React from 'react';
+import { Tabs, Spin, Button } from 'antd';
+import { connect } from 'react-redux';
+import HsDecksDeckList from './HsDecksDeckList';
+import HsDecksStats from './HsDecksStats';
+import { getDeck, deleteDeck } from '../../../../modules/hearthstone';
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 const hsclass = [
   { en: 'PRIEST', fr: 'Prêtre' },
   { en: 'MAGE', fr: 'Mage' },
@@ -16,48 +16,48 @@ const hsclass = [
   { en: 'DRUID', fr: 'Druide' },
   { en: 'WARLOCK', fr: 'Démoniste' },
   { en: 'WARRIOR', fr: 'Guerrier' },
-]
+];
 
 class HsDecksCards extends React.Component {
   constructor(props) {
-    super(props)
-    this.props.decks.forEach(deck => this.props.getDeck(deck.id))
+    super(props);
+    this.props.decks.forEach((deck) => this.props.getDeck(deck.id));
     this.state = {
       alldecks: this.props.alldecks,
       deletedDecks: [],
-    }
+    };
   }
 
   static getDerivedStateFromProps(props, state) {
-    return { ...state, alldecks: props.alldecks }
+    return { ...state, alldecks: props.alldecks };
   }
 
   deleteDeck(id) {
-    const { alldecks, deletedDecks } = this.state
-    alldecks.splice(alldecks.findIndex(deck => deck && deck.id === id))
-    deletedDecks.push(id)
-    this.setState({ alldecks, deletedDecks })
-    this.props.deleteDeck(id)
+    const { alldecks, deletedDecks } = this.state;
+    alldecks.splice(alldecks.findIndex((deck) => deck && deck.id === id));
+    deletedDecks.push(id);
+    this.setState({ alldecks, deletedDecks });
+    this.props.deleteDeck(id);
   }
 
   render() {
-    const { decks } = this.props
-    const { alldecks, deletedDecks } = this.state
-    if (!alldecks) return <Spin />
-    let f = false
-    decks.forEach(deck => {
+    const { decks } = this.props;
+    const { alldecks, deletedDecks } = this.state;
+    if (!alldecks) return <Spin />;
+    let f = false;
+    decks.forEach((deck) => {
       if (!alldecks[deck.id]) {
-        f = true
-        if (!deletedDecks.find(d => d === deck.id)) this.props.getDeck(deck.id)
+        f = true;
+        if (!deletedDecks.find((d) => d === deck.id)) this.props.getDeck(deck.id);
       }
-    })
-    if (f) return <Spin />
+    });
+    if (f) return <Spin />;
     return (
       <Tabs defaultActiveKey="0" size="small" tabPosition="left">
         {decks.map((de, key) => {
-          const deck = alldecks[de.id]
-          let deckclass = hsclass.find(c => c.en === deck.class)
-          deckclass = deckclass ? deckclass.fr : ''
+          const deck = alldecks[de.id];
+          let deckclass = hsclass.find((c) => c.en === deck.class);
+          deckclass = deckclass ? deckclass.fr : '';
           return (
             <TabPane
               className="cardTab"
@@ -83,23 +83,23 @@ class HsDecksCards extends React.Component {
                 </Button>
               )}
             </TabPane>
-          )
+          );
         })}
       </Tabs>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   alldecks: state.hearthstone.decks,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
-  getDeck: id => dispatch(getDeck(id)),
-  deleteDeck: id => dispatch(deleteDeck(id)),
-})
+const mapDispatchToProps = (dispatch) => ({
+  getDeck: (id) => dispatch(getDeck(id)),
+  deleteDeck: (id) => dispatch(deleteDeck(id)),
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HsDecksCards)
+)(HsDecksCards);

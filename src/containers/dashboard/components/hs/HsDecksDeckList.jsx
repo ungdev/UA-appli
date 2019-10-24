@@ -1,14 +1,14 @@
-import React from 'react'
-import { Col, Icon, Popover, Row, Tag } from 'antd'
-import { connect } from 'react-redux'
+import React from 'react';
+import { Col, Icon, Popover, Row, Tag } from 'antd';
+import { connect } from 'react-redux';
 
 class HsDecksDeckList extends React.Component {
   render() {
     return this.props.deck.cards
       .sort((c1, c2) => {
-        if (c1.cost > c2.cost) return 1
-        if (c1.cost < c2.cost) return -1
-        return 0
+        if (c1.cost > c2.cost) return 1;
+        if (c1.cost < c2.cost) return -1;
+        return 0;
       })
       .map((card, key) => {
         return (
@@ -44,20 +44,20 @@ class HsDecksDeckList extends React.Component {
               </Col>
             </Row>
           </Popover>
-        )
-      })
+        );
+      });
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   alldecks: state.hearthstone.decks,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // getCardImage: (id) => dispatch(getCardImage(id))
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HsDecksDeckList)
+)(HsDecksDeckList);

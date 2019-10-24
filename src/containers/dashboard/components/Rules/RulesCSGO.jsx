@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default class RulesCSGO extends React.Component {
   render() {
@@ -176,6 +176,6 @@ export default class RulesCSGO extends React.Component {
           est inclus dans le temps d'installation. Tout retard pourra être sanctionné.
         </p>
       </div>
-    )
+    );
   }
 }

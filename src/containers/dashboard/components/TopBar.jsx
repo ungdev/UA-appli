@@ -1,21 +1,21 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Layout, Menu, Icon } from 'antd'
-import Logo_UA from '../logo_ua_2018_hex.png'
-import { fetchUser } from '../../../modules/user'
-import { logout } from '../../../modules/login'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Layout, Menu, Icon } from 'antd';
+import Logo_UA from '../logo_ua_2018_hex.png';
+import { fetchUser } from '../../../modules/user';
+import { logout } from '../../../modules/login';
 
-const { Header } = Layout
+const { Header } = Layout;
 
 class TopBar extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.props.fetchUser()
+    this.props.fetchUser();
   }
 
   render() {
-    const { user } = this.props
+    const { user } = this.props;
 
     return (
       <Header className="header">
@@ -37,20 +37,20 @@ class TopBar extends React.Component {
           </Menu.Item>
         </Menu>
       </Header>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user.user,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchUser: () => dispatch(fetchUser()),
   disconnect: () => dispatch(logout()),
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TopBar)
+)(TopBar);

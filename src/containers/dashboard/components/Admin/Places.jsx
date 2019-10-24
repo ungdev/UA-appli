@@ -1,35 +1,35 @@
-import React from 'react'
-import { Tabs, Icon } from 'antd'
-import { connect } from 'react-redux'
+import React from 'react';
+import { Tabs, Icon } from 'antd';
+import { connect } from 'react-redux';
 
-import AdminBar from './AdminBar'
-import { fetchUsers } from '../../../../modules/admin'
-import UpdateUserPlace from './components/UpdateUserPlace'
-import SwitchUsersPlaces from './components/SwitchUsersPlaces'
+import AdminBar from './AdminBar';
+import { fetchUsers } from '../../../../modules/admin';
+import UpdateUserPlace from './components/UpdateUserPlace';
+import SwitchUsersPlaces from './components/SwitchUsersPlaces';
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 
 class Places extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.props.fetchUsers()
+    this.props.fetchUsers();
   }
 
   render() {
-    let { users } = this.props
+    let { users } = this.props;
 
     if (!users) {
-      this.props.gotoHome()
+      this.props.gotoHome();
     }
 
     // Get user fullname
-    users = users.map(user => {
+    users = users.map((user) => {
       return {
         ...user,
         fullname: `${user.name} (${user.firstname} ${user.lastname})`,
-      }
-    })
+      };
+    });
 
     return (
       <React.Fragment>
@@ -59,20 +59,20 @@ class Places extends React.Component {
           </TabPane>
         </Tabs>
       </React.Fragment>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   users: state.admin.users,
   tournaments: state.tournaments.tournaments,
-})
+});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchUsers: () => dispatch(fetchUsers()),
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Places)
+)(Places);
